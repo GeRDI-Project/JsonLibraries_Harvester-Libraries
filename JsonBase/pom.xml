@@ -5,7 +5,7 @@
   <version>1.0</version>
   
   <build>
-        <finalName>json-base-${project.version}</finalName>
+        <finalName>${project.artifactId}_${project.version}</finalName>
         <directory>target/</directory>
         <plugins>
 			<!-- Add dependencies to the /lib/ folder-->
