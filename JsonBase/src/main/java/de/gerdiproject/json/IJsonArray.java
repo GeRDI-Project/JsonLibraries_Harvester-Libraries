@@ -1,7 +1,8 @@
 package de.gerdiproject.json;
 
 
-public interface IJsonArray extends IJson, Iterable<Object>
+import java.util.Collection;
+public interface IJsonArray extends IJson, Collection<Object>
 {
 	/**
 	 * Returns the number of elements inside the array.
