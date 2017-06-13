@@ -110,8 +110,7 @@ public class JsonHelper
 	{
 		ArrayList<String> list = new ArrayList<>( array.size() );
 
-		array.forEach( (Object element ) ->
-		{
+		array.forEach( ( Object element ) -> {
 			if (element instanceof IJsonObject)
 			{
 				String value = ((IJsonObject) element).getString( key, null );
@@ -121,7 +120,7 @@ public class JsonHelper
 					list.add( value );
 				}
 			}
-		});
+		} );
 		return list;
 	}
 }
