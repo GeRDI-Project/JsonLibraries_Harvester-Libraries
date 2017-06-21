@@ -12,20 +12,36 @@ import de.gerdiproject.json.IJsonObject;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 
 
+/**
+ * This is a wrapper for the GSON implementation of JSON objects. It wraps a
+ * {@link JsonObject} and provides convenience functions.
+ * 
+ * @author Robin Weiss
+ *
+ */
 public class GsonObject implements IJsonObject
 {
 	protected JsonObject wrappedObject;
 
 
+	/**
+	 * Simple constructor that initializes the wrapped JsonObject as an empty
+	 * {@link JsonObject}.
+	 */
 	public GsonObject()
 	{
 		wrappedObject = new JsonObject();
 	}
 
 
+	/**
+	 * Constructor that requires an existing {@link JsonObject} to be specified.
+	 * 
+	 * @param wrappedObject
+	 *            a {@link JsonObject} that will be wrapped by this class
+	 */
 	public GsonObject( JsonObject wrappedObject )
 	{
 		this.wrappedObject = wrappedObject;
@@ -213,14 +229,14 @@ public class GsonObject implements IJsonObject
 	{
 		JsonElement ele = wrappedObject.get( key );
 
-		return gsonToObject( ele );
+		return GsonUtils.gsonToObject( ele );
 	}
 
 
 	@Override
 	public Object get( String key, Object defaultValue )
 	{
-		Object obj = gsonToObject( wrappedObject.get( key ) );
+		Object obj = GsonUtils.gsonToObject( wrappedObject.get( key ) );
 		return (obj != null) ? obj : defaultValue;
 	}
 
@@ -270,47 +286,7 @@ public class GsonObject implements IJsonObject
 	public Object remove( String key )
 	{
 		JsonElement oldValue = wrappedObject.remove( key );
-		return gsonToObject( oldValue );
-	}
-	
-	public static Object gsonToObject( JsonElement ele )
-	{
-		if (ele != null && !ele.isJsonNull())
-		{
-			if (ele.isJsonPrimitive())
-			{
-				JsonPrimitive primitive = ele.getAsJsonPrimitive();
-
-				if (primitive.isString())
-				{
-					return primitive.getAsString();
-				}
-
-				if (primitive.isBoolean())
-				{
-					return primitive.getAsBoolean();
-				}
-
-				if (primitive.isNumber())
-				{
-					return primitive.getAsNumber();
-				}
-			}
-			else
-			{
-				if (ele.isJsonArray())
-				{
-					return new GsonArray( ele.getAsJsonArray() );
-				}
-
-				if (ele.isJsonObject())
-				{
-					return new GsonObject( ele.getAsJsonObject() );
-				}
-			}
-		}
-
-		return null;
+		return GsonUtils.gsonToObject( oldValue );
 	}
 
 	/**

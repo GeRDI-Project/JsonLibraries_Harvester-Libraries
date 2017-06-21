@@ -15,16 +15,34 @@ import de.gerdiproject.json.IJsonArray;
 import de.gerdiproject.json.IJsonObject;
 
 
+/**
+ * This is a wrapper for the GSON implementation of JSON array. It wraps a
+ * {@link JsonArray} and provides convenience functions.
+ * 
+ * @author Robin Weiss
+ *
+ */
 public class GsonArray implements IJsonArray
 {
 	protected JsonArray wrappedArray;
 
 
+	/**
+	 * Simple constructor that initializes the wrapped JsonArray as an empty
+	 * {@link JsonArray}.
+	 */
 	public GsonArray()
 	{
 		wrappedArray = new JsonArray();
 	}
-	
+
+
+	/**
+	 * Constructor that requires an existing {@link JsonArray} to be specified.
+	 * 
+	 * @param wrappedArray
+	 *            a {@link JsonArray} that will be wrapped by this class
+	 */
 	public GsonArray( JsonArray wrappedArray )
 	{
 		this.wrappedArray = wrappedArray;
@@ -63,15 +81,15 @@ public class GsonArray implements IJsonArray
 	private int indexOf( Object requestedObj )
 	{
 		int size = wrappedArray.size();
-		
-		for(int i = 0; i < size; i++)
+
+		for (int i = 0; i < size; i++)
 		{
-			if( get( i ).equals( requestedObj ))
+			if (get( i ).equals( requestedObj ))
 			{
 				return i;
 			}
 		}
-		
+
 		return -1;
 	}
 
@@ -140,17 +158,17 @@ public class GsonArray implements IJsonArray
 	public boolean retainAll( Collection<?> collection )
 	{
 		int size = wrappedArray.size();
-		
-		for(int i = 0; i < size; i++)
+
+		for (int i = 0; i < size; i++)
 		{
 			Object obj = get( i );
-			
-			if( !collection.contains( obj ))
+
+			if (!collection.contains( obj ))
 			{
 				wrappedArray.remove( i );
 			}
 		}
-		
+
 		return true;
 	}
 
@@ -159,12 +177,12 @@ public class GsonArray implements IJsonArray
 	public Object[] toArray()
 	{
 		final Object[] arr = new Object[wrappedArray.size()];
-		
-		for(int i = 0; i < arr.length; i++)
+
+		for (int i = 0; i < arr.length; i++)
 		{
 			arr[i] = get( i );
 		}
-		
+
 		return arr;
 	}
 
@@ -174,33 +192,34 @@ public class GsonArray implements IJsonArray
 	public <T> T[] toArray( T[] dest )
 	{
 		int size = size();
-		
+
 		// increase destination array size, if it is too small
-		if(dest.length < size)
+		if (dest.length < size)
 		{
 			dest = Arrays.copyOf( dest, size );
 		}
-		
+
 		try
 		{
 			// copy elements to the destination array
-			for(int i = 0; i < size; i++)
+			for (int i = 0; i < size; i++)
 			{
-				dest[i] = (T) get(i);
+				dest[i] = (T) get( i );
 			}
 		}
-		catch( ClassCastException ex)
+		catch (ClassCastException ex)
 		{
 			// if any element is not of the specified type, throw this exception
 			throw new ArrayStoreException();
 		}
-		
-		// fill up the destination array with null, if it is bigger than the source
-		for(int i = size; i < dest.length; i++)
+
+		// fill up the destination array with null, if it is bigger than the
+		// source
+		for (int i = size; i < dest.length; i++)
 		{
 			dest[i] = null;
 		}
-		
+
 		return dest;
 	}
 
@@ -365,14 +384,14 @@ public class GsonArray implements IJsonArray
 	@Override
 	public Object get( int index ) throws ArrayIndexOutOfBoundsException
 	{
-		return GsonObject.gsonToObject( wrappedArray.get( index ) );
+		return GsonUtils.gsonToObject( wrappedArray.get( index ) );
 	}
 
 
 	@Override
 	public Object get( int index, Object defaultValue ) throws ArrayIndexOutOfBoundsException
 	{
-		Object value = GsonObject.gsonToObject( wrappedArray.get( index ) );
+		Object value = GsonUtils.gsonToObject( wrappedArray.get( index ) );
 		return (value != null) ? value : defaultValue;
 	}
 
@@ -479,7 +498,7 @@ public class GsonArray implements IJsonArray
 	public Object remove( int index ) throws ArrayIndexOutOfBoundsException
 	{
 		JsonElement oldValue = wrappedArray.remove( index );
-		return GsonObject.gsonToObject( oldValue );
+		return GsonUtils.gsonToObject( oldValue );
 	}
 
 
@@ -493,9 +512,10 @@ public class GsonArray implements IJsonArray
 			i--;
 		}
 	}
-	
+
 	/**
 	 * Custom iterator class for iterating the Json object.
+	 * 
 	 * @author Robin Weiss
 	 *
 	 */
@@ -504,11 +524,13 @@ public class GsonArray implements IJsonArray
 		int index = 0;
 		final int size = size();
 
+
 		@Override
 		final public boolean hasNext()
 		{
 			return index != size;
 		}
+
 
 		@Override
 		final public Object next()
@@ -519,6 +541,7 @@ public class GsonArray implements IJsonArray
 			}
 			return get( index++ );
 		}
+
 
 		@Override
 		public void remove()

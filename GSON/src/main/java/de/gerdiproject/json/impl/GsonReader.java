@@ -15,12 +15,22 @@ import de.gerdiproject.json.IJsonObject;
 import de.gerdiproject.json.IJsonReader;
 
 
+/**
+ * This Reader can read and parse JSON strings to create JSON objects and
+ * arrays.
+ * 
+ * @author Robin Weiss
+ *
+ */
 public class GsonReader implements IJsonReader
 {
 	private final JsonParser parser;
 	private JsonReader reader;
 
 
+	/**
+	 * Constructor that creates a Json parser instance.
+	 */
 	public GsonReader()
 	{
 		parser = new JsonParser();
