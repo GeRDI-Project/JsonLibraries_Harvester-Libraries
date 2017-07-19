@@ -103,6 +103,7 @@ public class GsonArray implements IJsonArray
                 break;
             }
         }
+
         return hasAll;
     }
 
@@ -141,6 +142,7 @@ public class GsonArray implements IJsonArray
             else
                 removedAll = false;
         }
+
         return removedAll;
     }
 
@@ -240,10 +242,12 @@ public class GsonArray implements IJsonArray
     public int getInt(int index, int defaultValue) throws ArrayIndexOutOfBoundsException
     {
         JsonElement ele = wrappedArray.get(index);
+
         if (ele != null
             && ele.isJsonPrimitive()
             && ele.getAsJsonPrimitive().isNumber())
             return ele.getAsInt();
+
         return defaultValue;
     }
 
@@ -259,10 +263,12 @@ public class GsonArray implements IJsonArray
     public double getDouble(int index, double defaultValue) throws ArrayIndexOutOfBoundsException
     {
         JsonElement ele = wrappedArray.get(index);
+
         if (ele != null
             && ele.isJsonPrimitive()
             && ele.getAsJsonPrimitive().isNumber())
             return ele.getAsDouble();
+
         return defaultValue;
     }
 
@@ -278,10 +284,12 @@ public class GsonArray implements IJsonArray
     public String getString(int index, String defaultValue) throws ArrayIndexOutOfBoundsException
     {
         JsonElement ele = wrappedArray.get(index);
+
         if (ele != null
             && ele.isJsonPrimitive()
             && ele.getAsJsonPrimitive().isString())
             return ele.getAsString();
+
         return defaultValue;
     }
 
@@ -298,10 +306,12 @@ public class GsonArray implements IJsonArray
     public boolean getBoolean(int index, boolean defaultValue) throws ArrayIndexOutOfBoundsException
     {
         JsonElement ele = wrappedArray.get(index);
+
         if (ele != null
             && ele.isJsonPrimitive()
             && ele.getAsJsonPrimitive().isBoolean())
             return ele.getAsBoolean();
+
         return defaultValue;
     }
 
@@ -318,8 +328,10 @@ public class GsonArray implements IJsonArray
     public IJsonObject getJsonObject(int index, IJsonObject defaultValue) throws ArrayIndexOutOfBoundsException
     {
         JsonElement ele = wrappedArray.get(index);
+
         if (ele != null && ele.isJsonObject())
             return new GsonObject(ele.getAsJsonObject());
+
         return defaultValue;
     }
 
@@ -337,8 +349,10 @@ public class GsonArray implements IJsonArray
     {
 
         JsonElement ele = wrappedArray.get(index);
+
         if (ele != null && ele.isJsonArray())
             return new GsonArray(ele.getAsJsonArray());
+
         return defaultValue;
     }
 
@@ -387,6 +401,7 @@ public class GsonArray implements IJsonArray
     {
         if (value != null)
             return put(index, value);
+
         return null;
     }
 
@@ -452,6 +467,7 @@ public class GsonArray implements IJsonArray
     public void clear()
     {
         int i = wrappedArray.size();
+
         while (i != 0) {
             wrappedArray.remove(0);
             i--;
@@ -482,6 +498,7 @@ public class GsonArray implements IJsonArray
         {
             if (!hasNext())
                 throw new NoSuchElementException();
+
             return get(index++);
         }
 

@@ -107,8 +107,10 @@ public class GsonObject implements IJsonObject
     public int getInt(String key, int defaultValue)
     {
         JsonElement ele = wrappedObject.get(key);
+
         if (ele != null && ele.isJsonPrimitive() && ele.getAsJsonPrimitive().isNumber())
             return ele.getAsInt();
+
         return defaultValue;
     }
 
@@ -124,8 +126,10 @@ public class GsonObject implements IJsonObject
     public double getDouble(String key, double defaultValue)
     {
         JsonElement ele = wrappedObject.get(key);
+
         if (ele != null && ele.isJsonPrimitive() && ele.getAsJsonPrimitive().isNumber())
             return ele.getAsDouble();
+
         return defaultValue;
     }
 
@@ -141,8 +145,10 @@ public class GsonObject implements IJsonObject
     public String getString(String key, String defaultValue)
     {
         JsonElement ele = wrappedObject.get(key);
+
         if (ele != null && ele.isJsonPrimitive() && ele.getAsJsonPrimitive().isString())
             return ele.getAsString();
+
         return defaultValue;
     }
 
@@ -158,8 +164,10 @@ public class GsonObject implements IJsonObject
     public boolean getBoolean(String key, boolean defaultValue)
     {
         JsonElement ele = wrappedObject.get(key);
+
         if (ele != null && ele.isJsonPrimitive() && ele.getAsJsonPrimitive().isBoolean())
             return ele.getAsBoolean();
+
         return defaultValue;
     }
 
@@ -176,8 +184,10 @@ public class GsonObject implements IJsonObject
     public IJsonObject getJsonObject(String key, IJsonObject defaultValue)
     {
         JsonElement ele = wrappedObject.get(key);
+
         if (ele != null && ele.isJsonObject())
             return new GsonObject(ele.getAsJsonObject());
+
         return defaultValue;
     }
 
@@ -194,8 +204,10 @@ public class GsonObject implements IJsonObject
     public IJsonArray getJsonArray(String key, IJsonArray defaultValue)
     {
         JsonElement ele = wrappedObject.get(key);
+
         if (ele != null && ele.isJsonArray())
             return new GsonArray(ele.getAsJsonArray());
+
         return defaultValue;
     }
 
@@ -246,6 +258,7 @@ public class GsonObject implements IJsonObject
     {
         if (value != null)
             return put(key, value);
+
         return null;
     }
 
