@@ -35,92 +35,85 @@ import de.gerdiproject.json.IJsonObject;
 public class JsonHelper
 {
 
-	/**
-	 * Since this is a static class, no constructor is needed.
-	 */
-	private JsonHelper()
-	{
-	}
+    /**
+     * Since this is a static class, no constructor is needed.
+     */
+    private JsonHelper()
+    {
+    }
 
 
-	/**
-	 * Retrieves a date value from a JSON-object.
-	 *
-	 * @param obj
-	 *            the JSON-object from which the date is to be retrieved
-	 * @param key
-	 *            the key of the date attribute
-	 * @return a SQL-date or null, if the date cannot be parsed
-	 */
-	public static Date getDateFromObject( IJsonObject obj, String key )
-	{
-		try
-		{
-			return Date.valueOf( obj.getString( key ) );
-		}
-		catch (IllegalArgumentException e)
-		{
-			return null;
-		}
-	}
+    /**
+     * Retrieves a date value from a JSON-object.
+     *
+     * @param obj
+     *            the JSON-object from which the date is to be retrieved
+     * @param key
+     *            the key of the date attribute
+     * @return a SQL-date or null, if the date cannot be parsed
+     */
+    public static Date getDateFromObject(IJsonObject obj, String key)
+    {
+        try {
+            return Date.valueOf(obj.getString(key));
+        } catch (IllegalArgumentException e) {
+            return null;
+        }
+    }
 
 
-	/**
-	 * Tries to find an element in a JSON-array that has a specified key-value
-	 * pair.
-	 *
-	 * @param array
-	 *            the array that is to be searched
-	 * @param key
-	 *            a required key of the element that is to be found
-	 * @param value
-	 *            the value of the key
-	 * @return a JsonObject or null, if no element has the required key-value
-	 *         pair
-	 */
-	public static IJsonObject findObjectInArray( IJsonArray array, String key, String value )
-	{
-		for (Object element : array)
-		{
-			if (element instanceof IJsonObject)
-			{
-				IJsonObject obj = (IJsonObject) element;
+    /**
+     * Tries to find an element in a JSON-array that has a specified key-value
+     * pair.
+     *
+     * @param array
+     *            the array that is to be searched
+     * @param key
+     *            a required key of the element that is to be found
+     * @param value
+     *            the value of the key
+     * @return a JsonObject or null, if no element has the required key-value
+     *         pair
+     */
+    public static IJsonObject findObjectInArray(IJsonArray array, String key, String value)
+    {
+        for (Object element : array) {
+            if (element instanceof IJsonObject) {
+                IJsonObject obj = (IJsonObject) element;
 
-				if (value.equals( obj.getString( key, null ) ))
-				{
-					return obj;
-				}
-			}
-		}
-		return null;
-	}
+                if (value.equals(obj.getString(key, null)))
+                    return obj;
+            }
+        }
+
+        return null;
+    }
 
 
-	/**
-	 * Retrieves a list of string values from a JSON-array of JSON-objects.
-	 *
-	 * @param array
-	 *            a JsonArray of JsonObjects
-	 * @param key
-	 *            the key of each element in the array of which the value is
-	 *            retrieved
-	 * @return a list of string values
-	 */
-	public static List<String> arrayToStringList( IJsonArray array, String key )
-	{
-		ArrayList<String> list = new ArrayList<>( array.size() );
+    /**
+     * Retrieves a list of string values from a JSON-array of JSON-objects.
+     *
+     * @param array
+     *            a JsonArray of JsonObjects
+     * @param key
+     *            the key of each element in the array of which the value is
+     *            retrieved
+     * @return a list of string values
+     */
+    public static List<String> arrayToStringList(IJsonArray array, String key)
+    {
+        ArrayList<String> list = new ArrayList<>(array.size());
 
-		array.forEach( ( Object element ) -> {
-			if (element instanceof IJsonObject)
-			{
-				String value = ((IJsonObject) element).getString( key, null );
+        array.forEach((Object element) -> {
+            if (element instanceof IJsonObject)
+            {
+                String value = ((IJsonObject) element)
+                .getString(key, null);
 
-				if (value != null)
-				{
-					list.add( value );
-				}
-			}
-		} );
-		return list;
-	}
+                if (value != null)
+                    list.add(value);
+            }
+        });
+        return list;
+    }
 }

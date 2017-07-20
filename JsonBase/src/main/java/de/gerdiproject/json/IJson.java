@@ -21,24 +21,24 @@ package de.gerdiproject.json;
 
 /**
  * A very basic interface that represents any of the JSON classes.
- * 
+ *
  * @author Robin Weiss
  *
  */
 public interface IJson
 {
-	/**
-	 * Represents the object as a JSON-conform string.
-	 * 
-	 * @return a JSON string
-	 */
-	public String toJsonString();
+    /**
+     * Represents the object as a JSON-conform string.
+     *
+     * @return a JSON string
+     */
+    public String toJsonString();
 
 
-	/**
-	 * Checks if this object is empty.
-	 * 
-	 * @return true, if this object is empty.
-	 */
-	public boolean isEmpty();
+    /**
+     * Checks if this object is empty.
+     *
+     * @return true, if this object is empty.
+     */
+    public boolean isEmpty();
 }
