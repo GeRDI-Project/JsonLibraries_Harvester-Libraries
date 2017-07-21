@@ -1,19 +1,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.gerdi-project</groupId>
+	<parent>
+		<groupId>de.gerdi-project</groupId>
+		<artifactId>GeRDI-parent</artifactId>
+		<version>1.0.0</version>
+	</parent>
+	
 	<artifactId>JSON-Base</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
   
 	<name>JSON Base</name>
 	<description>This library provides interfaces for JSON related classes.</description>
-	<url>http://www.gerdi-project.de</url>
-  
-	<licenses>
-	  <license>
-		<name>The Apache License, Version 2.0</name>
-		<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-	  </license>
-	</licenses>
   
 	<developers>
 		<developer>
@@ -149,7 +147,4 @@
 			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 	</distributionManagement>
-	
-	<dependencies>
-	</dependencies>
 </project>
