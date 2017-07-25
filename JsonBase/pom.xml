@@ -1,4 +1,7 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
+         http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>de.gerdi-project</groupId>
@@ -9,32 +12,27 @@
 	<artifactId>JSON-Base</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
-  
 	<name>JSON Base</name>
 	<description>This library provides interfaces for JSON related classes.</description>
-  
-	<developers>
-		<developer>
-			<name>Robin Weiss</name>
-			<email>row@informatik.uni-kiel.de</email>
-			<organization>Kiel University</organization>
-			<organizationUrl>http://www.uni-kiel.de/index-e.shtml</organizationUrl>
-		</developer>
-	</developers>
+	
+	<properties>
+		<compiler.plugin.version>3.6.1</compiler.plugin.version>
+		<jar.plugin.version>3.0.2</jar.plugin.version>
+		<javadoc.plugin.version>2.10.4</javadoc.plugin.version>
+		<source.plugin.version>3.0.1</source.plugin.version>
+		<bundle.plugin.version>3.0.1</bundle.plugin.version>
+	</properties>
   
 	<build>
-        <finalName>${project.artifactId}_${project.version}</finalName>
-        <directory>target/</directory>
         <plugins>			
-			<!-- Compile in UTF-8 with Java 8 -->
+			<!-- Compile Java -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.6.1</version>
+				<version>${compiler.plugin.version}</version>
 				<configuration>
-				  <source>1.8</source>
-				  <target>1.8</target>
-				  <encoding>UTF-8</encoding>
+				  <source>${java.version}</source>
+				  <target>${java.version}</target>
 				</configuration>
 			</plugin>
 			  
@@ -42,7 +40,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.0.2</version>
+                <version>${jar.plugin.version}</version>
 				<configuration>
 				  <outputDirectory>${project.build.directory}</outputDirectory>
 					<archive>  
@@ -55,7 +53,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
+                <version>${javadoc.plugin.version}</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -65,7 +63,6 @@
 					</execution>
 				</executions>
 				<configuration>
-					<encoding>UTF-8</encoding>
 					<outputDirectory>${project.build.directory}</outputDirectory>
 				</configuration>
 			</plugin>
@@ -74,7 +71,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
-                <version>3.0.1</version>
+                <version>${source.plugin.version}</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -84,7 +81,6 @@
 					</execution>
 				</executions>
 				<configuration>
-					<encoding>UTF-8</encoding>
 					<outputDirectory>${project.build.directory}</outputDirectory>
 				</configuration>
 			</plugin>
@@ -93,7 +89,7 @@
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
-				<version>3.0.1</version>
+				<version>${bundle.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
 					<manifestLocation>META-INF</manifestLocation>
@@ -107,4 +103,13 @@
 			</plugin>
 		</plugins>
     </build>
+	
+	<developers>
+		<developer>
+			<name>Robin Weiss</name>
+			<email>row@informatik.uni-kiel.de</email>
+			<organization>Kiel University</organization>
+			<organizationUrl>http://www.uni-kiel.de/index-e.shtml</organizationUrl>
+		</developer>
+	</developers>
 </project>
