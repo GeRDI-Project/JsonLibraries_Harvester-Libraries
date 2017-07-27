@@ -36,7 +36,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      *
      * @return the number of elements inside the array
      */
-    public int size();
+    int size();
 
 
     /**
@@ -46,7 +46,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      *            the index under which a value is stored
      * @return true, if null is stored at the given index
      */
-    public boolean isNull(int index) throws ArrayIndexOutOfBoundsException;
+    boolean isNull(int index) throws ArrayIndexOutOfBoundsException;
 
 
     /**
@@ -57,7 +57,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      *            the index under which a value is stored
      * @return true, if a non-empty, non-null value exists at the given index
      */
-    public boolean isNonEmptyValue(int index) throws ArrayIndexOutOfBoundsException;
+    boolean isNonEmptyValue(int index) throws ArrayIndexOutOfBoundsException;
 
 
     /**
@@ -69,7 +69,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      *            the index at which the value is stored
      * @return an integer value
      */
-    public int getInt(int index) throws NullPointerException, ClassCastException, ArrayIndexOutOfBoundsException;
+    int getInt(int index) throws NullPointerException, ClassCastException, ArrayIndexOutOfBoundsException;
 
 
     /**
@@ -83,7 +83,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      *            index
      * @return an integer value
      */
-    public int getInt(int index, int defaultValue) throws ArrayIndexOutOfBoundsException;
+    int getInt(int index, int defaultValue) throws ArrayIndexOutOfBoundsException;
 
 
     /**
@@ -95,7 +95,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      *            the index at which the value is stored
      * @return a double value
      */
-    public double getDouble(int index)
+    double getDouble(int index)
     throws NullPointerException, ClassCastException, ArrayIndexOutOfBoundsException;
 
 
@@ -110,7 +110,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      *            index
      * @return a double value
      */
-    public double getDouble(int index, double defaultValue) throws ArrayIndexOutOfBoundsException;
+    double getDouble(int index, double defaultValue) throws ArrayIndexOutOfBoundsException;
 
 
     /**
@@ -122,7 +122,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      *            the index at which the value is stored
      * @return a string
      */
-    public String getString(int index)
+    String getString(int index)
     throws NullPointerException, ClassCastException, ArrayIndexOutOfBoundsException;
 
 
@@ -137,7 +137,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      *            index
      * @return a string
      */
-    public String getString(int index, String defaultValue) throws ArrayIndexOutOfBoundsException;
+    String getString(int index, String defaultValue) throws ArrayIndexOutOfBoundsException;
 
 
     /**
@@ -149,7 +149,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      *            the index at which the value is stored
      * @return a boolean value
      */
-    public boolean getBoolean(int index)
+    boolean getBoolean(int index)
     throws NullPointerException, ClassCastException, ArrayIndexOutOfBoundsException;
 
 
@@ -164,7 +164,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      *            index
      * @return a boolean value
      */
-    public boolean getBoolean(int index, boolean defaultValue) throws ArrayIndexOutOfBoundsException;
+    boolean getBoolean(int index, boolean defaultValue) throws ArrayIndexOutOfBoundsException;
 
 
     /**
@@ -175,7 +175,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      *            the index at which the object is stored
      * @return a JSON Object or null, if it does not exist
      */
-    public IJsonObject getJsonObject(int index) throws ClassCastException, ArrayIndexOutOfBoundsException;
+    IJsonObject getJsonObject(int index) throws ClassCastException, ArrayIndexOutOfBoundsException;
 
 
     /**
@@ -189,7 +189,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      *            index
      * @return a JSON Object
      */
-    public IJsonObject getJsonObject(int index, IJsonObject defaultValue) throws ArrayIndexOutOfBoundsException;
+    IJsonObject getJsonObject(int index, IJsonObject defaultValue) throws ArrayIndexOutOfBoundsException;
 
 
     /**
@@ -200,7 +200,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      *            the index at which the object is stored
      * @return a JSON array or null, if it does not exist
      */
-    public IJsonArray getJsonArray(int index) throws ClassCastException, ArrayIndexOutOfBoundsException;
+    IJsonArray getJsonArray(int index) throws ClassCastException, ArrayIndexOutOfBoundsException;
 
 
     /**
@@ -214,7 +214,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      *            index
      * @return a JSON array
      */
-    public IJsonArray getJsonArray(int index, IJsonArray defaultValue) throws ArrayIndexOutOfBoundsException;
+    IJsonArray getJsonArray(int index, IJsonArray defaultValue) throws ArrayIndexOutOfBoundsException;
 
 
     /**
@@ -224,7 +224,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      *            the index at which the object is stored
      * @return an object or null, if it does not exist
      */
-    public Object get(int index) throws ArrayIndexOutOfBoundsException;
+    Object get(int index) throws ArrayIndexOutOfBoundsException;
 
 
     /**
@@ -238,7 +238,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      *            index
      * @return an object
      */
-    public Object get(int index, Object defaultValue) throws ArrayIndexOutOfBoundsException;
+    Object get(int index, Object defaultValue) throws ArrayIndexOutOfBoundsException;
 
 
     /**
@@ -250,7 +250,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      *            the value that is to be stored
      * @return the old value or null, if no mapping used to exist
      */
-    public Object put(int index, Object value) throws ArrayIndexOutOfBoundsException;
+    Object put(int index, Object value) throws ArrayIndexOutOfBoundsException;
 
 
     /**
@@ -262,7 +262,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      *            the value that is to be stored
      * @return the old value or null, if no mapping used to exist
      */
-    public Object putNotNull(int index, Object value) throws ArrayIndexOutOfBoundsException;
+    Object putNotNull(int index, Object value) throws ArrayIndexOutOfBoundsException;
 
 
     /**
@@ -272,7 +272,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      *            the element that is to be added
      * @return true if adding the element succeeded
      */
-    public boolean add(Object value);
+    boolean add(Object value);
 
 
     /**
@@ -281,7 +281,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      * @param value
      *            the element that is to be added
      */
-    public void addNotNull(Object value);
+    void addNotNull(Object value);
 
 
     /**
@@ -290,7 +290,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      * @param values
      *            the values that are to be added
      */
-    public void addAll(Iterable<?> values);
+    void addAll(Iterable<?> values);
 
 
     /**
@@ -299,7 +299,7 @@ public interface IJsonArray extends IJson, Collection<Object>
      * @param values
      *            the values that are to be added
      */
-    public void addAllNotNull(Iterable<?> values);
+    void addAllNotNull(Iterable<?> values);
 
 
     /**
@@ -309,13 +309,13 @@ public interface IJsonArray extends IJson, Collection<Object>
      *            the index of the element that is to be removed
      * @return the removed element or null, if no element used to exist
      */
-    public Object remove(int index) throws ArrayIndexOutOfBoundsException;
+    Object remove(int index) throws ArrayIndexOutOfBoundsException;
 
 
     /**
      * Removes all elements from the array.
      *
      */
-    public void clear();
+    void clear();
 
 }

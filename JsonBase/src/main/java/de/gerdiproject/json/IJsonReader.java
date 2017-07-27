@@ -39,7 +39,7 @@ public interface IJsonReader
      * @param reader
      *            a reader that provides a JSON string
      */
-    public void init(Reader reader);
+    void init(Reader reader);
 
 
     /**
@@ -48,7 +48,7 @@ public interface IJsonReader
      * @throws IOException
      *             if an I/O error occurs
      */
-    public void close() throws IOException;
+    void close() throws IOException;
 
 
     /**
@@ -63,7 +63,7 @@ public interface IJsonReader
      * @throws ParseException
      *             this exception is thrown if parsing the JSON string failed
      */
-    public IJson read() throws IllegalStateException, IOException, ParseException;
+    IJson read() throws IllegalStateException, IOException, ParseException;
 
 
     /**
@@ -81,7 +81,7 @@ public interface IJsonReader
      * @throws ParseException
      *             this exception is thrown if parsing the JSON string failed
      */
-    public IJsonArray readArray() throws IllegalStateException, ClassCastException, IOException, ParseException;
+    IJsonArray readArray() throws IllegalStateException, ClassCastException, IOException, ParseException;
 
 
     /**
@@ -99,5 +99,5 @@ public interface IJsonReader
      * @throws ParseException
      *             this exception is thrown if parsing the JSON string failed
      */
-    public IJsonObject readObject() throws IllegalStateException, ClassCastException, IOException, ParseException;
+    IJsonObject readObject() throws IllegalStateException, ClassCastException, IOException, ParseException;
 }

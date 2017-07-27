@@ -176,7 +176,11 @@ public class GsonObject implements IJsonObject
     public IJsonObject getJsonObject(String key) throws ClassCastException
     {
         JsonElement ele = wrappedObject.get(key);
-        return (ele != null && !ele.isJsonNull()) ? new GsonObject(ele.getAsJsonObject()) : null;
+
+        if (ele == null)
+            return null;
+        else
+            return new GsonObject(ele.getAsJsonObject());
     }
 
 
@@ -187,8 +191,8 @@ public class GsonObject implements IJsonObject
 
         if (ele != null && ele.isJsonObject())
             return new GsonObject(ele.getAsJsonObject());
-
-        return defaultValue;
+        else
+            return defaultValue;
     }
 
 
@@ -196,7 +200,11 @@ public class GsonObject implements IJsonObject
     public IJsonArray getJsonArray(String key) throws ClassCastException
     {
         JsonElement ele = wrappedObject.get(key);
-        return (ele != null && !ele.isJsonNull()) ? new GsonArray(ele.getAsJsonArray()) : null;
+
+        if (ele == null)
+            return null;
+        else
+            return new GsonArray(ele.getAsJsonArray());
     }
 
 
@@ -207,8 +215,8 @@ public class GsonObject implements IJsonObject
 
         if (ele != null && ele.isJsonArray())
             return new GsonArray(ele.getAsJsonArray());
-
-        return defaultValue;
+        else
+            return defaultValue;
     }
 
 

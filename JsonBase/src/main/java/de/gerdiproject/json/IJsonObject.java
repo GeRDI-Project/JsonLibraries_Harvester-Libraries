@@ -37,7 +37,7 @@ public interface IJsonObject extends IJson, Iterable<Entry<String, Object>>
      *            the key under which a value is stored
      * @return true, if null is stored for the key
      */
-    public boolean isNull(String key);
+    boolean isNull(String key);
 
 
     /**
@@ -47,7 +47,7 @@ public interface IJsonObject extends IJson, Iterable<Entry<String, Object>>
      *            the key under which a value is stored
      * @return true, if a non-empty, non-null value exists for the given key
      */
-    public boolean isNonEmptyValue(String key);
+    boolean isNonEmptyValue(String key);
 
 
     /**
@@ -55,7 +55,7 @@ public interface IJsonObject extends IJson, Iterable<Entry<String, Object>>
      *
      * @return the number of entries of the object
      */
-    public int size();
+    int size();
 
 
     /**
@@ -67,7 +67,7 @@ public interface IJsonObject extends IJson, Iterable<Entry<String, Object>>
      *            the key under which the value is stored
      * @return an integer value
      */
-    public int getInt(String key) throws NullPointerException, ClassCastException;
+    int getInt(String key) throws NullPointerException, ClassCastException;
 
 
     /**
@@ -80,7 +80,7 @@ public interface IJsonObject extends IJson, Iterable<Entry<String, Object>>
      *            the value that is returned if no value is stored for the key
      * @return an integer value
      */
-    public int getInt(String key, int defaultValue);
+    int getInt(String key, int defaultValue);
 
 
     /**
@@ -92,7 +92,7 @@ public interface IJsonObject extends IJson, Iterable<Entry<String, Object>>
      *            the key under which the value is stored
      * @return a double value
      */
-    public double getDouble(String key) throws NullPointerException, ClassCastException;
+    double getDouble(String key) throws NullPointerException, ClassCastException;
 
 
     /**
@@ -105,7 +105,7 @@ public interface IJsonObject extends IJson, Iterable<Entry<String, Object>>
      *            the value that is returned if no value is stored for the key
      * @return a double value
      */
-    public double getDouble(String key, double defaultValue);
+    double getDouble(String key, double defaultValue);
 
 
     /**
@@ -117,7 +117,7 @@ public interface IJsonObject extends IJson, Iterable<Entry<String, Object>>
      *            the key under which the value is stored
      * @return a string
      */
-    public String getString(String key) throws NullPointerException, ClassCastException;
+    String getString(String key) throws NullPointerException, ClassCastException;
 
 
     /**
@@ -130,7 +130,7 @@ public interface IJsonObject extends IJson, Iterable<Entry<String, Object>>
      *            the value that is returned if no value is stored for the key
      * @return a string
      */
-    public String getString(String key, String defaultValue);
+    String getString(String key, String defaultValue);
 
 
     /**
@@ -142,7 +142,7 @@ public interface IJsonObject extends IJson, Iterable<Entry<String, Object>>
      *            the key under which the value is stored
      * @return a boolean value
      */
-    public boolean getBoolean(String key) throws NullPointerException, ClassCastException;
+    boolean getBoolean(String key) throws NullPointerException, ClassCastException;
 
 
     /**
@@ -155,7 +155,7 @@ public interface IJsonObject extends IJson, Iterable<Entry<String, Object>>
      *            the value that is returned if no value is stored for the key
      * @return a boolean value
      */
-    public boolean getBoolean(String key, boolean defaultValue);
+    boolean getBoolean(String key, boolean defaultValue);
 
 
     /**
@@ -166,7 +166,7 @@ public interface IJsonObject extends IJson, Iterable<Entry<String, Object>>
      *            the key under which the object is stored
      * @return a JSON Object or null, if it does not exist
      */
-    public IJsonObject getJsonObject(String key) throws ClassCastException;
+    IJsonObject getJsonObject(String key) throws ClassCastException;
 
 
     /**
@@ -179,7 +179,7 @@ public interface IJsonObject extends IJson, Iterable<Entry<String, Object>>
      *            the value that is returned if no value is stored for the key
      * @return a JSON Object
      */
-    public IJsonObject getJsonObject(String key, IJsonObject defaultValue);
+    IJsonObject getJsonObject(String key, IJsonObject defaultValue);
 
 
     /**
@@ -190,7 +190,7 @@ public interface IJsonObject extends IJson, Iterable<Entry<String, Object>>
      *            the key under which the object is stored
      * @return a JSON array or null, if it does not exist
      */
-    public IJsonArray getJsonArray(String key) throws ClassCastException;
+    IJsonArray getJsonArray(String key) throws ClassCastException;
 
 
     /**
@@ -203,7 +203,7 @@ public interface IJsonObject extends IJson, Iterable<Entry<String, Object>>
      *            the value that is returned if no value is stored for the key
      * @return a JSON array
      */
-    public IJsonArray getJsonArray(String key, IJsonArray defaultValue);
+    IJsonArray getJsonArray(String key, IJsonArray defaultValue);
 
 
     /**
@@ -213,7 +213,7 @@ public interface IJsonObject extends IJson, Iterable<Entry<String, Object>>
      *            the key under which the object is stored
      * @return an object or null, if it does not exist
      */
-    public Object get(String key);
+    Object get(String key);
 
 
     /**
@@ -226,7 +226,7 @@ public interface IJsonObject extends IJson, Iterable<Entry<String, Object>>
      *            the value that is returned if no value is stored for the key
      * @return an object
      */
-    public Object get(String key, Object defaultValue);
+    Object get(String key, Object defaultValue);
 
 
     /**
@@ -238,7 +238,7 @@ public interface IJsonObject extends IJson, Iterable<Entry<String, Object>>
      *            the value that is to be stored
      * @return the old value or null, if no mapping used to exist
      */
-    public Object put(String key, Object value);
+    Object put(String key, Object value);
 
 
     /**
@@ -250,7 +250,7 @@ public interface IJsonObject extends IJson, Iterable<Entry<String, Object>>
      *            the value that is to be stored
      * @return the old value or null, if no mapping used to exist
      */
-    public Object putNotNull(String key, Object value);
+    Object putNotNull(String key, Object value);
 
 
     /**
@@ -260,6 +260,6 @@ public interface IJsonObject extends IJson, Iterable<Entry<String, Object>>
      *            the key of the mapping that is to be removed
      * @return the removed value or null, if no mapping used to exist
      */
-    public Object remove(String key);
+    Object remove(String key);
 
 }
