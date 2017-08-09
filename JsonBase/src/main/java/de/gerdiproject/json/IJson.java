@@ -32,7 +32,7 @@ public interface IJson
      *
      * @return a JSON string
      */
-    public String toJsonString();
+    String toJsonString();
 
 
     /**
@@ -40,5 +40,5 @@ public interface IJson
      *
      * @return true, if this object is empty.
      */
-    public boolean isEmpty();
+    boolean isEmpty();
 }

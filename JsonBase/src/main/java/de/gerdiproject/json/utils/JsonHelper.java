@@ -32,7 +32,7 @@ import de.gerdiproject.json.IJsonObject;
  *
  * @author row
  */
-public class JsonHelper
+public final class JsonHelper
 {
 
     /**

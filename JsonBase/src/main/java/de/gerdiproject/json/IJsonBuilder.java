@@ -38,7 +38,7 @@ public interface IJsonBuilder
      *            a reader that will be wrapped by the JSON reader.
      * @return an instance of a JSON reader.
      */
-    public IJsonReader createReader(Reader reader);
+    IJsonReader createReader(Reader reader);
 
 
     /**
@@ -46,7 +46,7 @@ public interface IJsonBuilder
      *
      * @return a new empty JSON object
      */
-    public IJsonObject createObject();
+    IJsonObject createObject();
 
 
     /**
@@ -54,7 +54,7 @@ public interface IJsonBuilder
      *
      * @return a new empty JSON array
      */
-    public IJsonArray createArray();
+    IJsonArray createArray();
 
 
     /**
@@ -67,7 +67,7 @@ public interface IJsonBuilder
      * @return a Json array that contains the content of all lists without
      *         duplicates
      */
-    public IJsonArray createArrayFromLists(Iterable<?>... iterable);
+    IJsonArray createArrayFromLists(Iterable<?>... iterable);
 
 
     /**
@@ -78,7 +78,7 @@ public interface IJsonBuilder
      *
      * @return a Json array that contains all objects
      */
-    public IJsonArray createArrayFromObjects(Object... elements);
+    IJsonArray createArrayFromObjects(Object... elements);
 
 
     /**
@@ -86,5 +86,5 @@ public interface IJsonBuilder
      *
      * @return a builder of geo json objects
      */
-    public IGeoJsonBuilder geoBuilder();
+    IGeoJsonBuilder geoBuilder();
 }

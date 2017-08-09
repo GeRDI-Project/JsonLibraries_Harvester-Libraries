@@ -320,7 +320,11 @@ public class GsonArray implements IJsonArray
     public IJsonObject getJsonObject(int index) throws ClassCastException, ArrayIndexOutOfBoundsException
     {
         JsonElement ele = wrappedArray.get(index);
-        return (ele != null && !ele.isJsonNull()) ? new GsonObject(ele.getAsJsonObject()) : null;
+
+        if (ele == null)
+            return null;
+        else
+            return  new GsonObject(ele.getAsJsonObject());
     }
 
 
@@ -331,8 +335,8 @@ public class GsonArray implements IJsonArray
 
         if (ele != null && ele.isJsonObject())
             return new GsonObject(ele.getAsJsonObject());
-
-        return defaultValue;
+        else
+            return defaultValue;
     }
 
 
@@ -340,7 +344,11 @@ public class GsonArray implements IJsonArray
     public IJsonArray getJsonArray(int index) throws ClassCastException, ArrayIndexOutOfBoundsException
     {
         JsonElement ele = wrappedArray.get(index);
-        return (ele != null && !ele.isJsonNull()) ? new GsonArray(ele.getAsJsonArray()) : null;
+
+        if (ele == null)
+            return null;
+        else
+            return new GsonArray(ele.getAsJsonArray());
     }
 
 
@@ -352,8 +360,8 @@ public class GsonArray implements IJsonArray
 
         if (ele != null && ele.isJsonArray())
             return new GsonArray(ele.getAsJsonArray());
-
-        return defaultValue;
+        else
+            return defaultValue;
     }
 
 
@@ -399,10 +407,10 @@ public class GsonArray implements IJsonArray
     @Override
     public Object putNotNull(int index, Object value) throws ArrayIndexOutOfBoundsException
     {
-        if (value != null)
+        if (value == null)
+            return null;
+        else
             return put(index, value);
-
-        return null;
     }
 
 
@@ -448,9 +456,7 @@ public class GsonArray implements IJsonArray
     {
         values.forEach((Object value) -> {
             if (value != null)
-            {
                 add(value);
-            }
         });
     }
 

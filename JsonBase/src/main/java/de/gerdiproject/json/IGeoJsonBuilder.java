@@ -43,7 +43,7 @@ public interface IGeoJsonBuilder
      *            rectangle
      * @return a geojson polygon that represents a rectangle
      */
-    public IJsonObject createRectangle(double longitudeWest, double latitudeNorth, double longitudeEast,
+    IJsonObject createRectangle(double longitudeWest, double latitudeNorth, double longitudeEast,
                                        double latitudeSouth);
 
 
@@ -58,7 +58,7 @@ public interface IGeoJsonBuilder
      * @return a geo json polygon that represents a horizontal ring around the
      *         globe
      */
-    public IJsonObject createHorizontalRing(double latitudeNorth, double latitudeSouth);
+    IJsonObject createHorizontalRing(double latitudeNorth, double latitudeSouth);
 
 
     /**
@@ -72,5 +72,5 @@ public interface IGeoJsonBuilder
      * @return a geo json polygon that represents a vertical ring around the
      *         globe
      */
-    public IJsonObject createVerticalRing(double longitudeWest, double longitudeEast);
+    IJsonObject createVerticalRing(double longitudeWest, double longitudeEast);
 }
