@@ -11,6 +11,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 
+import de.gerdiproject.json.GsonUtils;
 import de.gerdiproject.json.IJsonArray;
 import de.gerdiproject.json.IJsonObject;
 
@@ -368,14 +369,14 @@ public class GsonArray implements IJsonArray
     @Override
     public Object get(int index) throws ArrayIndexOutOfBoundsException
     {
-        return GsonUtils.gsonToObject(wrappedArray.get(index));
+        return GsonUtils.jsonToObject(wrappedArray.get(index));
     }
 
 
     @Override
     public Object get(int index, Object defaultValue) throws ArrayIndexOutOfBoundsException
     {
-        Object value = GsonUtils.gsonToObject(wrappedArray.get(index));
+        Object value = GsonUtils.jsonToObject(wrappedArray.get(index));
         return (value != null) ? value : defaultValue;
     }
 
@@ -465,7 +466,7 @@ public class GsonArray implements IJsonArray
     public Object remove(int index) throws ArrayIndexOutOfBoundsException
     {
         JsonElement oldValue = wrappedArray.remove(index);
-        return GsonUtils.gsonToObject(oldValue);
+        return GsonUtils.jsonToObject(oldValue);
     }
 
 

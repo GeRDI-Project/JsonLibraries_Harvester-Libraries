@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.NoSuchElementException;
 
+import de.gerdiproject.json.GsonUtils;
 import de.gerdiproject.json.IJsonArray;
 import de.gerdiproject.json.IJsonObject;
 
@@ -225,14 +226,14 @@ public class GsonObject implements IJsonObject
     {
         JsonElement ele = wrappedObject.get(key);
 
-        return GsonUtils.gsonToObject(ele);
+        return GsonUtils.jsonToObject(ele);
     }
 
 
     @Override
     public Object get(String key, Object defaultValue)
     {
-        Object obj = GsonUtils.gsonToObject(wrappedObject.get(key));
+        Object obj = GsonUtils.jsonToObject(wrappedObject.get(key));
         return (obj != null) ? obj : defaultValue;
     }
 
@@ -275,7 +276,7 @@ public class GsonObject implements IJsonObject
     public Object remove(String key)
     {
         JsonElement oldValue = wrappedObject.remove(key);
-        return GsonUtils.gsonToObject(oldValue);
+        return GsonUtils.jsonToObject(oldValue);
     }
 
     /**
