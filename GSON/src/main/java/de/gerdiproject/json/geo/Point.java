@@ -31,18 +31,18 @@ public class Point implements IGeoCoordinates
      * A geographic coordinate that specifies the east-west position of a point on the Earth's surface.
      * It ranges from -180.0° to 180.0°. The Prime Meridian is at 0.0°.
      */
-    public double longitude;
+    private double longitude;
 
     /**
      * A geographic coordinate that specifies the north–south position of a point on the Earth's surface.
      * It ranges from -90.0° to 90.0°. The Equator is at 0.0°.
      */
-    public double latitude;
+    private double latitude;
 
     /**
      * The elevation of a geographic location is its height above or below the Earth's sea level.
      */
-    public double elevation;
+    private double elevation;
 
     /**
      * Simple constructor that only requires longitude and latitude.
@@ -82,6 +82,36 @@ public class Point implements IGeoCoordinates
             this.elevation = array.get(2).getAsDouble();
         else
             this.elevation = Double.NaN;
+    }
+
+    public double getLongitude()
+    {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude)
+    {
+        this.longitude = longitude;
+    }
+
+    public double getLatitude()
+    {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude)
+    {
+        this.latitude = latitude;
+    }
+
+    public double getElevation()
+    {
+        return elevation;
+    }
+
+    public void setElevation(double elevation)
+    {
+        this.elevation = elevation;
     }
 }
 

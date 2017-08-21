@@ -31,17 +31,17 @@ public class Description
     /**
      * The actual text. Will be stripped of HTML
      */
-    public String description;
+    private String description;
 
     /**
      *  What the description entails.
      */
-    public DescriptionType type;
+    private DescriptionType type;
 
     /**
      * IETF language tag
      */
-    public String lang;
+    private String lang;
 
     /**
      * Simple constructor that requires all mandatory fields.
@@ -53,6 +53,50 @@ public class Description
         this.description = description;
         this.type = type;
     }
+
+
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
+
+
+    public DescriptionType getType()
+    {
+        return type;
+    }
+
+
+
+    public void setType(DescriptionType type)
+    {
+        this.type = type;
+    }
+
+
+
+    public String getLang()
+    {
+        return lang;
+    }
+
+
+
+    public void setLang(String lang)
+    {
+        this.lang = lang;
+    }
+
+
 
     /**
      * This enumeration describes what a description entails.
@@ -67,4 +111,6 @@ public class Description
         TechnicalInfo,
         Other
     }
+
+
 }

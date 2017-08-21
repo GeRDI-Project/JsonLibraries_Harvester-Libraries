@@ -24,8 +24,9 @@ package de.gerdiproject.json.geo;
  */
 public class GeoJson <T extends IGeoCoordinates>
 {
-    public String type;
-    public T coordinates;
+    private String type;
+
+    private T coordinates;
 
     /**
      * Constructor that sets the coordinates.
@@ -37,7 +38,7 @@ public class GeoJson <T extends IGeoCoordinates>
     }
 
     /**
-     * Changes the coordinates of the GeoJson.
+     * Changes the coordinates of the GeoJson. The type is adjusted accordingly.
      * @param coordinates a IGeoCoordinate implementing object that represents valid GeoJson coordinates
      */
     public void setCoordinates(T coordinates)
@@ -46,4 +47,15 @@ public class GeoJson <T extends IGeoCoordinates>
         this.coordinates = coordinates;
     }
 
+
+    public String getType()
+    {
+        return type;
+    }
+
+
+    public T getCoordinates()
+    {
+        return coordinates;
+    }
 }

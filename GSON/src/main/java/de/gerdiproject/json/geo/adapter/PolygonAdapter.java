@@ -9,6 +9,11 @@ import com.google.gson.JsonParseException;
 
 import de.gerdiproject.json.geo.Polygon;
 
+/**
+ * This adapter defines the (de-)serialization behavior of Polygon coordinate objects.
+ * @author Robin Weiss
+ *
+ */
 public class PolygonAdapter implements JsonDeserializer<Polygon>
 {
     @Override

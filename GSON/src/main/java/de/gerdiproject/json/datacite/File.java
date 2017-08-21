@@ -28,22 +28,22 @@ public class File
     /**
      * The URL that is used to access this file.
      */
-    public String url;
+    private String url;
 
     /**
      * Human readable name for the file.
      */
-    public String label;
+    private String label;
 
     /**
      * Locally (within this document) unique identifier for the file, should be concise, e.g. a hash value.
      */
-    public String identifier;
+    private String identifier;
 
     /**
      * File format, extension or mimetype, e.g. csv or application/json.
      */
-    public String type;
+    private String type;
 
 
     /**
@@ -58,5 +58,54 @@ public class File
         this.label = label;
         this.identifier = identifier;
     }
+
+
+    public String getUrl()
+    {
+        return url;
+    }
+
+
+    public void setUrl(String url)
+    {
+        this.url = url;
+    }
+
+
+    public String getLabel()
+    {
+        return label;
+    }
+
+
+    public void setLabel(String label)
+    {
+        this.label = label;
+    }
+
+
+    public String getIdentifier()
+    {
+        return identifier;
+    }
+
+
+    public void setIdentifier(String identifier)
+    {
+        this.identifier = identifier;
+    }
+
+
+    public String getType()
+    {
+        return type;
+    }
+
+
+    public void setType(String type)
+    {
+        this.type = type;
+    }
+
 
 }

@@ -28,37 +28,37 @@ public class Creator
     /**
      * format: FamilyName, GivenName (e.g. Neumann, Mathis) "creatorName" in DataCite schema
      */
-    public String name;
+    private String name;
 
     /**
      * first name
      */
-    public String givenName;
+    private String givenName;
 
     /**
      * last name
      */
-    public String familyName;
+    private String familyName;
 
     /**
      * e.g. orcid id number
      */
-    public String nameIdentifier;
+    private String nameIdentifier;
 
     /**
      * name of the identifier scheme, e.g. ORCID
      */
-    public String nameIdentifierSchema;
+    private String nameIdentifierSchema;
 
     /**
      * slightly differs from DataCite which is an XML attribute, e.g. http://orcid.org/
      */
-    public String nameIdentifierSchemaURI;
+    private String nameIdentifierSchemaURI;
 
     /**
      * organizaton the person is in
      */
-    public String affiliation;
+    private String affiliation;
 
     /**
      * Simple constructor that requires all mandatory fields.
@@ -67,5 +67,75 @@ public class Creator
     public Creator(String name)
     {
         this.name = name;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public String getGivenName()
+    {
+        return givenName;
+    }
+
+    public void setGivenName(String givenName)
+    {
+        this.givenName = givenName;
+    }
+
+    public String getFamilyName()
+    {
+        return familyName;
+    }
+
+    public void setFamilyName(String familyName)
+    {
+        this.familyName = familyName;
+    }
+
+    public String getNameIdentifier()
+    {
+        return nameIdentifier;
+    }
+
+    public void setNameIdentifier(String nameIdentifier)
+    {
+        this.nameIdentifier = nameIdentifier;
+    }
+
+    public String getNameIdentifierSchema()
+    {
+        return nameIdentifierSchema;
+    }
+
+    public void setNameIdentifierSchema(String nameIdentifierSchema)
+    {
+        this.nameIdentifierSchema = nameIdentifierSchema;
+    }
+
+    public String getNameIdentifierSchemaURI()
+    {
+        return nameIdentifierSchemaURI;
+    }
+
+    public void setNameIdentifierSchemaURI(String nameIdentifierSchemaURI)
+    {
+        this.nameIdentifierSchemaURI = nameIdentifierSchemaURI;
+    }
+
+    public String getAffiliation()
+    {
+        return affiliation;
+    }
+
+    public void setAffiliation(String affiliation)
+    {
+        this.affiliation = affiliation;
     }
 }

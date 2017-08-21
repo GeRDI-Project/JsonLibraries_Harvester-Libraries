@@ -33,19 +33,52 @@ public class GeoLocation
     /**
      * Free text name of a location - geoLocationPlace in DataCite schema
      */
-    public String place;
+    private String place;
 
     /**
      * geoLocationPlace in DataCite schema
      * NOTE: manually map! Represented as object with lat, lon, as string "lat,lon", as geohash or typle [lon,lat] (NOTE: reverse order to conform with GeoJSON)
      * DataCite schema: pointLongitude- and pointLatitude-tags in XML (might also allow string "lat lon")
      */
-    public GeoJson<Point> point;
+    private GeoJson<Point> point;
 
     /**
      *  first and last point must match (both ES and DataCite), at least 4 points (compatible with DataCite)
      */
-    public GeoJson<Polygon> polygon;
+    private GeoJson<Polygon> polygon;
+
+
+    public String getPlace()
+    {
+        return place;
+    }
+
+    public void setPlace(String place)
+    {
+        this.place = place;
+    }
+
+    public GeoJson<Point> getPoint()
+    {
+        return point;
+    }
+
+    public void setPoint(GeoJson<Point> point)
+    {
+        this.point = point;
+    }
+
+    public GeoJson<Polygon> getPolygon()
+    {
+        return polygon;
+    }
+
+    public void setPolygon(GeoJson<Polygon> polygon)
+    {
+        this.polygon = polygon;
+    }
 
     // NOTE: datacite includes a "box" geoJson. this is redundant with the polygon type and was therefore not included
+
+
 }

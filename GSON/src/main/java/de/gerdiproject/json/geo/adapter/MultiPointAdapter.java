@@ -7,6 +7,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import de.gerdiproject.json.geo.MultiPoint;
 
+/**
+ * This adapter defines the (de-)serialization behavior of MultiPoint coordinate objects.
+ * @author Robin Weiss
+ *
+ */
 public class MultiPointAdapter implements JsonDeserializer<MultiPoint>
 {
     @Override

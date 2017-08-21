@@ -9,6 +9,11 @@ import com.google.gson.JsonParseException;
 
 import de.gerdiproject.json.geo.LineString;
 
+/**
+ * This adapter defines the (de-)serialization behavior of LineString coordinate objects.
+ * @author Robin Weiss
+ *
+ */
 public class LineStringAdapter implements JsonDeserializer<LineString>
 {
     @Override

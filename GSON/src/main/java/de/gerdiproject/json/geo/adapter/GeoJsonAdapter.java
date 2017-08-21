@@ -22,7 +22,7 @@ import de.gerdiproject.json.geo.Polygon;
  * @author Robin Weiss
  *
  */
-@SuppressWarnings("rawtypes")
+@SuppressWarnings("rawtypes") // We cannot specify a type of GeoJson here. Any type is allowed!
 public class GeoJsonAdapter implements JsonDeserializer<GeoJson>
 {
 
@@ -62,7 +62,7 @@ public class GeoJsonAdapter implements JsonDeserializer<GeoJson>
                 break;
 
             default:
-                geoJson = null;
+                throw new JsonParseException(String.format("Unknown GeoJson type '%s'!", type));
         }
 
         return geoJson;

@@ -18,6 +18,9 @@
  */
 package de.gerdiproject.json.datacite;
 
+import java.time.Instant;
+import java.util.Calendar;
+
 /**
  * This JsonObject describes a date that has been relevant to the work.
  * @author Mathis Neumann, Robin Weiss
@@ -26,14 +29,43 @@ package de.gerdiproject.json.datacite;
 public class Date
 {
     /**
+     *  Timestamp in milliseconds since 01/01/1970 00:00:00.
      *  All formats supported by ES, see https://www.elastic.co/guide/en/elasticsearch/reference/5.2/mapping-date-format.html
      */
-    public java.sql.Date date;
+    private long date;
 
     /**
      * The event that is marked by this date.
      */
-    public DateType type;
+    private DateType type;
+
+
+    /**
+     * Simple constructor that requires all mandatory fields.
+     * @param date the date that is described by this object
+     */
+    public Date(Instant date)
+    {
+        setDate(date);
+    }
+
+    /**
+     * Simple constructor that requires all mandatory fields.
+     * @param date the date that is described by this object
+     */
+    public Date(Calendar date)
+    {
+        setDate(date);
+    }
+
+    /**
+     * Simple constructor that requires all mandatory fields.
+     * @param date the date that is described by this object
+     */
+    public Date(java.util.Date date)
+    {
+        setDate(date);
+    }
 
     /**
      * Simple constructor that requires all mandatory fields.
@@ -41,7 +73,57 @@ public class Date
      */
     public Date(java.sql.Date date)
     {
-        this.date = date;
+        setDate(date);
+    }
+
+    /**
+     * Simple constructor that requires all mandatory fields.
+     * @param epochMilli milliseconds that passed since 01/01/1970 00:00:00
+     */
+    public Date(long epochMilli)
+    {
+        setDate(epochMilli);
+    }
+
+
+    public long getTimeInMillis()
+    {
+        return date;
+    }
+
+    public void setDate(Instant date)
+    {
+        this.date = date.toEpochMilli();
+    }
+
+    public void setDate(Calendar date)
+    {
+        this.date = date.getTimeInMillis();
+    }
+
+    public void setDate(java.util.Date date)
+    {
+        this.date = date.getTime();
+    }
+
+    public void setDate(java.sql.Date date)
+    {
+        this.date = date.getTime();
+    }
+
+    public void setDate(long epochMilli)
+    {
+        this.date = epochMilli;
+    }
+
+    public DateType getType()
+    {
+        return type;
+    }
+
+    public void setType(DateType type)
+    {
+        this.type = type;
     }
 
     /**

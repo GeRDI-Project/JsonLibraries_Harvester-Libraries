@@ -9,6 +9,11 @@ import com.google.gson.JsonParseException;
 
 import de.gerdiproject.json.geo.MultiPolygon;
 
+/**
+ * This adapter defines the (de-)serialization behavior of MultiPolygon coordinate objects.
+ * @author Robin Weiss
+ *
+ */
 public class MultiPolygonAdapter implements JsonDeserializer<MultiPolygon>
 {
     @Override

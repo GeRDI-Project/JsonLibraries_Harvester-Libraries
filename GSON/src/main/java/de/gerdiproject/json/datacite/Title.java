@@ -28,17 +28,17 @@ public class Title
     /**
      * a free text title
      */
-    public String title;
+    private String title;
 
     /**
      * describes where the title appears
      */
-    public TitleType type;
+    private TitleType type;
 
     /**
      * IETF language tag
      */
-    public String lang;
+    private String lang;
 
     /**
      * Simple constructor that requires all mandatory fields.
@@ -47,6 +47,42 @@ public class Title
     public Title(String title)
     {
         this.title = title;
+    }
+
+
+    public String getTitle()
+    {
+        return title;
+    }
+
+
+    public void setTitle(String title)
+    {
+        this.title = title;
+    }
+
+
+    public TitleType getType()
+    {
+        return type;
+    }
+
+
+    public void setType(TitleType type)
+    {
+        this.type = type;
+    }
+
+
+    public String getLang()
+    {
+        return lang;
+    }
+
+
+    public void setLang(String lang)
+    {
+        this.lang = lang;
     }
 
 

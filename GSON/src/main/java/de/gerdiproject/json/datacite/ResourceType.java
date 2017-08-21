@@ -28,12 +28,37 @@ public class ResourceType
     /**
      * free text, e.g. "Census Data"
      */
-    public String value;
+    private String value;
 
     /**
      * general category, e.g. "Dataset" for census data, see DataCite Schema PDF for more info on each type
      */
-    public ResourceTypeCategory resourceTypeGeneral;
+    private ResourceTypeCategory resourceTypeGeneral;
+
+
+    public String getValue()
+    {
+        return value;
+    }
+
+
+    public void setValue(String value)
+    {
+        this.value = value;
+    }
+
+
+    public ResourceTypeCategory getResourceTypeGeneral()
+    {
+        return resourceTypeGeneral;
+    }
+
+
+    public void setResourceTypeGeneral(ResourceTypeCategory resourceTypeGeneral)
+    {
+        this.resourceTypeGeneral = resourceTypeGeneral;
+    }
+
 
     /**
      * This enumeration describes the resource category.

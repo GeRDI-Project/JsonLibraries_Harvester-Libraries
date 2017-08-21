@@ -30,32 +30,32 @@ public class FundingReference
     /**
      * Human readable name of the funder.
      */
-    public String funderName;
+    private String funderName;
 
     /**
      * Indentifier of the funder.
      */
-    public String funderIdentifier;
+    private String funderIdentifier;
 
     /**
      * To object mapping? award.number would break with DataCite, but looks a bit nicer.
      */
-    public String awardNumber;
+    private String awardNumber;
 
     /**
      * Optional link to award.
      */
-    public String awardURI;
+    private String awardURI;
 
     /**
      * Human readable version of the award.
      */
-    public String awardTitle;
+    private String awardTitle;
 
     /**
      * The type of the funder identifier.
      */
-    public FunderIdType funderIdentifierType;
+    private FunderIdType funderIdentifierType;
 
 
     /**
@@ -69,5 +69,79 @@ public class FundingReference
         Crossref_Funder_ID,
         Other
     }
+
+
+    public String getFunderName()
+    {
+        return funderName;
+    }
+
+
+    public void setFunderName(String funderName)
+    {
+        this.funderName = funderName;
+    }
+
+
+    public String getFunderIdentifier()
+    {
+        return funderIdentifier;
+    }
+
+
+    public void setFunderIdentifier(String funderIdentifier)
+    {
+        this.funderIdentifier = funderIdentifier;
+    }
+
+
+    public String getAwardNumber()
+    {
+        return awardNumber;
+    }
+
+
+    public void setAwardNumber(String awardNumber)
+    {
+        this.awardNumber = awardNumber;
+    }
+
+
+    public String getAwardURI()
+    {
+        return awardURI;
+    }
+
+
+    public void setAwardURI(String awardURI)
+    {
+        this.awardURI = awardURI;
+    }
+
+
+    public String getAwardTitle()
+    {
+        return awardTitle;
+    }
+
+
+    public void setAwardTitle(String awardTitle)
+    {
+        this.awardTitle = awardTitle;
+    }
+
+
+    public FunderIdType getFunderIdentifierType()
+    {
+        return funderIdentifierType;
+    }
+
+
+    public void setFunderIdentifierType(FunderIdType funderIdentifierType)
+    {
+        this.funderIdentifierType = funderIdentifierType;
+    }
+
+
 
 }

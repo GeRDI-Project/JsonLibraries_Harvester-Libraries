@@ -28,7 +28,7 @@ public class Contributor extends Creator
     /**
      * The role of the contributor.
      */
-    public ContributorType type;
+    private ContributorType type;
 
 
     /**
@@ -41,6 +41,19 @@ public class Contributor extends Creator
         super(name);
         this.type = type;
     }
+
+
+    public ContributorType getType()
+    {
+        return type;
+    }
+
+
+    public void setType(ContributorType type)
+    {
+        this.type = type;
+    }
+
 
     /**
      * This enumeration describes the role of a {@link Contributor}.

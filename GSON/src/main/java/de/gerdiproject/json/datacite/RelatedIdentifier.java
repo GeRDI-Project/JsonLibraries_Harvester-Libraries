@@ -28,27 +28,27 @@ public class RelatedIdentifier
     /**
      * relatedIdentifier in DataCite schema
      */
-    public String value;
+    private String value;
 
     /**
      * relatedIdentifierType in DataCite schema
      */
-    public RelatedIdType type;
+    private RelatedIdType type;
 
     /**
      * optional, e.g. citeproc+json
      */
-    public String relatedMetadataScheme;
+    private String relatedMetadataScheme;
 
     /**
      *  e.g. https://github.com/citation-style-language/schema/raw/master/csl-data.json
      */
-    public String schemeURI;
+    private String schemeURI;
 
     /**
      * the type of the metaData scheme
      */
-    public String schemeType;
+    private String schemeType;
 
     /**
      * Simple constructor that requires all mandatory fields.
@@ -60,6 +60,67 @@ public class RelatedIdentifier
         this.value = value;
         this.type = type;
     }
+
+
+    public String getValue()
+    {
+        return value;
+    }
+
+
+    public void setValue(String value)
+    {
+        this.value = value;
+    }
+
+
+    public RelatedIdType getType()
+    {
+        return type;
+    }
+
+
+    public void setType(RelatedIdType type)
+    {
+        this.type = type;
+    }
+
+
+    public String getRelatedMetadataScheme()
+    {
+        return relatedMetadataScheme;
+    }
+
+
+    public void setRelatedMetadataScheme(String relatedMetadataScheme)
+    {
+        this.relatedMetadataScheme = relatedMetadataScheme;
+    }
+
+
+    public String getSchemeURI()
+    {
+        return schemeURI;
+    }
+
+
+    public void setSchemeURI(String schemeURI)
+    {
+        this.schemeURI = schemeURI;
+    }
+
+
+    public String getSchemeType()
+    {
+        return schemeType;
+    }
+
+
+    public void setSchemeType(String schemeType)
+    {
+        this.schemeType = schemeType;
+    }
+
 
     /**
      * This enumeration represents the type of a {@link RelatedIdentifier}.

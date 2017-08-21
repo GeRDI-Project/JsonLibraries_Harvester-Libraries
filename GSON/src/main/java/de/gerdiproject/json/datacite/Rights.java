@@ -29,10 +29,36 @@ public class Rights
     /**
      * e.g. CC0 1.0 Universal
      */
-    public String rights;
+    private String rights;
 
     /**
      * rightsURI in DataCite schema
      */
-    public String URI;
+    private String URI;
+
+
+    public String getRights()
+    {
+        return rights;
+    }
+
+
+    public void setRights(String rights)
+    {
+        this.rights = rights;
+    }
+
+
+    public String getURI()
+    {
+        return URI;
+    }
+
+
+    public void setURI(String uRI)
+    {
+        URI = uRI;
+    }
+
+
 }

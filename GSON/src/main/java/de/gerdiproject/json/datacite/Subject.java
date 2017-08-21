@@ -28,27 +28,27 @@ public class Subject
     /**
      * Are only findable by exact match! Tags should therefore always be concise and probably a single term!
      */
-    public String subject;
+    private String subject;
 
     /**
      * IETF language tag
      */
-    public String lang;
+    private String lang;
 
     /**
      * The URI of the subject identifier scheme.
      */
-    public String schemeURI;
+    private String schemeURI;
 
     /**
      * The name of the subject scheme or classification code or authority if one is used.
      */
-    public String subjectScheme;
+    private String subjectScheme;
 
     /**
      * The URI of the subject term.
      */
-    public String valueURI;
+    private String valueURI;
 
     /**
      * Simple constructor that requires all mandatory fields.
@@ -57,5 +57,65 @@ public class Subject
     public Subject(String subject)
     {
         this.subject = subject;
+    }
+
+
+    public String getSubject()
+    {
+        return subject;
+    }
+
+
+    public void setSubject(String subject)
+    {
+        this.subject = subject;
+    }
+
+
+    public String getLang()
+    {
+        return lang;
+    }
+
+
+    public void setLang(String lang)
+    {
+        this.lang = lang;
+    }
+
+
+    public String getSchemeURI()
+    {
+        return schemeURI;
+    }
+
+
+    public void setSchemeURI(String schemeURI)
+    {
+        this.schemeURI = schemeURI;
+    }
+
+
+    public String getSubjectScheme()
+    {
+        return subjectScheme;
+    }
+
+
+    public void setSubjectScheme(String subjectScheme)
+    {
+        this.subjectScheme = subjectScheme;
+    }
+
+
+    public String getValueURI()
+    {
+        return valueURI;
+    }
+
+
+    public void setValueURI(String valueURI)
+    {
+        this.valueURI = valueURI;
     }
 }

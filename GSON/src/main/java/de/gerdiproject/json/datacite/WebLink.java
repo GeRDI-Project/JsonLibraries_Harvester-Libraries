@@ -29,17 +29,17 @@ public class WebLink
     /**
      * A descriptive name of the URL.
      */
-    public String name;
+    private String name;
 
     /**
      * The URL of the link.
      */
-    public String url;
+    private String url;
 
     /**
      * The link category.
      */
-    public WebLinkType type;
+    private WebLinkType type;
 
 
     /**
@@ -50,6 +50,43 @@ public class WebLink
     {
         this.url = url;
     }
+
+
+    public String getName()
+    {
+        return name;
+    }
+
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+
+    public String getUrl()
+    {
+        return url;
+    }
+
+
+    public void setUrl(String url)
+    {
+        this.url = url;
+    }
+
+
+    public WebLinkType getType()
+    {
+        return type;
+    }
+
+
+    public void setType(WebLinkType type)
+    {
+        this.type = type;
+    }
+
 
     /**
      * The kind of data or webpage which is linked.

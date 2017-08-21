@@ -29,17 +29,17 @@ public class Source
     /**
      * The URL that leads to the page, previously viewURL, e.g. http://www.fao.org/faostat/en/#country/2
      */
-    public String URI;
+    private String URI;
 
     /**
      * A unique readable name of the repository, e.g. FAOSTAT.
      */
-    public String provider;
+    private String provider;
 
     /**
      * URL to the main page of the repository that provided this metadata, e.g. fao.org/faostat
      */
-    public String providerURI;
+    private String providerURI;
 
 
     /**
@@ -53,4 +53,39 @@ public class Source
         this.provider = provider;
     }
 
+
+    public String getURI()
+    {
+        return URI;
+    }
+
+
+    public void setURI(String uRI)
+    {
+        URI = uRI;
+    }
+
+
+    public String getProvider()
+    {
+        return provider;
+    }
+
+
+    public void setProvider(String provider)
+    {
+        this.provider = provider;
+    }
+
+
+    public String getProviderURI()
+    {
+        return providerURI;
+    }
+
+
+    public void setProviderURI(String providerURI)
+    {
+        this.providerURI = providerURI;
+    }
 }
