@@ -18,13 +18,16 @@
  */
 package de.gerdiproject.json.datacite;
 
+import de.gerdiproject.harvest.ICleanable;
+import de.gerdiproject.harvest.utils.StringCleaner;
+
 /**
  * This JSON object represents legal rights regarding the usage of the data.
  * Not indexed by ElasticSearch!
  * @author Mathis Neumann, Robin Weiss
  *
  */
-public class Rights
+public class Rights implements ICleanable
 {
     /**
      * e.g. CC0 1.0 Universal
@@ -61,4 +64,9 @@ public class Rights
     }
 
 
+    @Override
+    public void clean()
+    {
+        rights = StringCleaner.clean(rights);
+    }
 }

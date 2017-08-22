@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
+import com.google.gson.reflect.TypeToken;
 
 import de.gerdiproject.json.geo.GeoJson;
 import de.gerdiproject.json.geo.LineString;
@@ -73,7 +74,7 @@ public final class GsonUtils
      * @param ele the GSON element that is to be converted
      * @param objClass the class of the target object
      * @param <T> the type of the target object
-     * @return
+     * @return a Java object, parsed from the JSON element
      */
     public static <T> T jsonToObject(JsonElement ele, Class<T> objClass)
     {
@@ -81,18 +82,29 @@ public final class GsonUtils
     }
 
     /**
-     * Converts a GSON element to the Java object representation.
+     * Converts a JSON string to the Java object representation.
      *
      * @param jsonString the json string that is to be converted
      * @param objClass the class of the target object
      * @param <T> the type of the target object
-     * @return
+     * @return a Java object, parsed from the JSON string
      */
     public static <T> T jsonStringToObject(String jsonString, Class<T> objClass)
     {
         return GSON.fromJson(jsonString, objClass);
     }
-
+    
+    /**
+     * Converts a Java object to a generic JSON object or array.
+     * @param obj the source Java object
+     * @param <T> the type of the source object
+     * @return a GSON element
+     */
+    public static <T> JsonElement objectToJson(T obj)
+    {
+        return GSON.toJsonTree( obj, new TypeToken<T>(){}.getType() );
+    }
+    
     /**
      * Converts a GSON element to the Java object representation.
      *
@@ -101,8 +113,6 @@ public final class GsonUtils
      */
     public static Object jsonToObject(JsonElement ele)
     {
-
-
         if (ele != null && !ele.isJsonNull()) {
 
             if (ele.isJsonPrimitive()) {

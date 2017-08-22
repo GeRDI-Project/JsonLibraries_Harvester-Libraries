@@ -18,6 +18,8 @@
  */
 package de.gerdiproject.json.datacite;
 
+import de.gerdiproject.harvest.ICleanable;
+import de.gerdiproject.harvest.utils.StringCleaner;
 
 /**
  * Highly recommended!
@@ -26,7 +28,7 @@ package de.gerdiproject.json.datacite;
  * @author Mathis Neumann, Robin Weiss
  *
  */
-public class Description
+public class Description implements ICleanable
 {
     /**
      * The actual text. Will be stripped of HTML
@@ -55,12 +57,10 @@ public class Description
     }
 
 
-
     public String getDescription()
     {
         return description;
     }
-
 
 
     public void setDescription(String description)
@@ -69,12 +69,10 @@ public class Description
     }
 
 
-
     public DescriptionType getType()
     {
         return type;
     }
-
 
 
     public void setType(DescriptionType type)
@@ -83,19 +81,16 @@ public class Description
     }
 
 
-
     public String getLang()
     {
         return lang;
     }
 
 
-
     public void setLang(String lang)
     {
         this.lang = lang;
     }
-
 
 
     /**
@@ -113,4 +108,9 @@ public class Description
     }
 
 
+    @Override
+    public void clean()
+    {
+        description = StringCleaner.clean(description);
+    }
 }

@@ -18,12 +18,15 @@
  */
 package de.gerdiproject.json.datacite;
 
+import de.gerdiproject.harvest.ICleanable;
+import de.gerdiproject.harvest.utils.StringCleaner;
+
 /**
  * This JSON object describes a title of the data.
  * @author Mathis Neumann, Robin Weiss
  *
  */
-public class Title
+public class Title implements ICleanable
 {
     /**
      * a free text title
@@ -83,6 +86,12 @@ public class Title
     public void setLang(String lang)
     {
         this.lang = lang;
+    }
+
+    @Override
+    public void clean()
+    {
+        title = StringCleaner.clean(title);
     }
 
 

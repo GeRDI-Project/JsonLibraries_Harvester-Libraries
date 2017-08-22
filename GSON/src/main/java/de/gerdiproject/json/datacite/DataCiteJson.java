@@ -20,7 +20,8 @@ package de.gerdiproject.json.datacite;
 
 import java.util.List;
 
-import de.gerdiproject.json.IDocument;
+import de.gerdiproject.harvest.ICleanable;
+import de.gerdiproject.harvest.IDocument;
 
 
 /**
@@ -28,7 +29,7 @@ import de.gerdiproject.json.IDocument;
  * @author Mathis Neumann, Robin Weiss
  *
  */
-public class DataCiteJson implements IDocument
+public class DataCiteJson implements IDocument, ICleanable
 {
 
     private String identifier;
@@ -75,186 +76,246 @@ public class DataCiteJson implements IDocument
     {
         return identifier;
     }
+
     public void setIdentifier(String identifier)
     {
         this.identifier = identifier;
     }
+
     public String getPublisher()
     {
         return publisher;
     }
+
     public void setPublisher(String publisher)
     {
         this.publisher = publisher;
     }
+
     public String getVersion()
     {
         return version;
     }
+
     public void setVersion(String version)
     {
         this.version = version;
     }
+
     public String getLanguage()
     {
         return language;
     }
+
     public void setLanguage(String language)
     {
         this.language = language;
     }
+
     public short getPublicationYear()
     {
         return publicationYear;
     }
+
     public void setPublicationYear(short publicationYear)
     {
         this.publicationYear = publicationYear;
     }
+
     public ResourceType getResourceType()
     {
         return resourceType;
     }
+
     public void setResourceType(ResourceType resourceType)
     {
         this.resourceType = resourceType;
     }
+
     public Object getCustomData()
     {
         return customData;
     }
+
     public void setCustomData(Object customData)
     {
         this.customData = customData;
     }
+
     public Source getSources()
     {
         return sources;
     }
+
     public void setSources(Source sources)
     {
         this.sources = sources;
     }
+
     public List<String> getSizes()
     {
         return sizes;
     }
+
     public void setSizes(List<String> sizes)
     {
         this.sizes = sizes;
     }
+
     public List<String> getFormats()
     {
         return formats;
     }
+
     public void setFormats(List<String> formats)
     {
         this.formats = formats;
     }
+
     public List<Creator> getCreators()
     {
         return creators;
     }
+
     public void setCreators(List<Creator> creators)
     {
         this.creators = creators;
     }
+
     public List<Title> getTitles()
     {
         return titles;
     }
+
     public void setTitles(List<Title> titles)
     {
         this.titles = titles;
     }
+
     public List<Description> getDescriptions()
     {
         return descriptions;
     }
+
     public void setDescriptions(List<Description> descriptions)
     {
         this.descriptions = descriptions;
     }
+
     public List<Subject> getSubjects()
     {
         return subjects;
     }
+
     public void setSubjects(List<Subject> subjects)
     {
         this.subjects = subjects;
     }
+
     public List<Contributor> getContributors()
     {
         return contributors;
     }
+
     public void setContributors(List<Contributor> contributors)
     {
         this.contributors = contributors;
     }
+
     public List<Date> getDates()
     {
         return dates;
     }
+
     public void setDates(List<Date> dates)
     {
         this.dates = dates;
     }
+
     public List<GeoLocation> getGeoLocations()
     {
         return geoLocations;
     }
+
     public void setGeoLocations(List<GeoLocation> geoLocations)
     {
         this.geoLocations = geoLocations;
     }
+
     public List<RelatedIdentifier> getRelatedIdentifiers()
     {
         return relatedIdentifiers;
     }
+
     public void setRelatedIdentifiers(List<RelatedIdentifier> relatedIdentifiers)
     {
         this.relatedIdentifiers = relatedIdentifiers;
     }
+
     public List<AlternateIdentifier> getAlternateIdentifiers()
     {
         return alternateIdentifiers;
     }
+
     public void setAlternateIdentifiers(List<AlternateIdentifier> alternateIdentifiers)
     {
         this.alternateIdentifiers = alternateIdentifiers;
     }
+
     public List<Rights> getRightsList()
     {
         return rightsList;
     }
+
     public void setRightsList(List<Rights> rightsList)
     {
         this.rightsList = rightsList;
     }
+
     public List<FundingReference> getFundingReferences()
     {
         return fundingReferences;
     }
+
     public void setFundingReferences(List<FundingReference> fundingReferences)
     {
         this.fundingReferences = fundingReferences;
     }
+
     public List<WebLink> getWebLinks()
     {
         return webLinks;
     }
+
     public void setWebLinks(List<WebLink> webLinks)
     {
         this.webLinks = webLinks;
     }
+
     public List<File> getFiles()
     {
         return files;
     }
+
     public void setFiles(List<File> files)
     {
         this.files = files;
     }
 
 
+    @Override
+    public void clean()
+    {
+        titles.forEach((Title t) -> t.clean());
+        descriptions.forEach((Description d) -> d.clean());
+        subjects.forEach((Subject s) -> s.clean());
+        rightsList.forEach((Rights r) -> r.clean());
+        geoLocations.forEach((GeoLocation g) -> g.clean());
+    }
+
+	@Override
+	public String getElasticSearchId()
+	{
+		return identifier;
+	}
 }

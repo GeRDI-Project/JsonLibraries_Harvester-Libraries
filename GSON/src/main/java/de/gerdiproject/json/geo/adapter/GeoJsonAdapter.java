@@ -10,6 +10,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
 import de.gerdiproject.json.geo.GeoJson;
+import de.gerdiproject.json.geo.IGeoCoordinates;
 import de.gerdiproject.json.geo.LineString;
 import de.gerdiproject.json.geo.MultiLineString;
 import de.gerdiproject.json.geo.MultiPoint;
@@ -22,7 +23,6 @@ import de.gerdiproject.json.geo.Polygon;
  * @author Robin Weiss
  *
  */
-@SuppressWarnings("rawtypes") // We cannot specify a type of GeoJson here. Any type is allowed!
 public class GeoJsonAdapter implements JsonDeserializer<GeoJson>
 {
 
@@ -30,41 +30,41 @@ public class GeoJsonAdapter implements JsonDeserializer<GeoJson>
     public GeoJson deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
     throws JsonParseException
     {
-        GeoJson<?> geoJson;
-
         JsonObject geoJsonRaw = json.getAsJsonObject();
         String type = geoJsonRaw.get("type").getAsString().toLowerCase();
-        JsonArray coords = geoJsonRaw.get("coordinates").getAsJsonArray();
+        JsonArray coordinatesRaw = geoJsonRaw.get("coordinates").getAsJsonArray();
+
+        IGeoCoordinates coordinates;
 
         switch (type) {
             case "point":
-                geoJson = new GeoJson<Point>(new Point(coords));
+                coordinates = new Point(coordinatesRaw);
                 break;
 
             case "multipoint":
-                geoJson = new GeoJson<MultiPoint>(new MultiPoint(coords));
+                coordinates = new MultiPoint(coordinatesRaw);
                 break;
 
             case "linestring":
-                geoJson = new GeoJson<LineString>(new LineString(coords));
+                coordinates = new LineString(coordinatesRaw);
                 break;
 
             case "multilinestring":
-                geoJson = new GeoJson<MultiLineString>(new MultiLineString(coords));
+                coordinates = new MultiLineString(coordinatesRaw);
                 break;
 
             case "polygon":
-                geoJson = new GeoJson<Polygon>(new Polygon(coords));
+                coordinates =  new Polygon(coordinatesRaw);
                 break;
 
             case "multipolygon":
-                geoJson = new GeoJson<MultiPolygon>(new MultiPolygon(coords));
+                coordinates = new MultiPolygon(coordinatesRaw);
                 break;
 
             default:
                 throw new JsonParseException(String.format("Unknown GeoJson type '%s'!", type));
         }
 
-        return geoJson;
+        return new GeoJson(coordinates);
     }
 }

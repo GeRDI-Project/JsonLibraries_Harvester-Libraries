@@ -18,21 +18,36 @@
  */
 package de.gerdiproject.json.geo;
 
+import org.json.JSONException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.esri.core.geometry.ogc.OGCGeometry;
+
+import de.gerdiproject.harvest.ICleanable;
+import de.gerdiproject.json.GsonUtils;
+
 /**
  * GeoJSON is a format for encoding a variety of geographic data structures.
  * @author Robin Weiss
  */
-public class GeoJson <T extends IGeoCoordinates>
+public class GeoJson implements ICleanable
 {
+    private static final String PARSE_FAILED = "Could not simplify GeoJson:\n";
+    private static final Logger LOGGER = LoggerFactory.getLogger(GeoJson.class);
+
+    // exclude this field from serialization, it's only used for performance reasons
+    private transient boolean isClean;
+
     private String type;
 
-    private T coordinates;
+    private IGeoCoordinates coordinates;
 
     /**
      * Constructor that sets the coordinates.
      * @param coordinates a IGeoCoordinate implementing object that represents valid GeoJson coordinates
      */
-    public GeoJson(T coordinates)
+    public GeoJson(IGeoCoordinates coordinates)
     {
         setCoordinates(coordinates);
     }
@@ -41,10 +56,11 @@ public class GeoJson <T extends IGeoCoordinates>
      * Changes the coordinates of the GeoJson. The type is adjusted accordingly.
      * @param coordinates a IGeoCoordinate implementing object that represents valid GeoJson coordinates
      */
-    public void setCoordinates(T coordinates)
+    public void setCoordinates(IGeoCoordinates coordinates)
     {
         this.type = coordinates.getClass().getSimpleName();
         this.coordinates = coordinates;
+        this.isClean = false;
     }
 
 
@@ -54,8 +70,39 @@ public class GeoJson <T extends IGeoCoordinates>
     }
 
 
-    public T getCoordinates()
+    public IGeoCoordinates getCoordinates()
     {
         return coordinates;
+    }
+
+    /**
+     * Attempts to detect and remove errors in a geoJson object, such as
+     * self-intersecting (multi-)polygons. Additionally, MultiPolygons that
+     * can be simplified, may become regular Polygons.
+     */
+    @Override
+    public void clean()
+    {
+        if (!isClean && (coordinates instanceof Polygon  || coordinates instanceof MultiPolygon)) {
+            String geoJsonString = GsonUtils.objectToJsonString(this, false);
+
+            try {
+                // map our polygon implementation to the ESRI implementation
+                OGCGeometry polygon = OGCGeometry.fromGeoJson(geoJsonString);
+
+                // simplify ESRI polygon and convert it to JSON string
+                String simpleGeoString = polygon.makeSimple().asGeoJson();
+
+                // parse JSON string to a new GeoJson object
+                GeoJson  cleanedGeo = GsonUtils.jsonStringToObject(simpleGeoString, GeoJson.class);
+
+                // copy the simplified coordinates
+                this.coordinates = cleanedGeo.coordinates;
+                this.type = cleanedGeo.type;
+
+            } catch (JSONException e) {
+                LOGGER.warn(PARSE_FAILED + geoJsonString);
+            }
+        }
     }
 }

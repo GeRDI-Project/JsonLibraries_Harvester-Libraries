@@ -18,9 +18,8 @@
  */
 package de.gerdiproject.json.datacite;
 
+import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.json.geo.GeoJson;
-import de.gerdiproject.json.geo.Point;
-import de.gerdiproject.json.geo.Polygon;
 
 /**
  * Spatial region or named place where the data was gathered or about which the data is focused.
@@ -28,7 +27,7 @@ import de.gerdiproject.json.geo.Polygon;
  * @author Mathis Neumann, Robin Weiss
  *
  */
-public class GeoLocation
+public class GeoLocation implements ICleanable
 {
     /**
      * Free text name of a location - geoLocationPlace in DataCite schema
@@ -40,12 +39,12 @@ public class GeoLocation
      * NOTE: manually map! Represented as object with lat, lon, as string "lat,lon", as geohash or typle [lon,lat] (NOTE: reverse order to conform with GeoJSON)
      * DataCite schema: pointLongitude- and pointLatitude-tags in XML (might also allow string "lat lon")
      */
-    private GeoJson<Point> point;
+    private GeoJson point;
 
     /**
      *  first and last point must match (both ES and DataCite), at least 4 points (compatible with DataCite)
      */
-    private GeoJson<Polygon> polygon;
+    private GeoJson polygon;
 
 
     public String getPlace()
@@ -58,27 +57,35 @@ public class GeoLocation
         this.place = place;
     }
 
-    public GeoJson<Point> getPoint()
+    public GeoJson getPoint()
     {
         return point;
     }
 
-    public void setPoint(GeoJson<Point> point)
+    public void setPoint(GeoJson point)
     {
         this.point = point;
     }
 
-    public GeoJson<Polygon> getPolygon()
+    public GeoJson getPolygon()
     {
         return polygon;
     }
 
-    public void setPolygon(GeoJson<Polygon> polygon)
+    public void setPolygon(GeoJson polygon)
     {
         this.polygon = polygon;
     }
 
+    @Override
+    public void clean()
+    {
+        if (point != null)
+            point.clean();
+
+        if (polygon != null)
+            polygon.clean();
+    }
+
     // NOTE: datacite includes a "box" geoJson. this is redundant with the polygon type and was therefore not included
-
-
 }

@@ -1,4 +1,4 @@
-package de.gerdiproject.json;
+package de.gerdiproject.harvest;
 
 /**
  * The interface for ElasticSearch documents.
@@ -7,5 +7,5 @@ package de.gerdiproject.json;
  */
 public interface IDocument
 {
-
+	String getElasticSearchId();
 }

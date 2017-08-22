@@ -18,12 +18,15 @@
  */
 package de.gerdiproject.json.datacite;
 
+import de.gerdiproject.harvest.ICleanable;
+import de.gerdiproject.harvest.utils.StringCleaner;
+
 /**
  * Subject, keywords (tags), classification codes, or key phrases describing the resource.
  * @author Mathis Neumann, Robin Weiss
  *
  */
-public class Subject
+public class Subject implements ICleanable
 {
     /**
      * Are only findable by exact match! Tags should therefore always be concise and probably a single term!
@@ -117,5 +120,12 @@ public class Subject
     public void setValueURI(String valueURI)
     {
         this.valueURI = valueURI;
+    }
+
+
+    @Override
+    public void clean()
+    {
+        subject = StringCleaner.clean(subject);
     }
 }
