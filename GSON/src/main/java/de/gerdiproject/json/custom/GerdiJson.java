@@ -22,7 +22,7 @@ import de.gerdiproject.json.impl.GsonObject;
 public class GerdiJson implements ICleanable, IDocument
 {
     private static final Base64.Encoder encoder = Base64.getEncoder();
-    
+
     private String label;
     private String viewUrl;
 
@@ -125,39 +125,37 @@ public class GerdiJson implements ICleanable, IDocument
         return viewUrl;
     }
 
-	@Override
-	public void clean()
-	{
-		label = StringCleaner.clean(label);
-		viewUrl = StringCleaner.clean(viewUrl);
-		logoUrl = StringCleaner.clean(logoUrl);
-		
-		// clean descriptions
-		if( description != null)
-		{
-	        for (int i = 0, len = description.size(); i < len; i++) {
-	            description.put(i, StringCleaner.clean(description.getString(i)));
-	        }
-		}
+    @Override
+    public void clean()
+    {
+        label = StringCleaner.clean(label);
+        viewUrl = StringCleaner.clean(viewUrl);
+        logoUrl = StringCleaner.clean(logoUrl);
+
+        // clean descriptions
+        if (description != null) {
+            for (int i = 0, len = description.size(); i < len; i++)
+                description.put(i, StringCleaner.clean(description.getString(i)));
+        }
 
         // correct possibly erroneous polygons
         if (geo != null) {
             for (int i = 0, len = geo.size(); i < len; i++) {
-            	GeoJson geoObj = GsonUtils.jsonStringToObject( geo.getJsonObject( i ).toJsonString(), GeoJson.class );
-            	geoObj.clean();
+                GeoJson geoObj = GsonUtils.jsonStringToObject(geo.getJsonObject(i).toJsonString(), GeoJson.class);
+                geoObj.clean();
 
-            	JsonObject cleanedGeo = (JsonObject) GsonUtils.objectToJson( geoObj );
-            	
+                JsonObject cleanedGeo = (JsonObject) GsonUtils.objectToJson(geoObj);
+
                 geo.put(i, new GsonObject(cleanedGeo));
             }
         }
-	}
+    }
 
-	@Override
-	public String getElasticSearchId()
-	{
+    @Override
+    public String getElasticSearchId()
+    {
         // base64 encoding:
         String base64EncodedString = new String(encoder.encode(viewUrl.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
         return base64EncodedString;
-	}
+    }
 }

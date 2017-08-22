@@ -7,5 +7,5 @@ package de.gerdiproject.harvest;
  */
 public interface IDocument
 {
-	String getElasticSearchId();
+    String getElasticSearchId();
 }

@@ -93,7 +93,7 @@ public final class GsonUtils
     {
         return GSON.fromJson(jsonString, objClass);
     }
-    
+
     /**
      * Converts a Java object to a generic JSON object or array.
      * @param obj the source Java object
@@ -102,9 +102,9 @@ public final class GsonUtils
      */
     public static <T> JsonElement objectToJson(T obj)
     {
-        return GSON.toJsonTree( obj, new TypeToken<T>(){}.getType() );
+        return GSON.toJsonTree(obj, new TypeToken<T>() {} .getType());
     }
-    
+
     /**
      * Converts a GSON element to the Java object representation.
      *

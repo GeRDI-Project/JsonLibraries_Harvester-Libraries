@@ -313,9 +313,9 @@ public class DataCiteJson implements IDocument, ICleanable
         geoLocations.forEach((GeoLocation g) -> g.clean());
     }
 
-	@Override
-	public String getElasticSearchId()
-	{
-		return identifier;
-	}
+    @Override
+    public String getElasticSearchId()
+    {
+        return identifier;
+    }
 }
