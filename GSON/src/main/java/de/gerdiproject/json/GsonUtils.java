@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
-import com.google.gson.reflect.TypeToken;
 
 import de.gerdiproject.json.geo.GeoJson;
 import de.gerdiproject.json.geo.LineString;
@@ -27,83 +26,72 @@ import de.gerdiproject.json.impl.GsonObject;
 
 /**
  * This is a static utility class that provides methods that are commonly used
- * by this GSON implementation.
+ * by this GSON implementation. The init function must be called once prior to calling getGson and getPrettyGson.
  *
  * @author Robin Weiss
  *
  */
 public final class GsonUtils
 {
-    private static final Gson GSON = createBuilder().create();
-    private static final Gson PRETTY_GSON = createBuilder().setPrettyPrinting().create();
+    private static final String ERROR_ALREADY_INITIALIZED = "GsonUtils is already initialized!";
+    private static final String ERROR_NOT_INITIALIZED = "GsonUtils was not initialized!";
+
+    private static Gson GSON;
+    private static Gson PRETTY_GSON;
 
 
     /**
-     * Creates a GsonBuilder with customized (de-)serialization adapters.
-     * @return a GsonBuilder with customized (de-)serialization adapters
+     * Initializes the {@linkplain Gson} instances with a specified builder.
+     * GeoJson adapters are automatically added.
+     * @param builder a GsonBuilder instance that may have registered Adapters
      */
-    private static GsonBuilder createBuilder()
+    public static void init(GsonBuilder builder)
     {
-        return new GsonBuilder()
-               .registerTypeAdapter(Point.class, new PointAdapter())
-               .registerTypeAdapter(MultiPoint.class, new MultiPointAdapter())
-               .registerTypeAdapter(LineString.class, new LineStringAdapter())
-               .registerTypeAdapter(MultiLineString.class, new MultiLineStringAdapter())
-               .registerTypeAdapter(Polygon.class, new PolygonAdapter())
-               .registerTypeAdapter(MultiPolygon.class, new MultiPolygonAdapter())
-               .registerTypeAdapter(GeoJson.class, new GeoJsonAdapter());
+        if (GSON != null)
+            throw new IllegalStateException(ERROR_ALREADY_INITIALIZED);
+
+        builder.registerTypeAdapter(Point.class, new PointAdapter())
+        .registerTypeAdapter(MultiPoint.class, new MultiPointAdapter())
+        .registerTypeAdapter(LineString.class, new LineStringAdapter())
+        .registerTypeAdapter(MultiLineString.class, new MultiLineStringAdapter())
+        .registerTypeAdapter(Polygon.class, new PolygonAdapter())
+        .registerTypeAdapter(MultiPolygon.class, new MultiPolygonAdapter())
+        .registerTypeAdapter(GeoJson.class, new GeoJsonAdapter());
+
+        GSON = builder.create();
+        PRETTY_GSON = builder.setPrettyPrinting().create();
     }
 
-    /**
-     * Converts an Object to a JSON string.
-     * @param obj the object that is to be converted
-     * @param pretty if true
-     * @return a JSON string, representing the object
-     */
-    public static String objectToJsonString(Object obj, boolean pretty)
-    {
-        if (pretty)
-            return PRETTY_GSON.toJson(obj);
-        else
-            return GSON.toJson(obj);
-    }
 
     /**
-     * Converts a GSON element to the Java object representation.
-     *
-     * @param ele the GSON element that is to be converted
-     * @param objClass the class of the target object
-     * @param <T> the type of the target object
-     * @return a Java object, parsed from the JSON element
+     * Retrieves a non-pretty printing {@linkplain Gson} instance, which
+     * can be used for converting JSON objects to Strings or Java objects,
+     * and vice versa.
+     * @return a non-pretty printing {@linkplain Gson} instance
      */
-    public static <T> T jsonToObject(JsonElement ele, Class<T> objClass)
+    public static Gson getGson()
     {
-        return GSON.fromJson(ele, objClass);
+        if (GSON == null)
+            throw new IllegalStateException(ERROR_NOT_INITIALIZED);
+
+        return GSON;
     }
 
-    /**
-     * Converts a JSON string to the Java object representation.
-     *
-     * @param jsonString the json string that is to be converted
-     * @param objClass the class of the target object
-     * @param <T> the type of the target object
-     * @return a Java object, parsed from the JSON string
-     */
-    public static <T> T jsonStringToObject(String jsonString, Class<T> objClass)
-    {
-        return GSON.fromJson(jsonString, objClass);
-    }
 
     /**
-     * Converts a Java object to a generic JSON object or array.
-     * @param obj the source Java object
-     * @param <T> the type of the source object
-     * @return a GSON element
+     * Retrieves a pretty printing {@linkplain Gson} instance, which
+     * can be used for converting JSON objects to Strings or Java objects,
+     * and vice versa.
+     * @return a pretty printing {@linkplain Gson} instance
      */
-    public static <T> JsonElement objectToJson(T obj)
+    public static Gson getPrettyGson()
     {
-        return GSON.toJsonTree(obj, new TypeToken<T>() {} .getType());
+        if (PRETTY_GSON == null)
+            throw new IllegalStateException(ERROR_NOT_INITIALIZED);
+
+        return PRETTY_GSON;
     }
+
 
     /**
      * Converts a GSON element to the Java object representation.

@@ -23,6 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esri.core.geometry.ogc.OGCGeometry;
+import com.google.gson.Gson;
 
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.json.GsonUtils;
@@ -84,7 +85,9 @@ public class GeoJson implements ICleanable
     public void clean()
     {
         if (!isClean && (coordinates instanceof Polygon  || coordinates instanceof MultiPolygon)) {
-            String geoJsonString = GsonUtils.objectToJsonString(this, false);
+            Gson gson = GsonUtils.getGson();
+
+            String geoJsonString = gson.toJson(this);
 
             try {
                 // map our polygon implementation to the ESRI implementation
@@ -94,7 +97,7 @@ public class GeoJson implements ICleanable
                 String simpleGeoString = polygon.makeSimple().asGeoJson();
 
                 // parse JSON string to a new GeoJson object
-                GeoJson  cleanedGeo = GsonUtils.jsonStringToObject(simpleGeoString, GeoJson.class);
+                GeoJson  cleanedGeo = gson.fromJson(simpleGeoString, GeoJson.class);
 
                 // copy the simplified coordinates
                 this.coordinates = cleanedGeo.coordinates;

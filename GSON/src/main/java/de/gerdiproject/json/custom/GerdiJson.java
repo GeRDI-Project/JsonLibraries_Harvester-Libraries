@@ -5,6 +5,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
+
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.IDocument;
 import de.gerdiproject.harvest.utils.StringCleaner;
@@ -141,10 +143,10 @@ public class GerdiJson implements ICleanable, IDocument
         // correct possibly erroneous polygons
         if (geo != null) {
             for (int i = 0, len = geo.size(); i < len; i++) {
-                GeoJson geoObj = GsonUtils.jsonStringToObject(geo.getJsonObject(i).toJsonString(), GeoJson.class);
+                GeoJson geoObj = GsonUtils.getGson().fromJson(geo.getJsonObject(i).toJsonString(), GeoJson.class);
                 geoObj.clean();
 
-                JsonObject cleanedGeo = (JsonObject) GsonUtils.objectToJson(geoObj);
+                JsonObject cleanedGeo = (JsonObject) GsonUtils.getGson().toJsonTree(geoObj, new TypeToken<GeoJson>() {} .getType());
 
                 geo.put(i, new GsonObject(cleanedGeo));
             }
