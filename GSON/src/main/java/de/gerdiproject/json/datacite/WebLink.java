@@ -95,6 +95,7 @@ public class WebLink
      */
     public enum WebLinkType {
         ViewURL,
+        LogoURL,
         Related
         // TODO: add more types
     }
