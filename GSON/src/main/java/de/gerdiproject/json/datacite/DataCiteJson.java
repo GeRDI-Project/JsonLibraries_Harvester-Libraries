@@ -18,6 +18,8 @@
  */
 package de.gerdiproject.json.datacite;
 
+import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.List;
 
 import de.gerdiproject.harvest.ICleanable;
@@ -31,7 +33,7 @@ import de.gerdiproject.harvest.IDocument;
  */
 public class DataCiteJson implements IDocument, ICleanable
 {
-
+    private static final Base64.Encoder ENCODER = Base64.getEncoder();
     private String identifier;
     private String publisher;
 
@@ -316,6 +318,8 @@ public class DataCiteJson implements IDocument, ICleanable
     @Override
     public String getElasticSearchId()
     {
-        return identifier;
+        // base64 encoding:
+        String base64EncodedString = new String(ENCODER.encode(sources.getURI().getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
+        return base64EncodedString;
     }
 }
