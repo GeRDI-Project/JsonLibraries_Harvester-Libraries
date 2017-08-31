@@ -697,11 +697,20 @@ public class DataCiteJson implements IDocument, ICleanable
     @Override
     public void clean()
     {
-        titles.forEach((Title t) -> t.clean());
-        descriptions.forEach((Description d) -> d.clean());
-        subjects.forEach((Subject s) -> s.clean());
-        rightsList.forEach((Rights r) -> r.clean());
-        geoLocations.forEach((GeoLocation g) -> g.clean());
+        if (titles != null)
+            titles.forEach((Title t) -> t.clean());
+
+        if (descriptions != null)
+            descriptions.forEach((Description d) -> d.clean());
+
+        if (subjects != null)
+            subjects.forEach((Subject s) -> s.clean());
+
+        if (rightsList != null)
+            rightsList.forEach((Rights r) -> r.clean());
+
+        if (geoLocations != null)
+            geoLocations.forEach((GeoLocation g) -> g.clean());
     }
 
     @Override
