@@ -13,7 +13,7 @@
 	<version>2.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 	<name>GSON</name>
-	<description>This library implements the interfaces provided by 'JSON Base' using GSON.</description>
+	<description>This library provides helper functions and common JSON structures using GSON.</description>
   
 	<properties>
 		<compiler.plugin.version>3.6.1</compiler.plugin.version>
