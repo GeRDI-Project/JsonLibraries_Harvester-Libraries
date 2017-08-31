@@ -232,7 +232,7 @@ public class RelatedIdentifier
         /**
          * Astrophysics Data System bibliographic codes;
          * a standardized 19 character identifier according to the syntax yyyyjjjjjvvvvmppppa.
-         * See http://info‐ uri.info/registry/OAIHandler?ve rb=GetRecord&metadataPrefix= reg&identifier=info:bibcode/
+         * See http://info-uri.info/registry/OAIHandler?ve rb=GetRecord&metadataPrefix= reg&identifier=info:bibcode/
          */
         bibcode,
 
@@ -310,13 +310,15 @@ public class RelatedIdentifier
         UPC,
 
         /**
-         * Uniform Resource Locator, also known as web address, is a specific character string that constitutes a reference to a resource. The syntax is: scheme://domain:port/path?qu ery_string#fragment_id
+         * Uniform Resource Locator, also known as web address, is a specific character string that constitutes a reference to a resource.
+         * The syntax is: scheme://domain:port/path?query_string#fragment_id
          */
         URL,
 
         /**
          * Uniform Resource Name;
-         * is a unique and persistent identifier of an electronic document. The syntax is: urn:< NID>:<NSS>             The leading urn: sequence is case‐insensitive, <NID> is the namespace identifier, <NSS> is the namespace‐specific string.
+         * is a unique and persistent identifier of an electronic document. The syntax is: urn:&lt;NID&gt;:&lt;NSS&gt;
+         * the leading urn:sequence is case‐insensitive, &lt;NID&gt; is the namespace identifier, &lt;NSS&gt; is the namespace‐specific string.
          */
         URN
     }

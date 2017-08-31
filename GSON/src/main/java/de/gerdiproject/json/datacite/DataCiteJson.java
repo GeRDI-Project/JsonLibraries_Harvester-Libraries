@@ -324,7 +324,7 @@ public class DataCiteJson implements IDocument, ICleanable
      * Sets an object of additional metadata that is important,
      * but does not fit the other fields.
      *
-     * @return an object of additional metadata
+     * @param customData an object of additional metadata
      */
     public void setCustomData(Object customData)
     {

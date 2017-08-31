@@ -210,7 +210,7 @@ public class Creator
      * Changes the URI of the name identifier scheme.
      * e.g. http://orcid.org/
      *
-     * @param nameIdentifierSchemaURI the URI of the name identifier scheme
+     * @param schemeURI the URI of the name identifier scheme
      */
     public void setSchemeURI(String schemeURI)
     {
