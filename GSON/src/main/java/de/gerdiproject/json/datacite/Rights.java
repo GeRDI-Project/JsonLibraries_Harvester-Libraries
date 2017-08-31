@@ -36,13 +36,13 @@ public class Rights implements ICleanable
 {
     /**
      * Free text that describes the rights.
-     * e.g. Creative Commons, Attribution 3.0 Germany
+     * <br>e.g. Creative Commons, Attribution 3.0 Germany
      */
     private String value;
 
     /**
      * The URI of the license.
-     * e.g. http://creativecommons.org/licenses/by/3.0/de/deed.en
+     * <br>e.g. http://creativecommons.org/licenses/by/3.0/de/deed.en
      */
     private String URI;
 
@@ -60,7 +60,7 @@ public class Rights implements ICleanable
 
     /**
      * Changes the free text that describes the rights.
-     * e.g. Creative Commons, Attribution 3.0 Germany
+     * <br>e.g. Creative Commons, Attribution 3.0 Germany
      *
      * @param value free text that describes the rights
      */
@@ -83,7 +83,7 @@ public class Rights implements ICleanable
 
     /**
      * Changes the URI of the license.
-     * e.g. http://creativecommons.org/licenses/by/3.0/de/deed.en
+     * <br>e.g. http://creativecommons.org/licenses/by/3.0/de/deed.en
      *
      * @param uri the URI of the license
      */

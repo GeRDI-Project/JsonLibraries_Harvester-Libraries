@@ -28,43 +28,43 @@ public class Creator
 {
     /**
      * The name of the creator.
-     * e.g. Sanchez, Rick
+     * <br>e.g. Sanchez, Rick
      */
     private String name;
 
     /**
      * The personal or first name of the creator.
-     * e.g. Rick
+     * <br>e.g. Rick
      */
     private String givenName;
 
     /**
      * The surname or last name of the creator.
-     * e.g. Sanchez
+     * <br>e.g. Sanchez
      */
     private String familyName;
 
     /**
      * Uniquely identifies an individual or legal entity, according to various schemes.
-     * e.g. orcid id number
+     * <br>e.g. orcid id number
      */
     private String nameIdentifier;
 
     /**
      * The name of the name identifier scheme.
-     * e.g. ORCID
+     * <br>e.g. ORCID
      */
     private String nameIdentifierScheme;
 
     /**
      * The URI of the name identifier scheme.
-     * e.g. http://orcid.org/
+     * <br>e.g. http://orcid.org/
      */
     private String schemeURI;
 
     /**
      * The organisational or institutional affiliation of the creator.
-     * e.g. Council of Ricks
+     * <br>e.g. Council of Ricks
      */
     private String affiliation;
 
@@ -93,7 +93,7 @@ public class Creator
 
     /**
      * Changes the name of the creator.
-     * e.g. Sanchez, Rick
+     * <br>e.g. Sanchez, Rick
      *
      * @param name the name of the creator
      */
@@ -116,7 +116,7 @@ public class Creator
 
     /**
      * Changes the personal or first name of the creator.
-     * e.g. Rick
+     * <br>e.g. Rick
      *
      * @param givenName the personal or first name of the creator
      */
@@ -139,7 +139,7 @@ public class Creator
 
     /**
      * Changes the surname or last name of the creator.
-     * e.g. Sanchez
+     * <br>e.g. Sanchez
      *
      * @param familyName the surname or last name of the creator
      */
@@ -162,7 +162,7 @@ public class Creator
 
     /**
      * Changes a unique identifier of an individual or legal entity, according to various schemes.
-     * e.g. orcid id number
+     * <br>e.g. orcid id number
      *
      * @param nameIdentifier a unique identifier of an individual or legal entity
      */
@@ -185,7 +185,7 @@ public class Creator
 
     /**
      * Changes the name of the name identifier scheme.
-     * e.g. ORCID
+     * <br>e.g. ORCID
      *
      * @param nameIdentifierSchema the name of the name identifier scheme
      */
@@ -208,7 +208,7 @@ public class Creator
 
     /**
      * Changes the URI of the name identifier scheme.
-     * e.g. http://orcid.org/
+     * <br>e.g. http://orcid.org/
      *
      * @param schemeURI the URI of the name identifier scheme
      */
@@ -231,7 +231,7 @@ public class Creator
 
     /**
      * Changes the organisational or institutional affiliation of the creator.
-     * e.g. Council of Ricks
+     * <br>e.g. Council of Ricks
      *
      * @param affiliation the organisational or institutional affiliation of the creator
      */

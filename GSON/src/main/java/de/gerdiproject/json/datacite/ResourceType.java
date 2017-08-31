@@ -28,7 +28,7 @@ public class ResourceType
 {
     /**
      * A free text description of the resource.
-     * e.g. "Census Data"
+     * <br>e.g. "Census Data"
      */
     private String value;
 
@@ -51,6 +51,7 @@ public class ResourceType
 
     /**
      * Changes the free text description of the resource.
+     * <br>e.g. "Census Data"
      *
      * @param value a free text description of the resource
      */

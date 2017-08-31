@@ -31,7 +31,7 @@ public class Title implements ICleanable
 {
     /**
      * A free text title or name.
-     * e.g. Crops, Catch Value in the Atlantic Ocean
+     * <br>e.g. Crops, Catch Value in the Atlantic Ocean
      */
     private String value;
 
@@ -42,7 +42,7 @@ public class Title implements ICleanable
 
     /**
      * IETF language tag describing the language of the title text.
-     * e.g. de, en-US
+     * <br>e.g. de, en-US
      */
     private String lang;
 
@@ -71,7 +71,7 @@ public class Title implements ICleanable
 
     /**
      * Changes the free text title or name.
-     * e.g. Crops, Catch Value in the Atlantic Ocean
+     * <br>e.g. Crops, Catch Value in the Atlantic Ocean
      *
      * @param value a free text title or name
      */
@@ -117,7 +117,7 @@ public class Title implements ICleanable
 
     /**
      * Changes the language of the title text.
-     * e.g. de, en-US
+     * <br>e.g. de, en-US
      *
      * @param lang the language of the title text
      */

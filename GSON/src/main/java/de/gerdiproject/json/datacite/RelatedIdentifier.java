@@ -46,13 +46,13 @@ public class RelatedIdentifier
 
     /**
      * The name of the related scheme.
-     * e.g. citeproc+json
+     * <br>e.g. citeproc+json
      */
     private String relatedMetadataScheme;
 
     /**
      * The URI of the relatedMetadataScheme.
-     * e.g. https://github.com/citation-style-language/schema/raw/master/csl-data.json
+     * <br>e.g. https://github.com/citation-style-language/schema/raw/master/csl-data.json
      */
     private String schemeURI;
 
@@ -133,7 +133,7 @@ public class RelatedIdentifier
 
     /**
      * Changes the URI of the relatedMetadataScheme.
-     * e.g. https://github.com/citation-style-language/schema/raw/master/csl-data.json
+     * <br>e.g. https://github.com/citation-style-language/schema/raw/master/csl-data.json
      *
      * @param schemeURI the URI of the relatedMetadataScheme
      */
@@ -219,7 +219,7 @@ public class RelatedIdentifier
     public enum RelatedIdentifierType {
         /**
          * Archival Resource Key;
-         * URL designed to support long‐term access to information objects. In general, ARK syntax is of the form (brackets indicate [optional] elements: [http://NMA/]ark:/NAAN/Name [Qualifier]
+         * URL designed to support long-term access to information objects. In general, ARK syntax is of the form (brackets indicate [optional] elements: [http://NMA/]ark:/NAAN/Name [Qualifier]
          */
         ARK,
 
@@ -232,7 +232,7 @@ public class RelatedIdentifier
         /**
          * Astrophysics Data System bibliographic codes;
          * a standardized 19 character identifier according to the syntax yyyyjjjjjvvvvmppppa.
-         * See http://info-uri.info/registry/OAIHandler?ve rb=GetRecord&metadataPrefix= reg&identifier=info:bibcode/
+         * <br>See http://info-uri.info/registry/OAIHandler?verb=GetRecord&amp;metadataPrefix=reg&amp;identifier=info:bibcode/
          */
         bibcode,
 
@@ -243,13 +243,13 @@ public class RelatedIdentifier
         DOI,
 
         /**
-         * European Article Number, now renamed International Article Number, but retaining the original acronym, is a 13‐digit barcoding standard which is a superset of the original 12‐digit Universal Product Code (UPC) system.
+         * European Article Number, now renamed International Article Number, but retaining the original acronym, is a 13-digit barcoding standard which is a superset of the original 12-digit Universal Product Code (UPC) system.
          */
         EAN13,
 
         /**
          * Electronic International Standard Serial Number;
-         * ISSN used to identify periodicals in electronic form (eISSN or e‐ ISSN).
+         * ISSN used to identify periodicals in electronic form (eISSN or e- ISSN).
          */
         EISSN,
 
@@ -260,19 +260,19 @@ public class RelatedIdentifier
 
         /**
          * International Geo Sample Number;
-         * a 9‐digit alphanumeric code that uniquely identifies samples from our natural environment and related sampling features.
+         * a 9-digit alphanumeric code that uniquely identifies samples from our natural environment and related sampling features.
          */
         IGSN,
 
         /**
          * International Standard Book Number;
-         * a unique numeric book identifier. There are 2 formats: a 10‐digit ISBN format and a 13‐ digit ISBN.
+         * a unique numeric book identifier. There are 2 formats: a 10-digit ISBN format and a 13- digit ISBN.
          */
         ISBN,
 
         /**
          * International Standard Serial Number;
-         * a unique 8‐digit number used to identify a print or electronic periodical publication.
+         * a unique 8-digit number used to identify a print or electronic periodical publication.
          */
         ISSN,
 
@@ -283,7 +283,7 @@ public class RelatedIdentifier
         ISTC,
 
         /**
-         * The linking ISSN or ISSN‐L enables collocation or linking among different media versions of a continuing resource.
+         * The linking ISSN or ISSN-L enables collocation or linking among different media versions of a continuing resource.
          */
         LISSN,
 
@@ -305,7 +305,7 @@ public class RelatedIdentifier
         PURL,
 
         /**
-         * Universal Product Code is a barcode symbology used for tracking trade items in stores. Its most common form, the UPC‐A, consists of 12 numerical digits.
+         * Universal Product Code is a barcode symbology used for tracking trade items in stores. Its most common form, the UPC-A, consists of 12 numerical digits.
          */
         UPC,
 
@@ -318,7 +318,7 @@ public class RelatedIdentifier
         /**
          * Uniform Resource Name;
          * is a unique and persistent identifier of an electronic document. The syntax is: urn:&lt;NID&gt;:&lt;NSS&gt;
-         * the leading urn:sequence is case‐insensitive, &lt;NID&gt; is the namespace identifier, &lt;NSS&gt; is the namespace‐specific string.
+         * the leading urn:sequence is case-insensitive, &lt;NID&gt; is the namespace identifier, &lt;NSS&gt; is the namespace-specific string.
          */
         URN
     }

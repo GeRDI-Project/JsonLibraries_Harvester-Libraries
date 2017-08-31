@@ -31,13 +31,13 @@ public class Subject implements ICleanable
 {
     /**
      * A term that describes the resource.
-     * e.g. Fishery, Dates
+     * <br>e.g. Fishery, Dates
      */
     private String value;
 
     /**
      * A IETF language tag of the subject text.
-     * e.g. de, en-US
+     * <br>e.g. de, en-US
      */
     private String lang;
 
@@ -48,13 +48,13 @@ public class Subject implements ICleanable
 
     /**
      * The URI of the subject identifier scheme.
-     * e.g. http://id.loc.gov/authorities/subjects
+     * <br>e.g. http://id.loc.gov/authorities/subjects
      */
     private String schemeURI;
 
     /**
      * The URI of the subject term.
-     * e.g. http://id.loc.gov/authorities/subjects/sh85026196
+     * <br>e.g. http://id.loc.gov/authorities/subjects/sh85026196
      */
     private String valueURI;
 
@@ -83,7 +83,7 @@ public class Subject implements ICleanable
 
     /**
      * Changes a term that describes the resource.
-     * e.g. Fishery, Dates
+     * <br>e.g. Fishery, Dates
      *
      * @param value a term that describes the resource
      */
@@ -106,7 +106,7 @@ public class Subject implements ICleanable
 
     /**
      * Changes the IETF language tag of the subject text.
-     * e.g. de, en-US
+     * <br>e.g. de, en-US
      *
      * @param lang an IETF language tag of the subject text
      */
@@ -129,7 +129,7 @@ public class Subject implements ICleanable
 
     /**
      * Changes the URI of the subject identifier scheme.
-     * e.g. http://id.loc.gov/authorities/subjects
+     * <br>e.g. http://id.loc.gov/authorities/subjects
      *
      * @param schemeURI the URI of the subject identifier scheme
      */
@@ -176,7 +176,7 @@ public class Subject implements ICleanable
 
     /**
      * Changes the URI of the subject term.
-     * e.g. http://id.loc.gov/authorities/subjects/sh85026196
+     * <br>e.g. http://id.loc.gov/authorities/subjects/sh85026196
      *
      * @param valueURI the URI of the subject term
      */

@@ -28,7 +28,7 @@ public class Identifier
 {
     /**
      * A unique string that identifies the resource.
-     * e.g 10.1234/foo
+     * <br>e.g. 10.1234/foo
      */
     private String value;
 
@@ -76,7 +76,7 @@ public class Identifier
 
     /**
      * Changes the unique identifier.
-     * e.g. 10.1234/foo
+     * <br>e.g. 10.1234/foo
      *
      * @param value a unique identifier
      */

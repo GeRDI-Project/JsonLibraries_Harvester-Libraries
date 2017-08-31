@@ -28,19 +28,19 @@ public class Source
 {
     /**
      * The URL that leads to the page, previously viewURL.
-     * e.g. http://www.fao.org/faostat/en/#country/2
+     * <br>e.g. http://www.fao.org/faostat/en/#country/2
      */
     private String URI;
 
     /**
      * A unique readable name of the repository.
-     * e.g. FAOSTAT
+     * <br>e.g. FAOSTAT
      */
     private String provider;
 
     /**
      * URL to the main page of the repository that provided this metadata.
-     * e.g. fao.org/faostat
+     * <br>e.g. fao.org/faostat
      */
     private String providerURI;
 
@@ -71,7 +71,7 @@ public class Source
 
     /**
      * Changes the URL that leads to the source page, previously viewURL.
-     * e.g. http://www.fao.org/faostat/en/#country/2
+     * <br>e.g. http://www.fao.org/faostat/en/#country/2
      *
      * @param uri the URL that leads to the source page
      */
@@ -93,7 +93,7 @@ public class Source
 
     /**
      * Changes the unique readable name of the repository.
-     * e.g. FAOSTAT
+     * <br>e.g. FAOSTAT
      *
      * @param provider a unique readable name of the repository
      */
@@ -115,7 +115,7 @@ public class Source
 
     /**
      * Changes the URL to the main page of the repository that provides the resource.
-     * e.g. fao.org/faostat
+     * <br>e.g. fao.org/faostat
      *
      * @param providerURI the URL to the main page of the repository
      */

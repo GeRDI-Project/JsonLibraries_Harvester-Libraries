@@ -60,7 +60,7 @@ public class DataCiteJson implements IDocument, ICleanable
 
     /**
      * Primary language of the resource. Allowed values are taken from  IETF BCP 47, ISO 639-1 language codes.
-     * e.g. de, en-US
+     * <br>e.g. de, en-US
      */
     private String language;
 
@@ -82,19 +82,19 @@ public class DataCiteJson implements IDocument, ICleanable
 
     /**
      * Endpoint and URL used to retrieve the source meta data.
-     * e.g. link to JSON/XML
+     * <br>e.g. link to JSON/XML
      */
     private Source sources;
 
     /**
      * Unstructured size information about the resource.
-     * e.g. "15 pages", "6 MB"
+     * <br>e.g. "15 pages", "6 MB"
      */
     private List<String> sizes;
 
     /**
      * Technical format of the resource. Use file extension or MIME type where possible.
-     * e.g. PDF, XML, application/pdf, text/xml
+     * <br>e.g. PDF, XML, application/pdf, text/xml
      */
     private List<String> formats;
 
@@ -345,7 +345,7 @@ public class DataCiteJson implements IDocument, ICleanable
 
     /**
      * Changes the endpoint and URL used to retrieve the source meta data.
-     * e.g. link to JSON/XML
+     * <br>e.g. link to JSON/XML
      *
      * @param sources the endpoint and URL used to retrieve the source meta data
      */
@@ -368,7 +368,7 @@ public class DataCiteJson implements IDocument, ICleanable
 
     /**
      * Changes the unstructured size information about the resource.
-     * e.g. "15 pages", "6 MB"
+     * <br>e.g. "15 pages", "6 MB"
      *
      * @param sizes unstructured size information about the resource
      */
@@ -391,7 +391,7 @@ public class DataCiteJson implements IDocument, ICleanable
 
     /**
      * Changes technical format of the resource. Use file extension or MIME type where possible.
-     * e.g. PDF, XML, application/pdf, text/xml
+     * <br>e.g. PDF, XML, application/pdf, text/xml
      *
      * @param formats technical format of the resource
      */

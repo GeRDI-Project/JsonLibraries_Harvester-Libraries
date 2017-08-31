@@ -44,7 +44,7 @@ public class Description implements ICleanable
 
     /**
      * IETF language tag.
-     * e.g. de, en-us
+     * <br>e.g. de, en-us
      */
     private String lang;
 
@@ -119,7 +119,7 @@ public class Description implements ICleanable
 
     /**
      * Changes the language in which the description is written.
-     * e.g. de, en-us
+     * <br>e.g. de, en-us
      *
      * @param lang  the language in which the description is written
      */

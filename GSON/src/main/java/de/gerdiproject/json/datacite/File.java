@@ -28,13 +28,13 @@ public class File
 {
     /**
      * The URL that is used to access the file.
-     * e.g. http://fenixservices.fao.org/faostat/static/documents/QC/QC_methodology_e.pdf
+     * <br>e.g. http://fenixservices.fao.org/faostat/static/documents/QC/QC_methodology_e.pdf
      */
     private String url;
 
     /**
      * Human readable name for the file.
-     * e.g. "Methodology - Crops Primary"
+     * <br>e.g. "Methodology - Crops Primary"
      */
     private String label;
 
@@ -46,7 +46,7 @@ public class File
 
     /**
      * File format, extension or mimetype.
-     * e.g. pdf, application/json
+     * <br>e.g. pdf, application/json
      */
     private String type;
 
@@ -77,7 +77,7 @@ public class File
 
     /**
      * Changes the URL that is used to access the file.
-     * e.g. http://fenixservices.fao.org/faostat/static/documents/QC/QC_methodology_e.pdf
+     * <br>e.g. http://fenixservices.fao.org/faostat/static/documents/QC/QC_methodology_e.pdf
      *
      * @param url the URL that is used to access the file
      */
@@ -101,7 +101,7 @@ public class File
 
     /**
      * Changes the human readable name for the file.
-     * e.g. "Methodology - Crops Primary"
+     * <br>e.g. "Methodology - Crops Primary"
      *
      * @param label a human readable name for the file
      */
@@ -135,7 +135,7 @@ public class File
 
     /**
      * Changes the file format, extension or mimetype.
-     * e.g. pdf, application/json
+     * <br>e.g. pdf, application/json
      *
      * @param type a file format, extension or mimetype
      */

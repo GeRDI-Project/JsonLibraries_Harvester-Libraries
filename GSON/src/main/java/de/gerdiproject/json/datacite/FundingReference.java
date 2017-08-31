@@ -29,13 +29,13 @@ public class FundingReference
 {
     /**
      * Name of the funding provider.
-     * e.g. Gordon and Betty Moore Foundation
+     * <br>e.g. Gordon and Betty Moore Foundation
      */
     private String funderName;
 
     /**
      * Uniquely identifies a funding entity, according to various types.
-     * e.g. http://dx.doi.org/10.13039/100000936
+     * <br>e.g. http://dx.doi.org/10.13039/100000936
      */
     private String funderIdentifier;
 
@@ -46,20 +46,20 @@ public class FundingReference
 
     /**
      * The code assigned by the funder to a sponsored award (grant).
-     * e.g. GBMF3859.01
+     * <br>e.g. GBMF3859.01
      */
     private String awardNumber;
 
     /**
      * The URI leading to a page provided by the funder for more
      * information about the award (grant).
-     * e.g. https://www.moore.org/grants/list/GBMF3859.01
+     * <br>e.g. https://www.moore.org/grants/list/GBMF3859.01
      */
     private String awardURI;
 
     /**
      * The human readable title of the award (grant).
-     * e.g. Socioenvironmental Monitoring of the Amazon Basin and Xingu
+     * <br>e.g. Socioenvironmental Monitoring of the Amazon Basin and Xingu
      */
     private String awardTitle;
 
@@ -88,7 +88,7 @@ public class FundingReference
 
     /**
      * Changes the name of the funding provider.
-     * e.g. Gordon and Betty Moore Foundation
+     * <br>e.g. Gordon and Betty Moore Foundation
      *
      * @param funderName the name of the funding provider
      */
@@ -111,7 +111,7 @@ public class FundingReference
 
     /**
      * Changes the unique identifier of the funding entity.
-     * e.g. http://dx.doi.org/10.13039/100000936
+     * <br>e.g. http://dx.doi.org/10.13039/100000936
      *
      * @param funderIdentifier a unique identifier of the funding entity
      */
@@ -134,7 +134,7 @@ public class FundingReference
 
     /**
      * Changes the code assigned by the funder to a sponsored award (grant).
-     * e.g. GBMF3859.01
+     * <br>e.g. GBMF3859.01
      *
      * @param awardNumber the code assigned by the funder to a sponsored award (grant)
      */
@@ -159,7 +159,7 @@ public class FundingReference
     /**
      * Changes the URI leading to a page provided by the funder for more
      * information about the award (grant).
-     * e.g. https://www.moore.org/grants/list/GBMF3859.01
+     * <br>e.g. https://www.moore.org/grants/list/GBMF3859.01
      *
      * @param awardURI the URI leading to a page for more information about the award
      */
@@ -182,7 +182,7 @@ public class FundingReference
 
     /**
      * Changes the human readable title of the award (grant).
-     * e.g. Socioenvironmental Monitoring of the Amazon Basin and Xingu
+     * <br>e.g. Socioenvironmental Monitoring of the Amazon Basin and Xingu
      *
      * @param awardTitle the human readable title of the award (grant)
      */

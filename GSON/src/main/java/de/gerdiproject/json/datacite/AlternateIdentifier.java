@@ -31,13 +31,13 @@ public class AlternateIdentifier
     /**
      * A unique free text identifier. This may be any alphanumeric string
      * which is unique within its domain of issue.
-     * e.g. E‐GEOD‐34814
+     * <br>e.g. E‐GEOD‐34814
      */
     private String value;
 
     /**
      * The free text type of the AlternateIdentifier.
-     * e.g. "A local accession number"
+     * <br>e.g. "A local accession number"
      */
     private String type;
 
@@ -68,7 +68,7 @@ public class AlternateIdentifier
 
     /**
      * Changes the unique identifier.
-     * e.g. E‐GEOD‐34814
+     * <br>e.g. E‐GEOD‐34814
      *
      * @param value a unique identifier
      */
@@ -91,7 +91,7 @@ public class AlternateIdentifier
 
     /**
      * Changes the type of the AlternateIdentifier.
-     * e.g. "A local accession number"
+     * <br>e.g. "A local accession number"
      *
      * @param type a type of an AlternateIdentifier
      */
