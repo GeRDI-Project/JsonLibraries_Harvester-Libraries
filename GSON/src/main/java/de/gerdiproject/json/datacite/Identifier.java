@@ -19,39 +19,47 @@
 package de.gerdiproject.json.datacite;
 
 /**
- * An identifier other than the primary Identifier applied to the resource being registered.
- * May be used for local identifiers. AlternateIdentifier should be used for another identifier of the same
- * instance (same location, same file).
+ * The primary Identifier of the resource being registered.
  *
  * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
  * @author Mathis Neumann, Robin Weiss
  */
-public class AlternateIdentifier
+public class Identifier
 {
     /**
-     * A unique free text identifier. This may be any alphanumeric string
-     * which is unique within its domain of issue.
-     * e.g. E‐GEOD‐34814
+     * A unique string that identifies the resource.
+     * e.g 10.1234/foo
      */
     private String value;
 
     /**
-     * The free text type of the AlternateIdentifier.
-     * e.g. "A local accession number"
+     * The type of the identifier.
      */
-    private String type;
+    private IdentifierType type;
 
 
     /**
      * Simple constructor that requires all mandatory fields.
      *
      * @param value the identifier value
-     * @param type free text describing the identifier
+     * @param type the type of the identifier
      */
-    public AlternateIdentifier(String value, String type)
+    public Identifier(String value, IdentifierType type)
     {
         this.value = value;
         this.type = type;
+    }
+
+
+    /**
+     * Constructs a DOI identifier.
+     *
+     * @param value a DOI identifier string of the format "10.1234/foo"
+     */
+    public Identifier(String value)
+    {
+        this.value = value;
+        this.type = IdentifierType.DOI;
     }
 
 
@@ -68,7 +76,7 @@ public class AlternateIdentifier
 
     /**
      * Changes the unique identifier.
-     * e.g. E‐GEOD‐34814
+     * e.g. 10.1234/foo
      *
      * @param value a unique identifier
      */
@@ -79,24 +87,36 @@ public class AlternateIdentifier
 
 
     /**
-     * Returns a type of the AlternateIdentifier.
+     * Returns the type of the identifier.
      *
-     * @return the type of the AlternateIdentifier
+     * @return the type of the identifier
      */
-    public String getType()
+    public IdentifierType getType()
     {
         return type;
     }
 
 
     /**
-     * Changes the type of the AlternateIdentifier.
-     * e.g. "A local accession number"
+     * Changes the type of the identifier.
      *
-     * @param type a type of an AlternateIdentifier
+     * @param type a type of the identifier
      */
-    public void setType(String type)
+    public void setType(IdentifierType type)
     {
         this.type = type;
+    }
+
+    /**
+     * This enumeration describes the type of the funder identifier.
+     *
+     * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+     * @author Robin Weiss
+     */
+    public enum IdentifierType {
+        /**
+         * A Digital Object Identifier, registered by a DataCite member.
+         */
+        DOI
     }
 }

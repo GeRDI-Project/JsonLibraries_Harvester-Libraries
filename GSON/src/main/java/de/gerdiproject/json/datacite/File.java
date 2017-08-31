@@ -19,29 +19,34 @@
 package de.gerdiproject.json.datacite;
 
 /**
- * This JSON object represents a downloadable file.
- * @author Mathis Neumann, Robin Weiss
+ * A downloadable file.
  *
+ * This object is NOT part of the original DataCite schema.
+ * @author Mathis Neumann, Robin Weiss
  */
 public class File
 {
     /**
-     * The URL that is used to access this file.
+     * The URL that is used to access the file.
+     * e.g. http://fenixservices.fao.org/faostat/static/documents/QC/QC_methodology_e.pdf
      */
     private String url;
 
     /**
      * Human readable name for the file.
+     * e.g. "Methodology - Crops Primary"
      */
     private String label;
 
     /**
-     * Locally (within this document) unique identifier for the file, should be concise, e.g. a hash value.
+     * Locally (within this document) unique identifier for the file.
+     * The identifier is generated from a hash value of the target URL.
      */
     private String identifier;
 
     /**
-     * File format, extension or mimetype, e.g. csv or application/json.
+     * File format, extension or mimetype.
+     * e.g. pdf, application/json
      */
     private String type;
 
@@ -50,62 +55,92 @@ public class File
      * Simple constructor that requires all mandatory fields.
      * @param url the file URL
      * @param label the file display name
-     * @param identifier the unique file identifier
      */
-    public File(String url, String label, String identifier)
+    public File(String url, String label)
     {
         this.url = url;
         this.label = label;
-        this.identifier = identifier;
+        this.identifier = String.valueOf(url.hashCode());
     }
 
 
+    /**
+     * Returns the URL that is used to access the file.
+     *
+     * @return the URL that is used to access the file
+     */
     public String getUrl()
     {
         return url;
     }
 
 
+    /**
+     * Changes the URL that is used to access the file.
+     * e.g. http://fenixservices.fao.org/faostat/static/documents/QC/QC_methodology_e.pdf
+     *
+     * @param url the URL that is used to access the file
+     */
     public void setUrl(String url)
     {
         this.url = url;
+        this.identifier = String.valueOf(url.hashCode());
     }
 
 
+    /**
+     * Returns the human readable name for the file.
+     *
+     * @return the human readable name for the file
+     */
     public String getLabel()
     {
         return label;
     }
 
 
+    /**
+     * Changes the human readable name for the file.
+     * e.g. "Methodology - Crops Primary"
+     *
+     * @param label a human readable name for the file
+     */
     public void setLabel(String label)
     {
         this.label = label;
     }
 
-
+    /**
+     * Returns the locally unique identifier for the file.
+     * The identifier is generated from a hash value of the target URL.
+     *
+     * @return the locally unique identifier for the file
+     */
     public String getIdentifier()
     {
         return identifier;
     }
 
 
-    public void setIdentifier(String identifier)
-    {
-        this.identifier = identifier;
-    }
-
-
+    /**
+     * Returns the file format, extension or mimetype of the file.
+     *
+     * @return a file format, extension or mimetype
+     */
     public String getType()
     {
         return type;
     }
 
 
+    /**
+     * Changes the file format, extension or mimetype.
+     * e.g. pdf, application/json
+     *
+     * @param type a file format, extension or mimetype
+     */
     public void setType(String type)
     {
         this.type = type;
     }
-
-
 }

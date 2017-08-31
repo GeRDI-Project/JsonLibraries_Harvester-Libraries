@@ -22,51 +22,80 @@ import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.utils.StringCleaner;
 
 /**
- * This JSON object represents legal rights regarding the usage of the data.
- * Not indexed by ElasticSearch!
+ * Any rights information for this resource.
+ * Provide a rights management statement for the resource or reference a service
+ * providing such information.
+ * Include embargo information if applicable. Use the complete title of a license and
+ * include version information if applicable.
+ *
+ * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
  * @author Mathis Neumann, Robin Weiss
  *
  */
 public class Rights implements ICleanable
 {
     /**
-     * e.g. CC0 1.0 Universal
+     * Free text that describes the rights.
+     * e.g. Creative Commons, Attribution 3.0 Germany
      */
-    private String rights;
+    private String value;
 
     /**
-     * rightsURI in DataCite schema
+     * The URI of the license.
+     * e.g. http://creativecommons.org/licenses/by/3.0/de/deed.en
      */
     private String URI;
 
 
-    public String getRights()
+    /**
+     * Returns the free text that describes the rights.
+     *
+     * @return free text that describes the rights
+     */
+    public String getValue()
     {
-        return rights;
+        return value;
     }
 
 
-    public void setRights(String rights)
+    /**
+     * Changes the free text that describes the rights.
+     * e.g. Creative Commons, Attribution 3.0 Germany
+     *
+     * @param value free text that describes the rights
+     */
+    public void setValue(String value)
     {
-        this.rights = rights;
+        this.value = value;
     }
 
 
+    /**
+     * Returns the URI of the license.
+     *
+     * @return the URI of the license
+     */
     public String getURI()
     {
         return URI;
     }
 
 
-    public void setURI(String uRI)
+    /**
+     * Changes the URI of the license.
+     * e.g. http://creativecommons.org/licenses/by/3.0/de/deed.en
+     *
+     * @param uri the URI of the license
+     */
+    public void setURI(String uri)
     {
-        URI = uRI;
+        URI = uri;
     }
 
 
     @Override
     public void clean()
     {
-        rights = StringCleaner.clean(rights);
+        value = StringCleaner.clean(value);
     }
 }

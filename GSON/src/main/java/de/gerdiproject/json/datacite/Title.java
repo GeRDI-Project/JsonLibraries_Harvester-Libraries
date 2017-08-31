@@ -22,88 +22,144 @@ import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.utils.StringCleaner;
 
 /**
- * This JSON object describes a title of the data.
- * @author Mathis Neumann, Robin Weiss
+ * A name or title by which a resource is known.
  *
+ * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+ * @author Mathis Neumann, Robin Weiss
  */
 public class Title implements ICleanable
 {
     /**
-     * a free text title
+     * A free text title or name.
+     * e.g. Crops, Catch Value in the Atlantic Ocean
      */
-    private String title;
+    private String value;
 
     /**
-     * describes where the title appears
+     * The type of Title.
      */
     private TitleType type;
 
     /**
-     * IETF language tag
+     * IETF language tag describing the language of the title text.
+     * e.g. de, en-US
      */
     private String lang;
 
+
     /**
      * Simple constructor that requires all mandatory fields.
+     *
      * @param title the title text
      */
     public Title(String title)
     {
-        this.title = title;
+        this.value = title;
     }
 
 
-    public String getTitle()
+    /**
+     * Returns a free text title or name.
+     *
+     * @return a free text title or name
+     */
+    public String getValue()
     {
-        return title;
+        return value;
     }
 
 
-    public void setTitle(String title)
+    /**
+     * Changes the free text title or name.
+     * e.g. Crops, Catch Value in the Atlantic Ocean
+     *
+     * @param value a free text title or name
+     */
+    public void setValue(String value)
     {
-        this.title = title;
+        this.value = value;
     }
 
 
+    /**
+     * Returns the type of title, or null if this is the main title.
+     *
+     * @return the type of title
+     */
     public TitleType getType()
     {
         return type;
     }
 
 
+    /**
+     * Changes the type of title.
+     * May be 'null' to represent the main title of the document.
+     *
+     * @param type the type of title
+     */
     public void setType(TitleType type)
     {
         this.type = type;
     }
 
 
+    /**
+     * Returns the language of the title text.
+     *
+     * @return the language of the title text
+     */
     public String getLang()
     {
         return lang;
     }
 
 
+    /**
+     * Changes the language of the title text.
+     * e.g. de, en-US
+     *
+     * @param lang the language of the title text
+     */
     public void setLang(String lang)
     {
         this.lang = lang;
     }
 
+
     @Override
     public void clean()
     {
-        title = StringCleaner.clean(title);
+        value = StringCleaner.clean(value);
     }
 
 
     /**
      * This enumeration describes the type of a {@link Title}.
-     * @author Robin Weiss
      *
+     * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+     * @author Robin Weiss
      */
     public enum TitleType {
+        /**
+         * An alternative title variant of the main title.
+         */
         AlternativeTitle,
+
+        /**
+         * An extension of the main title.
+         */
         Subtitle,
+
+        /**
+         * A title that is translated from the standard language (?)
+         * This type is not properly documented and may be interpreted wrongly.
+         */
         TranslatedTitle,
+
+        /**
+         * A title that does not match any other types and is not the main title.
+         */
         Other
     }
 }

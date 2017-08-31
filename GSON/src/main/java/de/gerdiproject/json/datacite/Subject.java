@@ -23,100 +23,163 @@ import de.gerdiproject.harvest.utils.StringCleaner;
 
 /**
  * Subject, keywords (tags), classification codes, or key phrases describing the resource.
- * @author Mathis Neumann, Robin Weiss
  *
+ * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+ * @author Mathis Neumann, Robin Weiss
  */
 public class Subject implements ICleanable
 {
     /**
-     * Are only findable by exact match! Tags should therefore always be concise and probably a single term!
+     * A term that describes the resource.
+     * e.g. Fishery, Dates
      */
-    private String subject;
+    private String value;
 
     /**
-     * IETF language tag
+     * A IETF language tag of the subject text.
+     * e.g. de, en-US
      */
     private String lang;
 
     /**
-     * The URI of the subject identifier scheme.
-     */
-    private String schemeURI;
-
-    /**
-     * The name of the subject scheme or classification code or authority if one is used.
+     * The free text name of the subject scheme or classification code or authority if one is used.
      */
     private String subjectScheme;
 
     /**
+     * The URI of the subject identifier scheme.
+     * e.g. http://id.loc.gov/authorities/subjects
+     */
+    private String schemeURI;
+
+    /**
      * The URI of the subject term.
+     * e.g. http://id.loc.gov/authorities/subjects/sh85026196
      */
     private String valueURI;
 
+
     /**
      * Simple constructor that requires all mandatory fields.
-     * @param subject the search tag
+     *
+     * @param value the search tag
      */
-    public Subject(String subject)
+    public Subject(String value)
     {
-        this.subject = subject;
+        this.value = value;
     }
 
 
-    public String getSubject()
+    /**
+     * Returns a term that describes the resource.
+     *
+     * @return a term that describes the resource
+     */
+    public String getValue()
     {
-        return subject;
+        return value;
     }
 
 
-    public void setSubject(String subject)
+    /**
+     * Changes a term that describes the resource.
+     * e.g. Fishery, Dates
+     *
+     * @param value a term that describes the resource
+     */
+    public void setValue(String value)
     {
-        this.subject = subject;
+        this.value = value;
     }
 
 
+    /**
+     * Returns the IETF language tag of the subject text.
+     *
+     * @return the IETF language tag of the subject text
+     */
     public String getLang()
     {
         return lang;
     }
 
 
+    /**
+     * Changes the IETF language tag of the subject text.
+     * e.g. de, en-US
+     *
+     * @param lang an IETF language tag of the subject text
+     */
     public void setLang(String lang)
     {
         this.lang = lang;
     }
 
 
+    /**
+     * Returns the URI of the subject identifier scheme.
+     *
+     * @return the URI of the subject identifier scheme
+     */
     public String getSchemeURI()
     {
         return schemeURI;
     }
 
 
+    /**
+     * Changes the URI of the subject identifier scheme.
+     * e.g. http://id.loc.gov/authorities/subjects
+     *
+     * @param schemeURI the URI of the subject identifier scheme
+     */
     public void setSchemeURI(String schemeURI)
     {
         this.schemeURI = schemeURI;
     }
 
 
+    /**
+     * Returns a free text name of the subject scheme or classification
+     * code or authority if one is used
+     *
+     * @return a free text name of the subject scheme
+     */
     public String getSubjectScheme()
     {
         return subjectScheme;
     }
 
 
+    /**
+     * Changes the free text name of the subject scheme or classification
+     * code or authority if one is used.
+     *
+     * @param subjectScheme a free text name of the subject scheme
+     */
     public void setSubjectScheme(String subjectScheme)
     {
         this.subjectScheme = subjectScheme;
     }
 
 
+    /**
+     * Returns the URI of the subject term.
+     *
+     * @return the URI of the subject term
+     */
     public String getValueURI()
     {
         return valueURI;
     }
 
 
+    /**
+     * Changes the URI of the subject term.
+     * e.g. http://id.loc.gov/authorities/subjects/sh85026196
+     *
+     * @param valueURI the URI of the subject term
+     */
     public void setValueURI(String valueURI)
     {
         this.valueURI = valueURI;
@@ -126,6 +189,6 @@ public class Subject implements ICleanable
     @Override
     public void clean()
     {
-        subject = StringCleaner.clean(subject);
+        value = StringCleaner.clean(value);
     }
 }

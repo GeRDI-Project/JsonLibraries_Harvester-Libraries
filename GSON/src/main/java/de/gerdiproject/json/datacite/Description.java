@@ -22,18 +22,20 @@ import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.utils.StringCleaner;
 
 /**
- * Highly recommended!
- * This JSON object represents a descriptive free text.
- * NOTE: The DataCite schema allows br-tags here, which are not supported and should be replaced with \n!
- * @author Mathis Neumann, Robin Weiss
+ * Additional information that does not fit in any of the other categories.
+ * May be used for technical information.
+ * NOTE:    The DataCite schema allows br-tags here, which are not supported
+ *          and should be replaced with \n!
  *
+ * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+ * @author Mathis Neumann, Robin Weiss
  */
 public class Description implements ICleanable
 {
     /**
-     * The actual text. Will be stripped of HTML
+     * Free descriptive text.
      */
-    private String description;
+    private String value;
 
     /**
      *  What the description entails.
@@ -41,52 +43,86 @@ public class Description implements ICleanable
     private DescriptionType type;
 
     /**
-     * IETF language tag
+     * IETF language tag.
+     * e.g. de, en-us
      */
     private String lang;
 
+
     /**
      * Simple constructor that requires all mandatory fields.
-     * @param description free text description
+     *
+     * @param value free text description
      * @param type the type of the free text
      */
-    public Description(String description, DescriptionType type)
+    public Description(String value, DescriptionType type)
     {
-        this.description = description;
+        this.value = value;
         this.type = type;
     }
 
 
-    public String getDescription()
+    /**
+     * Returns a free text description.
+     *
+     * @return a free text description
+     */
+    public String getValue()
     {
-        return description;
+        return value;
     }
 
 
-    public void setDescription(String description)
+    /**
+     * Changes a free text description.
+     *
+     * @param value a free text description
+     */
+    public void setValue(String value)
     {
-        this.description = description;
+        this.value = value;
     }
 
 
+    /**
+     * Returns the type of the description.
+     *
+     * @return what the description entails
+     */
     public DescriptionType getType()
     {
         return type;
     }
 
 
+    /**
+     * Changes the type of the description.
+     *
+     * @param type what the description entails
+     */
     public void setType(DescriptionType type)
     {
         this.type = type;
     }
 
 
+    /**
+     * Returns the language in which the description is written.
+     *
+     * @return the language in which the description is written
+     */
     public String getLang()
     {
         return lang;
     }
 
 
+    /**
+     * Changes the language in which the description is written.
+     * e.g. de, en-us
+     *
+     * @param lang  the language in which the description is written
+     */
     public void setLang(String lang)
     {
         this.lang = lang;
@@ -94,23 +130,50 @@ public class Description implements ICleanable
 
 
     /**
-     * This enumeration describes what a description entails.
-     * @author Robin Weiss
-     *
+     * Cleans the description text, removing HTML and unescaping special characters.
      */
-    public enum DescriptionType {
-        Abstract,
-        Methods,
-        SeriesInformation,
-        TableOfContents,
-        TechnicalInfo,
-        Other
-    }
-
-
     @Override
     public void clean()
     {
-        description = StringCleaner.clean(description);
+        value = StringCleaner.clean(value);
+    }
+
+
+    /**
+     * This enumeration describes what a description entails.
+     *
+     * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+     * @author Robin Weiss
+     */
+    public enum DescriptionType {
+        /**
+         * A brief description of the resource and the context in which the resource was created.
+         */
+        Abstract,
+
+        /**
+         * The methodology employed for the study or research.
+         */
+        Methods,
+
+        /**
+         * Information about a repeating series, such as volume, issue, number.
+         */
+        SeriesInformation,
+
+        /**
+         * A listing of the Table of Contents.
+         */
+        TableOfContents,
+
+        /**
+         * Detailed information that may be associated with design, implementation, operation, use, and/or maintenance of a process or system.
+         */
+        TechnicalInfo,
+
+        /**
+         * Other description information that does not fit into an existing category.
+         */
+        Other
     }
 }

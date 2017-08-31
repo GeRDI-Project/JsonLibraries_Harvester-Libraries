@@ -19,66 +19,144 @@
 package de.gerdiproject.json.datacite;
 
 /**
- * This object represents the kind of information the document is about.
- * @author Mathis Neumann, Robin Weiss
+ * This object represents a description of the resource.
  *
+ * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+ * @author Mathis Neumann, Robin Weiss
  */
 public class ResourceType
 {
     /**
-     * free text, e.g. "Census Data"
+     * A free text description of the resource.
+     * e.g. "Census Data"
      */
     private String value;
 
     /**
-     * general category, e.g. "Dataset" for census data, see DataCite Schema PDF for more info on each type
+     * The general type of a resource.
      */
-    private ResourceTypeCategory resourceTypeGeneral;
+    private GeneralResourceType generalType;
 
 
+    /**
+     * Returns the free text description of the resource.
+     *
+     * @return the free text description of the resource
+     */
     public String getValue()
     {
         return value;
     }
 
 
+    /**
+     * Changes the free text description of the resource.
+     *
+     * @param value a free text description of the resource
+     */
     public void setValue(String value)
     {
         this.value = value;
     }
 
 
-    public ResourceTypeCategory getResourceTypeGeneral()
+    /**
+     * Returns the general type of the resource.
+     *
+     * @return the general type of the resource
+     */
+    public GeneralResourceType getGeneralType()
     {
-        return resourceTypeGeneral;
+        return generalType;
     }
 
 
-    public void setResourceTypeGeneral(ResourceTypeCategory resourceTypeGeneral)
+    /**
+     * Changes the general type of the resource.
+     *
+     * @param generalType the general type of the resource
+     */
+    public void setGeneralType(GeneralResourceType generalType)
     {
-        this.resourceTypeGeneral = resourceTypeGeneral;
+        this.generalType = generalType;
     }
 
 
     /**
      * This enumeration describes the resource category.
-     * @author Robin Weiss
      *
+     * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+     * @author Robin Weiss
      */
-    public enum ResourceTypeCategory {
+    public enum GeneralResourceType {
+        /**
+         * A series of visual representations imparting an impression of motion when shown in succession. May or may not include sound.
+         */
         Audiovisual,
+
+        /**
+         * An aggregation of resources of various types, or a list of resources that form part of a publication. If a collection exists of a single type, use the single type to describe it.
+         */
         Collection,
+
+        /**
+         * Data encoded in a defined structure.
+         */
         Dataset,
+
+        /**
+         * A non‐persistent, time‐ based occurrence.
+         */
         Event,
+
+        /**
+         * A visual representation other than text.
+         */
         Image,
+
+        /**
+         * A resource requiring interaction from the user to be understood, executed, or experienced.
+         */
         InteractiveResource,
+
+        /**
+         * An abstract, conceptual, graphical, mathematical or visualization model that represents empirical objects, phenomena, or physical processes.
+         */
         Model,
+
+        /**
+         * An inanimate, three‐ dimensional object or substance.
+         */
         PhysicalObject,
+
+        /**
+         * A system that provides one or more functions of value to the end‐user.
+         */
         Service,
+
+        /**
+         * A computer program in source code (text) or compiled form.
+         */
         Software,
+
+        /**
+         * A resource primarily intended to be heard.
+         */
         Sound,
+
+        /**
+         * A resource consisting primarily of words for reading.
+         */
         Text,
+
+        /**
+         * A structured series of steps which can be executed to produce a final outcome, allowing users a means to specify and enact their work in a more reproducible manner.
+         */
         Workflow,
+
+        /**
+         * If selected, supply a value for ResourceType.
+         */
         Other
     }
 }

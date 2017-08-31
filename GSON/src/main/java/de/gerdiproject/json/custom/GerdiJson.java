@@ -23,7 +23,7 @@ import de.gerdiproject.json.impl.GsonObject;
 @Deprecated
 public class GerdiJson implements ICleanable, IDocument
 {
-    private static final Base64.Encoder encoder = Base64.getEncoder();
+    private static final Base64.Encoder ENCODER = Base64.getEncoder();
 
     private String label;
     private String viewUrl;
@@ -157,7 +157,7 @@ public class GerdiJson implements ICleanable, IDocument
     public String getElasticSearchId()
     {
         // base64 encoding:
-        String base64EncodedString = new String(encoder.encode(viewUrl.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
+        String base64EncodedString = new String(ENCODER.encode(viewUrl.getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
         return base64EncodedString;
     }
 }

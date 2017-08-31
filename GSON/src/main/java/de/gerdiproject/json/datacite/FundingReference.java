@@ -22,126 +22,229 @@ package de.gerdiproject.json.datacite;
  * Information about financial support (funding) for the resource being registered.
  * This is not indexed!
  *
+ * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
  * @author Mathis Neumann, Robin Weiss
- *
  */
 public class FundingReference
 {
     /**
-     * Human readable name of the funder.
+     * Name of the funding provider.
+     * e.g. Gordon and Betty Moore Foundation
      */
     private String funderName;
 
     /**
-     * Indentifier of the funder.
+     * Uniquely identifies a funding entity, according to various types.
+     * e.g. http://dx.doi.org/10.13039/100000936
      */
     private String funderIdentifier;
 
     /**
-     * To object mapping? award.number would break with DataCite, but looks a bit nicer.
+     * The type of the funder identifier.
+     */
+    private FunderIdentifierType funderIdentifierType;
+
+    /**
+     * The code assigned by the funder to a sponsored award (grant).
+     * e.g. GBMF3859.01
      */
     private String awardNumber;
 
     /**
-     * Optional link to award.
+     * The URI leading to a page provided by the funder for more
+     * information about the award (grant).
+     * e.g. https://www.moore.org/grants/list/GBMF3859.01
      */
     private String awardURI;
 
     /**
-     * Human readable version of the award.
+     * The human readable title of the award (grant).
+     * e.g. Socioenvironmental Monitoring of the Amazon Basin and Xingu
      */
     private String awardTitle;
 
-    /**
-     * The type of the funder identifier.
-     */
-    private FunderIdType funderIdentifierType;
-
 
     /**
-     * This enumeration describes the type of the funder identifier.
-     * @author Robin Weiss
+     * Simple constructor that requires all mandatory fields.
      *
+     * @param funderName name of the funding provider
      */
-    public enum FunderIdType {
-        ISNI,
-        GRID,
-        Crossref_Funder_ID,
-        Other
+    public FundingReference(String funderName)
+    {
+        this.funderName = funderName;
     }
 
 
+    /**
+     * Returns the name of the funding provider.
+     *
+     * @return the name of the funding provider
+     */
     public String getFunderName()
     {
         return funderName;
     }
 
 
+    /**
+     * Changes the name of the funding provider.
+     * e.g. Gordon and Betty Moore Foundation
+     *
+     * @param funderName the name of the funding provider
+     */
     public void setFunderName(String funderName)
     {
         this.funderName = funderName;
     }
 
 
+    /**
+     * Returns a unique identifier of the funding entity.
+     *
+     * @return a unique identifier of the funding entity
+     */
     public String getFunderIdentifier()
     {
         return funderIdentifier;
     }
 
 
+    /**
+     * Changes the unique identifier of the funding entity.
+     * e.g. http://dx.doi.org/10.13039/100000936
+     *
+     * @param funderIdentifier a unique identifier of the funding entity
+     */
     public void setFunderIdentifier(String funderIdentifier)
     {
         this.funderIdentifier = funderIdentifier;
     }
 
 
+    /**
+     * Returns the code assigned by the funder to a sponsored award (grant).
+     *
+     * @return the code assigned by the funder to a sponsored award (grant)
+     */
     public String getAwardNumber()
     {
         return awardNumber;
     }
 
 
+    /**
+     * Changes the code assigned by the funder to a sponsored award (grant).
+     * e.g. GBMF3859.01
+     *
+     * @param awardNumber the code assigned by the funder to a sponsored award (grant)
+     */
     public void setAwardNumber(String awardNumber)
     {
         this.awardNumber = awardNumber;
     }
 
 
+    /**
+     * Returns the URI leading to a page provided by the funder for more
+     * information about the award (grant).
+     *
+     * @return the URI leading to a page for more information about the award
+     */
     public String getAwardURI()
     {
         return awardURI;
     }
 
 
+    /**
+     * Changes the URI leading to a page provided by the funder for more
+     * information about the award (grant).
+     * e.g. https://www.moore.org/grants/list/GBMF3859.01
+     *
+     * @param awardURI the URI leading to a page for more information about the award
+     */
     public void setAwardURI(String awardURI)
     {
         this.awardURI = awardURI;
     }
 
 
+    /**
+     * Returns the human readable title of the award (grant).
+     *
+     * @return the human readable title of the award (grant)
+     */
     public String getAwardTitle()
     {
         return awardTitle;
     }
 
 
+    /**
+     * Changes the human readable title of the award (grant).
+     * e.g. Socioenvironmental Monitoring of the Amazon Basin and Xingu
+     *
+     * @param awardTitle the human readable title of the award (grant)
+     */
     public void setAwardTitle(String awardTitle)
     {
         this.awardTitle = awardTitle;
     }
 
 
-    public FunderIdType getFunderIdentifierType()
+    /**
+     * Returns the type of the funder identifier.
+     *
+     * @return the type of the funder identifier
+     */
+    public FunderIdentifierType getFunderIdentifierType()
     {
         return funderIdentifierType;
     }
 
 
-    public void setFunderIdentifierType(FunderIdType funderIdentifierType)
+    /**
+     * Changes the type of the funder identifier.
+     *
+     * @param funderIdentifierType the type of the funder identifier
+     */
+    public void setFunderIdentifierType(FunderIdentifierType funderIdentifierType)
     {
         this.funderIdentifierType = funderIdentifierType;
     }
 
 
+    /**
+     * This enumeration describes the type of the funder identifier.
+     *
+     * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+     * @author Robin Weiss
+     */
+    public enum FunderIdentifierType {
+        /**
+         * International Standard Name Identifier;
+         * the globally recognized and adopted international standard approved by ISO for the unique identification of the public identities of persons and organizations across all fields of creative activity.
+         * see http://www.isni.org/
+         */
+        ISNI,
 
+        /**
+         * Global Research Identifier Database ID;
+         * GRID is comprised of a worldwide collection of institutes associated with academic research. The institutes contained are distinguished by a unique identifier, the GRID ID.
+         * see https://www.grid.ac/
+         */
+        GRID,
+
+        /**
+         * Crossref is a not-for-profit membership organization for scholarly publishing working to make content easy to find, cite, link, and assess.
+         * Funder IDs can be found in the Crossref Funder Registry.
+         * see https://www.crossref.org/services/funder-registry/
+         */
+        Crossref_Funder_ID,
+
+        /**
+         * An identifier type that does not fit into any other category.
+         */
+        Other
+    }
 }

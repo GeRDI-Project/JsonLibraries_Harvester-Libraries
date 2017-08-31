@@ -18,64 +18,147 @@
  */
 package de.gerdiproject.json.datacite;
 
+import java.util.Arrays;
+import java.util.List;
+
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.json.geo.GeoJson;
+import de.gerdiproject.json.geo.Point;
+import de.gerdiproject.json.geo.Polygon;
 
 /**
  * Spatial region or named place where the data was gathered or about which the data is focused.
- * NOTE: every property has to manually mapped to the DataCite schema
- * @author Mathis Neumann, Robin Weiss
+ * This schema deviates from the DataCite schema, mapping the geo coordinates to GeoJson objects
+ * that can be read by ElasticSearch.
  *
+ * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+ * @author Mathis Neumann, Robin Weiss
  */
 public class GeoLocation implements ICleanable
 {
     /**
-     * Free text name of a location - geoLocationPlace in DataCite schema
+     * Description of the geographic location.
      */
     private String place;
 
     /**
-     * geoLocationPlace in DataCite schema
-     * NOTE: manually map! Represented as object with lat, lon, as string "lat,lon", as geohash or typle [lon,lat] (NOTE: reverse order to conform with GeoJSON)
-     * DataCite schema: pointLongitude- and pointLatitude-tags in XML (might also allow string "lat lon")
+     * A point location in space.
      */
     private GeoJson point;
 
     /**
-     *  first and last point must match (both ES and DataCite), at least 4 points (compatible with DataCite)
+     *  The spatial limits of a box.
+     *  It is somewhat redundant with the polygon, however,
+     *  it is compliant to the DataCite schema.
+     */
+    private GeoJson box;
+
+    /**
+     *  A drawn polygon area, defined by a set of points and
+     *  lines connecting the points in a closed chain.
      */
     private GeoJson polygon;
 
 
+    /**
+     * Returns the description of the geographic location.
+     *
+     * @return a free text description of the location
+     */
     public String getPlace()
     {
         return place;
     }
 
+    /**
+     * Changes the description of the geographic location.
+     *
+     * @param place a free text description of the location
+     */
     public void setPlace(String place)
     {
         this.place = place;
     }
 
+
+    /**
+     * Returns a point location in space.
+     *
+     * @return a point location
+     */
     public GeoJson getPoint()
     {
         return point;
     }
 
+
+    /**
+     * Changes the point location.
+     *
+     * @param point a point location
+     */
     public void setPoint(GeoJson point)
     {
         this.point = point;
     }
 
+
+    /**
+     * Returns a drawn polygon area, defined by a set of
+     * points and lines connecting the points in a closed chain.
+     *
+     * @return a polygon area
+     */
     public GeoJson getPolygon()
     {
         return polygon;
     }
 
+
+    /**
+     * Changes the drawn polygon area, defined by a set of
+     * points and lines connecting the points in a closed chain.
+     * The first and last point must be the same.
+     *
+     * @param polygon the polygon area
+     */
     public void setPolygon(GeoJson polygon)
     {
         this.polygon = polygon;
     }
+
+
+    /**
+     * Returns the spatial limits of a box.
+     *
+     * @return the spatial limits of a box
+     */
+    public GeoJson getBox()
+    {
+        return box;
+    }
+
+
+    /**
+     * Changes the spatial limits of a box, defining its shape.
+     *
+     * @param westBoundLongitude western longitudinal dimension of the box
+     * @param eastBoundLongitude eastern longitudinal dimension of the box
+     * @param southBoundLatitude southern latitudinal dimension of the box
+     * @param northBoundLatitude northern latitudinal dimension of the box
+     */
+    public void setBox(double westBoundLongitude, double eastBoundLongitude, double southBoundLatitude, double northBoundLatitude)
+    {
+        List<Point> boxShape = Arrays.asList(
+                                   new Point(westBoundLongitude, northBoundLatitude),
+                                   new Point(eastBoundLongitude, northBoundLatitude),
+                                   new Point(eastBoundLongitude, southBoundLatitude),
+                                   new Point(westBoundLongitude, southBoundLatitude),
+                                   new Point(westBoundLongitude, northBoundLatitude)
+                               );
+        this.box = new GeoJson(new Polygon(boxShape));
+    }
+
 
     @Override
     public void clean()
@@ -85,7 +168,8 @@ public class GeoLocation implements ICleanable
 
         if (polygon != null)
             polygon.clean();
-    }
 
-    // NOTE: datacite includes a "box" geoJson. this is redundant with the polygon type and was therefore not included
+        if (box != null)
+            box.clean();
+    }
 }
