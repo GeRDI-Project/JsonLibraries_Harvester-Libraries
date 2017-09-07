@@ -709,8 +709,24 @@ public class DataCiteJson implements IDocument, ICleanable
         if (rightsList != null)
             rightsList.forEach((Rights r) -> r.clean());
 
-        if (geoLocations != null)
-            geoLocations.forEach((GeoLocation g) -> g.clean());
+        // clean geoLocations, remove invalid ones
+        int i = geoLocations.size();
+
+        while (i != 0) {
+            i--;
+            GeoLocation geoLoc = geoLocations.get(i);
+
+            // clean geo location
+            geoLoc.clean();
+
+            // remove geo location, if it became invalid
+            if (!geoLoc.isValid())
+                geoLocations.remove(i);
+        }
+
+        // remove geolocation array, if it became empty
+        if (geoLocations.size() == 0)
+            geoLocations = null;
     }
 
     @Override

@@ -160,16 +160,46 @@ public class GeoLocation implements ICleanable
     }
 
 
+    /**
+     * Cleans each GeoJson attached to the location.
+     * Each invalid GeoJsons will become null.
+     */
     @Override
     public void clean()
     {
-        if (point != null)
+        if (point != null) {
             point.clean();
 
-        if (polygon != null)
+            // remove geoJson if it became invalid
+            if (!point.isValid())
+                point = null;
+        }
+
+        if (polygon != null) {
+
+            // remove geoJson if it became invalid
             polygon.clean();
 
-        if (box != null)
+            if (!polygon.isValid())
+                polygon = null;
+        }
+
+        if (box != null) {
             box.clean();
+
+            // remove geoJson if it became invalid
+            if (!box.isValid())
+                box = null;
+        }
+    }
+
+    /**
+     * Returns true if the GeoLocation has any geographical data.
+     *
+     * @return true, if the GeoLocation has any geographical data
+     */
+    public boolean isValid()
+    {
+        return box != null || polygon != null || point != null;
     }
 }

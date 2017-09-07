@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import com.esri.core.geometry.ogc.OGCGeometry;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.json.GsonUtils;
@@ -35,13 +36,14 @@ import de.gerdiproject.json.GsonUtils;
 public class GeoJson implements ICleanable
 {
     private static final String PARSE_FAILED = "Could not simplify GeoJson:\n";
+    private static final String INVALID_GEO = "Invalid GeoJson:\n";
+    private static final String INVALID_TYPE = "Invalid";
     private static final Logger LOGGER = LoggerFactory.getLogger(GeoJson.class);
 
     // exclude this field from serialization, it's only used for performance reasons
     private transient boolean isClean;
 
     private String type;
-
     private IGeoCoordinates coordinates;
 
     /**
@@ -53,15 +55,31 @@ public class GeoJson implements ICleanable
         setCoordinates(coordinates);
     }
 
+
     /**
      * Changes the coordinates of the GeoJson. The type is adjusted accordingly.
      * @param coordinates a IGeoCoordinate implementing object that represents valid GeoJson coordinates
      */
     public void setCoordinates(IGeoCoordinates coordinates)
     {
-        this.type = coordinates.getClass().getSimpleName();
+        if (coordinates == null)
+            this.type = INVALID_TYPE;
+        else
+            this.type = coordinates.getClass().getSimpleName();
+
         this.coordinates = coordinates;
         this.isClean = false;
+    }
+
+
+    /**
+     * Returns true if the GeoJson has coordinates.
+     *
+     * @return true, if the geo json has coordinates
+     */
+    public boolean isValid()
+    {
+        return coordinates != null;
     }
 
 
@@ -80,11 +98,14 @@ public class GeoJson implements ICleanable
      * Attempts to detect and remove errors in a geoJson object, such as
      * self-intersecting (multi-)polygons. Additionally, MultiPolygons that
      * can be simplified, may become regular Polygons.
+     *
+     * If the coordinates are broken beyond all repair, they will become null,
+     * rendering the GeoJson invalid.
      */
     @Override
     public void clean()
     {
-        if (!isClean && (coordinates instanceof Polygon  || coordinates instanceof MultiPolygon)) {
+        if (!isClean && coordinates != null && (coordinates instanceof Polygon  || coordinates instanceof MultiPolygon)) {
             Gson gson = GsonUtils.getGson();
 
             String geoJsonString = gson.toJson(this);
@@ -102,9 +123,14 @@ public class GeoJson implements ICleanable
                 // copy the simplified coordinates
                 this.coordinates = cleanedGeo.coordinates;
                 this.type = cleanedGeo.type;
+                isClean = true;
 
             } catch (JSONException e) {
                 LOGGER.warn(PARSE_FAILED + geoJsonString);
+                setCoordinates(null);
+            } catch (JsonSyntaxException e) {
+                LOGGER.warn(INVALID_GEO + geoJsonString);
+                setCoordinates(null);
             }
         }
     }
