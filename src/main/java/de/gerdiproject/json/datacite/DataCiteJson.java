@@ -22,6 +22,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.IDocument;
 
@@ -40,7 +43,10 @@ import de.gerdiproject.harvest.IDocument;
  */
 public class DataCiteJson implements IDocument, ICleanable
 {
+    private static final String ERROR_INVALID_GEO_LOCATION_LIST = "Could not remove invalid GeoLocations! The DataCiteJson.geoLocations list must support remove() operations!";
+
     private static final Base64.Encoder ENCODER = Base64.getEncoder();
+    private static final Logger LOGGER = LoggerFactory.getLogger(DataCiteJson.class);
 
     /**
      *  The Identifier is a unique string that identifies the resource.
@@ -711,18 +717,22 @@ public class DataCiteJson implements IDocument, ICleanable
 
         // clean geoLocations, remove invalid ones
         if (geoLocations != null) {
-            int i = geoLocations.size();
+            try {
+                int i = geoLocations.size();
 
-            while (i != 0) {
-                i--;
-                GeoLocation geoLoc = geoLocations.get(i);
+                while (i != 0) {
+                    i--;
+                    GeoLocation geoLoc = geoLocations.get(i);
 
-                // clean geo location
-                geoLoc.clean();
+                    // clean geo location
+                    geoLoc.clean();
 
-                // remove geo location, if it became invalid
-                if (!geoLoc.isValid())
-                    geoLocations.remove(i);
+                    // remove geo location, if it became invalid
+                    if (!geoLoc.isValid())
+                        geoLocations.remove(i);
+                }
+            } catch (UnsupportedOperationException e) {
+                LOGGER.error(ERROR_INVALID_GEO_LOCATION_LIST);
             }
 
             // remove geolocation array, if it became empty
