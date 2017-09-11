@@ -25,7 +25,7 @@ import de.gerdiproject.harvest.utils.StringCleaner;
  * Additional information that does not fit in any of the other categories.
  * May be used for technical information.
  * NOTE:    The DataCite schema allows br-tags here, which are not supported
- *          and should be replaced with \n!
+ *          by Elastic Search and should be replaced with \n!
  *
  * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
  * @author Mathis Neumann, Robin Weiss

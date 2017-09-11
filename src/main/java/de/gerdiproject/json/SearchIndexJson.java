@@ -3,9 +3,10 @@ package de.gerdiproject.json;
 import java.util.Collection;
 
 /**
- * This JSON object provides a harvested search index, as well as some harvesting metadata.
- * @author Robin Weiss
+ * This JSON object provides a harvested search index, as well as the harvesting duration, timestamp
+ * and checksum of the harvested documents.
  *
+ * @author Robin Weiss
  */
 public class SearchIndexJson
 {
