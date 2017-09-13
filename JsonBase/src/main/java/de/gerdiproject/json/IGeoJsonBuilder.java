@@ -44,7 +44,7 @@ public interface IGeoJsonBuilder
      * @return a geojson polygon that represents a rectangle
      */
     IJsonObject createRectangle(double longitudeWest, double latitudeNorth, double longitudeEast,
-                                       double latitudeSouth);
+                                double latitudeSouth);
 
 
     /**

@@ -6,11 +6,11 @@
 	<parent>
 		<groupId>de.gerdi-project</groupId>
 		<artifactId>GeRDI-parent</artifactId>
-		<version>2.0.0-SNAPSHOT</version>
+		<version>2.1.0-SNAPSHOT</version>
 	</parent>
 	
 	<artifactId>GSON</artifactId>
-	<version>1.0.1-SNAPSHOT</version>
+	<version>1.1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 	<name>GSON</name>
 	<description>This library implements the interfaces provided by 'JSON Base' using GSON.</description>
@@ -21,8 +21,10 @@
 		<javadoc.plugin.version>2.10.4</javadoc.plugin.version>
 		<source.plugin.version>3.0.1</source.plugin.version>
 		<bundle.plugin.version>3.0.1</bundle.plugin.version>
-		<jsonbase.dependency.version>1.0.1-SNAPSHOT</jsonbase.dependency.version>
+		<jsonbase.dependency.version>1.1.0-SNAPSHOT</jsonbase.dependency.version>
 		<gson.dependency.version>2.8.1</gson.dependency.version>
+		<esri.dependency.version>1.2.1</esri.dependency.version>
+		<jsoup.dependency.version>1.8.3</jsoup.dependency.version>
 	</properties>
 	
 	<build>
@@ -102,6 +104,20 @@
 			<artifactId>gson</artifactId>
 			<version>${gson.dependency.version}</version>
 		</dependency>
+		
+		<!-- required for validating geo json -->
+		<dependency>
+		  <groupId>com.esri.geometry</groupId>
+		  <artifactId>esri-geometry-api</artifactId>
+		  <version>${esri.dependency.version}</version>
+		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>${jsoup.dependency.version}</version>
+		</dependency>
 	</dependencies>
 	
 	<developers>
@@ -112,4 +128,12 @@
 			<organizationUrl>http://www.uni-kiel.de/index-e.shtml</organizationUrl>
 		</developer>
 	</developers>
+	
+	<!-- Define Sonatype repository for retrieving SNAPSHOT versions -->
+	<repositories>
+		<repository>
+			<id>Sonatype</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</repository>
+	</repositories>
 </project>
