@@ -3,8 +3,6 @@ package de.gerdiproject.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonPrimitive;
 
 import de.gerdiproject.json.geo.GeoJson;
 import de.gerdiproject.json.geo.LineString;
@@ -20,8 +18,6 @@ import de.gerdiproject.json.geo.adapter.MultiPointAdapter;
 import de.gerdiproject.json.geo.adapter.MultiPolygonAdapter;
 import de.gerdiproject.json.geo.adapter.PointAdapter;
 import de.gerdiproject.json.geo.adapter.PolygonAdapter;
-import de.gerdiproject.json.impl.GsonArray;
-import de.gerdiproject.json.impl.GsonObject;
 
 
 /**
@@ -90,41 +86,6 @@ public final class GsonUtils
             throw new IllegalStateException(ERROR_NOT_INITIALIZED);
 
         return PRETTY_GSON;
-    }
-
-
-    /**
-     * Converts a GSON element to the Java object representation.
-     *
-     * @param ele the GSON element that is to be converted
-     * @return a Java object that is represented by the GSON element
-     */
-    public static Object jsonToObject(JsonElement ele)
-    {
-        if (ele != null && !ele.isJsonNull()) {
-
-            if (ele.isJsonPrimitive()) {
-                JsonPrimitive primitive = ele.getAsJsonPrimitive();
-
-                if (primitive.isString())
-                    return primitive.getAsString();
-
-                if (primitive.isBoolean())
-                    return primitive.getAsBoolean();
-
-                if (primitive.isNumber())
-                    return primitive.getAsNumber();
-
-            } else {
-                if (ele.isJsonArray())
-                    return new GsonArray(ele.getAsJsonArray());
-
-                if (ele.isJsonObject())
-                    return new GsonObject(ele.getAsJsonObject());
-            }
-        }
-
-        return null;
     }
 
 

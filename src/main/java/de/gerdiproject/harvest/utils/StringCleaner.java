@@ -8,7 +8,10 @@ import org.jsoup.Jsoup;
 
 /**
  * This class is used for cleaning up Strings, removing unneccessary tags and spaces.
- * @author Robin Weiss
+ * The ESCAPES table and unescapeHtml() function are adapted versions of code that was
+ * developed by Nick Frolov (http://stackoverflow.com/users/305775/nick-frolov)
+ *
+ * @author Robin Weiss, Nick Frolov
  *
  */
 public class StringCleaner
