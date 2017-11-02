@@ -43,6 +43,11 @@ public class Date
      */
     private DateType dateType;
 
+    /**
+     * Specific free text information about the date, if appropriate.
+     */
+    private String dateInformation;
+
 
     /**
      * Simple constructor that requires all mandatory fields.
@@ -196,5 +201,27 @@ public class Date
     public void setType(DateType type)
     {
         this.dateType = type;
+    }
+
+
+    /**
+     * Returns specific free text information about the date.
+     *
+     * @return specific free text information about the date
+     */
+    public String getDateInformation()
+    {
+        return dateInformation;
+    }
+
+
+    /**
+     * Changes the specific free text information about the date.
+     *
+     * @param dateInformation specific free text information about the date
+     */
+    public void setDateInformation(String dateInformation)
+    {
+        this.dateInformation = dateInformation;
     }
 }

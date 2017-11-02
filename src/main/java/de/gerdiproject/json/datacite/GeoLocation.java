@@ -21,6 +21,8 @@ package de.gerdiproject.json.datacite;
 import java.util.Arrays;
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.json.geo.GeoJson;
 import de.gerdiproject.json.geo.Point;
@@ -37,7 +39,7 @@ import de.gerdiproject.json.geo.Polygon;
 public class GeoLocation implements ICleanable
 {
     /**
-     * Description of the geographic location.
+     * Free text description of the geographic location.
      */
     private String geoLocationPlace;
 
@@ -54,10 +56,11 @@ public class GeoLocation implements ICleanable
     private GeoJson geoLocationBox;
 
     /**
-     *  A drawn polygon area, defined by a set of points and
-     *  lines connecting the points in a closed chain.
+     *  A list of drawn polygon areas, defined by sets of points and
+     *  lines connecting the points in closed chains.
      */
-    private GeoJson geoLocationPolygon;
+    @SerializedName("geoLocationPolygon")
+    private List<GeoJson> geoLocationPolygons;
 
 
     /**
@@ -104,27 +107,26 @@ public class GeoLocation implements ICleanable
 
 
     /**
-     * Returns a drawn polygon area, defined by a set of
-     * points and lines connecting the points in a closed chain.
+     * Returns a list of drawn polygon areas, defined by sets of
+     * points and lines connecting the points in closed chains.
      *
-     * @return a polygon area
+     * @return a list of drawn polygon areas
      */
-    public GeoJson getPolygon()
+    public List<GeoJson> getPolygons()
     {
-        return geoLocationPolygon;
+        return geoLocationPolygons;
     }
 
 
     /**
-     * Changes the drawn polygon area, defined by a set of
-     * points and lines connecting the points in a closed chain.
-     * The first and last point must be the same.
+     * Changes the list of drawn polygon areas, defined by sets of
+     * points and lines connecting the points in closed chains.
      *
-     * @param polygon the polygon area
+     * @param polygons a list of drawn polygon areas
      */
-    public void setPolygon(GeoJson polygon)
+    public void setPolygons(List<GeoJson> polygons)
     {
-        this.geoLocationPolygon = polygon;
+        this.geoLocationPolygons = polygons;
     }
 
 
@@ -175,13 +177,22 @@ public class GeoLocation implements ICleanable
                 geoLocationPoint = null;
         }
 
-        if (geoLocationPolygon != null) {
+        // remove each polygon, if it is invalid
+        if (geoLocationPolygons != null) {
+            int i = geoLocationPolygons.size();
 
-            // remove geoJson if it became invalid
-            geoLocationPolygon.clean();
+            while (i != 0) {
+                i--;
+                GeoJson geo = geoLocationPolygons.get(i);
+                geo.clean();
 
-            if (!geoLocationPolygon.isValid())
-                geoLocationPolygon = null;
+                if (!geo.isValid())
+                    geoLocationPolygons.remove(i);
+            }
+
+            // nullify the whole polygon list, if it is now empty
+            if (geoLocationPolygons.isEmpty())
+                geoLocationPolygons = null;
         }
 
         if (geoLocationBox != null) {
@@ -200,6 +211,6 @@ public class GeoLocation implements ICleanable
      */
     public boolean isValid()
     {
-        return geoLocationBox != null || geoLocationPolygon != null || geoLocationPoint != null;
+        return geoLocationBox != null || (geoLocationPolygons != null && !geoLocationPolygons.isEmpty()) || geoLocationPoint != null;
     }
 }
