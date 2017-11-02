@@ -99,6 +99,14 @@ public class ResourceType
          * An aggregation of resources of various types, or a list of resources that form part of a publication. If a collection exists of a single type, use the single type to describe it.
          */
         Collection,
+        
+        
+        /**
+         * A factual and objective publication with a focused intent to identify and describe specific data, sets of data, or data collections
+         * to facilitate discoverability.
+         */
+        DataPaper,
+        
 
         /**
          * Data encoded in a defined structure.
