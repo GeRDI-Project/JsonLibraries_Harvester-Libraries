@@ -27,6 +27,9 @@ import org.slf4j.LoggerFactory;
 
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.IDocument;
+import de.gerdiproject.json.datacite.extension.File;
+import de.gerdiproject.json.datacite.extension.Source;
+import de.gerdiproject.json.datacite.extension.WebLink;
 
 
 /**

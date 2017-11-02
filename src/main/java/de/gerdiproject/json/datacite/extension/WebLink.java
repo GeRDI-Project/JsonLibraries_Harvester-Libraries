@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.json.datacite;
+package de.gerdiproject.json.datacite.extension;
 
 /**
  * A link to the data provider's website.

@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.json.datacite;
+package de.gerdiproject.json.datacite.extension;
 
 /**
  * Endpoints and URLs used to retrieve the source meta data, e.g. link to JSON/XML.
