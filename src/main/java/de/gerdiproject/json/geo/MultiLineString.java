@@ -26,15 +26,17 @@ import com.google.gson.JsonElement;
 
 /**
  * A set of {@link LineString}s.
- * @author Robin Weiss
  *
+ * @author Robin Weiss
  */
 public class MultiLineString extends LinkedList<LineString> implements IGeoCoordinates
 {
     private static final long serialVersionUID = -4567075857240196220L;
 
+
     /**
      * Constructor that requires an arbitrary number of line strings.
+     *
      * @param lineStrings an arbitrary number of line strings
      */
     public MultiLineString(LineString... lineStrings)
@@ -45,8 +47,10 @@ public class MultiLineString extends LinkedList<LineString> implements IGeoCoord
             add(l);
     }
 
+
     /**
      * Constructor that requires any kind of collection of line strings.
+     *
      * @param lineStrings a Collection of line strings
      */
     public MultiLineString(Collection<LineString> lineStrings)
@@ -54,8 +58,10 @@ public class MultiLineString extends LinkedList<LineString> implements IGeoCoord
         super(lineStrings);
     }
 
+
     /**
      * Constructor that requires a JsonArray of coordinates.
+     *
      * @param array a JsonArray of points
      */
     public MultiLineString(JsonArray array)

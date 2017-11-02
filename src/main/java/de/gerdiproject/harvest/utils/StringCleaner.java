@@ -1,3 +1,21 @@
+/*
+ *  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
 package de.gerdiproject.harvest.utils;
 
 import java.io.StringWriter;
@@ -29,6 +47,7 @@ public class StringCleaner
 
     /**
      * Creates a HashMap that maps escape sequences to the sign that is escaped.
+     *
      * @return a HTML 3 escape hash map
      */
     private static Map<String, String> createEscapeMap()
@@ -141,8 +160,8 @@ public class StringCleaner
     /**
      * Cleans up a String, removing unwanted character escapes and trimming it.
      *
-     * @param input
-     *            the String which is to be cleaned
+     * @param input the String which is to be cleaned
+     *
      * @return a cleaned String
      */
     public static String clean(String input)
@@ -165,8 +184,8 @@ public class StringCleaner
     /**
      * Unescapes escaped HTML characters.
      *
-     * @param input
-     *            a HTML input text
+     * @param input a HTML input text
+     *
      * @return a text with unescaped characters.
      */
     public static final String unescapeHtml(final String input)

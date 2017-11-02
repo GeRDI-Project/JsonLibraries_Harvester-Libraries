@@ -22,8 +22,8 @@ import com.google.gson.JsonArray;
 
 /**
  * A geographical point. It must contain longitude and latitude and may contain the elevation as well.
- * @author Robin Weiss
  *
+ * @author Robin Weiss
  */
 public class Point implements IGeoCoordinates
 {
@@ -44,8 +44,10 @@ public class Point implements IGeoCoordinates
      */
     private double elevation;
 
+
     /**
      * Simple constructor that only requires longitude and latitude.
+     *
      * @param longitude a geographic coordinate that specifies the east-west position of a point on the Earth's surface
      * @param latitude a geographic coordinate that specifies the north–south position of a point on the Earth's surface
      */
@@ -56,8 +58,10 @@ public class Point implements IGeoCoordinates
         this.elevation = Double.NaN;
     }
 
+
     /**
      * Constructor that also lets you set the elevation.
+     *
      * @param longitude a geographic coordinate that specifies the east-west position of a point on the Earth's surface
      * @param latitude a geographic coordinate that specifies the north–south position of a point on the Earth's surface
      * @param elevation the elevation of a geographic location is its height above or below the Earth's sea level
@@ -69,8 +73,10 @@ public class Point implements IGeoCoordinates
         this.elevation = elevation;
     }
 
+
     /**
      * Constructor that constructs the point from a json array.
+     *
      * @param array a JsonArray containing two or three numbers
      */
     public Point(JsonArray array)
@@ -84,30 +90,36 @@ public class Point implements IGeoCoordinates
             this.elevation = Double.NaN;
     }
 
+
     public double getLongitude()
     {
         return longitude;
     }
+
 
     public void setLongitude(double longitude)
     {
         this.longitude = longitude;
     }
 
+
     public double getLatitude()
     {
         return latitude;
     }
+
 
     public void setLatitude(double latitude)
     {
         this.latitude = latitude;
     }
 
+
     public double getElevation()
     {
         return elevation;
     }
+
 
     public void setElevation(double elevation)
     {

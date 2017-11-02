@@ -31,6 +31,7 @@ import de.gerdiproject.json.GsonUtils;
 
 /**
  * GeoJSON is a format for encoding a variety of geographic data structures.
+ *
  * @author Robin Weiss
  */
 public class GeoJson implements ICleanable
@@ -46,8 +47,10 @@ public class GeoJson implements ICleanable
     private String type;
     private IGeoCoordinates coordinates;
 
+
     /**
      * Constructor that sets the coordinates.
+     *
      * @param coordinates a IGeoCoordinate implementing object that represents valid GeoJson coordinates
      */
     public GeoJson(IGeoCoordinates coordinates)
@@ -58,6 +61,7 @@ public class GeoJson implements ICleanable
 
     /**
      * Changes the coordinates of the GeoJson. The type is adjusted accordingly.
+     *
      * @param coordinates a IGeoCoordinate implementing object that represents valid GeoJson coordinates
      */
     public void setCoordinates(IGeoCoordinates coordinates)
@@ -93,6 +97,7 @@ public class GeoJson implements ICleanable
     {
         return coordinates;
     }
+
 
     /**
      * Attempts to detect and remove errors in a geoJson object, such as
