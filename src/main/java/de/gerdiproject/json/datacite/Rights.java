@@ -28,7 +28,7 @@ import de.gerdiproject.harvest.utils.StringCleaner;
  * Include embargo information if applicable. Use the complete title of a license and
  * include version information if applicable.
  *
- * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+ * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  *
  */
@@ -36,6 +36,7 @@ public class Rights implements ICleanable
 {
     /**
      * Free text that describes the rights.
+     * In XML, this is the value between the rights-tags.
      * <br>e.g. Creative Commons, Attribution 3.0 Germany
      */
     private String value;
@@ -44,11 +45,12 @@ public class Rights implements ICleanable
      * The URI of the license.
      * <br>e.g. http://creativecommons.org/licenses/by/3.0/de/deed.en
      */
-    private String URI;
+    private String rightsURI;
 
 
     /**
      * Returns the free text that describes the rights.
+     * In XML, this is the value between the rights-tags.
      *
      * @return free text that describes the rights
      */
@@ -60,6 +62,7 @@ public class Rights implements ICleanable
 
     /**
      * Changes the free text that describes the rights.
+     * In XML, this is the value between the rights-tags.
      * <br>e.g. Creative Commons, Attribution 3.0 Germany
      *
      * @param value free text that describes the rights
@@ -77,7 +80,7 @@ public class Rights implements ICleanable
      */
     public String getURI()
     {
-        return URI;
+        return rightsURI;
     }
 
 
@@ -89,7 +92,7 @@ public class Rights implements ICleanable
      */
     public void setURI(String uri)
     {
-        URI = uri;
+        rightsURI = uri;
     }
 
 

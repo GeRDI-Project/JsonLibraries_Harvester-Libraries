@@ -18,6 +18,8 @@
  */
 package de.gerdiproject.json.datacite.extension;
 
+import de.gerdiproject.json.datacite.extension.enums.WebLinkType;
+
 /**
  * A link to the data provider's website.
  *
@@ -110,44 +112,5 @@ public class WebLink
     public void setType(WebLinkType type)
     {
         this.webLinkType = type;
-    }
-
-
-    /**
-     * The kind of data or webpage which is linked.
-     * This enumeration is incomplete, as more types will be added in accordance with the requirements.
-     *
-     * @author Robin Weiss
-     */
-    public enum WebLinkType {
-        /**
-         * A URL that points to the website at which the resource data can be viewed.<br>
-         * e.g. http://www.arcgis.com/home/item.html?id=aa9a3a2dc6924f46adc5a999787f7961
-         */
-        ViewURL,
-
-        /**
-         * A URL that points to the raw resource data.<br>
-         * e.g. http://api.seaaroundus.org/api/v1/taxa/600009
-         */
-        SourceURL,
-
-        /**
-         * A URL that points to a (small) logo of the organisation that provides the resource data.<br>
-         * e.g. https://livingatlas.arcgis.com/emu/tailcoat/images/tailcoat/logo-esri.png
-         */
-        ProviderLogoURL,
-
-        /**
-         * A URL that points to a small image or thumbnail that represents the resource data itself.<br>
-         * e.g. http://arcgis.com/sharing/rest/content/items/aa9a3a2dc6924f46adc5a999787f7961/info/thumbnail/ago_downloaded.png
-         */
-        ThumbnailURL,
-
-        /**
-         * A URL that points to a website that is related to the resource.<br>
-         * e.g. http://webarchive.iiasa.ac.at/Research/LUC/External-World-soil-database/HWSD_Documentation.pdf
-         */
-        Related
     }
 }

@@ -20,6 +20,7 @@ package de.gerdiproject.json.datacite;
 
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.utils.StringCleaner;
+import de.gerdiproject.json.datacite.enums.DescriptionType;
 
 /**
  * Additional information that does not fit in any of the other categories.
@@ -27,20 +28,20 @@ import de.gerdiproject.harvest.utils.StringCleaner;
  * NOTE:    The DataCite schema allows br-tags here, which are not supported
  *          by Elastic Search and should be replaced with \n!
  *
- * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+ * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
 public class Description implements ICleanable
 {
     /**
-     * Free descriptive text.
+     * Free descriptive text. In XML, this is the value between the description-tags.
      */
     private String value;
 
     /**
      *  What the description entails.
      */
-    private DescriptionType type;
+    private DescriptionType descriptionType;
 
     /**
      * IETF language tag.
@@ -58,7 +59,7 @@ public class Description implements ICleanable
     public Description(String value, DescriptionType type)
     {
         this.value = value;
-        this.type = type;
+        this.descriptionType = type;
     }
 
 
@@ -74,7 +75,7 @@ public class Description implements ICleanable
 
 
     /**
-     * Changes a free text description.
+     * Changes a free text description. In XML, this is the value between the description-tags.
      *
      * @param value a free text description
      */
@@ -85,13 +86,13 @@ public class Description implements ICleanable
 
 
     /**
-     * Returns the type of the description.
+     * Returns the type of the description. In XML, this is the value between the description-tags.
      *
      * @return what the description entails
      */
     public DescriptionType getType()
     {
-        return type;
+        return descriptionType;
     }
 
 
@@ -102,7 +103,7 @@ public class Description implements ICleanable
      */
     public void setType(DescriptionType type)
     {
-        this.type = type;
+        this.descriptionType = type;
     }
 
 
@@ -136,44 +137,5 @@ public class Description implements ICleanable
     public void clean()
     {
         value = StringCleaner.clean(value);
-    }
-
-
-    /**
-     * This enumeration describes what a description entails.
-     *
-     * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
-     * @author Robin Weiss
-     */
-    public enum DescriptionType {
-        /**
-         * A brief description of the resource and the context in which the resource was created.
-         */
-        Abstract,
-
-        /**
-         * The methodology employed for the study or research.
-         */
-        Methods,
-
-        /**
-         * Information about a repeating series, such as volume, issue, number.
-         */
-        SeriesInformation,
-
-        /**
-         * A listing of the Table of Contents.
-         */
-        TableOfContents,
-
-        /**
-         * Detailed information that may be associated with design, implementation, operation, use, and/or maintenance of a process or system.
-         */
-        TechnicalInfo,
-
-        /**
-         * Other description information that does not fit into an existing category.
-         */
-        Other
     }
 }

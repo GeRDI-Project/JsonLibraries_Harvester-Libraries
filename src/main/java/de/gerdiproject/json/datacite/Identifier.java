@@ -18,16 +18,19 @@
  */
 package de.gerdiproject.json.datacite;
 
+import de.gerdiproject.json.datacite.enums.IdentifierType;
+
 /**
  * The primary Identifier of the resource being registered.
  *
- * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+ * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
 public class Identifier
 {
     /**
      * A unique string that identifies the resource.
+     * In XML, this is the value between the identifier-tags.
      * <br>e.g. 10.1234/foo
      */
     private String value;
@@ -35,7 +38,7 @@ public class Identifier
     /**
      * The type of the identifier.
      */
-    private IdentifierType type;
+    private IdentifierType identifierType;
 
 
     /**
@@ -47,7 +50,7 @@ public class Identifier
     public Identifier(String value, IdentifierType type)
     {
         this.value = value;
-        this.type = type;
+        this.identifierType = type;
     }
 
 
@@ -59,12 +62,13 @@ public class Identifier
     public Identifier(String value)
     {
         this.value = value;
-        this.type = IdentifierType.DOI;
+        this.identifierType = IdentifierType.DOI;
     }
 
 
     /**
      * Returns a unique identifier.
+     * In XML, this is the value between the identifier-tags.
      *
      * @return a unique identifier
      */
@@ -76,6 +80,7 @@ public class Identifier
 
     /**
      * Changes the unique identifier.
+     * In XML, this is the value between the identifier-tags.
      * <br>e.g. 10.1234/foo
      *
      * @param value a unique identifier
@@ -93,7 +98,7 @@ public class Identifier
      */
     public IdentifierType getType()
     {
-        return type;
+        return identifierType;
     }
 
 
@@ -104,19 +109,6 @@ public class Identifier
      */
     public void setType(IdentifierType type)
     {
-        this.type = type;
-    }
-
-    /**
-     * This enumeration describes the type of the funder identifier.
-     *
-     * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
-     * @author Robin Weiss
-     */
-    public enum IdentifierType {
-        /**
-         * A Digital Object Identifier, registered by a DataCite member.
-         */
-        DOI
+        this.identifierType = type;
     }
 }

@@ -31,7 +31,7 @@ import de.gerdiproject.json.geo.Polygon;
  * This schema deviates from the DataCite schema, mapping the geo coordinates to GeoJson objects
  * that can be read by ElasticSearch.
  *
- * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+ * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
 public class GeoLocation implements ICleanable
@@ -39,25 +39,25 @@ public class GeoLocation implements ICleanable
     /**
      * Description of the geographic location.
      */
-    private String place;
+    private String geoLocationPlace;
 
     /**
      * A point location in space.
      */
-    private GeoJson point;
+    private GeoJson geoLocationPoint;
 
     /**
      *  The spatial limits of a box.
      *  It is somewhat redundant with the polygon, however,
      *  it is compliant to the DataCite schema.
      */
-    private GeoJson box;
+    private GeoJson geoLocationBox;
 
     /**
      *  A drawn polygon area, defined by a set of points and
      *  lines connecting the points in a closed chain.
      */
-    private GeoJson polygon;
+    private GeoJson geoLocationPolygon;
 
 
     /**
@@ -67,7 +67,7 @@ public class GeoLocation implements ICleanable
      */
     public String getPlace()
     {
-        return place;
+        return geoLocationPlace;
     }
 
     /**
@@ -77,7 +77,7 @@ public class GeoLocation implements ICleanable
      */
     public void setPlace(String place)
     {
-        this.place = place;
+        this.geoLocationPlace = place;
     }
 
 
@@ -88,7 +88,7 @@ public class GeoLocation implements ICleanable
      */
     public GeoJson getPoint()
     {
-        return point;
+        return geoLocationPoint;
     }
 
 
@@ -99,7 +99,7 @@ public class GeoLocation implements ICleanable
      */
     public void setPoint(GeoJson point)
     {
-        this.point = point;
+        this.geoLocationPoint = point;
     }
 
 
@@ -111,7 +111,7 @@ public class GeoLocation implements ICleanable
      */
     public GeoJson getPolygon()
     {
-        return polygon;
+        return geoLocationPolygon;
     }
 
 
@@ -124,7 +124,7 @@ public class GeoLocation implements ICleanable
      */
     public void setPolygon(GeoJson polygon)
     {
-        this.polygon = polygon;
+        this.geoLocationPolygon = polygon;
     }
 
 
@@ -135,7 +135,7 @@ public class GeoLocation implements ICleanable
      */
     public GeoJson getBox()
     {
-        return box;
+        return geoLocationBox;
     }
 
 
@@ -156,7 +156,7 @@ public class GeoLocation implements ICleanable
                                    new Point(westBoundLongitude, southBoundLatitude),
                                    new Point(westBoundLongitude, northBoundLatitude)
                                );
-        this.box = new GeoJson(new Polygon(boxShape));
+        this.geoLocationBox = new GeoJson(new Polygon(boxShape));
     }
 
 
@@ -167,29 +167,29 @@ public class GeoLocation implements ICleanable
     @Override
     public void clean()
     {
-        if (point != null) {
-            point.clean();
+        if (geoLocationPoint != null) {
+            geoLocationPoint.clean();
 
             // remove geoJson if it became invalid
-            if (!point.isValid())
-                point = null;
+            if (!geoLocationPoint.isValid())
+                geoLocationPoint = null;
         }
 
-        if (polygon != null) {
+        if (geoLocationPolygon != null) {
 
             // remove geoJson if it became invalid
-            polygon.clean();
+            geoLocationPolygon.clean();
 
-            if (!polygon.isValid())
-                polygon = null;
+            if (!geoLocationPolygon.isValid())
+                geoLocationPolygon = null;
         }
 
-        if (box != null) {
-            box.clean();
+        if (geoLocationBox != null) {
+            geoLocationBox.clean();
 
             // remove geoJson if it became invalid
-            if (!box.isValid())
-                box = null;
+            if (!geoLocationBox.isValid())
+                geoLocationBox = null;
         }
     }
 
@@ -200,6 +200,6 @@ public class GeoLocation implements ICleanable
      */
     public boolean isValid()
     {
-        return box != null || polygon != null || point != null;
+        return geoLocationBox != null || geoLocationPolygon != null || geoLocationPoint != null;
     }
 }

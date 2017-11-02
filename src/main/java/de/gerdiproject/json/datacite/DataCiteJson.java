@@ -38,7 +38,7 @@ import de.gerdiproject.json.datacite.extension.WebLink;
  *
  * The metadata schema is extended by fields that are required by GeRDI features.
  *
- * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+ * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
 public class DataCiteJson implements IDocument, ICleanable

@@ -20,17 +20,18 @@ package de.gerdiproject.json.datacite;
 
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.utils.StringCleaner;
+import de.gerdiproject.json.datacite.enums.TitleType;
 
 /**
  * A name or title by which a resource is known.
  *
- * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+ * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
 public class Title implements ICleanable
 {
     /**
-     * A free text title or name.
+     * A free text title or name. In XML, this is the value between the title-tags.
      * <br>e.g. Crops, Catch Value in the Atlantic Ocean
      */
     private String value;
@@ -38,7 +39,7 @@ public class Title implements ICleanable
     /**
      * The type of Title.
      */
-    private TitleType type;
+    private TitleType titleType;
 
     /**
      * IETF language tag describing the language of the title text.
@@ -59,7 +60,8 @@ public class Title implements ICleanable
 
 
     /**
-     * Returns a free text title or name.
+     * Returns a free text title or name. 
+     * In XML, this is the value between the title-tags.
      *
      * @return a free text title or name
      */
@@ -71,6 +73,7 @@ public class Title implements ICleanable
 
     /**
      * Changes the free text title or name.
+     * In XML, this is the value between the title-tags.
      * <br>e.g. Crops, Catch Value in the Atlantic Ocean
      *
      * @param value a free text title or name
@@ -88,7 +91,7 @@ public class Title implements ICleanable
      */
     public TitleType getType()
     {
-        return type;
+        return titleType;
     }
 
 
@@ -100,7 +103,7 @@ public class Title implements ICleanable
      */
     public void setType(TitleType type)
     {
-        this.type = type;
+        this.titleType = type;
     }
 
 
@@ -131,35 +134,5 @@ public class Title implements ICleanable
     public void clean()
     {
         value = StringCleaner.clean(value);
-    }
-
-
-    /**
-     * This enumeration describes the type of a {@link Title}.
-     *
-     * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
-     * @author Robin Weiss
-     */
-    public enum TitleType {
-        /**
-         * An alternative title variant of the main title.
-         */
-        AlternativeTitle,
-
-        /**
-         * An extension of the main title.
-         */
-        Subtitle,
-
-        /**
-         * A title that is translated from the standard language (?)
-         * This type is not properly documented and may be interpreted wrongly.
-         */
-        TranslatedTitle,
-
-        /**
-         * A title that does not match any other types and is not the main title.
-         */
-        Other
     }
 }

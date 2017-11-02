@@ -21,16 +21,19 @@ package de.gerdiproject.json.datacite;
 import java.time.Instant;
 import java.util.Calendar;
 
+import de.gerdiproject.json.datacite.enums.DateType;
+
 /**
  * This JsonObject describes a date that has been relevant to the work.
  *
- * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+ * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
 public class Date
 {
     /**
      *  Timestamp in milliseconds since 01/01/1970 00:00:00.
+     *  In XML, this is the value between the identifier-tags.
      *  All formats supported by ES, see https://www.elastic.co/guide/en/elasticsearch/reference/5.2/mapping-date-format.html
      */
     private long value;
@@ -38,7 +41,7 @@ public class Date
     /**
      * The event that is marked by this date.
      */
-    private DateType type;
+    private DateType dateType;
 
 
     /**
@@ -50,7 +53,7 @@ public class Date
     public Date(Instant date, DateType type)
     {
         setDate(date);
-        this.type = type;
+        this.dateType = type;
     }
 
 
@@ -63,7 +66,7 @@ public class Date
     public Date(Calendar date, DateType type)
     {
         setDate(date);
-        this.type = type;
+        this.dateType = type;
     }
 
 
@@ -76,7 +79,7 @@ public class Date
     public Date(java.util.Date date, DateType type)
     {
         setDate(date);
-        this.type = type;
+        this.dateType = type;
     }
 
 
@@ -89,7 +92,7 @@ public class Date
     public Date(java.sql.Date date, DateType type)
     {
         setDate(date);
-        this.type = type;
+        this.dateType = type;
     }
 
 
@@ -102,7 +105,7 @@ public class Date
     public Date(long epochMilli, DateType type)
     {
         setValue(epochMilli);
-        this.type = type;
+        this.dateType = type;
     }
 
 
@@ -181,7 +184,7 @@ public class Date
      */
     public DateType getType()
     {
-        return type;
+        return dateType;
     }
 
 
@@ -192,61 +195,6 @@ public class Date
      */
     public void setType(DateType type)
     {
-        this.type = type;
-    }
-
-
-    /**
-     * This enumeration describes an event that is marked by a date.
-     *
-     * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
-     * @author Robin Weiss
-     */
-    public enum DateType {
-        /**
-         * The date that the publisher accepted the resource into their system.
-         */
-        Accepted,
-
-        /**
-         * The date the resource is made publicly available. May be a range.
-         */
-        Available,
-
-        /**
-         * The specific, documented date at which the resource receives a copyrighted status, if applicable.
-         */
-        Copyrighted,
-
-        /**
-         * The date or date range in which the resource content was collected.
-         */
-        Collected,
-
-        /**
-         * The date the resource itself was put together; this could be a date range or a single date for a final component,
-         * e.g. the finalised file with all of the data.
-         */
-        Created,
-
-        /**
-         * The date that the resource is published or distributed e.g. to a data centre.
-         */
-        Issued,
-
-        /**
-         * The date the creator submits the resource to the publisher. This could be different from Accepted if the publisher then applies a selection process.
-         */
-        Submitted,
-
-        /**
-         * The date of the last update to the resource, when the resource is being added to. May be a range.
-         */
-        Updated,
-
-        /**
-         * The date or date range during which the dataset or resource is accurate.
-         */
-        Valid
+        this.dateType = type;
     }
 }

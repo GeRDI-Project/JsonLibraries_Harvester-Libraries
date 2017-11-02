@@ -16,47 +16,17 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.json.datacite;
-
-import de.gerdiproject.json.datacite.nested.AbstractPerson;
-import de.gerdiproject.json.datacite.nested.PersonName;
+package de.gerdiproject.json.datacite.enums;
 
 /**
- * The main researcher involved in producing the data, or an author of the publication.
+ * This enumeration describes the type of the funder identifier.
  *
  * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
- * @author Mathis Neumann, Robin Weiss
+ * @author Robin Weiss
  */
-public class Creator extends AbstractPerson
-{
+public enum IdentifierType {
     /**
-     * The full name of the creator.
-     * <br>e.g. Sanchez, Rick
+     * A Digital Object Identifier, registered by a DataCite member.
      */
-    private PersonName creatorName;
-
-
-    /**
-     * Simple constructor that requires all mandatory fields.
-     *
-     * @param name the name of the creator
-     */
-    public Creator(String name)
-    {
-        super(name);
-    }
-
-
-    @Override
-    public PersonName getName()
-    {
-        return creatorName;
-    }
-
-
-    @Override
-    public void setName(PersonName name)
-    {
-        this.creatorName = name;
-    }
+    DOI
 }
