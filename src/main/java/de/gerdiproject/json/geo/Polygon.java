@@ -27,15 +27,17 @@ import com.google.gson.JsonElement;
 
 /**
  * A single shape that may have holes.
- * @author Robin Weiss
  *
+ * @author Robin Weiss
  */
 public class Polygon extends LinkedList<List<Point>> implements IGeoCoordinates
 {
     private static final long serialVersionUID = -9154174270949179550L;
 
+
     /**
      * Constructor that creates a single shape without any holes.
+     *
      * @param filledShape a list of points that must form a ring
      */
     public Polygon(List<Point> filledShape)
@@ -44,8 +46,10 @@ public class Polygon extends LinkedList<List<Point>> implements IGeoCoordinates
         add(filledShape);
     }
 
+
     /**
      * Constructor that creates a shape with holes.
+     *
      * @param filledShape a list of points that must form a ring, defining the filled shape
      * @param holes a list of rings of coordinates, where each ring defines a hole in the filledShape
      */
@@ -57,8 +61,10 @@ public class Polygon extends LinkedList<List<Point>> implements IGeoCoordinates
         addAll(holes);
     }
 
+
     /**
      * Constructor that requires a collection of rings. The first ring defines the filled shape and every subsequent ring defines a whole in the filled shape.
+     *
      * @param shapes a collection of coordinate rings
      */
     public Polygon(Collection<List<Point>> shapes)
@@ -66,8 +72,11 @@ public class Polygon extends LinkedList<List<Point>> implements IGeoCoordinates
         super(shapes);
     }
 
+
     /**
-     * Constructor that requires a JsonArray of rings. The first ring defines the filled shape and every subsequent ring defines a whole in the filled shape.
+     * Constructor that requires a JsonArray of rings.
+     * The first ring defines the filled shape and every subsequent ring defines a whole in the filled shape.
+     *
      * @param array a JsonArray of coordinate rings
      */
     public Polygon(JsonArray array)
@@ -85,8 +94,10 @@ public class Polygon extends LinkedList<List<Point>> implements IGeoCoordinates
         });
     }
 
+
     /**
      * Checks if holes exist in the polygon.
+     *
      * @return true, if the polygon has holes in it
      */
     public boolean hasHoles()
@@ -94,8 +105,10 @@ public class Polygon extends LinkedList<List<Point>> implements IGeoCoordinates
         return size() > 1;
     }
 
+
     /**
      * Returns the filled shape of the polygon.
+     *
      * @return the filled shape of the polygon
      */
     public List<Point> getFilledShape()
@@ -103,8 +116,10 @@ public class Polygon extends LinkedList<List<Point>> implements IGeoCoordinates
         return get(0);
     }
 
+
     /**
      * Changes the filled shape of the polygon witout changing the holes.
+     *
      * @param shape a ring of coordinates, defining a shape
      */
     public void setFilledShape(List<Point> shape)
@@ -112,14 +127,17 @@ public class Polygon extends LinkedList<List<Point>> implements IGeoCoordinates
         set(0, shape);
     }
 
+
     /**
      * Returns a list of all holes.
+     *
      * @return a list of rings, defining the holes of the polygon
      */
     public List<List<Point>> getHoles()
     {
         return super.subList(1, size());
     }
+
 
     /**
      * Removes all holes of the polygon.

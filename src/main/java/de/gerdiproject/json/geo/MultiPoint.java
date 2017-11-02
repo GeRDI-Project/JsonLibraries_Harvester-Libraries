@@ -26,12 +26,13 @@ import com.google.gson.JsonElement;
 
 /**
  * This class represents an array of coordinates (points).
- * @author Robin Weiss
  *
+ * @author Robin Weiss
  */
 public class MultiPoint extends LinkedList<Point> implements IGeoCoordinates
 {
     private static final long serialVersionUID = -3091739333929089564L;
+
 
     /**
      * Constructor that requires an arbitrary number of coordinates.
@@ -44,6 +45,7 @@ public class MultiPoint extends LinkedList<Point> implements IGeoCoordinates
         for (Point gp : points)
             add(gp);
     }
+
 
     /**
      * Constructor that requires any kind of collection of coordinates.

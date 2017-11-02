@@ -1,3 +1,21 @@
+/*
+ *  Licensed to the Apache Software Foundation (ASF) under one
+ *  or more contributor license agreements.  See the NOTICE file
+ *  distributed with this work for additional information
+ *  regarding copyright ownership.  The ASF licenses this file
+ *  to you under the Apache License, Version 2.0 (the
+ *  "License"); you may not use this file except in compliance
+ *  with the License.  You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing,
+ *  software distributed under the License is distributed on an
+ *  "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ *  KIND, either express or implied.  See the License for the
+ *  specific language governing permissions and limitations
+ *  under the License.
+ */
 package de.gerdiproject.json;
 
 
@@ -25,7 +43,6 @@ import de.gerdiproject.json.geo.adapter.PolygonAdapter;
  * by this GSON implementation. The init function must be called once prior to calling getGson and getPrettyGson.
  *
  * @author Robin Weiss
- *
  */
 public final class GsonUtils
 {
@@ -39,6 +56,7 @@ public final class GsonUtils
     /**
      * Initializes the {@linkplain Gson} instances with a specified builder.
      * GeoJson adapters are automatically added.
+     *
      * @param builder a GsonBuilder instance that may have registered Adapters
      */
     public static void init(GsonBuilder builder)
@@ -63,6 +81,7 @@ public final class GsonUtils
      * Retrieves a non-pretty printing {@linkplain Gson} instance, which
      * can be used for converting JSON objects to Strings or Java objects,
      * and vice versa.
+     *
      * @return a non-pretty printing {@linkplain Gson} instance
      */
     public static Gson getGson()
@@ -78,6 +97,7 @@ public final class GsonUtils
      * Retrieves a pretty printing {@linkplain Gson} instance, which
      * can be used for converting JSON objects to Strings or Java objects,
      * and vice versa.
+     *
      * @return a pretty printing {@linkplain Gson} instance
      */
     public static Gson getPrettyGson()

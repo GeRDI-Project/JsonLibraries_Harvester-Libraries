@@ -20,11 +20,9 @@ package de.gerdiproject.json.geo;
 
 
 /**
- * An interface for objects that represent coordinates of a GeoJson object.
+ * An interface for objects that represent coordinates of a {@linkplain GeoJson} object.
  *
- * @see GeoJson
  * @author Robin Weiss
- *
  */
 public interface IGeoCoordinates
 {

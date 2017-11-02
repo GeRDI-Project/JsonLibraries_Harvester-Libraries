@@ -26,8 +26,8 @@ import com.google.gson.JsonElement;
 
 /**
  * A set of at least two points that represent coordinates of connected lines.
- * @author Robin Weiss
  *
+ * @author Robin Weiss
  */
 public class LineString extends LinkedList<Point> implements IGeoCoordinates
 {
@@ -35,6 +35,7 @@ public class LineString extends LinkedList<Point> implements IGeoCoordinates
 
     /**
      * Constructor that requires an arbitrary number of coordinates.
+     *
      * @param points an arbitrary number of points
      */
     public LineString(Point... points)
@@ -45,8 +46,10 @@ public class LineString extends LinkedList<Point> implements IGeoCoordinates
             add(gp);
     }
 
+
     /**
      * Constructor that requires any kind of collection of coordinates.
+     *
      * @param points a Collection of points
      */
     public LineString(Collection<Point> points)
@@ -54,8 +57,10 @@ public class LineString extends LinkedList<Point> implements IGeoCoordinates
         super(points);
     }
 
+
     /**
      * Constructor that requires a JsonArray of coordinates.
+     *
      * @param array a JsonArray of points
      */
     public LineString(JsonArray array)

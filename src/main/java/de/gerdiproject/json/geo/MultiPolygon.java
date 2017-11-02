@@ -26,12 +26,13 @@ import com.google.gson.JsonElement;
 
 /**
  * A set of {@link Polygon}s.
- * @author Robin Weiss
  *
+ * @author Robin Weiss
  */
 public class MultiPolygon extends LinkedList<Polygon> implements IGeoCoordinates
 {
     private static final long serialVersionUID = 1337151528933932554L;
+
 
     /**
      * Constructor that requires an arbitrary number of polygons.
@@ -45,6 +46,7 @@ public class MultiPolygon extends LinkedList<Polygon> implements IGeoCoordinates
             add(p);
     }
 
+
     /**
      * Constructor that requires any kind of collection of polygons.
      * @param polygons a Collection of polygons
@@ -53,6 +55,7 @@ public class MultiPolygon extends LinkedList<Polygon> implements IGeoCoordinates
     {
         super(polygons);
     }
+
 
     /**
      * Constructor that requires a JsonArray of polygons.
