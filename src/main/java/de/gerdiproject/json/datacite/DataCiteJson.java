@@ -18,8 +18,6 @@
  */
 package de.gerdiproject.json.datacite;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -27,8 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.IDocument;
-import de.gerdiproject.json.datacite.extension.File;
-import de.gerdiproject.json.datacite.extension.Source;
+import de.gerdiproject.json.datacite.extension.ResearchData;
 import de.gerdiproject.json.datacite.extension.WebLink;
 
 
@@ -47,8 +44,6 @@ import de.gerdiproject.json.datacite.extension.WebLink;
 public class DataCiteJson implements IDocument, ICleanable
 {
     private static final String ERROR_INVALID_GEO_LOCATION_LIST = "Could not remove invalid GeoLocations! The DataCiteJson.geoLocations list must support remove() operations!";
-
-    private static final Base64.Encoder ENCODER = Base64.getEncoder();
     private static final Logger LOGGER = LoggerFactory.getLogger(DataCiteJson.class);
 
     /**
@@ -90,10 +85,17 @@ public class DataCiteJson implements IDocument, ICleanable
     private Object customData;
 
     /**
-     * Endpoint and URL used to retrieve the source meta data.
-     * <br>e.g. link to JSON/XML
+     * A unique but human readable name of the repository.
+     * <br>e.g. Sea Around Us, FAOSTAT
      */
-    private Source sources;
+    private String repositoryIdentifier;
+
+    /**
+     * A list of human readable names of the research disciplines, meaning the topics or domains that this document covers.
+     * <br>e.g. Computer Science, Geography
+     */
+    private List<String> researchDisciplines;
+
 
     /**
      * Unstructured size information about the resource.
@@ -177,7 +179,7 @@ public class DataCiteJson implements IDocument, ICleanable
     /**
      * Downloadable source data files.
      */
-    private List<File> files;
+    private List<ResearchData> files;
 
 
     /**
@@ -342,25 +344,47 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Returns the endpoint and URL used to retrieve the source meta data.
+     * Returns the unique but human readable name of the repository.
+     * <br>e.g. Sea Around Us, FAOSTAT
      *
-     * @return the endpoint and URL used to retrieve the source meta data
+     * @return a unique but human readable name of the repository
      */
-    public Source getSources()
+    public String getRepositoryIdentifier()
     {
-        return sources;
+        return repositoryIdentifier;
     }
 
 
     /**
-     * Changes the endpoint and URL used to retrieve the source meta data.
-     * <br>e.g. link to JSON/XML
+     * Changes the unique but human readable name of the repository.
      *
-     * @param sources the endpoint and URL used to retrieve the source meta data
+     * @param repositoryIdentifier a unique but human readable name of the repository
      */
-    public void setSources(Source sources)
+    public void setRepositoryIdentifier(String repositoryIdentifier)
     {
-        this.sources = sources;
+        this.repositoryIdentifier = repositoryIdentifier;
+    }
+
+
+    /**
+     * Retrieves the list of human readable names of the research disciplines, meaning the topics or domains that this document covers.
+     *
+     * @return a list of human readable names of the research disciplines
+     */
+    public List<String> getResearchDisciplines()
+    {
+        return researchDisciplines;
+    }
+
+
+    /**
+     * Changes the list of human readable names of the research disciplines, meaning the topics or domains that this document covers.
+     *
+     * @param researchDisciplines a list of human readable names of the research disciplines
+     */
+    public void setResearchDisciplines(List<String> researchDisciplines)
+    {
+        this.researchDisciplines = researchDisciplines;
     }
 
 
@@ -686,7 +710,7 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @return downloadable files
      */
-    public List<File> getFiles()
+    public List<ResearchData> getFiles()
     {
         return files;
     }
@@ -697,7 +721,7 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @param files downloadable files
      */
-    public void setFiles(List<File> files)
+    public void setFiles(List<ResearchData> files)
     {
         this.files = files;
     }
@@ -742,13 +766,5 @@ public class DataCiteJson implements IDocument, ICleanable
             if (geoLocations.size() == 0)
                 geoLocations = null;
         }
-    }
-
-    @Override
-    public String getElasticSearchId()
-    {
-        // base64 encoding:
-        String base64EncodedString = new String(ENCODER.encode(sources.getURI().getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
-        return base64EncodedString;
     }
 }

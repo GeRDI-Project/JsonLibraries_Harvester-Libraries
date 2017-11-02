@@ -29,17 +29,17 @@ public class WebLink
     /**
      * A descriptive name of the web link destination.
      */
-    private String name;
+    private String webLinkName;
 
     /**
      * The URL of the web link.
      */
-    private String URL;
+    private String webLinkURI;
 
     /**
      * The link category.
      */
-    private WebLinkType type;
+    private WebLinkType webLinkType;
 
 
     /**
@@ -49,7 +49,7 @@ public class WebLink
      */
     public WebLink(String url)
     {
-        this.URL = url;
+        this.webLinkURI = url;
     }
 
 
@@ -59,7 +59,7 @@ public class WebLink
      */
     public String getName()
     {
-        return name;
+        return webLinkName;
     }
 
 
@@ -69,7 +69,7 @@ public class WebLink
      */
     public void setName(String name)
     {
-        this.name = name;
+        this.webLinkName = name;
     }
 
 
@@ -79,7 +79,7 @@ public class WebLink
      */
     public String getUrl()
     {
-        return URL;
+        return webLinkURI;
     }
 
 
@@ -89,7 +89,7 @@ public class WebLink
      */
     public void setUrl(String url)
     {
-        this.URL = url;
+        this.webLinkURI = url;
     }
 
 
@@ -99,7 +99,7 @@ public class WebLink
      */
     public WebLinkType getType()
     {
-        return type;
+        return webLinkType;
     }
 
 
@@ -109,7 +109,7 @@ public class WebLink
      */
     public void setType(WebLinkType type)
     {
-        this.type = type;
+        this.webLinkType = type;
     }
 
 
@@ -121,22 +121,32 @@ public class WebLink
      */
     public enum WebLinkType {
         /**
-         * A URL that points to the website at which the resource data can be viewed.
+         * A URL that points to the website at which the resource data can be viewed.<br>
+         * e.g. http://www.arcgis.com/home/item.html?id=aa9a3a2dc6924f46adc5a999787f7961
          */
         ViewURL,
 
         /**
-         * A URL that points to a (small) logo of the organisation that provides the resource data.
+         * A URL that points to the raw resource data.<br>
+         * e.g. http://api.seaaroundus.org/api/v1/taxa/600009
+         */
+        SourceURL,
+
+        /**
+         * A URL that points to a (small) logo of the organisation that provides the resource data.<br>
+         * e.g. https://livingatlas.arcgis.com/emu/tailcoat/images/tailcoat/logo-esri.png
          */
         ProviderLogoURL,
 
         /**
-         * A URL that points to a small image or thumbnail that represents the resource data itself.
+         * A URL that points to a small image or thumbnail that represents the resource data itself.<br>
+         * e.g. http://arcgis.com/sharing/rest/content/items/aa9a3a2dc6924f46adc5a999787f7961/info/thumbnail/ago_downloaded.png
          */
         ThumbnailURL,
 
         /**
-         * A URL that points to a website that is related to the resource.
+         * A URL that points to a website that is related to the resource.<br>
+         * e.g. http://webarchive.iiasa.ac.at/Research/LUC/External-World-soil-database/HWSD_Documentation.pdf
          */
         Related
     }

@@ -19,11 +19,10 @@
 package de.gerdiproject.harvest;
 
 /**
- * The interface for ElasticSearch documents.
+ * The interface for documents.
  *
  * @author Robin Weiss
  */
 public interface IDocument
 {
-    String getElasticSearchId();
 }
