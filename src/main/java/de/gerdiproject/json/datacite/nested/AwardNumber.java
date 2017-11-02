@@ -26,16 +26,27 @@ package de.gerdiproject.json.datacite.nested;
  */
 public class AwardNumber
 {
-	/**
-	 * The value of the AwardNumber.
-	 * In XML, this is the value between the awardNumber-tags.
-	 */
+    /**
+     * The value of the AwardNumber.
+     * In XML, this is the value between the awardNumber-tags.
+     */
     private String value;
-    
+
     /**
      * The URI leading to a page for more information about the award.
      */
     private String awardURI;
+
+
+    /**
+     * Simple Constructor that requires all mandatory fields.
+     *
+     * @param value the value of the AwardNumber
+     */
+    public AwardNumber(String value)
+    {
+        this.value = value;
+    }
 
 
     /**

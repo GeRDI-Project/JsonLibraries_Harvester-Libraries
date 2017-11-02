@@ -42,6 +42,19 @@ public class ResourceType
 
 
     /**
+     * Simple constructor that requires all mandatory values.
+     *
+     * @param value the free text description of the resource
+     * @param resourceTypeGeneral the general type of the resource
+     */
+    public ResourceType(String value, ResourceTypeGeneral resourceTypeGeneral)
+    {
+        this.value = value;
+        this.resourceTypeGeneral = resourceTypeGeneral;
+    }
+
+
+    /**
      * Returns the free text description of the resource.
      * In XML, this is the value between the resourceType-tags.
      *

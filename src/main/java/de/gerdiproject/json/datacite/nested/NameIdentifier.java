@@ -45,6 +45,19 @@ public class NameIdentifier
      */
     private String schemeURI;
 
+
+    /**
+     * Simple Constructor that requires all mandatory fields.
+     * @param value uniquely identifies an individual or legal entity, according to various schemes
+     * @param nameIdentifierScheme the name of the name identifier scheme
+     */
+    public NameIdentifier(String value, String nameIdentifierScheme)
+    {
+        this.value = value;
+        this.nameIdentifierScheme = nameIdentifierScheme;
+    }
+
+
     /**
      * Returns a unique identifier of an individual or legal entity, according to various schemes.
      * In XML, this is the value between the nameIdentifier-tags.

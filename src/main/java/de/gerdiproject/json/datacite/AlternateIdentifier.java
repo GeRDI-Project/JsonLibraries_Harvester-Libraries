@@ -48,10 +48,10 @@ public class AlternateIdentifier
      * @param value the identifier value
      * @param type free text describing the identifier
      */
-    public AlternateIdentifier(String value, String type)
+    public AlternateIdentifier(String value, String alternateIdentifierType)
     {
         this.value = value;
-        this.alternateIdentifierType = type;
+        this.alternateIdentifierType = alternateIdentifierType;
     }
 
 

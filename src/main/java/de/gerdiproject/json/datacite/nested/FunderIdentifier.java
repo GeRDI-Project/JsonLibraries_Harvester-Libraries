@@ -29,16 +29,27 @@ import de.gerdiproject.json.datacite.enums.FunderIdentifierType;
  */
 public class FunderIdentifier
 {
-	/**
-	 * The value of the FunderIdentifier
-	 * In XML, this is the value between the funderIdentifier-tags.
-	 */
+    /**
+     * The value of the FunderIdentifier.
+     * In XML, this is the value between the funderIdentifier-tags.
+     */
     private String value;
-    
+
     /**
      * The type of the funder identifier.
      */
     private FunderIdentifierType funderIdentifierType;
+
+
+    /**
+     * Simple Constructor that requires all mandatory fields.
+     *
+     * @param value the value of the FunderIdentifier
+     */
+    public FunderIdentifier(String value)
+    {
+        this.value = value;
+    }
 
 
     /**

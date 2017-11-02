@@ -51,16 +51,16 @@ public class Title implements ICleanable
     /**
      * Simple constructor that requires all mandatory fields.
      *
-     * @param title the title text
+     * @param value the title text
      */
-    public Title(String title)
+    public Title(String value)
     {
-        this.value = title;
+        this.value = value;
     }
 
 
     /**
-     * Returns a free text title or name. 
+     * Returns a free text title or name.
      * In XML, this is the value between the title-tags.
      *
      * @return a free text title or name

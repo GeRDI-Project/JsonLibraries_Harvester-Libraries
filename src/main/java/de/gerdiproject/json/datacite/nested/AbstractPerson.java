@@ -18,6 +18,8 @@
  */
 package de.gerdiproject.json.datacite.nested;
 
+import java.util.List;
+
 import de.gerdiproject.json.datacite.Contributor;
 import de.gerdiproject.json.datacite.Creator;
 
@@ -45,13 +47,13 @@ public abstract class AbstractPerson
      * A unique identifier for an individual or legal entity, according to various schemes.
      * <br>e.g. Orcid ID
      */
-    private NameIdentifier nameIdentifier;
+    private List<NameIdentifier> nameIdentifiers;
 
     /**
      * The organisational or institutional affiliation of the person.
      * <br>e.g. Council of Ricks
      */
-    private String affiliation;
+    private List<String> affiliations;
 
 
     /**
@@ -129,47 +131,47 @@ public abstract class AbstractPerson
 
 
     /**
-     * Returns a unique identifier of an individual or legal entity, according to various schemes.
+     * Returns unique identifiers of an individual or legal entity, according to various schemes.
      *
-     * @return a unique identifier of an individual or legal entity
+     * @return unique identifiers of an individual or legal entity
      */
-    public NameIdentifier getNameIdentifier()
+    public List<NameIdentifier> getNameIdentifiers()
     {
-        return nameIdentifier;
+        return nameIdentifiers;
     }
 
 
     /**
-     * Changes a unique identifier of an individual or legal entity, according to various schemes.
+     * Changes unique identifiers of an individual or legal entity, according to various schemes.
      * <br>e.g. orcid id number
      *
-     * @param nameIdentifier a unique identifier of an individual or legal entity
+     * @param nameIdentifiers unique identifiers of an individual or legal entity
      */
-    public void setNameIdentifier(NameIdentifier nameIdentifier)
+    public void setNameIdentifiers(List<NameIdentifier> nameIdentifiers)
     {
-        this.nameIdentifier = nameIdentifier;
+        this.nameIdentifiers = nameIdentifiers;
     }
 
 
     /**
-     * Returns the organisational or institutional affiliation of the person.
+     * Returns the organisational or institutional affiliations of the person.
      *
-     * @return the organisational or institutional affiliation of the person
+     * @return the organisational or institutional affiliations of the person
      */
-    public String getAffiliation()
+    public List<String> getAffiliations()
     {
-        return affiliation;
+        return affiliations;
     }
 
 
     /**
-     * Changes the organisational or institutional affiliation of the person.
+     * Changes the organisational or institutional affiliations of the person.
      * <br>e.g. Council of Ricks
      *
-     * @param affiliation the organisational or institutional affiliation of the person
+     * @param affiliations the organisational or institutional affiliations of the person
      */
-    public void setAffiliation(String affiliation)
+    public void setAffiliation(List<String> affiliations)
     {
-        this.affiliation = affiliation;
+        this.affiliations = affiliations;
     }
 }

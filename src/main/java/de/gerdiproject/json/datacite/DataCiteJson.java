@@ -52,64 +52,6 @@ public class DataCiteJson implements IDocument, ICleanable
     private Identifier identifier;
 
     /**
-     * The name of the entity that holds, archives, publishes prints, distributes, releases, issues, or produces the resource.
-     * This property will be used to formulate the citation, so consider the prominence of the role.
-     */
-    private String publisher;
-
-    /**
-     * Version number of the resource. If the primary resource has changed the version number increases.
-     */
-    private String version;
-
-    /**
-     * Primary language of the resource. Allowed values are taken from  IETF BCP 47, ISO 639-1 language codes.
-     * <br>e.g. de, en-US
-     */
-    private String language;
-
-    /**
-     * The year when the data was or will be made publicly available.
-     */
-    private short publicationYear;
-
-    /**
-     * A description of the resource.
-     */
-    private ResourceType resourceType;
-
-    /**
-     * Any kind of non-indexed data that does not fit the other fields, but is important metadata nonetheless.
-     * This object is NOT part of the original DataCite schema.
-     */
-    private Object customData;
-
-    /**
-     * A unique but human readable name of the repository.
-     * <br>e.g. Sea Around Us, FAOSTAT
-     */
-    private String repositoryIdentifier;
-
-    /**
-     * A list of human readable names of the research disciplines, meaning the topics or domains that this document covers.
-     * <br>e.g. Computer Science, Geography
-     */
-    private List<String> researchDisciplines;
-
-
-    /**
-     * Unstructured size information about the resource.
-     * <br>e.g. "15 pages", "6 MB"
-     */
-    private List<String> sizes;
-
-    /**
-     * Technical format of the resource. Use file extension or MIME type where possible.
-     * <br>e.g. PDF, XML, application/pdf, text/xml
-     */
-    private List<String> formats;
-
-    /**
      * The main researchers involved in producing the data, or the authors of the publication,
      * in priority order.
      */
@@ -121,9 +63,20 @@ public class DataCiteJson implements IDocument, ICleanable
     private List<Title> titles;
 
     /**
-     * All additional information that does not fit in any of the other categories.
+     * The name of the entity that holds, archives, publishes prints, distributes, releases, issues, or produces the resource.
+     * This property will be used to formulate the citation, so consider the prominence of the role.
      */
-    private List<Description> descriptions;
+    private String publisher;
+
+    /**
+     * The year when the data was or will be made publicly available.
+     */
+    private short publicationYear;
+
+    /**
+     * A description of the resource.
+     */
+    private ResourceType resourceType;
 
     /**
      * Subjects, keywords, classification codes, or key phrases describing the resource.
@@ -142,15 +95,10 @@ public class DataCiteJson implements IDocument, ICleanable
     private List<Date> dates;
 
     /**
-     * Spatial regions or named places where the data was gathered or about which the data is focused.
+     * Primary language of the resource. Allowed values are taken from  IETF BCP 47, ISO 639-1 language codes.
+     * <br>e.g. de, en-US
      */
-    private List<GeoLocation> geoLocations;
-
-    /**
-     * Identifiers of related resources.
-     * These must be globally unique identifiers.
-     */
-    private List<RelatedIdentifier> relatedIdentifiers;
+    private String language;
 
     /**
      * An identifier or identifiers other than the primary Identifier applied to the resource being registered.
@@ -161,9 +109,42 @@ public class DataCiteJson implements IDocument, ICleanable
     private List<AlternateIdentifier> alternateIdentifiers;
 
     /**
+     * Identifiers of related resources.
+     * These must be globally unique identifiers.
+     */
+    private List<RelatedIdentifier> relatedIdentifiers;
+
+    /**
+     * Unstructured size information about the resource.
+     * <br>e.g. "15 pages", "6 MB"
+     */
+    private List<String> sizes;
+
+    /**
+     * Technical format of the resource. Use file extension or MIME type where possible.
+     * <br>e.g. PDF, XML, application/pdf, text/xml
+     */
+    private List<String> formats;
+
+    /**
+     * Version number of the resource. If the primary resource has changed the version number increases.
+     */
+    private String version;
+
+    /**
      * Any rights information for this resource.
      */
     private List<Rights> rightsList;
+
+    /**
+     * All additional information that does not fit in any of the other categories.
+     */
+    private List<Description> descriptions;
+
+    /**
+     * Spatial regions or named places where the data was gathered or about which the data is focused.
+     */
+    private List<GeoLocation> geoLocations;
 
     /**
      * Information about financial support (funding) for the resource
@@ -180,6 +161,18 @@ public class DataCiteJson implements IDocument, ICleanable
      * Downloadable source data files.
      */
     private List<ResearchData> files;
+
+    /**
+     * A unique but human readable name of the repository.
+     * <br>e.g. Sea Around Us, FAOSTAT
+     */
+    private String repositoryIdentifier;
+
+    /**
+     * A list of human readable names of the research disciplines, meaning the topics or domains that this document covers.
+     * <br>e.g. Computer Science, Geography
+     */
+    private List<String> researchDisciplines;
 
 
     /**
@@ -316,30 +309,6 @@ public class DataCiteJson implements IDocument, ICleanable
     public void setResourceType(ResourceType resourceType)
     {
         this.resourceType = resourceType;
-    }
-
-
-    /**
-     * Returns an object of additional metadata that is important,
-     * but does not fit the other fields.
-     *
-     * @return an object of additional metadata
-     */
-    public Object getCustomData()
-    {
-        return customData;
-    }
-
-
-    /**
-     * Sets an object of additional metadata that is important,
-     * but does not fit the other fields.
-     *
-     * @param customData an object of additional metadata
-     */
-    public void setCustomData(Object customData)
-    {
-        this.customData = customData;
     }
 
 
