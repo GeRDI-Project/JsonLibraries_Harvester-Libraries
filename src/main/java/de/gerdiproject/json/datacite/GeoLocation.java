@@ -211,6 +211,6 @@ public class GeoLocation implements ICleanable
      */
     public boolean isValid()
     {
-        return geoLocationBox != null || (geoLocationPolygons != null && !geoLocationPolygons.isEmpty()) || geoLocationPoint != null;
+        return geoLocationBox != null || geoLocationPolygons != null && !geoLocationPolygons.isEmpty() || geoLocationPoint != null;
     }
 }

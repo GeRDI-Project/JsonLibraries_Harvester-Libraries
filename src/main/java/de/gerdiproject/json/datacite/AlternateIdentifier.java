@@ -46,7 +46,7 @@ public class AlternateIdentifier
      * Simple constructor that requires all mandatory fields.
      *
      * @param value the identifier value
-     * @param type free text describing the identifier
+     * @param alternateIdentifierType free text describing the identifier
      */
     public AlternateIdentifier(String value, String alternateIdentifierType)
     {
