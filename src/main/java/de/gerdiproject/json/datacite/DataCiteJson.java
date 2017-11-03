@@ -115,8 +115,8 @@ public class DataCiteJson implements IDocument, ICleanable
     private List<RelatedIdentifier> relatedIdentifiers;
 
     /**
-     * Unstructured size information about the resource.
-     * <br>e.g. "15 pages", "6 MB"
+     * Unstructured information about the resource size, duration, or extent.
+     * <br>e.g. "15 pages", "6 MB", "15 seconds"
      */
     private List<String> sizes;
 

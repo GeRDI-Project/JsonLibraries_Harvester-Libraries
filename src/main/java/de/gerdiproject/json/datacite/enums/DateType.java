@@ -69,5 +69,10 @@ public enum DateType {
     /**
      * The date or date range during which the dataset or resource is accurate.
      */
-    Valid
+    Valid,
+
+    /**
+     * This type should be applied if the date does not fit any of the other categories.
+     */
+    Other
 }

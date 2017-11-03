@@ -57,6 +57,16 @@ public enum RelationType {
     Continues,
 
     /**
+     * Indicates A describes B.
+     */
+    Describes,
+
+    /**
+     * Indicates A is described by B.
+     */
+    IsDescribedBy,
+
+    /**
      * Indicates resource A has additional metadata B.
      */
     HasMetadata,
@@ -65,6 +75,16 @@ public enum RelationType {
      * Indicates additional metadata A for a   resource B.
      */
     IsMetadataFor,
+
+    /**
+     * Indicates A has a version B.
+     */
+    HasVersion,
+
+    /**
+     * Indicates A is a version of B.
+     */
+    IsVersionOf,
 
     /**
      * Indicates A is a new edition of B, where the new edition has been modified or updated.
@@ -149,5 +169,15 @@ public enum RelationType {
     /**
      * Indicates A is a source upon which B is based.
      */
-    IsSourceOf
+    IsSourceOf,
+
+    /**
+     * Indicates A is required by B.
+     */
+    IsRequiredBy,
+
+    /**
+     * Indicates A requires B.
+     */
+    Requires
 }

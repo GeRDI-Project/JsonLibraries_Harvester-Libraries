@@ -47,6 +47,12 @@ public class Rights implements ICleanable
      */
     private String rightsURI;
 
+    /**
+     * An optional IETF language tag of the subject text.
+     * <br>e.g. de, en-US
+     */
+    private String lang;
+
 
     /**
      * Returns the free text that describes the rights.
@@ -93,6 +99,29 @@ public class Rights implements ICleanable
     public void setURI(String uri)
     {
         rightsURI = uri;
+    }
+
+
+    /**
+     * Returns the IETF language tag of the rights text.
+     *
+     * @return the IETF language tag of the rights text
+     */
+    public String getLang()
+    {
+        return lang;
+    }
+
+
+    /**
+     * Changes the IETF language tag of the rights text.
+     * <br>e.g. de, en-US
+     *
+     * @param lang an IETF language tag of the rights text
+     */
+    public void setLang(String lang)
+    {
+        this.lang = lang;
     }
 
 
