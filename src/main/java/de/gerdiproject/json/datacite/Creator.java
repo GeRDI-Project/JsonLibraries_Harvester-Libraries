@@ -37,7 +37,7 @@ public class Creator extends AbstractPerson
 
 
     /**
-     * Simple constructor that requires all mandatory fields.
+     * Constructor that creates a {@linkplain PersonName} out of a String.
      *
      * @param name the name of the creator
      */
@@ -45,7 +45,18 @@ public class Creator extends AbstractPerson
     {
         super(name);
     }
+    
 
+    /**
+     * Simple constructor that requires all mandatory fields.
+     *
+     * @param nameObject the name and name type of the person
+     */
+    public Creator(PersonName nameObject)
+    {
+        super(nameObject);
+    }
+    
 
     @Override
     public PersonName getName()

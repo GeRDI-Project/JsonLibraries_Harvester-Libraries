@@ -57,7 +57,7 @@ public abstract class AbstractPerson
 
 
     /**
-     * Simple constructor that requires all mandatory fields.
+     * Constructor that creates a {@linkplain PersonName} out of a String.
      *
      * @param name the name of the person
      */
@@ -65,7 +65,18 @@ public abstract class AbstractPerson
     {
         setName(new PersonName(name));
     }
-
+    
+    
+    /**
+     * Simple constructor that requires all mandatory fields.
+     *
+     * @param nameObject the name and name type of the person
+     */
+    public AbstractPerson(PersonName nameObject)
+    {
+        setName(nameObject);
+    }
+    
 
     /**
      * Returns the name of the person.
@@ -170,7 +181,7 @@ public abstract class AbstractPerson
      *
      * @param affiliations the organisational or institutional affiliations of the person
      */
-    public void setAffiliation(List<String> affiliations)
+    public void setAffiliations(List<String> affiliations)
     {
         this.affiliations = affiliations;
     }

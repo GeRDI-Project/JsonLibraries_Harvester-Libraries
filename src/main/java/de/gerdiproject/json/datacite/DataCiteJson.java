@@ -160,7 +160,7 @@ public class DataCiteJson implements IDocument, ICleanable
     /**
      * Downloadable source data files.
      */
-    private List<ResearchData> files;
+    private List<ResearchData> researchDataList;
 
     /**
      * A unique but human readable name of the repository.
@@ -681,7 +681,7 @@ public class DataCiteJson implements IDocument, ICleanable
      */
     public List<ResearchData> getFiles()
     {
-        return files;
+        return researchDataList;
     }
 
 
@@ -692,7 +692,7 @@ public class DataCiteJson implements IDocument, ICleanable
      */
     public void setFiles(List<ResearchData> files)
     {
-        this.files = files;
+        this.researchDataList = files;
     }
 
 
