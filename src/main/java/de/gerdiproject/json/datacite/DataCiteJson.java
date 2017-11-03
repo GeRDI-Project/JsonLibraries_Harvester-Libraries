@@ -679,7 +679,7 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @return downloadable files
      */
-    public List<ResearchData> getFiles()
+    public List<ResearchData> getResearchDataList()
     {
         return researchDataList;
     }
@@ -690,7 +690,7 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @param files downloadable files
      */
-    public void setFiles(List<ResearchData> files)
+    public void setResearchDataList(List<ResearchData> files)
     {
         this.researchDataList = files;
     }
