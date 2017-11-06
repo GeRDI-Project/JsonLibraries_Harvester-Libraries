@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.IDocument;
+import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.extension.ResearchData;
 import de.gerdiproject.json.datacite.extension.WebLink;
 
@@ -92,7 +93,7 @@ public class DataCiteJson implements IDocument, ICleanable
     /**
      * Different dates relevant to the work.
      */
-    private List<Date> dates;
+    private List<AbstractDate> dates;
 
     /**
      * Primary language of the resource. Allowed values are taken from  IETF BCP 47, ISO 639-1 language codes.
@@ -522,7 +523,7 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @return dates relevant to the work
      */
-    public List<Date> getDates()
+    public List<AbstractDate> getDates()
     {
         return dates;
     }
@@ -533,7 +534,7 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @param dates dates relevant to the work
      */
-    public void setDates(List<Date> dates)
+    public void setDates(List<AbstractDate> dates)
     {
         this.dates = dates;
     }

@@ -18,7 +18,7 @@
  */
 package de.gerdiproject.json.datacite;
 
-import de.gerdiproject.json.datacite.nested.AbstractPerson;
+import de.gerdiproject.json.datacite.abstr.AbstractPerson;
 import de.gerdiproject.json.datacite.nested.PersonName;
 
 /**
@@ -45,7 +45,7 @@ public class Creator extends AbstractPerson
     {
         super(name);
     }
-    
+
 
     /**
      * Simple constructor that requires all mandatory fields.
@@ -56,7 +56,7 @@ public class Creator extends AbstractPerson
     {
         super(nameObject);
     }
-    
+
 
     @Override
     public PersonName getName()

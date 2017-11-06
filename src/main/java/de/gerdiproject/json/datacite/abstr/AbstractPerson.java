@@ -16,12 +16,14 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.json.datacite.nested;
+package de.gerdiproject.json.datacite.abstr;
 
 import java.util.List;
 
 import de.gerdiproject.json.datacite.Contributor;
 import de.gerdiproject.json.datacite.Creator;
+import de.gerdiproject.json.datacite.nested.NameIdentifier;
+import de.gerdiproject.json.datacite.nested.PersonName;
 
 /**
  * Both the {@linkplain Creator} and {@linkplain Contributor} share so many similarities, that it made sense
@@ -65,8 +67,8 @@ public abstract class AbstractPerson
     {
         setName(new PersonName(name));
     }
-    
-    
+
+
     /**
      * Simple constructor that requires all mandatory fields.
      *
@@ -76,7 +78,7 @@ public abstract class AbstractPerson
     {
         setName(nameObject);
     }
-    
+
 
     /**
      * Returns the name of the person.

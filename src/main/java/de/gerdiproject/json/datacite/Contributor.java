@@ -18,8 +18,8 @@
  */
 package de.gerdiproject.json.datacite;
 
+import de.gerdiproject.json.datacite.abstr.AbstractPerson;
 import de.gerdiproject.json.datacite.enums.ContributorType;
-import de.gerdiproject.json.datacite.nested.AbstractPerson;
 import de.gerdiproject.json.datacite.nested.PersonName;
 
 /**
@@ -67,8 +67,8 @@ public class Contributor extends AbstractPerson
         super(nameObject);
         this.contributorType = type;
     }
-    
-    
+
+
     /**
      * Returns the type of contributor of the resource.
      *

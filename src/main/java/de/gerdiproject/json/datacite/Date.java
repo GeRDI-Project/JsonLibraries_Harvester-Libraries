@@ -19,8 +19,8 @@
 package de.gerdiproject.json.datacite;
 
 import java.time.Instant;
-import java.util.Calendar;
 
+import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.enums.DateType;
 
 /**
@@ -29,75 +29,25 @@ import de.gerdiproject.json.datacite.enums.DateType;
  * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
-public class Date
+public class Date extends AbstractDate
 {
     /**
-     *  Timestamp in milliseconds since 01/01/1970 00:00:00.
-     *  In XML, this is the value between the identifier-tags.
-     *  All formats supported by ES, see https://www.elastic.co/guide/en/elasticsearch/reference/5.2/mapping-date-format.html
+     *  The date value.
+     *  In XML, this is the value between the date-tags.
      */
-    private long value;
-
-    /**
-     * The event that is marked by this date.
-     */
-    private DateType dateType;
-
-    /**
-     * Specific free text information about the date, if appropriate.
-     */
-    private String dateInformation;
+    private Instant value;
 
 
     /**
      * Simple constructor that requires all mandatory fields.
      *
-     * @param date the date that is described by this object
+     * @param dateString a ISO-8601-compliant date string
      * @param type the event that is marked by this date
      */
-    public Date(Instant date, DateType type)
+    public Date(String dateString, DateType type)
     {
-        setDate(date);
-        this.dateType = type;
-    }
-
-
-    /**
-     * Simple constructor that requires all mandatory fields.
-     *
-     * @param date the date that is described by this object
-     * @param type the event that is marked by this date
-     */
-    public Date(Calendar date, DateType type)
-    {
-        setDate(date);
-        this.dateType = type;
-    }
-
-
-    /**
-     * Simple constructor that requires all mandatory fields.
-     *
-     * @param date the date that is described by this object
-     * @param type the event that is marked by this date
-     */
-    public Date(java.util.Date date, DateType type)
-    {
-        setDate(date);
-        this.dateType = type;
-    }
-
-
-    /**
-     * Simple constructor that requires all mandatory fields.
-     *
-     * @param date the date that is described by this object
-     * @param type the event that is marked by this date
-     */
-    public Date(java.sql.Date date, DateType type)
-    {
-        setDate(date);
-        this.dateType = type;
+        super(type);
+        setValue(dateString);
     }
 
 
@@ -109,20 +59,35 @@ public class Date
      */
     public Date(long epochMilli, DateType type)
     {
-        setValue(epochMilli);
-        this.dateType = type;
+        super(type);
+        setDate(epochMilli);
     }
 
 
     /**
-     * Returns the amount of milliseconds that passed from
-     * 01/01/1970 00:00:00 until this date.
+     * Returns the date as ISO-8601-compliant String.
+     * <br>e.g. 1994-11-05T13:15:30Z
+     * <br><br>(see https://www.w3.org/TR/NOTE-datetime)
      *
-     * @return the amount of milliseconds between 01/01/1970 00:00:00 and this date
+     * @return the date as ISO-8601-compliant String
      */
-    public long getValue()
+    @Override
+    public String getValue()
     {
-        return value;
+        return value.toString();
+    }
+
+    /**
+     * Tries to set the date by parsing an ISO 8601 compliant String.
+     * <br>e.g. 1994-11-05T13:15:30Z
+     * <br><br>(see https://www.w3.org/TR/NOTE-datetime)
+     *
+     * @param stringValue the String that is to be parsed
+     */
+    @Override
+    public void setValue(String stringValue)
+    {
+        this.value = stringToInstant(stringValue);
     }
 
 
@@ -132,9 +97,9 @@ public class Date
      *
      * @param epochMilli the amount of milliseconds between 01/01/1970 00:00:00 and this date
      */
-    public void setValue(long epochMilli)
+    public void setDate(long epochMilli)
     {
-        this.value = epochMilli;
+        this.value = unixTimestampToInstant(epochMilli);
     }
 
 
@@ -145,83 +110,6 @@ public class Date
      */
     public void setDate(Instant date)
     {
-        this.value = date.toEpochMilli();
-    }
-
-
-    /**
-     * Changes the date value using a {@linkplain Calendar} that marks a date.
-     *
-     * @param date a {@linkplain Calendar} that represents the new date
-     */
-    public void setDate(Calendar date)
-    {
-        this.value = date.getTimeInMillis();
-    }
-
-
-    /**
-     * Changes the date value using a {@linkplain java.util.Date} that marks a date.
-     *
-     * @param date a {@linkplain java.util.Date} that represents the new date
-     */
-    public void setDate(java.util.Date date)
-    {
-        this.value = date.getTime();
-    }
-
-
-    /**
-     * Changes the date value using a {@linkplain java.sql.Date} that marks a date.
-     *
-     * @param date a {@linkplain java.sql.Date} that represents the new date
-     */
-    public void setDate(java.sql.Date date)
-    {
-        this.value = date.getTime();
-    }
-
-
-    /**
-     * Returns the event that is marked by this date.
-     *
-     * @return the event that is marked by this date
-     */
-    public DateType getType()
-    {
-        return dateType;
-    }
-
-
-    /**
-     * Changes the event that is marked by this date.
-     *
-     * @param type the event that is marked by this date
-     */
-    public void setType(DateType type)
-    {
-        this.dateType = type;
-    }
-
-
-    /**
-     * Returns specific free text information about the date.
-     *
-     * @return specific free text information about the date
-     */
-    public String getDateInformation()
-    {
-        return dateInformation;
-    }
-
-
-    /**
-     * Changes the specific free text information about the date.
-     *
-     * @param dateInformation specific free text information about the date
-     */
-    public void setDateInformation(String dateInformation)
-    {
-        this.dateInformation = dateInformation;
+        this.value = date;
     }
 }
