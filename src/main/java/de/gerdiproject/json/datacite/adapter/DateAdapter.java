@@ -15,7 +15,7 @@ import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.enums.DateType;
 
 /**
- * This adapter defines the (de-)serialization behavior of {@linkplain Configuration} objects.
+ * This adapter defines the (de-)serialization behavior of {@linkplain AbstractDate} objects.
  *
  * @author Robin Weiss
  */

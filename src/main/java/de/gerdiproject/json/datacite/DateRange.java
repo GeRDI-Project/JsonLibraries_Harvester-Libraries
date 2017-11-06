@@ -131,8 +131,10 @@ public class DateRange extends AbstractDate
         // check if we really had a separator
         if (range.length == 2) {
             setRangeFrom(range[0]);
-            setRangeFrom(range[1]);
-        } else
+            setRangeUntil(range[1]);
+        } else if (range.length == 1)
+            setRangeFrom(range[0]);
+        else
             LOGGER.error(String.format(PARSE_ERROR, stringValue));
     }
 
@@ -149,10 +151,9 @@ public class DateRange extends AbstractDate
     }
 
     /**
-     * Changes the since-value using the amount of milliseconds that passed
-     * from 01/01/1970 00:00:00 until this date.
+     * Changes the since-value by parsing a date-string.
      *
-     * @param epochMilli the amount of milliseconds between 01/01/1970 00:00:00 and this date
+     * @param stringValue a date string that represents the start-date
      */
     public void setRangeFrom(String stringValue)
     {
@@ -171,10 +172,9 @@ public class DateRange extends AbstractDate
     }
 
     /**
-     * Changes the until-value using the amount of milliseconds that passed
-     * from 01/01/1970 00:00:00 until this date.
+     * Changes the since-value by parsing a date-string.
      *
-     * @param epochMilli the amount of milliseconds between 01/01/1970 00:00:00 and this date
+     * @param stringValue a date string that represents the end-date
      */
     public void setRangeUntil(String stringValue)
     {
