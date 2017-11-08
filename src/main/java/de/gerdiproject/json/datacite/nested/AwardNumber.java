@@ -39,13 +39,26 @@ public class AwardNumber
 
 
     /**
-     * Simple Constructor that requires all mandatory fields.
+     * Constructor that requires all mandatory fields.
      *
      * @param value the value of the AwardNumber
      */
     public AwardNumber(String value)
     {
         this.value = value;
+    }
+
+
+    /**
+     * Constructor that requires all fields.
+     *
+     * @param value the value of the AwardNumber
+     * @param awardURI the URI leading to a page for more information about the award
+     */
+    public AwardNumber(String value, String awardURI)
+    {
+        this.value = value;
+        this.awardURI = awardURI;
     }
 
 

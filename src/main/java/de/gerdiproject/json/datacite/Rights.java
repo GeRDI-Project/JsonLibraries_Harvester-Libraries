@@ -54,6 +54,18 @@ public class Rights implements ICleanable
     private String lang;
 
 
+
+    /**
+     * Constructor that requires all mandatory fields.
+     *
+     * @param value free text that describes the rights
+     */
+    public Rights(String value)
+    {
+        this.value = value;
+    }
+
+
     /**
      * Returns the free text that describes the rights.
      * In XML, this is the value between the rights-tags.

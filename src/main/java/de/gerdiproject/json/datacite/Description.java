@@ -51,7 +51,7 @@ public class Description implements ICleanable
 
 
     /**
-     * Simple constructor that requires all mandatory fields.
+     * Constructor that requires all mandatory fields.
      *
      * @param value free text description
      * @param type the type of the free text
@@ -60,6 +60,20 @@ public class Description implements ICleanable
     {
         this.value = value;
         this.descriptionType = type;
+    }
+
+    /**
+     * Constructor that requires all fields.
+     *
+     * @param value free text description
+     * @param type the type of the free text
+     * @param language  IETF language tag
+     */
+    public Description(String value, DescriptionType type, String language)
+    {
+        this.value = value;
+        this.descriptionType = type;
+        this.lang = language;
     }
 
 

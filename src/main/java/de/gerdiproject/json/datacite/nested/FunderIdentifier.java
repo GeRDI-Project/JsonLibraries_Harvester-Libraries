@@ -42,13 +42,26 @@ public class FunderIdentifier
 
 
     /**
-     * Simple Constructor that requires all mandatory fields.
+     * Constructor that requires all mandatory fields.
      *
      * @param value the value of the FunderIdentifier
      */
     public FunderIdentifier(String value)
     {
         this.value = value;
+    }
+
+
+    /**
+     * Constructor that requires all fields.
+     *
+     * @param value the value of the FunderIdentifier
+     * @param type the type of the funder identifier
+     */
+    public FunderIdentifier(String value, FunderIdentifierType type)
+    {
+        this.value = value;
+        this.funderIdentifierType = type;
     }
 
 
