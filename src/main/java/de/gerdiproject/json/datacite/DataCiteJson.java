@@ -712,6 +712,22 @@ public class DataCiteJson implements IDocument, ICleanable
         if (rightsList != null)
             rightsList.forEach((Rights r) -> r.clean());
 
+        // remove invalid dates
+        if (dates != null) {
+            int i = dates.size();
+
+            while (i != 0) {
+                i--;
+                AbstractDate d = dates.get(i);
+
+                if (d.getValue() == null)
+                    dates.remove(i);
+            }
+
+            if (dates.size() == 0)
+                dates = null;
+        }
+
         // clean geoLocations, remove invalid ones
         if (geoLocations != null) {
             try {

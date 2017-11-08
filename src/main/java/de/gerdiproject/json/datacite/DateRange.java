@@ -20,10 +20,8 @@ package de.gerdiproject.json.datacite;
 
 import java.time.Instant;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
+import de.gerdiproject.json.datacite.constants.DataCiteDateConstants;
 import de.gerdiproject.json.datacite.enums.DateType;
 
 /**
@@ -34,9 +32,6 @@ import de.gerdiproject.json.datacite.enums.DateType;
  */
 public class DateRange extends AbstractDate
 {
-    public static final String DATE_RANGE_SPLITTER = "/";
-    private static final Logger LOGGER = LoggerFactory.getLogger(DateRange.class);
-
     /**
      *  The date at which the range starts.
      *  In XML, this is the value between the date-tags, before the slash.
@@ -112,7 +107,7 @@ public class DateRange extends AbstractDate
         if (until != null)
             untilVal = until.toString();
 
-        return sinceVal + DATE_RANGE_SPLITTER + untilVal;
+        return sinceVal + DataCiteDateConstants.DATE_RANGE_SPLITTER + untilVal;
     }
 
     /**
@@ -126,7 +121,7 @@ public class DateRange extends AbstractDate
     public void setValue(String stringValue)
     {
         // split up the dates
-        String[] range = stringValue.split(DATE_RANGE_SPLITTER);
+        String[] range = stringValue.split(DataCiteDateConstants.DATE_RANGE_SPLITTER);
 
         // check if we really had a separator
         if (range.length == 2) {
@@ -135,7 +130,7 @@ public class DateRange extends AbstractDate
         } else if (range.length == 1)
             setRangeFrom(range[0]);
         else
-            LOGGER.error(String.format(PARSE_ERROR, stringValue));
+            LOGGER.error(String.format(DataCiteDateConstants.PARSE_ERROR, stringValue));
     }
 
 

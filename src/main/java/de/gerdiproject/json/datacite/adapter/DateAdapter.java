@@ -12,6 +12,7 @@ import com.google.gson.JsonSerializer;
 import de.gerdiproject.json.datacite.Date;
 import de.gerdiproject.json.datacite.DateRange;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
+import de.gerdiproject.json.datacite.constants.DataCiteDateConstants;
 import de.gerdiproject.json.datacite.enums.DateType;
 
 /**
@@ -30,19 +31,19 @@ public class DateAdapter implements JsonDeserializer<AbstractDate>, JsonSerializ
         JsonObject dateJsonObj = json.getAsJsonObject();
 
         // get date type
-        DateType dateType = DateType.valueOf(dateJsonObj.get("dateType").getAsString());
+        DateType dateType = DateType.valueOf(dateJsonObj.get(DataCiteDateConstants.DATE_TYPE_JSON).getAsString());
 
         // get raw date value
-        String value = dateJsonObj.get("value").getAsString();
+        String value = dateJsonObj.get(DataCiteDateConstants.VALUE_JSON).getAsString();
 
         // is date-range?
-        if (value.indexOf(DateRange.DATE_RANGE_SPLITTER) != -1)
+        if (value.indexOf(DataCiteDateConstants.DATE_RANGE_SPLITTER) != -1)
             returnDate = new DateRange(value, dateType);
         else
             returnDate = new Date(value, dateType);
 
         // get date information
-        JsonElement rawDateInfo = dateJsonObj.get("dateInformation");
+        JsonElement rawDateInfo = dateJsonObj.get(DataCiteDateConstants.DATE_INFO_JSON);
 
         if (rawDateInfo != null)
             returnDate.setDateInformation(rawDateInfo.getAsString());
@@ -57,16 +58,16 @@ public class DateAdapter implements JsonDeserializer<AbstractDate>, JsonSerializ
         JsonObject dateJson = new JsonObject();
 
         // add date or date-range
-        dateJson.addProperty("value", src.getValue());
+        dateJson.addProperty(DataCiteDateConstants.VALUE_JSON, src.getValue());
 
         // add dateType
-        dateJson.addProperty("dateType", src.getType().toString());
+        dateJson.addProperty(DataCiteDateConstants.DATE_TYPE_JSON, src.getType().toString());
 
         // optionally add dateInformation
         String dateInfo = src.getDateInformation();
 
         if (dateInfo != null)
-            dateJson.addProperty("dateInformation", dateInfo);
+            dateJson.addProperty(DataCiteDateConstants.DATE_INFO_JSON, dateInfo);
 
         return dateJson;
     }

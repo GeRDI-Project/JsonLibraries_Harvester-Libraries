@@ -20,12 +20,19 @@ package de.gerdiproject.json.datacite.abstr;
 
 
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.time.format.DateTimeParseException;
+import java.util.Calendar;
+import java.util.TimeZone;
+
+import javax.xml.bind.DatatypeConverter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import de.gerdiproject.harvest.utils.StringCleaner;
+import de.gerdiproject.json.datacite.constants.DataCiteDateConstants;
 import de.gerdiproject.json.datacite.enums.DateType;
 
 /**
@@ -36,8 +43,7 @@ import de.gerdiproject.json.datacite.enums.DateType;
  */
 public abstract class AbstractDate
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractDate.class);
-    protected static final String PARSE_ERROR = "Could not parse date string '%s'!";
+    protected static final Logger LOGGER = LoggerFactory.getLogger(AbstractDate.class);
 
     /**
      * The event that is marked by this date.
@@ -120,8 +126,9 @@ public abstract class AbstractDate
         this.dateInformation = dateInformation;
     }
 
+
     /**
-     * Parses an ISO 8601 compliant String.
+     * Tries to parse a String to a date. Ideally, the string is ISO 8601 compliant.
      * <br>e.g. 1994-11-05T13:15:30Z
      * <br><br>(see https://www.w3.org/TR/NOTE-datetime)
      *
@@ -131,18 +138,62 @@ public abstract class AbstractDate
      */
     protected static Instant stringToInstant(String stringValue)
     {
-        Instant parsedInstant = null;
+        // empty strings should not be parsed
+        if (stringValue == null || stringValue.isEmpty())
+            return null;
 
-        if (stringValue != null && !stringValue.isEmpty()) {
+        // make string DatatypeConverter compliant by adding seconds to it and removing HTML tags
+        String cleanString = StringCleaner.clean(
+                                 stringValue.replaceAll(
+                                     DataCiteDateConstants.ISO_8601_TIME_WITHOUT_SECONDS,
+                                     DataCiteDateConstants.ISO_8601_REPLACE_TIME_WITH_SECONDS
+                                 )
+                             );
+
+        // try to parse formats that start with a character (e.g. "Nov-2015")
+        if (!Character.isDigit(cleanString.charAt(0))) {
+            // remove all text before the first word before the first number (if it exists)
+            // this converts "Monthly time series starting February 2010" to "February 2010"
+            cleanString = cleanString.replaceAll(
+                              DataCiteDateConstants.WORD_BEFORE_NUMBER_REGEX,
+                              DataCiteDateConstants.FIRST_MATCH);
+
+            for (SimpleDateFormat format : DataCiteDateConstants.DATE_FORMATS_STARTING_WITH_CHAR) {
+                try {
+                    return format.parse(cleanString).toInstant();
+
+                } catch (ParseException e) {}  // NOPMD - nothing to do here, just keep parsing
+            }
+
+            // remove all text before the first number (if it exists)
+            // this converts "Annual data for the period 1997 onwards" to "1997 onwards"
+            cleanString = cleanString.replaceAll(
+                              DataCiteDateConstants.FIRST_NUMBER_REGEX,
+                              DataCiteDateConstants.FIRST_MATCH);
+        }
+
+        // only continue parsing if the string starts with a number
+        if (Character.isDigit(cleanString.charAt(0))) {
+
+            // try to parse ISO 8601 string
             try {
-                parsedInstant = Instant.parse(stringValue);
+                Calendar parsedCalendar = DatatypeConverter.parseDateTime(cleanString);
+                parsedCalendar.setTimeZone(TimeZone.getTimeZone(DataCiteDateConstants.STANDARD_TIMEZONE));
+                return parsedCalendar.toInstant();
 
-            } catch (DateTimeParseException e) {
-                LOGGER.error(String.format(PARSE_ERROR, stringValue));
+            } catch (IllegalArgumentException e) {} // NOPMD - nothing to do here, just keep parsing
+
+            // try to parse less common formats
+            for (SimpleDateFormat format : DataCiteDateConstants.DATE_FORMATS_STARTING_WITH_NUM) {
+                try {
+                    return format.parse(cleanString).toInstant();
+
+                } catch (ParseException e) {} // NOPMD - nothing to do here, just keep parsing
             }
         }
 
-        return parsedInstant;
+        LOGGER.warn(String.format(DataCiteDateConstants.PARSE_ERROR, stringValue));
+        return null;
     }
 
 

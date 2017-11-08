@@ -69,12 +69,12 @@ public class Date extends AbstractDate
      * <br>e.g. 1994-11-05T13:15:30Z
      * <br><br>(see https://www.w3.org/TR/NOTE-datetime)
      *
-     * @return the date as ISO-8601-compliant String
+     * @return the date as ISO-8601-compliant String, or null if the date is invalid
      */
     @Override
     public String getValue()
     {
-        return value.toString();
+        return value != null ? value.toString() : null;
     }
 
     /**
