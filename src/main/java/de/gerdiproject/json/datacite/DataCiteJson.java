@@ -700,35 +700,206 @@ public class DataCiteJson implements IDocument, ICleanable
     @Override
     public void clean()
     {
-        if (titles != null)
-            titles.forEach((Title t) -> t.clean());
+        // remove null entries from lists
+        if (creators != null) {
+            int i = creators.size();
 
-        if (descriptions != null)
-            descriptions.forEach((Description d) -> d.clean());
+            while (i-- != 0) {
+                if (creators.get(i) == null)
+                    creators.remove(i);
+            }
 
-        if (subjects != null)
-            subjects.forEach((Subject s) -> s.clean());
+            if (creators.isEmpty())
+                creators = null;
+        }
 
-        if (rightsList != null)
-            rightsList.forEach((Rights r) -> r.clean());
+        if (titles != null) {
+            int i = titles.size();
 
-        // remove invalid dates
+            while (i-- != 0) {
+                Title title = titles.get(i);
+
+                if (title == null)
+                    titles.remove(i);
+                else
+                    title.clean();
+            }
+
+            if (titles.isEmpty())
+                titles = null;
+        }
+
+        if (subjects != null) {
+            int i = subjects.size();
+
+            while (i-- != 0) {
+                Subject subject = subjects.get(i);
+
+                if (subject == null)
+                    subjects.remove(i);
+                else
+                    subject.clean();
+            }
+
+            if (subjects.isEmpty())
+                subjects = null;
+        }
+
+        if (contributors != null) {
+            int i = contributors.size();
+
+            while (i-- != 0) {
+                if (contributors.get(i) == null)
+                    contributors.remove(i);
+            }
+
+            if (contributors.isEmpty())
+                contributors = null;
+        }
+
+        if (alternateIdentifiers != null) {
+            int i = alternateIdentifiers.size();
+
+            while (i-- != 0) {
+                if (alternateIdentifiers.get(i) == null)
+                    alternateIdentifiers.remove(i);
+            }
+
+            if (alternateIdentifiers.isEmpty())
+                alternateIdentifiers = null;
+        }
+
+        if (relatedIdentifiers != null) {
+            int i = relatedIdentifiers.size();
+
+            while (i-- != 0) {
+                if (relatedIdentifiers.get(i) == null)
+                    relatedIdentifiers.remove(i);
+            }
+
+            if (relatedIdentifiers.isEmpty())
+                relatedIdentifiers = null;
+        }
+
+        if (sizes != null) {
+            int i = sizes.size();
+
+            while (i-- != 0) {
+                if (sizes.get(i) == null)
+                    sizes.remove(i);
+            }
+
+            if (sizes.isEmpty())
+                sizes = null;
+        }
+
+        if (formats != null) {
+            int i = formats.size();
+
+            while (i-- != 0) {
+                if (formats.get(i) == null)
+                    formats.remove(i);
+            }
+
+            if (formats.isEmpty())
+                formats = null;
+        }
+
+        if (rightsList != null) {
+            int i = rightsList.size();
+
+            while (i-- != 0) {
+                Rights rights = rightsList.get(i);
+
+                if (rights == null)
+                    rightsList.remove(i);
+                else
+                    rights.clean();
+            }
+
+            if (rightsList.isEmpty())
+                rightsList = null;
+        }
+
+        if (descriptions != null) {
+            int i = descriptions.size();
+
+            while (i-- != 0) {
+                Description description = descriptions.get(i);
+
+                if (description == null)
+                    descriptions.remove(i);
+                else
+                    description.clean();
+            }
+
+            if (descriptions.isEmpty())
+                descriptions = null;
+        }
+
+        if (fundingReferences != null) {
+            int i = fundingReferences.size();
+
+            while (i-- != 0) {
+                if (fundingReferences.get(i) == null)
+                    fundingReferences.remove(i);
+            }
+
+            if (fundingReferences.isEmpty())
+                fundingReferences = null;
+        }
+
+        if (webLinks != null) {
+            int i = webLinks.size();
+
+            while (i-- != 0) {
+                if (webLinks.get(i) == null)
+                    webLinks.remove(i);
+            }
+
+            if (webLinks.isEmpty())
+                webLinks = null;
+        }
+
+        if (researchDataList != null) {
+            int i = researchDataList.size();
+
+            while (i-- != 0) {
+                if (researchDataList.get(i) == null)
+                    researchDataList.remove(i);
+            }
+
+            if (researchDataList.isEmpty())
+                researchDataList = null;
+        }
+
+        if (researchDisciplines != null) {
+            int i = researchDisciplines.size();
+
+            while (i-- != 0) {
+                if (researchDisciplines.get(i) == null)
+                    researchDisciplines.remove(i);
+            }
+
+            if (researchDisciplines.isEmpty())
+                researchDisciplines = null;
+        }
+
         if (dates != null) {
             int i = dates.size();
 
-            while (i != 0) {
-                i--;
+            while (i-- != 0) {
                 AbstractDate d = dates.get(i);
 
-                if (d.getValue() == null)
+                // remove non-existing dates and dates with null values
+                if (d == null || d.getValue() == null)
                     dates.remove(i);
             }
 
-            if (dates.size() == 0)
+            if (dates.isEmpty())
                 dates = null;
         }
 
-        // clean geoLocations, remove invalid ones
         if (geoLocations != null) {
             try {
                 int i = geoLocations.size();
@@ -737,19 +908,23 @@ public class DataCiteJson implements IDocument, ICleanable
                     i--;
                     GeoLocation geoLoc = geoLocations.get(i);
 
-                    // clean geo location
-                    geoLoc.clean();
-
-                    // remove geo location, if it became invalid
-                    if (!geoLoc.isValid())
+                    // remove null entries
+                    if (geoLoc == null)
                         geoLocations.remove(i);
+                    else {
+                        // clean geo location
+                        geoLoc.clean();
+
+                        // remove geo location, if it became invalid
+                        if (!geoLoc.isValid())
+                            geoLocations.remove(i);
+                    }
                 }
             } catch (UnsupportedOperationException e) {
                 LOGGER.error(ERROR_INVALID_GEO_LOCATION_LIST);
             }
 
-            // remove geolocation array, if it became empty
-            if (geoLocations.size() == 0)
+            if (geoLocations.isEmpty())
                 geoLocations = null;
         }
     }

@@ -184,10 +184,15 @@ public class GeoLocation implements ICleanable
             while (i != 0) {
                 i--;
                 GeoJson geo = geoLocationPolygons.get(i);
-                geo.clean();
 
-                if (!geo.isValid())
+                if (geo == null)
                     geoLocationPolygons.remove(i);
+                else {
+                    geo.clean();
+
+                    if (!geo.isValid())
+                        geoLocationPolygons.remove(i);
+                }
             }
 
             // nullify the whole polygon list, if it is now empty
