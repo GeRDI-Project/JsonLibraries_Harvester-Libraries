@@ -20,6 +20,8 @@ package de.gerdiproject.json.datacite.abstr;
 
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+
 import de.gerdiproject.json.datacite.Contributor;
 import de.gerdiproject.json.datacite.Creator;
 import de.gerdiproject.json.datacite.nested.NameIdentifier;
@@ -55,6 +57,7 @@ public abstract class AbstractPerson
      * The organisational or institutional affiliation of the person.
      * <br>e.g. Council of Ricks
      */
+    @SerializedName("affiliation")
     private List<String> affiliations;
 
 
