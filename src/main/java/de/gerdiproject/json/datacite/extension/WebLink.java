@@ -16,7 +16,9 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.json.datacite;
+package de.gerdiproject.json.datacite.extension;
+
+import de.gerdiproject.json.datacite.extension.enums.WebLinkType;
 
 /**
  * A link to the data provider's website.
@@ -29,17 +31,17 @@ public class WebLink
     /**
      * A descriptive name of the web link destination.
      */
-    private String name;
+    private String webLinkName;
 
     /**
      * The URL of the web link.
      */
-    private String URL;
+    private String webLinkURI;
 
     /**
      * The link category.
      */
-    private WebLinkType type;
+    private WebLinkType webLinkType;
 
 
     /**
@@ -49,7 +51,7 @@ public class WebLink
      */
     public WebLink(String url)
     {
-        this.URL = url;
+        this.webLinkURI = url;
     }
 
 
@@ -59,7 +61,7 @@ public class WebLink
      */
     public String getName()
     {
-        return name;
+        return webLinkName;
     }
 
 
@@ -69,7 +71,7 @@ public class WebLink
      */
     public void setName(String name)
     {
-        this.name = name;
+        this.webLinkName = name;
     }
 
 
@@ -79,7 +81,7 @@ public class WebLink
      */
     public String getUrl()
     {
-        return URL;
+        return webLinkURI;
     }
 
 
@@ -89,7 +91,7 @@ public class WebLink
      */
     public void setUrl(String url)
     {
-        this.URL = url;
+        this.webLinkURI = url;
     }
 
 
@@ -99,7 +101,7 @@ public class WebLink
      */
     public WebLinkType getType()
     {
-        return type;
+        return webLinkType;
     }
 
 
@@ -109,35 +111,6 @@ public class WebLink
      */
     public void setType(WebLinkType type)
     {
-        this.type = type;
-    }
-
-
-    /**
-     * The kind of data or webpage which is linked.
-     * This enumeration is incomplete, as more types will be added in accordance with the requirements.
-     *
-     * @author Robin Weiss
-     */
-    public enum WebLinkType {
-        /**
-         * A URL that points to the website at which the resource data can be viewed.
-         */
-        ViewURL,
-
-        /**
-         * A URL that points to a (small) logo of the organisation that provides the resource data.
-         */
-        ProviderLogoURL,
-
-        /**
-         * A URL that points to a small image or thumbnail that represents the resource data itself.
-         */
-        ThumbnailURL,
-
-        /**
-         * A URL that points to a website that is related to the resource.
-         */
-        Related
+        this.webLinkType = type;
     }
 }

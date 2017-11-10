@@ -16,13 +16,18 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.harvest;
+package de.gerdiproject.json.datacite.enums;
+
+import de.gerdiproject.json.datacite.Contributor;
+import de.gerdiproject.json.datacite.Creator;
 
 /**
- * The interface for documents.
- *
+ * The type of name of a {@linkplain Creator} or {@linkplain Contributor}.
+ * <br><br>
+ * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Robin Weiss
  */
-public interface IDocument
-{
+public enum NameType {
+    Organisational,
+    Personal
 }

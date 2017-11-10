@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.json.datacite;
+package de.gerdiproject.json.datacite.extension;
 
 /**
  * A downloadable file.
@@ -24,31 +24,31 @@ package de.gerdiproject.json.datacite;
  * This object is NOT part of the original DataCite schema.
  * @author Mathis Neumann, Robin Weiss
  */
-public class File
+public class ResearchData
 {
     /**
      * The URL that is used to access the file.
      * <br>e.g. http://fenixservices.fao.org/faostat/static/documents/QC/QC_methodology_e.pdf
      */
-    private String url;
+    private String researchDataURL;
 
     /**
      * Human readable name for the file.
      * <br>e.g. "Methodology - Crops Primary"
      */
-    private String label;
+    private String researchDataLabel;
 
     /**
      * Locally (within this document) unique identifier for the file.
      * The identifier is generated from a hash value of the target URL.
      */
-    private String identifier;
+    private String researchDataIdentifier;
 
     /**
      * File format, extension or mimetype.
      * <br>e.g. pdf, application/json
      */
-    private String type;
+    private String researchDataType;
 
 
     /**
@@ -56,11 +56,11 @@ public class File
      * @param url the file URL
      * @param label the file display name
      */
-    public File(String url, String label)
+    public ResearchData(String url, String label)
     {
-        this.url = url;
-        this.label = label;
-        this.identifier = String.valueOf(url.hashCode());
+        this.researchDataURL = url;
+        this.researchDataLabel = label;
+        this.researchDataIdentifier = String.valueOf(url.hashCode());
     }
 
 
@@ -71,7 +71,7 @@ public class File
      */
     public String getUrl()
     {
-        return url;
+        return researchDataURL;
     }
 
 
@@ -83,8 +83,8 @@ public class File
      */
     public void setUrl(String url)
     {
-        this.url = url;
-        this.identifier = String.valueOf(url.hashCode());
+        this.researchDataURL = url;
+        this.researchDataIdentifier = String.valueOf(url.hashCode());
     }
 
 
@@ -95,7 +95,7 @@ public class File
      */
     public String getLabel()
     {
-        return label;
+        return researchDataLabel;
     }
 
 
@@ -107,7 +107,7 @@ public class File
      */
     public void setLabel(String label)
     {
-        this.label = label;
+        this.researchDataLabel = label;
     }
 
     /**
@@ -118,7 +118,7 @@ public class File
      */
     public String getIdentifier()
     {
-        return identifier;
+        return researchDataIdentifier;
     }
 
 
@@ -129,7 +129,7 @@ public class File
      */
     public String getType()
     {
-        return type;
+        return researchDataType;
     }
 
 
@@ -141,6 +141,6 @@ public class File
      */
     public void setType(String type)
     {
-        this.type = type;
+        this.researchDataType = type;
     }
 }

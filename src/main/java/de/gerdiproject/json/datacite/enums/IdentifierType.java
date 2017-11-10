@@ -16,13 +16,17 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.harvest;
+package de.gerdiproject.json.datacite.enums;
 
 /**
- * The interface for documents.
+ * This enumeration describes the type of the funder identifier.
  *
+ * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Robin Weiss
  */
-public interface IDocument
-{
+public enum IdentifierType {
+    /**
+     * A Digital Object Identifier, registered by a DataCite member.
+     */
+    DOI
 }

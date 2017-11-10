@@ -18,8 +18,6 @@
  */
 package de.gerdiproject.json.datacite;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -27,6 +25,9 @@ import org.slf4j.LoggerFactory;
 
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.IDocument;
+import de.gerdiproject.json.datacite.abstr.AbstractDate;
+import de.gerdiproject.json.datacite.extension.ResearchData;
+import de.gerdiproject.json.datacite.extension.WebLink;
 
 
 /**
@@ -38,71 +39,18 @@ import de.gerdiproject.harvest.IDocument;
  *
  * The metadata schema is extended by fields that are required by GeRDI features.
  *
- * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+ * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
 public class DataCiteJson implements IDocument, ICleanable
 {
     private static final String ERROR_INVALID_GEO_LOCATION_LIST = "Could not remove invalid GeoLocations! The DataCiteJson.geoLocations list must support remove() operations!";
-
-    private static final Base64.Encoder ENCODER = Base64.getEncoder();
     private static final Logger LOGGER = LoggerFactory.getLogger(DataCiteJson.class);
 
     /**
      *  The Identifier is a unique string that identifies the resource.
      */
     private Identifier identifier;
-
-    /**
-     * The name of the entity that holds, archives, publishes prints, distributes, releases, issues, or produces the resource.
-     * This property will be used to formulate the citation, so consider the prominence of the role.
-     */
-    private String publisher;
-
-    /**
-     * Version number of the resource. If the primary resource has changed the version number increases.
-     */
-    private String version;
-
-    /**
-     * Primary language of the resource. Allowed values are taken from  IETF BCP 47, ISO 639-1 language codes.
-     * <br>e.g. de, en-US
-     */
-    private String language;
-
-    /**
-     * The year when the data was or will be made publicly available.
-     */
-    private short publicationYear;
-
-    /**
-     * A description of the resource.
-     */
-    private ResourceType resourceType;
-
-    /**
-     * Any kind of non-indexed data that does not fit the other fields, but is important metadata nonetheless.
-     * This object is NOT part of the original DataCite schema.
-     */
-    private Object customData;
-
-    /**
-     * Endpoint and URL used to retrieve the source meta data.
-     * <br>e.g. link to JSON/XML
-     */
-    private Source sources;
-
-    /**
-     * Unstructured size information about the resource.
-     * <br>e.g. "15 pages", "6 MB"
-     */
-    private List<String> sizes;
-
-    /**
-     * Technical format of the resource. Use file extension or MIME type where possible.
-     * <br>e.g. PDF, XML, application/pdf, text/xml
-     */
-    private List<String> formats;
 
     /**
      * The main researchers involved in producing the data, or the authors of the publication,
@@ -116,9 +64,20 @@ public class DataCiteJson implements IDocument, ICleanable
     private List<Title> titles;
 
     /**
-     * All additional information that does not fit in any of the other categories.
+     * The name of the entity that holds, archives, publishes prints, distributes, releases, issues, or produces the resource.
+     * This property will be used to formulate the citation, so consider the prominence of the role.
      */
-    private List<Description> descriptions;
+    private String publisher;
+
+    /**
+     * The year when the data was or will be made publicly available.
+     */
+    private short publicationYear;
+
+    /**
+     * A description of the resource.
+     */
+    private ResourceType resourceType;
 
     /**
      * Subjects, keywords, classification codes, or key phrases describing the resource.
@@ -134,18 +93,13 @@ public class DataCiteJson implements IDocument, ICleanable
     /**
      * Different dates relevant to the work.
      */
-    private List<Date> dates;
+    private List<AbstractDate> dates;
 
     /**
-     * Spatial regions or named places where the data was gathered or about which the data is focused.
+     * Primary language of the resource. Allowed values are taken from  IETF BCP 47, ISO 639-1 language codes.
+     * <br>e.g. de, en-US
      */
-    private List<GeoLocation> geoLocations;
-
-    /**
-     * Identifiers of related resources.
-     * These must be globally unique identifiers.
-     */
-    private List<RelatedIdentifier> relatedIdentifiers;
+    private String language;
 
     /**
      * An identifier or identifiers other than the primary Identifier applied to the resource being registered.
@@ -156,9 +110,42 @@ public class DataCiteJson implements IDocument, ICleanable
     private List<AlternateIdentifier> alternateIdentifiers;
 
     /**
+     * Identifiers of related resources.
+     * These must be globally unique identifiers.
+     */
+    private List<RelatedIdentifier> relatedIdentifiers;
+
+    /**
+     * Unstructured information about the resource size, duration, or extent.
+     * <br>e.g. "15 pages", "6 MB", "15 seconds"
+     */
+    private List<String> sizes;
+
+    /**
+     * Technical format of the resource. Use file extension or MIME type where possible.
+     * <br>e.g. PDF, XML, application/pdf, text/xml
+     */
+    private List<String> formats;
+
+    /**
+     * Version number of the resource. If the primary resource has changed the version number increases.
+     */
+    private String version;
+
+    /**
      * Any rights information for this resource.
      */
     private List<Rights> rightsList;
+
+    /**
+     * All additional information that does not fit in any of the other categories.
+     */
+    private List<Description> descriptions;
+
+    /**
+     * Spatial regions or named places where the data was gathered or about which the data is focused.
+     */
+    private List<GeoLocation> geoLocations;
 
     /**
      * Information about financial support (funding) for the resource
@@ -174,7 +161,19 @@ public class DataCiteJson implements IDocument, ICleanable
     /**
      * Downloadable source data files.
      */
-    private List<File> files;
+    private List<ResearchData> researchDataList;
+
+    /**
+     * A unique but human readable name of the repository.
+     * <br>e.g. Sea Around Us, FAOSTAT
+     */
+    private String repositoryIdentifier;
+
+    /**
+     * A list of human readable names of the research disciplines, meaning the topics or domains that this document covers.
+     * <br>e.g. Computer Science, Geography
+     */
+    private List<String> researchDisciplines;
 
 
     /**
@@ -315,49 +314,47 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Returns an object of additional metadata that is important,
-     * but does not fit the other fields.
+     * Returns the unique but human readable name of the repository.
+     * <br>e.g. Sea Around Us, FAOSTAT
      *
-     * @return an object of additional metadata
+     * @return a unique but human readable name of the repository
      */
-    public Object getCustomData()
+    public String getRepositoryIdentifier()
     {
-        return customData;
+        return repositoryIdentifier;
     }
 
 
     /**
-     * Sets an object of additional metadata that is important,
-     * but does not fit the other fields.
+     * Changes the unique but human readable name of the repository.
      *
-     * @param customData an object of additional metadata
+     * @param repositoryIdentifier a unique but human readable name of the repository
      */
-    public void setCustomData(Object customData)
+    public void setRepositoryIdentifier(String repositoryIdentifier)
     {
-        this.customData = customData;
+        this.repositoryIdentifier = repositoryIdentifier;
     }
 
 
     /**
-     * Returns the endpoint and URL used to retrieve the source meta data.
+     * Retrieves the list of human readable names of the research disciplines, meaning the topics or domains that this document covers.
      *
-     * @return the endpoint and URL used to retrieve the source meta data
+     * @return a list of human readable names of the research disciplines
      */
-    public Source getSources()
+    public List<String> getResearchDisciplines()
     {
-        return sources;
+        return researchDisciplines;
     }
 
 
     /**
-     * Changes the endpoint and URL used to retrieve the source meta data.
-     * <br>e.g. link to JSON/XML
+     * Changes the list of human readable names of the research disciplines, meaning the topics or domains that this document covers.
      *
-     * @param sources the endpoint and URL used to retrieve the source meta data
+     * @param researchDisciplines a list of human readable names of the research disciplines
      */
-    public void setSources(Source sources)
+    public void setResearchDisciplines(List<String> researchDisciplines)
     {
-        this.sources = sources;
+        this.researchDisciplines = researchDisciplines;
     }
 
 
@@ -526,7 +523,7 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @return dates relevant to the work
      */
-    public List<Date> getDates()
+    public List<AbstractDate> getDates()
     {
         return dates;
     }
@@ -537,7 +534,7 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @param dates dates relevant to the work
      */
-    public void setDates(List<Date> dates)
+    public void setDates(List<AbstractDate> dates)
     {
         this.dates = dates;
     }
@@ -683,9 +680,9 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @return downloadable files
      */
-    public List<File> getFiles()
+    public List<ResearchData> getResearchDataList()
     {
-        return files;
+        return researchDataList;
     }
 
 
@@ -694,28 +691,215 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @param files downloadable files
      */
-    public void setFiles(List<File> files)
+    public void setResearchDataList(List<ResearchData> files)
     {
-        this.files = files;
+        this.researchDataList = files;
     }
 
 
     @Override
     public void clean()
     {
-        if (titles != null)
-            titles.forEach((Title t) -> t.clean());
+        // remove null entries from lists
+        if (creators != null) {
+            int i = creators.size();
 
-        if (descriptions != null)
-            descriptions.forEach((Description d) -> d.clean());
+            while (i-- != 0) {
+                if (creators.get(i) == null)
+                    creators.remove(i);
+            }
 
-        if (subjects != null)
-            subjects.forEach((Subject s) -> s.clean());
+            if (creators.isEmpty())
+                creators = null;
+        }
 
-        if (rightsList != null)
-            rightsList.forEach((Rights r) -> r.clean());
+        if (titles != null) {
+            int i = titles.size();
 
-        // clean geoLocations, remove invalid ones
+            while (i-- != 0) {
+                Title title = titles.get(i);
+
+                if (title == null)
+                    titles.remove(i);
+                else
+                    title.clean();
+            }
+
+            if (titles.isEmpty())
+                titles = null;
+        }
+
+        if (subjects != null) {
+            int i = subjects.size();
+
+            while (i-- != 0) {
+                Subject subject = subjects.get(i);
+
+                if (subject == null)
+                    subjects.remove(i);
+                else
+                    subject.clean();
+            }
+
+            if (subjects.isEmpty())
+                subjects = null;
+        }
+
+        if (contributors != null) {
+            int i = contributors.size();
+
+            while (i-- != 0) {
+                if (contributors.get(i) == null)
+                    contributors.remove(i);
+            }
+
+            if (contributors.isEmpty())
+                contributors = null;
+        }
+
+        if (alternateIdentifiers != null) {
+            int i = alternateIdentifiers.size();
+
+            while (i-- != 0) {
+                if (alternateIdentifiers.get(i) == null)
+                    alternateIdentifiers.remove(i);
+            }
+
+            if (alternateIdentifiers.isEmpty())
+                alternateIdentifiers = null;
+        }
+
+        if (relatedIdentifiers != null) {
+            int i = relatedIdentifiers.size();
+
+            while (i-- != 0) {
+                if (relatedIdentifiers.get(i) == null)
+                    relatedIdentifiers.remove(i);
+            }
+
+            if (relatedIdentifiers.isEmpty())
+                relatedIdentifiers = null;
+        }
+
+        if (sizes != null) {
+            int i = sizes.size();
+
+            while (i-- != 0) {
+                if (sizes.get(i) == null)
+                    sizes.remove(i);
+            }
+
+            if (sizes.isEmpty())
+                sizes = null;
+        }
+
+        if (formats != null) {
+            int i = formats.size();
+
+            while (i-- != 0) {
+                if (formats.get(i) == null)
+                    formats.remove(i);
+            }
+
+            if (formats.isEmpty())
+                formats = null;
+        }
+
+        if (rightsList != null) {
+            int i = rightsList.size();
+
+            while (i-- != 0) {
+                Rights rights = rightsList.get(i);
+
+                if (rights == null)
+                    rightsList.remove(i);
+                else
+                    rights.clean();
+            }
+
+            if (rightsList.isEmpty())
+                rightsList = null;
+        }
+
+        if (descriptions != null) {
+            int i = descriptions.size();
+
+            while (i-- != 0) {
+                Description description = descriptions.get(i);
+
+                if (description == null)
+                    descriptions.remove(i);
+                else
+                    description.clean();
+            }
+
+            if (descriptions.isEmpty())
+                descriptions = null;
+        }
+
+        if (fundingReferences != null) {
+            int i = fundingReferences.size();
+
+            while (i-- != 0) {
+                if (fundingReferences.get(i) == null)
+                    fundingReferences.remove(i);
+            }
+
+            if (fundingReferences.isEmpty())
+                fundingReferences = null;
+        }
+
+        if (webLinks != null) {
+            int i = webLinks.size();
+
+            while (i-- != 0) {
+                if (webLinks.get(i) == null)
+                    webLinks.remove(i);
+            }
+
+            if (webLinks.isEmpty())
+                webLinks = null;
+        }
+
+        if (researchDataList != null) {
+            int i = researchDataList.size();
+
+            while (i-- != 0) {
+                if (researchDataList.get(i) == null)
+                    researchDataList.remove(i);
+            }
+
+            if (researchDataList.isEmpty())
+                researchDataList = null;
+        }
+
+        if (researchDisciplines != null) {
+            int i = researchDisciplines.size();
+
+            while (i-- != 0) {
+                if (researchDisciplines.get(i) == null)
+                    researchDisciplines.remove(i);
+            }
+
+            if (researchDisciplines.isEmpty())
+                researchDisciplines = null;
+        }
+
+        if (dates != null) {
+            int i = dates.size();
+
+            while (i-- != 0) {
+                AbstractDate d = dates.get(i);
+
+                // remove non-existing dates and dates with null values
+                if (d == null || d.getValue() == null)
+                    dates.remove(i);
+            }
+
+            if (dates.isEmpty())
+                dates = null;
+        }
+
         if (geoLocations != null) {
             try {
                 int i = geoLocations.size();
@@ -724,28 +908,24 @@ public class DataCiteJson implements IDocument, ICleanable
                     i--;
                     GeoLocation geoLoc = geoLocations.get(i);
 
-                    // clean geo location
-                    geoLoc.clean();
-
-                    // remove geo location, if it became invalid
-                    if (!geoLoc.isValid())
+                    // remove null entries
+                    if (geoLoc == null)
                         geoLocations.remove(i);
+                    else {
+                        // clean geo location
+                        geoLoc.clean();
+
+                        // remove geo location, if it became invalid
+                        if (!geoLoc.isValid())
+                            geoLocations.remove(i);
+                    }
                 }
             } catch (UnsupportedOperationException e) {
                 LOGGER.error(ERROR_INVALID_GEO_LOCATION_LIST);
             }
 
-            // remove geolocation array, if it became empty
-            if (geoLocations.size() == 0)
+            if (geoLocations.isEmpty())
                 geoLocations = null;
         }
-    }
-
-    @Override
-    public String getElasticSearchId()
-    {
-        // base64 encoding:
-        String base64EncodedString = new String(ENCODER.encode(sources.getURI().getBytes(StandardCharsets.UTF_8)), StandardCharsets.UTF_8);
-        return base64EncodedString;
     }
 }

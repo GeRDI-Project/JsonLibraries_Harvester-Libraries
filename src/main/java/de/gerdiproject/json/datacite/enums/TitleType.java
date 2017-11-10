@@ -16,13 +16,35 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.harvest;
+package de.gerdiproject.json.datacite.enums;
+
+import de.gerdiproject.json.datacite.Title;
 
 /**
- * The interface for documents.
+ * This enumeration describes the type of a {@link Title}.
  *
+ * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
  * @author Robin Weiss
  */
-public interface IDocument
-{
+public enum TitleType {
+    /**
+     * An alternative title variant of the main title.
+     */
+    AlternativeTitle,
+
+    /**
+     * An extension of the main title.
+     */
+    Subtitle,
+
+    /**
+     * A title that is translated from the standard language (?)
+     * This type is not properly documented and may be interpreted wrongly.
+     */
+    TranslatedTitle,
+
+    /**
+     * A title that does not match any other types and is not the main title.
+     */
+    Other
 }

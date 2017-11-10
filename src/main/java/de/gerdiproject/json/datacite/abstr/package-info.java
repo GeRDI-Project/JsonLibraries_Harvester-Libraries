@@ -16,13 +16,10 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.harvest;
-
 /**
- * The interface for documents.
+ * This package contains abstract classes that are helpful from a programmer's
+ * perspective, but are not actively mappable to DataCite properties.
  *
  * @author Robin Weiss
  */
-public interface IDocument
-{
-}
+package de.gerdiproject.json.datacite.abstr;

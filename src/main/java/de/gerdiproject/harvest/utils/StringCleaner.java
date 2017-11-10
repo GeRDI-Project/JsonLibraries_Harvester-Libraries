@@ -173,6 +173,10 @@ public class StringCleaner
         // unescape characters
         input = unescapeHtml(input);
 
+        // replace nbsp with spaces
+        input = input.replaceAll("&nbsp;", " ");
+        input = input.replaceAll("\u00A0", " ");
+
         // merge whitespaces
         input = input.replaceAll("[\\u00A0\\s]{2,}", " ");
 

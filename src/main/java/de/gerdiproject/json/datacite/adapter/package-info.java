@@ -16,13 +16,12 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.harvest;
 
 /**
- * The interface for documents.
+ * This package contains GSON {@linkplain com.google.gson.JsonSerializer}s and {@linkplain com.google.gson.JsonDeserializer}s
+ * for parsing and writing JSON objects that deal with
+ * {@linkplain de.gerdiproject.json.datacite.DataCiteJson} and related classes.
  *
  * @author Robin Weiss
  */
-public interface IDocument
-{
-}
+package de.gerdiproject.json.datacite.adapter;

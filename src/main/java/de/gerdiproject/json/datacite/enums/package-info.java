@@ -16,13 +16,10 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.harvest;
 
 /**
- * The interface for documents.
+ * This package contains enumerations for controlled list values of DataCite JSON objects.
  *
  * @author Robin Weiss
  */
-public interface IDocument
-{
-}
+package de.gerdiproject.json.datacite.enums;

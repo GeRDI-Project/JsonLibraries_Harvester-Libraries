@@ -19,77 +19,35 @@
 package de.gerdiproject.json.datacite;
 
 import java.time.Instant;
-import java.util.Calendar;
+
+import de.gerdiproject.json.datacite.abstr.AbstractDate;
+import de.gerdiproject.json.datacite.enums.DateType;
 
 /**
  * This JsonObject describes a date that has been relevant to the work.
  *
- * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+ * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
-public class Date
+public class Date extends AbstractDate
 {
     /**
-     *  Timestamp in milliseconds since 01/01/1970 00:00:00.
-     *  All formats supported by ES, see https://www.elastic.co/guide/en/elasticsearch/reference/5.2/mapping-date-format.html
+     *  The date value.
+     *  In XML, this is the value between the date-tags.
      */
-    private long value;
-
-    /**
-     * The event that is marked by this date.
-     */
-    private DateType type;
+    private Instant value;
 
 
     /**
      * Simple constructor that requires all mandatory fields.
      *
-     * @param date the date that is described by this object
+     * @param dateString a ISO-8601-compliant date string
      * @param type the event that is marked by this date
      */
-    public Date(Instant date, DateType type)
+    public Date(String dateString, DateType type)
     {
-        setDate(date);
-        this.type = type;
-    }
-
-
-    /**
-     * Simple constructor that requires all mandatory fields.
-     *
-     * @param date the date that is described by this object
-     * @param type the event that is marked by this date
-     */
-    public Date(Calendar date, DateType type)
-    {
-        setDate(date);
-        this.type = type;
-    }
-
-
-    /**
-     * Simple constructor that requires all mandatory fields.
-     *
-     * @param date the date that is described by this object
-     * @param type the event that is marked by this date
-     */
-    public Date(java.util.Date date, DateType type)
-    {
-        setDate(date);
-        this.type = type;
-    }
-
-
-    /**
-     * Simple constructor that requires all mandatory fields.
-     *
-     * @param date the date that is described by this object
-     * @param type the event that is marked by this date
-     */
-    public Date(java.sql.Date date, DateType type)
-    {
-        setDate(date);
-        this.type = type;
+        super(type);
+        setValue(dateString);
     }
 
 
@@ -101,20 +59,35 @@ public class Date
      */
     public Date(long epochMilli, DateType type)
     {
-        setValue(epochMilli);
-        this.type = type;
+        super(type);
+        setDate(epochMilli);
     }
 
 
     /**
-     * Returns the amount of milliseconds that passed from
-     * 01/01/1970 00:00:00 until this date.
+     * Returns the date as ISO-8601-compliant String.
+     * <br>e.g. 1994-11-05T13:15:30Z
+     * <br><br>(see https://www.w3.org/TR/NOTE-datetime)
      *
-     * @return the amount of milliseconds between 01/01/1970 00:00:00 and this date
+     * @return the date as ISO-8601-compliant String, or null if the date is invalid
      */
-    public long getValue()
+    @Override
+    public String getValue()
     {
-        return value;
+        return value != null ? value.toString() : null;
+    }
+
+    /**
+     * Tries to set the date by parsing an ISO 8601 compliant String.
+     * <br>e.g. 1994-11-05T13:15:30Z
+     * <br><br>(see https://www.w3.org/TR/NOTE-datetime)
+     *
+     * @param stringValue the String that is to be parsed
+     */
+    @Override
+    public void setValue(String stringValue)
+    {
+        this.value = stringToInstant(stringValue);
     }
 
 
@@ -124,9 +97,9 @@ public class Date
      *
      * @param epochMilli the amount of milliseconds between 01/01/1970 00:00:00 and this date
      */
-    public void setValue(long epochMilli)
+    public void setDate(long epochMilli)
     {
-        this.value = epochMilli;
+        this.value = unixTimestampToInstant(epochMilli);
     }
 
 
@@ -137,116 +110,6 @@ public class Date
      */
     public void setDate(Instant date)
     {
-        this.value = date.toEpochMilli();
-    }
-
-
-    /**
-     * Changes the date value using a {@linkplain Calendar} that marks a date.
-     *
-     * @param date a {@linkplain Calendar} that represents the new date
-     */
-    public void setDate(Calendar date)
-    {
-        this.value = date.getTimeInMillis();
-    }
-
-
-    /**
-     * Changes the date value using a {@linkplain java.util.Date} that marks a date.
-     *
-     * @param date a {@linkplain java.util.Date} that represents the new date
-     */
-    public void setDate(java.util.Date date)
-    {
-        this.value = date.getTime();
-    }
-
-
-    /**
-     * Changes the date value using a {@linkplain java.sql.Date} that marks a date.
-     *
-     * @param date a {@linkplain java.sql.Date} that represents the new date
-     */
-    public void setDate(java.sql.Date date)
-    {
-        this.value = date.getTime();
-    }
-
-
-    /**
-     * Returns the event that is marked by this date.
-     *
-     * @return the event that is marked by this date
-     */
-    public DateType getType()
-    {
-        return type;
-    }
-
-
-    /**
-     * Changes the event that is marked by this date.
-     *
-     * @param type the event that is marked by this date
-     */
-    public void setType(DateType type)
-    {
-        this.type = type;
-    }
-
-
-    /**
-     * This enumeration describes an event that is marked by a date.
-     *
-     * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
-     * @author Robin Weiss
-     */
-    public enum DateType {
-        /**
-         * The date that the publisher accepted the resource into their system.
-         */
-        Accepted,
-
-        /**
-         * The date the resource is made publicly available. May be a range.
-         */
-        Available,
-
-        /**
-         * The specific, documented date at which the resource receives a copyrighted status, if applicable.
-         */
-        Copyrighted,
-
-        /**
-         * The date or date range in which the resource content was collected.
-         */
-        Collected,
-
-        /**
-         * The date the resource itself was put together; this could be a date range or a single date for a final component,
-         * e.g. the finalised file with all of the data.
-         */
-        Created,
-
-        /**
-         * The date that the resource is published or distributed e.g. to a data centre.
-         */
-        Issued,
-
-        /**
-         * The date the creator submits the resource to the publisher. This could be different from Accepted if the publisher then applies a selection process.
-         */
-        Submitted,
-
-        /**
-         * The date of the last update to the resource, when the resource is being added to. May be a range.
-         */
-        Updated,
-
-        /**
-         * The date or date range during which the dataset or resource is accurate.
-         */
-        Valid
+        this.value = date;
     }
 }

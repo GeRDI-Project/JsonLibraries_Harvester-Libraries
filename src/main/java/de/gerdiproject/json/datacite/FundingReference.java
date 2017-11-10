@@ -18,11 +18,14 @@
  */
 package de.gerdiproject.json.datacite;
 
+import de.gerdiproject.json.datacite.nested.AwardNumber;
+import de.gerdiproject.json.datacite.nested.FunderIdentifier;
+
 /**
  * Information about financial support (funding) for the resource being registered.
- * This is not indexed!
- *
- * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+ * <br>This is not indexed!
+ * <br><br>
+ * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
 public class FundingReference
@@ -37,25 +40,13 @@ public class FundingReference
      * Uniquely identifies a funding entity, according to various types.
      * <br>e.g. http://dx.doi.org/10.13039/100000936
      */
-    private String funderIdentifier;
-
-    /**
-     * The type of the funder identifier.
-     */
-    private FunderIdentifierType funderIdentifierType;
+    private FunderIdentifier funderIdentifier;
 
     /**
      * The code assigned by the funder to a sponsored award (grant).
      * <br>e.g. GBMF3859.01
      */
-    private String awardNumber;
-
-    /**
-     * The URI leading to a page provided by the funder for more
-     * information about the award (grant).
-     * <br>e.g. https://www.moore.org/grants/list/GBMF3859.01
-     */
-    private String awardURI;
+    private AwardNumber awardNumber;
 
     /**
      * The human readable title of the award (grant).
@@ -103,7 +94,7 @@ public class FundingReference
      *
      * @return a unique identifier of the funding entity
      */
-    public String getFunderIdentifier()
+    public FunderIdentifier getFunderIdentifier()
     {
         return funderIdentifier;
     }
@@ -115,7 +106,7 @@ public class FundingReference
      *
      * @param funderIdentifier a unique identifier of the funding entity
      */
-    public void setFunderIdentifier(String funderIdentifier)
+    public void setFunderIdentifier(FunderIdentifier funderIdentifier)
     {
         this.funderIdentifier = funderIdentifier;
     }
@@ -126,7 +117,7 @@ public class FundingReference
      *
      * @return the code assigned by the funder to a sponsored award (grant)
      */
-    public String getAwardNumber()
+    public AwardNumber getAwardNumber()
     {
         return awardNumber;
     }
@@ -138,34 +129,9 @@ public class FundingReference
      *
      * @param awardNumber the code assigned by the funder to a sponsored award (grant)
      */
-    public void setAwardNumber(String awardNumber)
+    public void setAwardNumber(AwardNumber awardNumber)
     {
         this.awardNumber = awardNumber;
-    }
-
-
-    /**
-     * Returns the URI leading to a page provided by the funder for more
-     * information about the award (grant).
-     *
-     * @return the URI leading to a page for more information about the award
-     */
-    public String getAwardURI()
-    {
-        return awardURI;
-    }
-
-
-    /**
-     * Changes the URI leading to a page provided by the funder for more
-     * information about the award (grant).
-     * <br>e.g. https://www.moore.org/grants/list/GBMF3859.01
-     *
-     * @param awardURI the URI leading to a page for more information about the award
-     */
-    public void setAwardURI(String awardURI)
-    {
-        this.awardURI = awardURI;
     }
 
 
@@ -189,62 +155,5 @@ public class FundingReference
     public void setAwardTitle(String awardTitle)
     {
         this.awardTitle = awardTitle;
-    }
-
-
-    /**
-     * Returns the type of the funder identifier.
-     *
-     * @return the type of the funder identifier
-     */
-    public FunderIdentifierType getFunderIdentifierType()
-    {
-        return funderIdentifierType;
-    }
-
-
-    /**
-     * Changes the type of the funder identifier.
-     *
-     * @param funderIdentifierType the type of the funder identifier
-     */
-    public void setFunderIdentifierType(FunderIdentifierType funderIdentifierType)
-    {
-        this.funderIdentifierType = funderIdentifierType;
-    }
-
-
-    /**
-     * This enumeration describes the type of the funder identifier.
-     *
-     * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
-     * @author Robin Weiss
-     */
-    public enum FunderIdentifierType {
-        /**
-         * International Standard Name Identifier;
-         * the globally recognized and adopted international standard approved by ISO for the unique identification of the public identities of persons and organizations across all fields of creative activity.
-         * see http://www.isni.org/
-         */
-        ISNI,
-
-        /**
-         * Global Research Identifier Database ID;
-         * GRID is comprised of a worldwide collection of institutes associated with academic research. The institutes contained are distinguished by a unique identifier, the GRID ID.
-         * see https://www.grid.ac/
-         */
-        GRID,
-
-        /**
-         * Crossref is a not-for-profit membership organization for scholarly publishing working to make content easy to find, cite, link, and assess.
-         * Funder IDs can be found in the Crossref Funder Registry.
-         * see https://www.crossref.org/services/funder-registry/
-         */
-        Crossref_Funder_ID,
-
-        /**
-         * An identifier type that does not fit into any other category.
-         */
-        Other
     }
 }

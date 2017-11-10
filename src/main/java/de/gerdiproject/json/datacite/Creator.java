@@ -18,225 +18,56 @@
  */
 package de.gerdiproject.json.datacite;
 
+import de.gerdiproject.json.datacite.abstr.AbstractPerson;
+import de.gerdiproject.json.datacite.nested.PersonName;
+
 /**
  * The main researcher involved in producing the data, or an author of the publication.
  *
- * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+ * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
-public class Creator
+public class Creator extends AbstractPerson
 {
     /**
-     * The name of the creator.
+     * The full name of the creator.
      * <br>e.g. Sanchez, Rick
      */
-    private String name;
-
-    /**
-     * The personal or first name of the creator.
-     * <br>e.g. Rick
-     */
-    private String givenName;
-
-    /**
-     * The surname or last name of the creator.
-     * <br>e.g. Sanchez
-     */
-    private String familyName;
-
-    /**
-     * Uniquely identifies an individual or legal entity, according to various schemes.
-     * <br>e.g. orcid id number
-     */
-    private String nameIdentifier;
-
-    /**
-     * The name of the name identifier scheme.
-     * <br>e.g. ORCID
-     */
-    private String nameIdentifierScheme;
-
-    /**
-     * The URI of the name identifier scheme.
-     * <br>e.g. http://orcid.org/
-     */
-    private String schemeURI;
-
-    /**
-     * The organisational or institutional affiliation of the creator.
-     * <br>e.g. Council of Ricks
-     */
-    private String affiliation;
+    private PersonName creatorName;
 
 
     /**
-     * Simple constructor that requires all mandatory fields.
+     * Constructor that creates a {@linkplain PersonName} out of a String.
      *
      * @param name the name of the creator
      */
     public Creator(String name)
     {
-        this.name = name;
+        super(name);
     }
 
 
     /**
-     * Returns the name of the creator.
+     * Simple constructor that requires all mandatory fields.
      *
-     * @return the name of the creator
+     * @param nameObject the name and name type of the person
      */
-    public String getName()
+    public Creator(PersonName nameObject)
     {
-        return name;
+        super(nameObject);
     }
 
 
-    /**
-     * Changes the name of the creator.
-     * <br>e.g. Sanchez, Rick
-     *
-     * @param name the name of the creator
-     */
-    public void setName(String name)
+    @Override
+    public PersonName getName()
     {
-        this.name = name;
+        return creatorName;
     }
 
 
-    /**
-     * Returns the personal or first name of the creator.
-     *
-     * @return the personal or first name of the creator
-     */
-    public String getGivenName()
+    @Override
+    public void setName(PersonName name)
     {
-        return givenName;
-    }
-
-
-    /**
-     * Changes the personal or first name of the creator.
-     * <br>e.g. Rick
-     *
-     * @param givenName the personal or first name of the creator
-     */
-    public void setGivenName(String givenName)
-    {
-        this.givenName = givenName;
-    }
-
-
-    /**
-     * Returns the surname or last name of the creator.
-     *
-     * @return the surname or last name of the creator
-     */
-    public String getFamilyName()
-    {
-        return familyName;
-    }
-
-
-    /**
-     * Changes the surname or last name of the creator.
-     * <br>e.g. Sanchez
-     *
-     * @param familyName the surname or last name of the creator
-     */
-    public void setFamilyName(String familyName)
-    {
-        this.familyName = familyName;
-    }
-
-
-    /**
-     * Returns a unique identifier of an individual or legal entity, according to various schemes.
-     *
-     * @return a unique identifier of an individual or legal entity
-     */
-    public String getNameIdentifier()
-    {
-        return nameIdentifier;
-    }
-
-
-    /**
-     * Changes a unique identifier of an individual or legal entity, according to various schemes.
-     * <br>e.g. orcid id number
-     *
-     * @param nameIdentifier a unique identifier of an individual or legal entity
-     */
-    public void setNameIdentifier(String nameIdentifier)
-    {
-        this.nameIdentifier = nameIdentifier;
-    }
-
-
-    /**
-     * Returns the name of the name identifier scheme.
-     *
-     * @return the name of the name identifier scheme
-     */
-    public String getNameIdentifierScheme()
-    {
-        return nameIdentifierScheme;
-    }
-
-
-    /**
-     * Changes the name of the name identifier scheme.
-     * <br>e.g. ORCID
-     *
-     * @param nameIdentifierSchema the name of the name identifier scheme
-     */
-    public void setNameIdentifierScheme(String nameIdentifierSchema)
-    {
-        this.nameIdentifierScheme = nameIdentifierSchema;
-    }
-
-
-    /**
-     * Returns the URI of the name identifier scheme.
-     *
-     * @return the URI of the name identifier scheme
-     */
-    public String getSchemeURI()
-    {
-        return schemeURI;
-    }
-
-
-    /**
-     * Changes the URI of the name identifier scheme.
-     * <br>e.g. http://orcid.org/
-     *
-     * @param schemeURI the URI of the name identifier scheme
-     */
-    public void setSchemeURI(String schemeURI)
-    {
-        this.schemeURI = schemeURI;
-    }
-
-
-    /**
-     * Returns the organisational or institutional affiliation of the creator.
-     *
-     * @return the organisational or institutional affiliation of the creator
-     */
-    public String getAffiliation()
-    {
-        return affiliation;
-    }
-
-
-    /**
-     * Changes the organisational or institutional affiliation of the creator.
-     * <br>e.g. Council of Ricks
-     *
-     * @param affiliation the organisational or institutional affiliation of the creator
-     */
-    public void setAffiliation(String affiliation)
-    {
-        this.affiliation = affiliation;
+        this.creatorName = name;
     }
 }

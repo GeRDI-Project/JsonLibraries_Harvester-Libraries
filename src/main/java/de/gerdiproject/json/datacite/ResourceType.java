@@ -18,16 +18,19 @@
  */
 package de.gerdiproject.json.datacite;
 
+import de.gerdiproject.json.datacite.enums.ResourceTypeGeneral;
+
 /**
  * This object represents a description of the resource.
  *
- * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+ * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
 public class ResourceType
 {
     /**
      * A free text description of the resource.
+     * In XML, this is the value between the resourceType-tags.
      * <br>e.g. "Census Data"
      */
     private String value;
@@ -35,11 +38,25 @@ public class ResourceType
     /**
      * The general type of a resource.
      */
-    private GeneralResourceType generalType;
+    private ResourceTypeGeneral resourceTypeGeneral;
+
+
+    /**
+     * Simple constructor that requires all mandatory values.
+     *
+     * @param value the free text description of the resource
+     * @param resourceTypeGeneral the general type of the resource
+     */
+    public ResourceType(String value, ResourceTypeGeneral resourceTypeGeneral)
+    {
+        this.value = value;
+        this.resourceTypeGeneral = resourceTypeGeneral;
+    }
 
 
     /**
      * Returns the free text description of the resource.
+     * In XML, this is the value between the resourceType-tags.
      *
      * @return the free text description of the resource
      */
@@ -51,6 +68,7 @@ public class ResourceType
 
     /**
      * Changes the free text description of the resource.
+     * In XML, this is the value between the resourceType-tags.
      * <br>e.g. "Census Data"
      *
      * @param value a free text description of the resource
@@ -66,9 +84,9 @@ public class ResourceType
      *
      * @return the general type of the resource
      */
-    public GeneralResourceType getGeneralType()
+    public ResourceTypeGeneral getGeneralType()
     {
-        return generalType;
+        return resourceTypeGeneral;
     }
 
 
@@ -77,87 +95,8 @@ public class ResourceType
      *
      * @param generalType the general type of the resource
      */
-    public void setGeneralType(GeneralResourceType generalType)
+    public void setGeneralType(ResourceTypeGeneral generalType)
     {
-        this.generalType = generalType;
-    }
-
-
-    /**
-     * This enumeration describes the resource category.
-     *
-     * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
-     * @author Robin Weiss
-     */
-    public enum GeneralResourceType {
-        /**
-         * A series of visual representations imparting an impression of motion when shown in succession. May or may not include sound.
-         */
-        Audiovisual,
-
-        /**
-         * An aggregation of resources of various types, or a list of resources that form part of a publication. If a collection exists of a single type, use the single type to describe it.
-         */
-        Collection,
-
-        /**
-         * Data encoded in a defined structure.
-         */
-        Dataset,
-
-        /**
-         * A non‐persistent, time‐ based occurrence.
-         */
-        Event,
-
-        /**
-         * A visual representation other than text.
-         */
-        Image,
-
-        /**
-         * A resource requiring interaction from the user to be understood, executed, or experienced.
-         */
-        InteractiveResource,
-
-        /**
-         * An abstract, conceptual, graphical, mathematical or visualization model that represents empirical objects, phenomena, or physical processes.
-         */
-        Model,
-
-        /**
-         * An inanimate, three‐ dimensional object or substance.
-         */
-        PhysicalObject,
-
-        /**
-         * A system that provides one or more functions of value to the end‐user.
-         */
-        Service,
-
-        /**
-         * A computer program in source code (text) or compiled form.
-         */
-        Software,
-
-        /**
-         * A resource primarily intended to be heard.
-         */
-        Sound,
-
-        /**
-         * A resource consisting primarily of words for reading.
-         */
-        Text,
-
-        /**
-         * A structured series of steps which can be executed to produce a final outcome, allowing users a means to specify and enact their work in a more reproducible manner.
-         */
-        Workflow,
-
-        /**
-         * If selected, supply a value for ResourceType.
-         */
-        Other
+        this.resourceTypeGeneral = generalType;
     }
 }

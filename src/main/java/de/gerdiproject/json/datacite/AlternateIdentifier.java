@@ -23,14 +23,14 @@ package de.gerdiproject.json.datacite;
  * May be used for local identifiers. AlternateIdentifier should be used for another identifier of the same
  * instance (same location, same file).
  *
- * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
+ * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
 public class AlternateIdentifier
 {
     /**
      * A unique free text identifier. This may be any alphanumeric string
-     * which is unique within its domain of issue.
+     * which is unique within its domain of issue. In XML, this is the value between the alternateIdentifier-tags.
      * <br>e.g. E‐GEOD‐34814
      */
     private String value;
@@ -39,24 +39,24 @@ public class AlternateIdentifier
      * The free text type of the AlternateIdentifier.
      * <br>e.g. "A local accession number"
      */
-    private String type;
+    private String alternateIdentifierType;
 
 
     /**
      * Simple constructor that requires all mandatory fields.
      *
      * @param value the identifier value
-     * @param type free text describing the identifier
+     * @param alternateIdentifierType free text describing the identifier
      */
-    public AlternateIdentifier(String value, String type)
+    public AlternateIdentifier(String value, String alternateIdentifierType)
     {
         this.value = value;
-        this.type = type;
+        this.alternateIdentifierType = alternateIdentifierType;
     }
 
 
     /**
-     * Returns a unique identifier.
+     * Returns a unique identifier. In XML, this is the value between the alternateIdentifier-tags.
      *
      * @return a unique identifier
      */
@@ -67,7 +67,7 @@ public class AlternateIdentifier
 
 
     /**
-     * Changes the unique identifier.
+     * Changes the unique identifier. In XML, this is the value between the alternateIdentifier-tags.
      * <br>e.g. E‐GEOD‐34814
      *
      * @param value a unique identifier
@@ -85,7 +85,7 @@ public class AlternateIdentifier
      */
     public String getType()
     {
-        return type;
+        return alternateIdentifierType;
     }
 
 
@@ -97,6 +97,6 @@ public class AlternateIdentifier
      */
     public void setType(String type)
     {
-        this.type = type;
+        this.alternateIdentifierType = type;
     }
 }
