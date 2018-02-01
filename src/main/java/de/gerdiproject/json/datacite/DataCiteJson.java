@@ -25,6 +25,8 @@ import org.slf4j.LoggerFactory;
 
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.IDocument;
+import de.gerdiproject.json.controlledvocab.IResearchDiscipline;
+import de.gerdiproject.json.controlledvocab.ResearchDiscipline;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.extension.ResearchData;
 import de.gerdiproject.json.datacite.extension.WebLink;
@@ -173,7 +175,7 @@ public class DataCiteJson implements IDocument, ICleanable
      * A list of human readable names of the research disciplines, meaning the topics or domains that this document covers.
      * <br>e.g. Computer Science, Geography
      */
-    private List<String> researchDisciplines;
+    private List<IResearchDiscipline> researchDisciplines;
 
 
     /**
@@ -341,7 +343,7 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @return a list of human readable names of the research disciplines
      */
-    public List<String> getResearchDisciplines()
+    public List<IResearchDiscipline> getResearchDisciplines()
     {
         return researchDisciplines;
     }
@@ -352,7 +354,7 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @param researchDisciplines a list of human readable names of the research disciplines
      */
-    public void setResearchDisciplines(List<String> researchDisciplines)
+    public void setResearchDisciplines(List<IResearchDiscipline> researchDisciplines)
     {
         this.researchDisciplines = researchDisciplines;
     }
