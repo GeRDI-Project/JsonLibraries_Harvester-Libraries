@@ -18,57 +18,34 @@
  */
 package de.gerdiproject.json.controlledvocab;
 
+import de.gerdiproject.json.controlledvocab.abstr.AbstractResearch;
+import de.gerdiproject.json.controlledvocab.constants.ResearchConstants;
+
 /**
  * @author Robin Weiss
  *
  */
-public enum ResearchDiscipline implements IResearchDiscipline{
-	
-    // ANCIENT CULTURES
-    PREHISTORY(01,             "Prehistory",                                  ResearchCategory.ANCIENT_CULTURES),
-    CLASSICAL_PHILOLOGY(02,   "Classical Philology",                         ResearchCategory.ANCIENT_CULTURES),
-    ANCIENT_HISTORY(03,        "Ancient History",                            ResearchCategory.ANCIENT_CULTURES),
-    CLASSICAL_ARCHAEOLOGY(04, "Classical Archaeology",                       ResearchCategory.ANCIENT_CULTURES),
-    EGYPTOLOGY(05,             "Egyptology and Ancient Near Eastern Studies", ResearchCategory.ANCIENT_CULTURES),
-
-    // HISTORY
-    MEDIEVAL_HISTORY(01,       "Medieval History",           ResearchCategory.HISTORY),
-    EARLY_MODERN_HISTORY(02,  "Early Modern History",       ResearchCategory.HISTORY),
-    MODERN_HISTORY(03,         "Modern and Current History", ResearchCategory.HISTORY),
-    SCIENCE_HISTORY(04,        "History of Science",         ResearchCategory.HISTORY);
-
-    //...
-
+public class ResearchDiscipline extends AbstractResearch
+{
     private final ResearchCategory category;
-    private final String rbnr;
-    private final String displayName;
 
 
-    private ResearchDiscipline(int rbnr, String displayName, ResearchCategory category)
+    public ResearchDiscipline(int rbnr, String displayName, ResearchCategory category)
     {
+        super(rbnr, displayName);
         this.category = category;
-        this.rbnr = String.format("%02d", rbnr );
-        this.displayName = displayName;
     }
-    
-    
+
+
     public ResearchCategory getCategory()
-	{
-		return category;
-	}
+    {
+        return category;
+    }
 
 
-	@Override
-	public String getRbnr()
-	{
-		return rbnr;
-	}
-
-
-
-	@Override
-	public String getName()
-	{
-		return displayName;
-	}
+    @Override
+    public String toString()
+    {
+        return String.format(ResearchConstants.DISCIPLINE_WITH_NAME_FORMAT, category.getRbnr(), rbnr, displayName, category.getName());
+    }
 }

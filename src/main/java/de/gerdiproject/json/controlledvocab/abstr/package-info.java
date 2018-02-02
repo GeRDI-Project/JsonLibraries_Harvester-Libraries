@@ -16,26 +16,8 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.json.controlledvocab;
-
-import de.gerdiproject.json.controlledvocab.abstr.AbstractResearch;
-import de.gerdiproject.json.controlledvocab.constants.ResearchConstants;
-
 /**
  * @author Robin Weiss
  *
  */
-public class ResearchCategory extends AbstractResearch
-{
-    public ResearchCategory(int rbnr, String displayName)
-    {
-        super(rbnr, displayName);
-    }
-
-
-    @Override
-    public String toString()
-    {
-        return String.format(ResearchConstants.CATEGORY_WITH_NAME_FORMAT, rbnr, displayName);
-    }
-}
+package de.gerdiproject.json.controlledvocab.abstr;

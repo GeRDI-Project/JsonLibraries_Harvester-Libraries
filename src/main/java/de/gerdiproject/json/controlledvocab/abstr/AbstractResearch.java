@@ -16,15 +16,32 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.json.controlledvocab;
+package de.gerdiproject.json.controlledvocab.abstr;
 
 /**
  * @author Robin Weiss
  *
  */
-public interface IResearchDiscipline
+public abstract class AbstractResearch
 {
-	String getRbnr();
-	String getName();
-	
+    protected final String displayName;
+    protected final int rbnr;
+
+
+    public AbstractResearch(int rbnr, String displayName)
+    {
+        this.rbnr = rbnr;
+        this.displayName = displayName;
+    }
+
+    public String getName()
+    {
+        return displayName;
+    }
+
+
+    public int getRbnr()
+    {
+        return rbnr;
+    }
 }
