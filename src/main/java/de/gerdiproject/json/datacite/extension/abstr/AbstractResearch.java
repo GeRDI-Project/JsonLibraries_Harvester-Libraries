@@ -16,8 +16,32 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
+package de.gerdiproject.json.datacite.extension.abstr;
+
 /**
  * @author Robin Weiss
  *
  */
-package de.gerdiproject.json.controlledvocab.constants;
+public abstract class AbstractResearch
+{
+    protected final String displayName;
+    protected final int rbnr;
+
+
+    public AbstractResearch(int rbnr, String displayName)
+    {
+        this.rbnr = rbnr;
+        this.displayName = displayName;
+    }
+
+    public String getName()
+    {
+        return displayName;
+    }
+
+
+    public int getRbnr()
+    {
+        return rbnr;
+    }
+}

@@ -16,10 +16,10 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.json.controlledvocab;
+package de.gerdiproject.json.datacite.extension;
 
-import de.gerdiproject.json.controlledvocab.abstr.AbstractResearch;
-import de.gerdiproject.json.controlledvocab.constants.ResearchConstants;
+import de.gerdiproject.json.datacite.constants.DataCiteResearchConstants;
+import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
 
 /**
  * @author Robin Weiss
@@ -46,6 +46,6 @@ public class ResearchDiscipline extends AbstractResearch
     @Override
     public String toString()
     {
-        return String.format(ResearchConstants.DISCIPLINE_WITH_NAME_FORMAT, category.getRbnr(), rbnr, displayName, category.getName());
+        return String.format(DataCiteResearchConstants.DISCIPLINE_WITH_NAME_FORMAT, category.getRbnr(), rbnr, displayName, category.getName());
     }
 }

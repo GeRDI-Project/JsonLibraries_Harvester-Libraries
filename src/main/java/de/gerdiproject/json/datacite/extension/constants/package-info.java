@@ -20,4 +20,4 @@
  * @author Robin Weiss
  *
  */
-package de.gerdiproject.json.controlledvocab.adapter;
+package de.gerdiproject.json.datacite.extension.constants;

@@ -22,14 +22,14 @@ package de.gerdiproject.json;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import de.gerdiproject.json.controlledvocab.ResearchCategory;
-import de.gerdiproject.json.controlledvocab.ResearchDiscipline;
-import de.gerdiproject.json.controlledvocab.abstr.AbstractResearch;
-import de.gerdiproject.json.controlledvocab.adapter.ResearchAdapter;
 import de.gerdiproject.json.datacite.Date;
 import de.gerdiproject.json.datacite.DateRange;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.adapter.DateAdapter;
+import de.gerdiproject.json.datacite.extension.ResearchCategory;
+import de.gerdiproject.json.datacite.extension.ResearchDiscipline;
+import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
+import de.gerdiproject.json.datacite.extension.adapter.ResearchAdapter;
 import de.gerdiproject.json.geo.GeoJson;
 import de.gerdiproject.json.geo.LineString;
 import de.gerdiproject.json.geo.MultiLineString;

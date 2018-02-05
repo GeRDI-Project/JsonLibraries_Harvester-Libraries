@@ -25,11 +25,11 @@ import org.slf4j.LoggerFactory;
 
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.IDocument;
-import de.gerdiproject.json.controlledvocab.ResearchDiscipline;
-import de.gerdiproject.json.controlledvocab.abstr.AbstractResearch;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.extension.ResearchData;
+import de.gerdiproject.json.datacite.extension.ResearchDiscipline;
 import de.gerdiproject.json.datacite.extension.WebLink;
+import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
 
 
 /**

@@ -16,56 +16,30 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.json.controlledvocab.constants;
+package de.gerdiproject.json.datacite.extension.utils;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import de.gerdiproject.json.controlledvocab.ResearchCategory;
-import de.gerdiproject.json.controlledvocab.ResearchDiscipline;
+import de.gerdiproject.json.datacite.extension.ResearchCategory;
+import de.gerdiproject.json.datacite.extension.ResearchDiscipline;
+import de.gerdiproject.json.datacite.extension.constants.ResearchConstants;
 
 /**
  * This static class is a collection of constants that define a controlled list of Research Disciplines and categories.
  *
  * @author Fidan Limani, Robin Weiss
  */
-public class ResearchConstants
+public class ResearchUtils
 {
-    // ANCIENT CULTURES
-    public static final ResearchCategory ANCIENT_CULTURES = new ResearchCategory(101, "Ancient Cultures");
-    public static final ResearchDiscipline PREHISTORY = new ResearchDiscipline(01, "Prehistory", ANCIENT_CULTURES);
-    public static final ResearchDiscipline CLASSICAL_PHILOLOGY = new ResearchDiscipline(02, "Classical Philology", ANCIENT_CULTURES);
-    public static final ResearchDiscipline ANCIENT_HISTORY = new ResearchDiscipline(03, "Ancient History", ANCIENT_CULTURES);
-    public static final ResearchDiscipline CLASSICAL_ARCHAEOLOGY = new ResearchDiscipline(04, "Classical Archaeology", ANCIENT_CULTURES);
-    public static final ResearchDiscipline EGYPTOLOGY = new ResearchDiscipline(05, "Egyptology and Ancient Near Eastern Studies", ANCIENT_CULTURES);
-
-    // HISTORY
-    public static final ResearchCategory HISTORY = new ResearchCategory(102, "Historys");
-    public static final ResearchDiscipline MEDIEVAL_HISTORY = new ResearchDiscipline(01, "Medieval History", HISTORY);
-    public static final ResearchDiscipline EARLY_MODERN_HISTORY = new ResearchDiscipline(02, "Early Modern History", HISTORY);
-    public static final ResearchDiscipline MODERN_HISTORY = new ResearchDiscipline(03, "Modern and Current History", HISTORY);
-    public static final ResearchDiscipline SCIENCE_HISTORY = new ResearchDiscipline(04, "History of Science", HISTORY);
-
-
     // Helper Maps
     private static Map<Integer, Map<Integer, ResearchDiscipline>> disciplineMap = createDisciplineMap();
     private static Map<Integer, ResearchCategory> categoryMap = createCategoryMap();
 
-    // Json Fields
-    public static final String NAME_JSON = "name";
-    public static final String RNBR_JSON = "RNBR";
-
-    // Formatting
-    public static final String CATEGORY_FORMAT = "%03d";
-    public static final String CATEGORY_WITH_NAME_FORMAT = CATEGORY_FORMAT + " %s";
-    public static final String DISCIPLINE_FORMAT = "%03d-%02d";
-    public static final String DISCIPLINE_WITH_NAME_FORMAT = DISCIPLINE_FORMAT + " %s (%s)";
-
-
     /**
      * Private constructor, because this is a static class.
      */
-    private ResearchConstants()
+    private ResearchUtils()
     {
 
     }
@@ -100,8 +74,18 @@ public class ResearchConstants
     {
         final Map<Integer, Map<Integer, ResearchDiscipline>> map = new HashMap<>();
 
-        addResearchDisciplinesToMap(map, PREHISTORY, CLASSICAL_PHILOLOGY, ANCIENT_HISTORY, CLASSICAL_ARCHAEOLOGY, EGYPTOLOGY);
-        addResearchDisciplinesToMap(map, MEDIEVAL_HISTORY, EARLY_MODERN_HISTORY, MODERN_HISTORY, SCIENCE_HISTORY);
+        addResearchDisciplinesToMap(map,
+                                    ResearchConstants.PREHISTORY,
+                                    ResearchConstants.CLASSICAL_PHILOLOGY,
+                                    ResearchConstants.ANCIENT_HISTORY,
+                                    ResearchConstants.CLASSICAL_ARCHAEOLOGY,
+                                    ResearchConstants.EGYPTOLOGY);
+
+        addResearchDisciplinesToMap(map,
+                                    ResearchConstants.MEDIEVAL_HISTORY,
+                                    ResearchConstants.EARLY_MODERN_HISTORY,
+                                    ResearchConstants.MODERN_HISTORY,
+                                    ResearchConstants.SCIENCE_HISTORY);
 
         return map;
     }
@@ -119,7 +103,7 @@ public class ResearchConstants
     {
         final Map<Integer, ResearchCategory> map = new HashMap<>();
 
-        addResearchCategoriesToMap(map, ANCIENT_CULTURES, HISTORY);
+        addResearchCategoriesToMap(map, ResearchConstants.ANCIENT_CULTURES, ResearchConstants.HISTORY);
 
         return map;
     }
