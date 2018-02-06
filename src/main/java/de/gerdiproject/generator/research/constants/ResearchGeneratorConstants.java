@@ -23,7 +23,6 @@ import java.util.Collections;
 import java.util.List;
 
 
-
 /**
  * This static class is a collection of constants for automatically creating research discipline constants classes.
  *
@@ -43,7 +42,6 @@ public class ResearchGeneratorConstants
     public static final String AREA_CLASSNAME = "ResearchArea";
     public static final String DISCIPLINE_CLASSNAME = "ResearchDiscipline";
     public static final String DISCIPLINE_MAP_CLASSNAME = "Map<Integer, ResearchDiscipline>";
-
 
     public static final String CATEGORY_DEF = "%n    public static final String %s = \"%s\";";
     public static final String AREA_DEF = "%n    public static final ResearchArea %s = new ResearchArea(%d, \"%s\", ResearchCategoryConstants.%s);";
@@ -196,11 +194,6 @@ public class ResearchGeneratorConstants
     public static final String DISCIPLINE_IMPORT = "de.gerdiproject.json.datacite.extension.ResearchDiscipline";
     public static final String MAP_IMPORT = "java.util.Map";
     public static final String HASH_MAP_IMPORT = "java.util.HashMap";
-
-
-
-
-
 
 
     /**

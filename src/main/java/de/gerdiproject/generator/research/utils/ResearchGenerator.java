@@ -26,6 +26,11 @@ import de.gerdiproject.generator.research.constants.ResearchGeneratorConstants;
 import de.gerdiproject.generator.research.source.json.ResearchAreaSource;
 import de.gerdiproject.generator.research.source.json.ResearchCategorySource;
 import de.gerdiproject.generator.research.source.json.ResearchDisciplineSource;
+import de.gerdiproject.json.datacite.extension.ResearchArea;
+import de.gerdiproject.json.datacite.extension.ResearchDiscipline;
+import de.gerdiproject.json.datacite.extension.constants.ResearchAreaConstants;
+import de.gerdiproject.json.datacite.extension.constants.ResearchCategoryConstants;
+import de.gerdiproject.json.datacite.extension.constants.ResearchDisciplineConstants;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +68,14 @@ public class ResearchGenerator
     }
 
 
+    /**
+     * This method accepts a list of filePaths that point to JSON files. These files should contain
+     * a list of {@linkplain ResearchCategorySource} objects. The objects are read and written down
+     * in {@linkplain ResearchDisciplineConstants}, {@linkplain ResearchAreaConstants}, and {@linkplain ResearchCategoryConstants},
+     * overwriting the original classes.
+     *
+     * @param filePaths a list of filePaths that point to JSON files
+     */
     public void generateConstants(String... filePaths)
     {
         logger.info(ResearchGeneratorConstants.GENERATOR_STARTED);
@@ -101,8 +114,20 @@ public class ResearchGenerator
             }
         }
 
+        // add category constructor
+        try {
+            categoryWriter.write(String.format(
+                                     ResearchGeneratorConstants.CONSTRUCTOR,
+                                     ResearchGeneratorConstants.CATEGORY_CLASSNAME));
+        } catch (IOException e) {
+            logger.error(ResearchGeneratorConstants.FILE_WRITE_ERROR, e);
+        }
+
         // add area constants class specific methods
         try {
+            areaWriter.write(String.format(
+                                 ResearchGeneratorConstants.CONSTRUCTOR,
+                                 ResearchGeneratorConstants.AREA_CLASSNAME));
             areaWriter.append(String.format(
                                   ResearchGeneratorConstants.RESEARCH_MAP_INITIALIZATION,
                                   ResearchGeneratorConstants.AREA_CLASSNAME,
@@ -116,6 +141,9 @@ public class ResearchGenerator
 
         // add discipline constants class specific methods
         try {
+            disciplineWriter.write(String.format(
+                                       ResearchGeneratorConstants.CONSTRUCTOR,
+                                       ResearchGeneratorConstants.DISCIPLINE_CLASSNAME));
             disciplineWriter.append(String.format(
                                         ResearchGeneratorConstants.RESEARCH_MAP_INITIALIZATION,
                                         ResearchGeneratorConstants.DISCIPLINE_MAP_CLASSNAME,
@@ -127,16 +155,27 @@ public class ResearchGenerator
             logger.error(ResearchGeneratorConstants.FILE_WRITE_ERROR, e);
         }
 
-
         // finish class declaration and save files
-        finishConstantsFile(categoryWriter, ResearchGeneratorConstants.CATEGORY_CLASSNAME);
-        finishConstantsFile(areaWriter, ResearchGeneratorConstants.AREA_CLASSNAME);
-        finishConstantsFile(disciplineWriter, ResearchGeneratorConstants.DISCIPLINE_CLASSNAME);
+        finishConstantsFile(categoryWriter);
+        finishConstantsFile(areaWriter);
+        finishConstantsFile(disciplineWriter);
 
         logger.info(ResearchGeneratorConstants.GENERATOR_DONE);
     }
 
 
+    /**
+     * This method parses all {@linkplain ResearchCategorySource} objects within a file.
+     *
+     * @param filePath the file path to the JSON file that is being read
+     * @param categoryWriter the output stream writer for {@linkplain ResearchCategoryConstants}
+     * @param areaWriter the output stream writer for {@linkplain ResearchAreaConstants}
+     * @param disciplineWriter the output stream writer for {@linkplain ResearchDisciplineConstants}
+     * @param areaMapBuilder a string builder that concatenates a list of constant names of {@linkplain ResearchArea}
+     * @param disciplineMapBuilder a string builder that concatenates a list of constant names of {@linkplain ResearchDiscipline}
+     *
+     * @throws IOException this exception is thrown when a read or write operation of any file failed
+     */
     private void addConstantsFromFile(String filePath, OutputStreamWriter categoryWriter, OutputStreamWriter areaWriter, OutputStreamWriter disciplineWriter, StringBuilder areaMapBuilder, StringBuilder disciplineMapBuilder) throws IOException
     {
         List<ResearchCategorySource> categories = readResearchListFromFile(filePath);
@@ -180,6 +219,15 @@ public class ResearchGenerator
     }
 
 
+    /**
+     * Opens an output stream writer to a Constants class file and starts writing the header, imports
+     * and class definition.
+     *
+     * @param constantType the type that ist most common within the constants class
+     * @param imports an arbitrary number of class paths that are imported
+     *
+     * @return the output stream writer of the generated class
+     */
     private OutputStreamWriter initConstantsFile(String constantType, String... imports)
     {
         String filePath = String.format(ResearchGeneratorConstants.CONSTANTS_FILE_NAME, constantType);
@@ -215,10 +263,14 @@ public class ResearchGenerator
     }
 
 
-    private void finishConstantsFile(OutputStreamWriter writer, String className)
+    /**
+     * Writes the closing brace of the class definition to a specified writer and closes the writer.
+     *
+     * @param writer the output stream writer of a constants file
+     */
+    private void finishConstantsFile(OutputStreamWriter writer)
     {
         try {
-            writer.write(String.format(ResearchGeneratorConstants.CONSTRUCTOR, className));
             writer.write(ResearchGeneratorConstants.CLASS_END);
 
             writer.close();
@@ -228,6 +280,15 @@ public class ResearchGenerator
     }
 
 
+    /**
+     * Opens a JSON file and attempts to parse its content to a list of {@linkplain ResearchCategorySource}s.
+     *
+     * @param filepath the path to the JSON file
+     *
+     * @return a list of {@linkplain ResearchCategorySource}
+     *
+     * @throws IOException this exception is thrown when the JSON file could not be parsed
+     */
     private List<ResearchCategorySource> readResearchListFromFile(String filepath) throws IOException
     {
         List<ResearchCategorySource> researchList = null;
