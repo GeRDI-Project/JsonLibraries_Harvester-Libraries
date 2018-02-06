@@ -22,43 +22,44 @@ import de.gerdiproject.json.datacite.constants.DataCiteResearchConstants;
 import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
 
 /**
- * This class defines JSON objects that represent precise research disciplines.
+ * This class defines a JSON object that represents the general area to which a
+ * {@linkplain ResearchDiscipline} belongs.
  *
  * @author Fidan Limani, Robin Weiss
  */
-public class ResearchDiscipline extends AbstractResearch
+public class ResearchArea extends AbstractResearch
 {
-    private final ResearchArea area;
+    private final String category;
 
 
     /**
-     * Constructor that requires the RNBR, name, and are of the discipline.
+     * Simple constructor that requires the RNBR, the human readable name and the
+     * category of the research area.
      *
-     * @param rbnr a number that serves as a unique key of a discipline within an area
-     * @param displayName a human readable name of the discipline
-     * @param area to which the discipline belongs
+     * @param rbnr a number that serves as a unique key of the research area
+     * @param displayName an english human readable name of the research area
+     * @param category a human readable name of the general category
      */
-    public ResearchDiscipline(int rbnr, String displayName, ResearchArea area)
+    public ResearchArea(int rbnr, String displayName, String category)
     {
         super(rbnr, displayName);
-        this.area = area;
+        this.category = category;
     }
 
 
     /**
-     * Returns the research area to which the discipline belongs.
-     *
-     * @return the area to which the discipline belongs
+     * Returns a human readable name of the general category.
+     * @return the name of the general research category
      */
-    public ResearchArea getArea()
+    public String getCategory()
     {
-        return area;
+        return category;
     }
 
 
     @Override
     public String toString()
     {
-        return String.format(DataCiteResearchConstants.DISCIPLINE_NAME_FORMAT, area.getRbnr(), rbnr, displayName, area.getName(), area.getCategory());
+        return String.format(DataCiteResearchConstants.AREA_NAME_FORMAT, rbnr, displayName, category);
     }
 }

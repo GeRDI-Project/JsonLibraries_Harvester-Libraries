@@ -16,10 +16,48 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
+package de.gerdiproject.generator.research.source.json;
+
+import java.util.List;
+
 /**
- * This package contains constant collections that are used by the
- * GeRDI extension of the DataCite schema.
+ * This class models the 4 general DFG vocabulary categories.
  *
- * @author Fidan Limani, Robin Weiss
+ * @author Fidan Limani
  */
-package de.gerdiproject.json.datacite.extension.constants;
+public class ResearchCategorySource
+{
+    private String name;
+    private List<ResearchAreaSource> subclasses;
+
+
+    public String getName()
+    {
+        return name;
+    }
+
+
+    public List<ResearchAreaSource> getSubclasses()
+    {
+        return subclasses;
+    }
+
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+
+    public void setSubclasses(List<ResearchAreaSource> subclasses)
+    {
+        this.subclasses = subclasses;
+    }
+
+
+    @Override
+    public String toString()
+    {
+        return "Subject category: " + name + "; # of subject areas: " + subclasses.size();
+    }
+}

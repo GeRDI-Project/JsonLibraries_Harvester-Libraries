@@ -16,10 +16,11 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
+
 /**
- * This package contains constant collections that are used by the
- * GeRDI extension of the DataCite schema.
+ * This package contains constants that are related to the generation of research discipline
+ * constants classes.
  *
  * @author Fidan Limani, Robin Weiss
  */
-package de.gerdiproject.json.datacite.extension.constants;
+package de.gerdiproject.generator.research.constants;

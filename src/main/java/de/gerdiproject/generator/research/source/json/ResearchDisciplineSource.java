@@ -16,26 +16,47 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.json.datacite.extension;
 
-import de.gerdiproject.json.datacite.constants.DataCiteResearchConstants;
-import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
+package de.gerdiproject.generator.research.source.json;
 
 /**
- * @author Robin Weiss
+ * This class supports GeRDI researchDiscipline metadata element assignment.
  *
+ * @author Fidan Limani
  */
-public class ResearchCategory extends AbstractResearch
+public class ResearchDisciplineSource
 {
-    public ResearchCategory(int rbnr, String displayName)
+    private String name;
+    private String RBNR;
+
+
+    public String getName()
     {
-        super(rbnr, displayName);
+        return name;
+    }
+
+
+    public int getRBNR()
+    {
+        return Integer.parseInt(RBNR.split("-")[1]);
+    }
+
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+
+    public void setRBNR(String rBNR)
+    {
+        RBNR = rBNR;
     }
 
 
     @Override
     public String toString()
     {
-        return String.format(DataCiteResearchConstants.CATEGORY_WITH_NAME_FORMAT, rbnr, displayName);
+        return "Subject discipline: " + getName() + "; RBNR: " + getRBNR();
     }
 }

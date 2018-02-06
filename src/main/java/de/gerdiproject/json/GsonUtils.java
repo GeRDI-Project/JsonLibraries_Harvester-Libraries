@@ -26,7 +26,7 @@ import de.gerdiproject.json.datacite.Date;
 import de.gerdiproject.json.datacite.DateRange;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.adapter.DateAdapter;
-import de.gerdiproject.json.datacite.extension.ResearchCategory;
+import de.gerdiproject.json.datacite.extension.ResearchArea;
 import de.gerdiproject.json.datacite.extension.ResearchDiscipline;
 import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
 import de.gerdiproject.json.datacite.extension.adapter.ResearchAdapter;
@@ -83,7 +83,7 @@ public final class GsonUtils
         .registerTypeAdapter(DateRange.class, new DateAdapter())
         .registerTypeAdapter(Date.class, new DateAdapter())
         .registerTypeAdapter(AbstractResearch.class, new ResearchAdapter())
-        .registerTypeAdapter(ResearchCategory.class, new ResearchAdapter())
+        .registerTypeAdapter(ResearchArea.class, new ResearchAdapter())
         .registerTypeAdapter(ResearchDiscipline.class, new ResearchAdapter());
 
         GSON = builder.create();

@@ -17,7 +17,9 @@
  *  under the License.
  */
 /**
- * @author Robin Weiss
+ * This package contains abstract classes that are used by the
+ * GeRDI extension of the DataCite schema.
  *
+ * @author Fidan Limani, Robin Weiss
  */
 package de.gerdiproject.json.datacite.extension.abstr;

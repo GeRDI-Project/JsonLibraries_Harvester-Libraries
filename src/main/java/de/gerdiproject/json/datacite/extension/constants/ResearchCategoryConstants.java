@@ -16,32 +16,28 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.json.datacite.constants;
+package de.gerdiproject.json.datacite.extension.constants;
 
-import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
+import de.gerdiproject.generator.research.utils.ResearchGenerator;
 
 /**
- * This static class is a collection of constants that are used by {@linkplain AbstractResearch} and its sub-classes.
- *
- * @author Robin Weiss
- */
-public class DataCiteResearchConstants
+  * This static class is a collection of constants that define a controlled list of ResearchCategorys.
+  * It was generated via the {@linkplain ResearchGenerator}.
+  * If there are errors or inconsistencies, please contact the authors.
+  *
+  * @author Fidan Limani, Robin Weiss
+  */
+public class ResearchCategoryConstants
 {
-    // Json Fields
-    public static final String NAME_JSON = "name";
-    public static final String RNBR_JSON = "RNBR";
-
-    // Formatting
-    public static final String AREA_RNBR_FORMAT = "%03d";
-    public static final String AREA_NAME_FORMAT = AREA_RNBR_FORMAT + " %s (%s)";
-    public static final String DISCIPLINE_RNBR_FORMAT = "%03d-%02d";
-    public static final String DISCIPLINE_NAME_FORMAT = DISCIPLINE_RNBR_FORMAT + " %s (%s) (%s)";
-
+    public static final String HUMANITIES_AND_SOCIAL_SCIENCES = "Humanities and Social Sciences";
+    public static final String LIFE_SCIENCES = "Life Sciences";
+    public static final String NATURAL_SCIENCES = "Natural Sciences";
+    public static final String ENGINEERING_SCIENCES = "Engineering Sciences";
 
     /**
      * Private constructor, because this is a static class.
      */
-    private DataCiteResearchConstants()
+    private ResearchCategoryConstants()
     {
 
     }

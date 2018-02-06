@@ -16,8 +16,12 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
+package de.gerdiproject.generator.research.utils;
+
 /**
- * @author Robin Weiss
+ * A set of classes that model the hierarchical DFG vocabulary used to typify the research disciplines of data sets
+ * harvested in GeRDI.
  *
+ * @see http://www.dfg.de/en/dfg_profile/statutory_bodies/review_boards/subject_areas/index.jsp
+ * @author Fidan Limani
  */
-package de.gerdiproject.json.datacite.extension.utils;

@@ -16,10 +16,10 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
+
 /**
- * This package contains constant collections that are used by the
- * GeRDI extension of the DataCite schema.
- *
+ * This package includes JSON classes for parsing a file and generating a set of constants Java classes.
+
  * @author Fidan Limani, Robin Weiss
  */
-package de.gerdiproject.json.datacite.extension.constants;
+package de.gerdiproject.generator.research.source.json;

@@ -12,7 +12,8 @@ import com.google.gson.JsonSerializer;
 import de.gerdiproject.json.datacite.constants.DataCiteResearchConstants;
 import de.gerdiproject.json.datacite.extension.ResearchDiscipline;
 import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
-import de.gerdiproject.json.datacite.extension.utils.ResearchUtils;
+import de.gerdiproject.json.datacite.extension.constants.ResearchAreaConstants;
+import de.gerdiproject.json.datacite.extension.constants.ResearchDisciplineConstants;
 
 /**
  * This adapter can convert {@linkplain AbstractResearch} objects to JSON and vice-versa.
@@ -29,14 +30,9 @@ public class ResearchAdapter implements JsonDeserializer<AbstractResearch>, Json
         AbstractResearch output;
 
         if (rnbrString.indexOf('-') == -1)
-            output = ResearchUtils.getCategoryByRnbr(Integer.parseInt(rnbrString));
-        else {
-            String[] splitRnbr = rnbrString.split("-");
-            int categoryRnbr = Integer.parseInt(splitRnbr[0]);
-            int disciplineRnbr = Integer.parseInt(splitRnbr[1]);
-
-            output = ResearchUtils.getDisciplineByRnbr(categoryRnbr, disciplineRnbr);
-        }
+            output = ResearchAreaConstants.getByRnbrString(rnbrString);
+        else
+            output = ResearchDisciplineConstants.getByRnbrString(rnbrString);
 
         return output;
     }
@@ -48,11 +44,11 @@ public class ResearchAdapter implements JsonDeserializer<AbstractResearch>, Json
         String rnbrString = "";
 
         if (src instanceof ResearchDiscipline)
-            rnbrString = String.format(DataCiteResearchConstants.DISCIPLINE_FORMAT,
-                                       ((ResearchDiscipline) src).getCategory().getRbnr(),
+            rnbrString = String.format(DataCiteResearchConstants.DISCIPLINE_RNBR_FORMAT,
+                                       ((ResearchDiscipline) src).getArea().getRbnr(),
                                        src.getRbnr());
         else
-            rnbrString = String.format(DataCiteResearchConstants.CATEGORY_FORMAT, src.getRbnr());
+            rnbrString = String.format(DataCiteResearchConstants.AREA_RNBR_FORMAT, src.getRbnr());
 
 
         JsonObject rdObject = new JsonObject();
