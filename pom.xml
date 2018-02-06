@@ -46,6 +46,9 @@
                 <version>${jar.plugin.version}</version>
 				<configuration>
 				  <outputDirectory>${project.build.directory}</outputDirectory>
+					<excludes>
+						<exclude>**/de/gerdiproject/generator/**</exclude>
+					</excludes>
 				</configuration>
             </plugin>
 			
