@@ -47,8 +47,27 @@ public class ResearchGeneratorConstants
     public static final String AREA_DEF = "%n    public static final ResearchArea %s = new ResearchArea(%d, \"%s\", ResearchCategoryConstants.%s);";
     public static final String DISCIPLINE_DEF = "%n    public static final ResearchDiscipline %s = new ResearchDiscipline(%d, \"%s\", ResearchAreaConstants.%s);";
 
+    public static final String CLASS_END = "\n}";
+    public static final String COMMENT = "%n    // %s";
+
+    public static final String FILE_CREATE_ERROR = "Could not create file '%s'!";
+    public static final String FILE_READ_ERROR = "Could not read file '%s'!";
+    public static final String FILE_WRITE_ERROR = "Could not write to file!";
+    public static final String FILE_FOLDER_ERROR = "Could not create directories for file '%s'!";
+
+    public static final List<String> NAME_BREAKING_STRINGS = Collections.unmodifiableList(Arrays.asList(" -", ","));
+    public static final String SEPARATOR_CHARS_PATTERN = createSeparatorPattern(SEPARATOR_CHARS);
+    public static final String DUPLICATE_SPACES_PATTERN = " +";
+    public static final char NEW_LINE = '\n';
+
+    public static final String IMPORT_DEF = "%nimport %s;";
+    public static final String AREA_IMPORT = "de.gerdiproject.json.datacite.extension.ResearchArea";
+    public static final String DISCIPLINE_IMPORT = "de.gerdiproject.json.datacite.extension.ResearchDiscipline";
+    public static final String MAP_IMPORT = "java.util.Map";
+    public static final String HASH_MAP_IMPORT = "java.util.HashMap";
+
     public static final String CONSTRUCTOR =
-        "%n%n    /**"
+        "%n%n%n    /**"
         + "%n     * Private constructor, because this is a static class."
         + "%n     */"
         + "%n    private %sConstants()"
@@ -97,11 +116,10 @@ public class ResearchGeneratorConstants
         + "%n    private static final Map<Integer, %s> RESEARCH_MAP ="
         + "%n        createResearchMap("
         + "%s"
-        + "%n        );"
-        + "%n";
+        + "%n        );";
 
     public static final String RESEARCH_AREA_GETTER =
-        "\n\n    /**"   // NOPMD - intended for readability
+        "\n\n\n    /**"   // NOPMD - intended for readability
         + "\n     * This function returns a {@linkplain ResearchArea} by parsing a string"
         + "\n     * which contains the area RNBR."
         + "\n     *"    // NOPMD - intended for readability
@@ -113,11 +131,10 @@ public class ResearchGeneratorConstants
         + "\n    {"     // NOPMD - intended forreadability
         + "\n        int rnbr = Integer.parseInt(rnbrString);"
         + "\n        return RESEARCH_MAP.get(rnbr);"
-        + "\n    }"     // NOPMD - intended for readability
-        + "\n";
+        + "\n    }";     // NOPMD - intended for readability
 
     public static final String RESEARCH_AREA_CREATE_MAP_METHOD =
-        "\n\n    /**"
+        "\n\n\n    /**"
         + "\n     * A convenience function for initializing the research map."
         + "\n     *"
         + "\n     * @param areas a list of areas that are to be added to the map"
@@ -135,7 +152,7 @@ public class ResearchGeneratorConstants
         + "\n    }";
 
     public static final String RESEARCH_DISCIPLINE_GETTER =
-        "\n\n    /**"
+        "\n\n\n    /**"
         + "\n     * This function returns a {@linkplain ResearchDiscipline} by parsing a string"
         + "\n     * which contains the area RNBR and the internal RNBR of the discipline."
         + "\n     *"
@@ -152,11 +169,10 @@ public class ResearchGeneratorConstants
         + "\n        Map<Integer, ResearchDiscipline> subClasses = RESEARCH_MAP.get(areaRnbr);"
         + "\n"
         + "\n        return (subClasses != null) ? subClasses.get(disciplineRnbr) : null;"
-        + "\n    }"
-        + "\n";
+        + "\n    }";
 
     public static final String RESEARCH_DISCIPLINE_CREATE_MAP_METHOD =
-        "\n\n    /**"
+        "\n\n\n    /**"
         + "\n     * A convenience function for initializing the research map."
         + "\n     *"
         + "\n     * @param disciplines a list of disciplines that are to be added to the map"
@@ -175,25 +191,6 @@ public class ResearchGeneratorConstants
         + "\n"
         + "\n        return map;"
         + "\n    }";
-
-    public static final String CLASS_END = "\n}";
-    public static final String COMMENT = "%n    // %s";
-
-    public static final String FILE_CREATE_ERROR = "Could not create file '%s'!";
-    public static final String FILE_READ_ERROR = "Could not read file '%s'!";
-    public static final String FILE_WRITE_ERROR = "Could not write to file!";
-    public static final String FILE_FOLDER_ERROR = "Could not create directories for file '%s'!";
-
-    public static final List<String> NAME_BREAKING_STRINGS = Collections.unmodifiableList(Arrays.asList(" -", ","));
-    public static final String SEPARATOR_CHARS_PATTERN = createSeparatorPattern(SEPARATOR_CHARS);
-    public static final String DUPLICATE_SPACES_PATTERN = " +";
-    public static final char NEW_LINE = '\n';
-
-    public static final String IMPORT_DEF = "%nimport %s;";
-    public static final String AREA_IMPORT = "de.gerdiproject.json.datacite.extension.ResearchArea";
-    public static final String DISCIPLINE_IMPORT = "de.gerdiproject.json.datacite.extension.ResearchDiscipline";
-    public static final String MAP_IMPORT = "java.util.Map";
-    public static final String HASH_MAP_IMPORT = "java.util.HashMap";
 
 
     /**

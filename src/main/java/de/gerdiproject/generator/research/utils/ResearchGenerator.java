@@ -116,22 +116,23 @@ public class ResearchGenerator
 
         // add category constructor
         try {
-            categoryWriter.write(String.format(
-                                     ResearchGeneratorConstants.CONSTRUCTOR,
-                                     ResearchGeneratorConstants.CATEGORY_CLASSNAME));
+            categoryWriter.append(String.format(
+                                      ResearchGeneratorConstants.CONSTRUCTOR,
+                                      ResearchGeneratorConstants.CATEGORY_CLASSNAME));
         } catch (IOException e) {
             logger.error(ResearchGeneratorConstants.FILE_WRITE_ERROR, e);
         }
 
         // add area constants class specific methods
         try {
-            areaWriter.write(String.format(
-                                 ResearchGeneratorConstants.CONSTRUCTOR,
-                                 ResearchGeneratorConstants.AREA_CLASSNAME));
             areaWriter.append(String.format(
                                   ResearchGeneratorConstants.RESEARCH_MAP_INITIALIZATION,
                                   ResearchGeneratorConstants.AREA_CLASSNAME,
                                   areaMapBuilder.toString()));
+
+            areaWriter.append(String.format(
+                                  ResearchGeneratorConstants.CONSTRUCTOR,
+                                  ResearchGeneratorConstants.AREA_CLASSNAME));
 
             areaWriter.append(ResearchGeneratorConstants.RESEARCH_AREA_GETTER);
             areaWriter.append(ResearchGeneratorConstants.RESEARCH_AREA_CREATE_MAP_METHOD);
@@ -141,13 +142,13 @@ public class ResearchGenerator
 
         // add discipline constants class specific methods
         try {
-            disciplineWriter.write(String.format(
-                                       ResearchGeneratorConstants.CONSTRUCTOR,
-                                       ResearchGeneratorConstants.DISCIPLINE_CLASSNAME));
             disciplineWriter.append(String.format(
                                         ResearchGeneratorConstants.RESEARCH_MAP_INITIALIZATION,
                                         ResearchGeneratorConstants.DISCIPLINE_MAP_CLASSNAME,
                                         disciplineMapBuilder.toString()));
+            disciplineWriter.append(String.format(
+                                        ResearchGeneratorConstants.CONSTRUCTOR,
+                                        ResearchGeneratorConstants.DISCIPLINE_CLASSNAME));
 
             disciplineWriter.append(ResearchGeneratorConstants.RESEARCH_DISCIPLINE_GETTER);
             disciplineWriter.append(ResearchGeneratorConstants.RESEARCH_DISCIPLINE_CREATE_MAP_METHOD);
@@ -271,7 +272,7 @@ public class ResearchGenerator
     private void finishConstantsFile(OutputStreamWriter writer)
     {
         try {
-            writer.write(ResearchGeneratorConstants.CLASS_END);
+            writer.append(ResearchGeneratorConstants.CLASS_END);
 
             writer.close();
         } catch (IOException e) {

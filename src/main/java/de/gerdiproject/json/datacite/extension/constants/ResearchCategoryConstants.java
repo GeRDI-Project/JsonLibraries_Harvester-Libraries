@@ -34,6 +34,7 @@ public class ResearchCategoryConstants
     public static final String NATURAL_SCIENCES = "Natural Sciences";
     public static final String ENGINEERING_SCIENCES = "Engineering Sciences";
 
+
     /**
      * Private constructor, because this is a static class.
      */

@@ -143,6 +143,15 @@ public class ResearchAreaConstants
 
 
     /**
+     * Private constructor, because this is a static class.
+     */
+    private ResearchAreaConstants()
+    {
+
+    }
+
+
+    /**
      * This function returns a {@linkplain ResearchArea} by parsing a string
      * which contains the area RNBR.
      *
@@ -172,13 +181,5 @@ public class ResearchAreaConstants
             map.put(ra.getRbnr(), ra);
 
         return map;
-    }
-
-    /**
-     * Private constructor, because this is a static class.
-     */
-    private ResearchAreaConstants()
-    {
-
     }
 }

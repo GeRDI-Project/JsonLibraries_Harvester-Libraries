@@ -561,6 +561,15 @@ public class ResearchDisciplineConstants
 
 
     /**
+     * Private constructor, because this is a static class.
+     */
+    private ResearchDisciplineConstants()
+    {
+
+    }
+
+
+    /**
      * This function returns a {@linkplain ResearchDiscipline} by parsing a string
      * which contains the area RNBR and the internal RNBR of the discipline.
      *
@@ -598,13 +607,5 @@ public class ResearchDisciplineConstants
         }
 
         return map;
-    }
-
-    /**
-     * Private constructor, because this is a static class.
-     */
-    private ResearchDisciplineConstants()
-    {
-
     }
 }
