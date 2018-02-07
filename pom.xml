@@ -21,9 +21,11 @@
 		<javadoc.plugin.version>2.10.4</javadoc.plugin.version>
 		<source.plugin.version>3.0.1</source.plugin.version>
 		<bundle.plugin.version>3.0.1</bundle.plugin.version>
+		<dependency.plugin.version>3.0.2</dependency.plugin.version>
 		<gson.dependency.version>2.8.1</gson.dependency.version>
 		<esri.dependency.version>1.2.1</esri.dependency.version>
 		<jsoup.dependency.version>1.8.3</jsoup.dependency.version>
+		<harvesterutils.dependency.version>1.2.0-SNAPSHOT</harvesterutils.dependency.version>
 	</properties>
 	
 	<build>
@@ -87,6 +89,31 @@
 					<outputDirectory>${project.build.directory}</outputDirectory>
 				</configuration>
 			</plugin>
+			
+			<!-- Unpack Utility Scripts -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>${dependency.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>unpack-shared-resources</id>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<!--<includes>setup/**</includes>-->
+							<outputDirectory>${basedir}</outputDirectory>
+							<excludeTransitive>true</excludeTransitive>
+							<overWrite>false</overWrite>
+							<includeGroupIds>de.gerdi-project</includeGroupIds>
+							<includeTypes>zip</includeTypes>
+							<excludes>${invalid.script.extensions}</excludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
     </build>
 	
@@ -110,6 +137,17 @@
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>${jsoup.dependency.version}</version>
+		</dependency>
+		
+		<!-- Utility Scripts : Mainly used for formatting after generating files -->
+		<dependency>
+			<groupId>de.gerdi-project</groupId>
+			<artifactId>GeRDI-harvester-utilities-archive</artifactId>
+			<version>${harvesterutils.dependency.version}</version>
+			<classifier>resources</classifier>
+			<type>zip</type>
+			<!-- Make sure this isn't included on any classpath-->
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	
