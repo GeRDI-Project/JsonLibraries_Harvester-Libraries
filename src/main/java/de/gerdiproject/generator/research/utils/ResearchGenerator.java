@@ -37,12 +37,10 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -57,7 +55,13 @@ public class ResearchGenerator
     private static final Logger logger = LoggerFactory.getLogger(ResearchGenerator.class);
 
 
-    public static void main(String[] args) throws UnsupportedEncodingException, FileNotFoundException, IOException
+    /**
+     * This main function creates a {@linkplain ResearchGenerator} and runs it, using a default path, or optionally
+     * an arbitrary number of filepaths that can be passed via arguments
+     *
+     * @param args an arbitrary number of filepaths to JSON files that are to be parsed
+     */
+    public static void main(String[] args)
     {
         final ResearchGenerator generator = new ResearchGenerator();
 
