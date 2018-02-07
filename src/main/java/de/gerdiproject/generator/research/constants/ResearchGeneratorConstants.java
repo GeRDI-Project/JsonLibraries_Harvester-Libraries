@@ -101,19 +101,19 @@ public class ResearchGeneratorConstants
         + "%n";
 
     public static final String RESEARCH_AREA_GETTER =
-        "\n\n    /**"
+        "\n\n    /**"   // NOPMD - intended for readability
         + "\n     * This function returns a {@linkplain ResearchArea} by parsing a string"
         + "\n     * which contains the area RNBR."
-        + "\n     *"
+        + "\n     *"    // NOPMD - intended for readability
         + "\n     * @param rnbrString the area RNBR as a string"
         + "\n     *"
         + "\n     * @return an area that matches the RNBR"
-        + "\n     */"
+        + "\n     */"   // NOPMD - intended for readability
         + "\n    public static ResearchArea getByRnbrString(String rnbrString)"
-        + "\n    {"
+        + "\n    {"     // NOPMD - intended forreadability
         + "\n        int rnbr = Integer.parseInt(rnbrString);"
         + "\n        return RESEARCH_MAP.get(rnbr);"
-        + "\n    }"
+        + "\n    }"     // NOPMD - intended for readability
         + "\n";
 
     public static final String RESEARCH_AREA_CREATE_MAP_METHOD =
@@ -214,7 +214,7 @@ public class ResearchGeneratorConstants
     {
 
         StringBuilder sb = new StringBuilder();
-        sb.append('[');
+        sb.append('['); // NOPMD - yes, append is called twice, but this is fine here
         illegalChars.forEach((Character c) -> sb.append('\\').append(c));
         sb.append(']');
 
