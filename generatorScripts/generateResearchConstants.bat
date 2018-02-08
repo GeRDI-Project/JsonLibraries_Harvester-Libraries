@@ -18,6 +18,4 @@
 :: This Script runs the java main function of the ResearchGenerator in order to read a JSON
 :: file and replace constants files, if necessary. Afterwards, all files are formatted.
 
-mvn exec:java -D"exec.mainClass"="de.gerdiproject.generator.research.utils.ResearchGenerator"
-
-.\scripts\formatting\astyle-check.bat
+mvn exec:java -D"exec.mainClass"="de.gerdiproject.generator.research.utils.ResearchGenerator" & .\scripts\formatting\astyle-format.bat

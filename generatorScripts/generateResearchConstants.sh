@@ -20,5 +20,4 @@
 # This Script runs the java main function of the ResearchGenerator in order to read a JSON
 # file and replace constants files, if necessary. Afterwards, all files are formatted.
 
-mvn exec:java -Dexec.mainClass="de.gerdiproject.generator.research.utils.ResearchGenerator"
-./scripts/formatting/astyle-format.sh
+mvn exec:java -Dexec.mainClass="de.gerdiproject.generator.research.utils.ResearchGenerator" && ./scripts/formatting/astyle-format.sh
