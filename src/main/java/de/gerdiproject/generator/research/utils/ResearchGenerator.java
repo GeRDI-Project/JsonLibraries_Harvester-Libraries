@@ -52,7 +52,7 @@ import java.util.List;
  */
 public class ResearchGenerator
 {
-    private static final Logger logger = LoggerFactory.getLogger(ResearchGenerator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ResearchGenerator.class);
 
 
     /**
@@ -82,7 +82,7 @@ public class ResearchGenerator
      */
     public void generateConstants(String... filePaths)
     {
-        logger.info(ResearchGeneratorConstants.GENERATOR_STARTED);
+        LOGGER.info(ResearchGeneratorConstants.GENERATOR_STARTED);
 
         final OutputStreamWriter categoryWriter = initConstantsFile(
                                                       ResearchGeneratorConstants.CATEGORY_CLASSNAME);
@@ -114,7 +114,7 @@ public class ResearchGenerator
                     disciplineMapBuilder
                 );
             } catch (IOException e) {
-                logger.error(String.format(ResearchGeneratorConstants.FILE_READ_ERROR, filePath), e);
+                LOGGER.error(String.format(ResearchGeneratorConstants.FILE_READ_ERROR, filePath), e);
             }
         }
 
@@ -124,7 +124,7 @@ public class ResearchGenerator
                                       ResearchGeneratorConstants.CONSTRUCTOR,
                                       ResearchGeneratorConstants.CATEGORY_CLASSNAME));
         } catch (IOException e) {
-            logger.error(ResearchGeneratorConstants.FILE_WRITE_ERROR, e);
+            LOGGER.error(ResearchGeneratorConstants.FILE_WRITE_ERROR, e);
         }
 
         // add area constants class specific methods
@@ -141,7 +141,7 @@ public class ResearchGenerator
             areaWriter.append(ResearchGeneratorConstants.RESEARCH_AREA_GETTER);
             areaWriter.append(ResearchGeneratorConstants.RESEARCH_AREA_CREATE_MAP_METHOD);
         } catch (IOException e) {
-            logger.error(ResearchGeneratorConstants.FILE_WRITE_ERROR, e);
+            LOGGER.error(ResearchGeneratorConstants.FILE_WRITE_ERROR, e);
         }
 
         // add discipline constants class specific methods
@@ -157,7 +157,7 @@ public class ResearchGenerator
             disciplineWriter.append(ResearchGeneratorConstants.RESEARCH_DISCIPLINE_GETTER);
             disciplineWriter.append(ResearchGeneratorConstants.RESEARCH_DISCIPLINE_CREATE_MAP_METHOD);
         } catch (IOException e) {
-            logger.error(ResearchGeneratorConstants.FILE_WRITE_ERROR, e);
+            LOGGER.error(ResearchGeneratorConstants.FILE_WRITE_ERROR, e);
         }
 
         // finish class declaration and save files
@@ -165,7 +165,7 @@ public class ResearchGenerator
         finishConstantsFile(areaWriter);
         finishConstantsFile(disciplineWriter);
 
-        logger.info(ResearchGeneratorConstants.GENERATOR_DONE);
+        LOGGER.info(ResearchGeneratorConstants.GENERATOR_DONE);
     }
 
 
@@ -259,10 +259,10 @@ public class ResearchGenerator
                 // write class definition
                 writer.append(String.format(ResearchGeneratorConstants.CLASS_START, constantType, importBuilder.toString()));
             } catch (IOException e) {
-                logger.error(String.format(ResearchGeneratorConstants.FILE_CREATE_ERROR, filePath), e);
+                LOGGER.error(String.format(ResearchGeneratorConstants.FILE_CREATE_ERROR, filePath), e);
             }
         } else
-            logger.error(String.format(ResearchGeneratorConstants.FILE_FOLDER_ERROR, filePath));
+            LOGGER.error(String.format(ResearchGeneratorConstants.FILE_FOLDER_ERROR, filePath));
 
         return writer;
     }
@@ -280,7 +280,7 @@ public class ResearchGenerator
 
             writer.close();
         } catch (IOException e) {
-            logger.error(ResearchGeneratorConstants.FILE_WRITE_ERROR, e);
+            LOGGER.error(ResearchGeneratorConstants.FILE_WRITE_ERROR, e);
         }
     }
 

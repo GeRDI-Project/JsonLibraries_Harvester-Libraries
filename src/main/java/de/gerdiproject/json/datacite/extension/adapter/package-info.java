@@ -17,7 +17,10 @@
  *  under the License.
  */
 /**
- * @author Robin Weiss
+ * This package contains GSON {@linkplain com.google.gson.JsonSerializer}s and {@linkplain com.google.gson.JsonDeserializer}s
+ * for parsing and writing JSON objects that are part of the GeRDI extension of the
+ * {@linkplain de.gerdiproject.json.datacite.DataCiteJson}.
  *
+ * @author Robin Weiss
  */
 package de.gerdiproject.json.datacite.extension.adapter;
