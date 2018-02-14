@@ -22,8 +22,14 @@ package de.gerdiproject.json;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import de.gerdiproject.json.datacite.Date;
+import de.gerdiproject.json.datacite.DateRange;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.adapter.DateAdapter;
+import de.gerdiproject.json.datacite.extension.ResearchArea;
+import de.gerdiproject.json.datacite.extension.ResearchDiscipline;
+import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
+import de.gerdiproject.json.datacite.extension.adapter.ResearchAdapter;
 import de.gerdiproject.json.geo.GeoJson;
 import de.gerdiproject.json.geo.LineString;
 import de.gerdiproject.json.geo.MultiLineString;
@@ -73,7 +79,12 @@ public final class GsonUtils
         .registerTypeAdapter(Polygon.class, new PolygonAdapter())
         .registerTypeAdapter(MultiPolygon.class, new MultiPolygonAdapter())
         .registerTypeAdapter(GeoJson.class, new GeoJsonAdapter())
-        .registerTypeAdapter(AbstractDate.class, new DateAdapter());
+        .registerTypeAdapter(AbstractDate.class, new DateAdapter())
+        .registerTypeAdapter(DateRange.class, new DateAdapter())
+        .registerTypeAdapter(Date.class, new DateAdapter())
+        .registerTypeAdapter(AbstractResearch.class, new ResearchAdapter())
+        .registerTypeAdapter(ResearchArea.class, new ResearchAdapter())
+        .registerTypeAdapter(ResearchDiscipline.class, new ResearchAdapter());
 
         GSON = builder.create();
         PRETTY_GSON = builder.setPrettyPrinting().create();

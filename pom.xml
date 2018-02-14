@@ -6,11 +6,11 @@
 	<parent>
 		<groupId>de.gerdi-project</groupId>
 		<artifactId>GeRDI-parent</artifactId>
-		<version>2.2.0-SNAPSHOT</version>
+		<version>3.0.0-SNAPSHOT</version>
 	</parent>
 	
 	<artifactId>GSON</artifactId>
-	<version>3.1.0-SNAPSHOT</version>
+	<version>4.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 	<name>GSON</name>
 	<description>This library provides helper functions and common JSON structures using GSON.</description>
@@ -21,9 +21,12 @@
 		<javadoc.plugin.version>2.10.4</javadoc.plugin.version>
 		<source.plugin.version>3.0.1</source.plugin.version>
 		<bundle.plugin.version>3.0.1</bundle.plugin.version>
+		<dependency.plugin.version>3.0.2</dependency.plugin.version>
+		<exec.plugin.version>1.1.1</exec.plugin.version>
 		<gson.dependency.version>2.8.1</gson.dependency.version>
 		<esri.dependency.version>1.2.1</esri.dependency.version>
 		<jsoup.dependency.version>1.8.3</jsoup.dependency.version>
+		<harvesterutils.dependency.version>1.2.0-SNAPSHOT</harvesterutils.dependency.version>
 	</properties>
 	
 	<build>
@@ -46,6 +49,9 @@
                 <version>${jar.plugin.version}</version>
 				<configuration>
 				  <outputDirectory>${project.build.directory}</outputDirectory>
+					<excludes>
+						<exclude>**/de/gerdiproject/generator/**</exclude>
+					</excludes>
 				</configuration>
             </plugin>
 			
@@ -84,8 +90,69 @@
 					<outputDirectory>${project.build.directory}</outputDirectory>
 				</configuration>
 			</plugin>
+			
+			<!-- Unpack Utility Scripts -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>${dependency.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>unpack-shared-resources</id>
+						<goals>
+							<goal>unpack-dependencies</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<!--<includes>setup/**</includes>-->
+							<outputDirectory>${basedir}</outputDirectory>
+							<excludeTransitive>true</excludeTransitive>
+							<overWrite>false</overWrite>
+							<includeGroupIds>de.gerdi-project</includeGroupIds>
+							<includeTypes>zip</includeTypes>
+							<excludes>${invalid.script.extensions}</excludes>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
     </build>
+	
+	<profiles>
+		<profile>
+			<id>generateConstants</id>
+			<activation>
+				<property>
+					<name>generate</name>
+				</property>
+			</activation>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>exec-maven-plugin</artifactId>
+						<version>${exec.plugin.version}</version>
+						<executions>
+							<execution>
+								<id>Generate Classes</id>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<phase>compile</phase>
+							</execution>
+						</executions>
+						<configuration>
+							<executable>generatorScripts/generateResearchConstants.${script.extension}</executable>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+				
+			<dependencies>	
+				
+			</dependencies>
+		</profile>
+	</profiles>
 	
 	<dependencies>		
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
@@ -107,6 +174,17 @@
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>${jsoup.dependency.version}</version>
+		</dependency>
+		
+		<!-- Utility Scripts : Mainly used for formatting after generating files -->
+		<dependency>
+			<groupId>de.gerdi-project</groupId>
+			<artifactId>GeRDI-harvester-utilities-archive</artifactId>
+			<version>${harvesterutils.dependency.version}</version>
+			<classifier>resources</classifier>
+			<type>zip</type>
+			<!-- Make sure this isn't included on any classpath-->
+			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 	

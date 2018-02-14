@@ -28,6 +28,7 @@ import de.gerdiproject.harvest.IDocument;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.extension.ResearchData;
 import de.gerdiproject.json.datacite.extension.WebLink;
+import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
 
 
 /**
@@ -173,7 +174,7 @@ public class DataCiteJson implements IDocument, ICleanable
      * A list of human readable names of the research disciplines, meaning the topics or domains that this document covers.
      * <br>e.g. Computer Science, Geography
      */
-    private List<String> researchDisciplines;
+    private List<AbstractResearch> researchDisciplines;
 
 
     /**
@@ -341,7 +342,7 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @return a list of human readable names of the research disciplines
      */
-    public List<String> getResearchDisciplines()
+    public List<AbstractResearch> getResearchDisciplines()
     {
         return researchDisciplines;
     }
@@ -352,7 +353,7 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @param researchDisciplines a list of human readable names of the research disciplines
      */
-    public void setResearchDisciplines(List<String> researchDisciplines)
+    public void setResearchDisciplines(List<AbstractResearch> researchDisciplines)
     {
         this.researchDisciplines = researchDisciplines;
     }

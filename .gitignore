@@ -5,4 +5,5 @@
 .settings/
 /META-INF/MANIFEST.MF
 /bin/
+/scripts/
 **/*.orig
