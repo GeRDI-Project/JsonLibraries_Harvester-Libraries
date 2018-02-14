@@ -138,6 +138,7 @@
 								<goals>
 									<goal>exec</goal>
 								</goals>
+								<phase>compile</phase>
 							</execution>
 						</executions>
 						<configuration>

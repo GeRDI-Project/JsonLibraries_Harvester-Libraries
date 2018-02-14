@@ -19,5 +19,9 @@
 
 # This Script runs the java main function of the ResearchGenerator in order to read a JSON
 # file and replace constants files, if necessary. Afterwards, all files are formatted.
+#
+# Since this script requires compiled Java classes, it is required to run 'mvn clean compile'
+# or a later stage of the build lifecycle. When running 'mvn clean compile -Dgenerate', the
+# classes are compiled and the Generator is executed thereafter.
 
 mvn exec:java -Dexec.mainClass="de.gerdiproject.generator.research.utils.ResearchGenerator" && ./scripts/formatting/astyle-format.sh
