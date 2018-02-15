@@ -29,7 +29,7 @@ public class DataCiteResearchConstants
 {
     // Json Fields
     public static final String DISCIPLINE_JSON = "discipline";
-    public static final String RNBR_JSON = "RNBR";
+    public static final String RNBR_JSON = "rnbr";
     public static final String AREA_JSON = "area";
     public static final String CATEGORY_JSON = "category";
 
