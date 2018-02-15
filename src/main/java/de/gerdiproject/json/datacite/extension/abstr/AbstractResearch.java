@@ -25,7 +25,6 @@ package de.gerdiproject.json.datacite.extension.abstr;
  */
 public abstract class AbstractResearch
 {
-    protected final String displayName;
     protected final int rbnr;
 
 
@@ -33,24 +32,44 @@ public abstract class AbstractResearch
      * Constructor that requires the RBNR and name of the research topic.
      *
      * @param rbnr a unique key that represents the topic
-     * @param displayName a human readable name of the topic
      */
-    public AbstractResearch(int rbnr, String displayName)
+    public AbstractResearch(int rbnr)
     {
         this.rbnr = rbnr;
-        this.displayName = displayName;
     }
 
 
     /**
-     * Returns the human readable name of the topic.
+     * Returns the human readable name of the research discipline.
      *
-     * @return the human readable name of the topic
+     * @return the human readable name of the research discipline,
+     * or null if it is unknown
      */
-    public String getName()
-    {
-        return displayName;
-    }
+    public abstract String getDisciplineName();
+
+
+    /**
+     * Returns the human readable name of the research area.
+     *
+     * @return the human readable name of the research area
+     */
+    public abstract String getAreaName();
+
+
+    /**
+     * Returns the human readable name of the research category.
+     *
+     * @return the human readable name of the research category
+     */
+    public abstract String getCategoryName();
+
+
+    /**
+     * Returns the RNBR as a string.
+     *
+     * @return ther RNBR as a string
+     */
+    public abstract String getRnbrAsString();
 
 
     /**

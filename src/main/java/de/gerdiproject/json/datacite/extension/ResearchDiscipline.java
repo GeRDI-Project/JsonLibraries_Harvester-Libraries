@@ -29,18 +29,20 @@ import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
 public class ResearchDiscipline extends AbstractResearch
 {
     private final ResearchArea area;
+    private final String name;
 
 
     /**
      * Constructor that requires the RNBR, name, and are of the discipline.
      *
      * @param rbnr a number that serves as a unique key of a discipline within an area
-     * @param displayName a human readable name of the discipline
+     * @param name a human readable name of the discipline
      * @param area to which the discipline belongs
      */
-    public ResearchDiscipline(int rbnr, String displayName, ResearchArea area)
+    public ResearchDiscipline(int rbnr, String name, ResearchArea area)
     {
-        super(rbnr, displayName);
+        super(rbnr);
+        this.name = name;
         this.area = area;
     }
 
@@ -57,8 +59,39 @@ public class ResearchDiscipline extends AbstractResearch
 
 
     @Override
+    public String getDisciplineName()
+    {
+        return name;
+    }
+
+
+    @Override
+    public String getAreaName()
+    {
+        return area.getAreaName();
+    }
+
+
+    @Override
+    public String getCategoryName()
+    {
+        return area.getCategoryName();
+    }
+
+
+    @Override
+    public String getRnbrAsString()
+    {
+        return String.format(
+                   DataCiteResearchConstants.DISCIPLINE_RNBR_FORMAT,
+                   area.getRbnr(),
+                   getRbnr());
+    }
+
+
+    @Override
     public String toString()
     {
-        return String.format(DataCiteResearchConstants.DISCIPLINE_NAME_FORMAT, area.getRbnr(), rbnr, displayName, area.getName(), area.getCategory());
+        return String.format(DataCiteResearchConstants.DISCIPLINE_NAME_FORMAT, area.getRbnr(), rbnr, area, getAreaName(), getCategoryName());
     }
 }

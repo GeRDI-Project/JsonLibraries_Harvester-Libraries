@@ -10,7 +10,6 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 import de.gerdiproject.json.datacite.constants.DataCiteResearchConstants;
-import de.gerdiproject.json.datacite.extension.ResearchDiscipline;
 import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
 import de.gerdiproject.json.datacite.extension.constants.ResearchAreaConstants;
 import de.gerdiproject.json.datacite.extension.constants.ResearchDisciplineConstants;
@@ -41,19 +40,17 @@ public class ResearchAdapter implements JsonDeserializer<AbstractResearch>, Json
     @Override
     public JsonElement serialize(AbstractResearch src, Type typeOfSrc, JsonSerializationContext context)
     {
-        String rnbrString = "";
-
-        if (src instanceof ResearchDiscipline)
-            rnbrString = String.format(DataCiteResearchConstants.DISCIPLINE_RNBR_FORMAT,
-                                       ((ResearchDiscipline) src).getArea().getRbnr(),
-                                       src.getRbnr());
-        else
-            rnbrString = String.format(DataCiteResearchConstants.AREA_RNBR_FORMAT, src.getRbnr());
-
-
         JsonObject rdObject = new JsonObject();
-        rdObject.addProperty(DataCiteResearchConstants.NAME_JSON, src.getName());
-        rdObject.addProperty(DataCiteResearchConstants.RNBR_JSON, rnbrString);
+        rdObject.addProperty(DataCiteResearchConstants.AREA_JSON, src.getAreaName());
+        rdObject.addProperty(DataCiteResearchConstants.CATEGORY_JSON, src.getCategoryName());
+        rdObject.addProperty(DataCiteResearchConstants.RNBR_JSON, src.getRnbrAsString());
+
+        // discipline is optional
+        String disciString = src.getDisciplineName();
+
+        if (disciString != null)
+            rdObject.addProperty(DataCiteResearchConstants.DISCIPLINE_JSON, disciString);
+
         return rdObject;
     }
 }

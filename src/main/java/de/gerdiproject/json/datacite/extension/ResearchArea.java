@@ -30,6 +30,7 @@ import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
 public class ResearchArea extends AbstractResearch
 {
     private final String category;
+    private final String name;
 
 
     /**
@@ -37,29 +38,48 @@ public class ResearchArea extends AbstractResearch
      * category of the research area.
      *
      * @param rbnr a number that serves as a unique key of the research area
-     * @param displayName an english human readable name of the research area
+     * @param name an english human readable name of the research area
      * @param category a human readable name of the general category
      */
-    public ResearchArea(int rbnr, String displayName, String category)
+    public ResearchArea(int rbnr, String name, String category)
     {
-        super(rbnr, displayName);
+        super(rbnr);
         this.category = category;
+        this.name = name;
     }
 
 
-    /**
-     * Returns a human readable name of the general category.
-     * @return the name of the general research category
-     */
-    public String getCategory()
+    @Override
+    public String getDisciplineName()
+    {
+        return null;
+    }
+
+
+    @Override
+    public String getAreaName()
+    {
+        return name;
+    }
+
+
+    @Override
+    public String getCategoryName()
     {
         return category;
     }
 
 
     @Override
+    public String getRnbrAsString()
+    {
+        return String.format(DataCiteResearchConstants.AREA_RNBR_FORMAT, getRbnr());
+    }
+
+
+    @Override
     public String toString()
     {
-        return String.format(DataCiteResearchConstants.AREA_NAME_FORMAT, rbnr, displayName, category);
+        return String.format(DataCiteResearchConstants.AREA_NAME_FORMAT, rbnr, name, category);
     }
 }
