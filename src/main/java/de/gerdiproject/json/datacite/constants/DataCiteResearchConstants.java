@@ -28,8 +28,10 @@ import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
 public class DataCiteResearchConstants
 {
     // Json Fields
-    public static final String NAME_JSON = "name";
+    public static final String DISCIPLINE_JSON = "discipline";
     public static final String RNBR_JSON = "RNBR";
+    public static final String AREA_JSON = "area";
+    public static final String CATEGORY_JSON = "category";
 
     // Formatting
     public static final String AREA_RNBR_FORMAT = "%03d";
