@@ -196,6 +196,12 @@
 			<organization>Kiel University</organization>
 			<organizationUrl>http://www.uni-kiel.de/index-e.shtml</organizationUrl>
 		</developer>
+        <developer>
+            <name>Fidan Limani</name>
+            <email>f.limani@zbw.eu</email>
+            <organization>ZBW</organization>
+            <organizationUrl>https://www.zbw.eu</organizationUrl>
+        </developer>
 	</developers>
 	
 	<!-- Define Sonatype repository for retrieving SNAPSHOT versions -->
