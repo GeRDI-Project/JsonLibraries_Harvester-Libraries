@@ -16,10 +16,18 @@
 package de.gerdiproject.harvest;
 
 /**
- * The interface for documents.
+ * The interface for harvested documents.
  *
  * @author Robin Weiss
  */
 public interface IDocument
 {
+    /**
+     * Returns an identifier of the source of the document. The identifier must
+     * be unique within the context of the harvester that generates it.
+     *
+     * @return a unique identifier of the source from which the document was
+     *         retrieved
+     */
+    String getSourceId();
 }

@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.IDocument;
+import de.gerdiproject.json.GsonUtils;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.extension.ResearchData;
 import de.gerdiproject.json.datacite.extension.WebLink;
@@ -29,30 +30,41 @@ import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
 
 
 /**
- * A JSON object representing an extended DataCite document,
- * representing core metadata properties chosen for an accurate and consistent identification
- * of a resource for citation. The resource that is being identified can be of any kind,
- * but it is typically a dataset. It may include not only numerical data, but any other
- * research data outputs.
+ * A JSON object representing an extended DataCite document, representing core
+ * metadata properties chosen for an accurate and consistent identification of a
+ * resource for citation. The resource that is being identified can be of any
+ * kind, but it is typically a dataset. It may include not only numerical data,
+ * but any other research data outputs.
  *
- * The metadata schema is extended by fields that are required by GeRDI features.
+ * The metadata schema is extended by fields that are required by GeRDI
+ * features.
  *
- * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
+ * Source:
+ * https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
+ * 
  * @author Mathis Neumann, Robin Weiss
  */
 public class DataCiteJson implements IDocument, ICleanable
 {
-    private static final String ERROR_INVALID_GEO_LOCATION_LIST = "Could not remove invalid GeoLocations! The DataCiteJson.geoLocations list must support remove() operations!";
+    private static final String ERROR_INVALID_GEO_LOCATION_LIST =
+            "Could not remove invalid GeoLocations! The DataCiteJson.geoLocations list must support remove() operations!";
     private static final Logger LOGGER = LoggerFactory.getLogger(DataCiteJson.class);
 
+
     /**
-     *  The Identifier is a unique string that identifies the resource.
+     * An identifier of the source of the document. The identifier must be
+     * unique within the context of the harvester that generates it.
+     */
+    private final transient String sourceId;
+
+    /**
+     * The Identifier is a unique string that identifies the resource.
      */
     private Identifier identifier;
 
     /**
-     * The main researchers involved in producing the data, or the authors of the publication,
-     * in priority order.
+     * The main researchers involved in producing the data, or the authors of
+     * the publication, in priority order.
      */
     private List<Creator> creators;
 
@@ -62,8 +74,10 @@ public class DataCiteJson implements IDocument, ICleanable
     private List<Title> titles;
 
     /**
-     * The name of the entity that holds, archives, publishes prints, distributes, releases, issues, or produces the resource.
-     * This property will be used to formulate the citation, so consider the prominence of the role.
+     * The name of the entity that holds, archives, publishes prints,
+     * distributes, releases, issues, or produces the resource. This property
+     * will be used to formulate the citation, so consider the prominence of the
+     * role.
      */
     private String publisher;
 
@@ -78,13 +92,15 @@ public class DataCiteJson implements IDocument, ICleanable
     private ResourceType resourceType;
 
     /**
-     * Subjects, keywords, classification codes, or key phrases describing the resource.
+     * Subjects, keywords, classification codes, or key phrases describing the
+     * resource.
      */
     private List<Subject> subjects;
 
     /**
-     * The institutions or persons responsible for collecting, managing, distributing,
-     * or otherwise contributing to the development of the resource.
+     * The institutions or persons responsible for collecting, managing,
+     * distributing, or otherwise contributing to the development of the
+     * resource.
      */
     private List<Contributor> contributors;
 
@@ -94,39 +110,44 @@ public class DataCiteJson implements IDocument, ICleanable
     private List<AbstractDate> dates;
 
     /**
-     * Primary language of the resource. Allowed values are taken from  IETF BCP 47, ISO 639-1 language codes.
-     * <br>e.g. de, en-US
+     * Primary language of the resource. Allowed values are taken from IETF BCP
+     * 47, ISO 639-1 language codes. <br>
+     * e.g. de, en-US
      */
     private String language;
 
     /**
-     * An identifier or identifiers other than the primary Identifier applied to the resource being registered.
-     * This may be any alphanumeric string which is unique within its domain of issue.
-     * May be used for local identifiers. AlternateIdentifier should be used for another identifier
-     * of the same instance (same location, same file).
+     * An identifier or identifiers other than the primary Identifier applied to
+     * the resource being registered. This may be any alphanumeric string which
+     * is unique within its domain of issue. May be used for local identifiers.
+     * AlternateIdentifier should be used for another identifier of the same
+     * instance (same location, same file).
      */
     private List<AlternateIdentifier> alternateIdentifiers;
 
     /**
-     * Identifiers of related resources.
-     * These must be globally unique identifiers.
+     * Identifiers of related resources. These must be globally unique
+     * identifiers.
      */
     private List<RelatedIdentifier> relatedIdentifiers;
 
     /**
      * Unstructured information about the resource size, duration, or extent.
-     * <br>e.g. "15 pages", "6 MB", "15 seconds"
+     * <br>
+     * e.g. "15 pages", "6 MB", "15 seconds"
      */
     private List<String> sizes;
 
     /**
-     * Technical format of the resource. Use file extension or MIME type where possible.
-     * <br>e.g. PDF, XML, application/pdf, text/xml
+     * Technical format of the resource. Use file extension or MIME type where
+     * possible. <br>
+     * e.g. PDF, XML, application/pdf, text/xml
      */
     private List<String> formats;
 
     /**
-     * Version number of the resource. If the primary resource has changed the version number increases.
+     * Version number of the resource. If the primary resource has changed the
+     * version number increases.
      */
     private String version;
 
@@ -136,18 +157,20 @@ public class DataCiteJson implements IDocument, ICleanable
     private List<Rights> rightsList;
 
     /**
-     * All additional information that does not fit in any of the other categories.
+     * All additional information that does not fit in any of the other
+     * categories.
      */
     private List<Description> descriptions;
 
     /**
-     * Spatial regions or named places where the data was gathered or about which the data is focused.
+     * Spatial regions or named places where the data was gathered or about
+     * which the data is focused.
      */
     private List<GeoLocation> geoLocations;
 
     /**
-     * Information about financial support (funding) for the resource
-     * being registered.
+     * Information about financial support (funding) for the resource being
+     * registered.
      */
     private List<FundingReference> fundingReferences;
 
@@ -162,16 +185,62 @@ public class DataCiteJson implements IDocument, ICleanable
     private List<ResearchData> researchDataList;
 
     /**
-     * A unique but human readable name of the repository.
-     * <br>e.g. Sea Around Us, FAOSTAT
+     * A unique but human readable name of the repository. <br>
+     * e.g. Sea Around Us, FAOSTAT
      */
     private String repositoryIdentifier;
 
     /**
-     * A list of human readable names of the research disciplines, meaning the topics or domains that this document covers.
-     * <br>e.g. Computer Science, Geography
+     * A list of human readable names of the research disciplines, meaning the
+     * topics or domains that this document covers. <br>
+     * e.g. Computer Science, Geography
      */
     private List<AbstractResearch> researchDisciplines;
+
+
+    /**
+     * This constructor set the source identifier of the document which allows
+     * for persisting it when one of its values change.
+     * 
+     * @param sourceId a unique identifier of the source from which the document
+     *            was retrieved
+     */
+    public DataCiteJson(final String sourceId)
+    {
+        this.sourceId = sourceId;
+    }
+
+
+    /**
+     * This constructor does not set a sourceId. As a fallback, a hash code of
+     * the harvested document is returned as a source identifier, causing any
+     * reference to this document in the index to be lost if any field value is
+     * updated.
+     */
+    @Deprecated
+    public DataCiteJson()
+    {
+        this.sourceId = null;
+    }
+
+
+    /**
+     * Returns an identifier of the source of the document. If no such
+     * identifier was set, a hash value of the JSON representation of this
+     * document is used as a fallback, causing any reference to this document in
+     * the index to be lost if any field value is updated.
+     * 
+     * @return a unique identifier of the source from which the document was
+     *         retrieved
+     */
+    @Override
+    public String getSourceId()
+    {
+        if (sourceId == null)
+            return String.valueOf(GsonUtils.getGson().toJson(this).hashCode());
+        else
+            return sourceId;
+    }
 
 
     /**
@@ -201,7 +270,7 @@ public class DataCiteJson implements IDocument, ICleanable
      * distributes, releases, issues, or produces the resource.
      *
      * @return the name of the entity that holds, archives, publishes prints,
-     * distributes, releases, issues, or produces the resource
+     *         distributes, releases, issues, or produces the resource
      */
     public String getPublisher()
     {
@@ -213,8 +282,9 @@ public class DataCiteJson implements IDocument, ICleanable
      * Changes the name of the entity that holds, archives, publishes prints,
      * distributes, releases, issues, or produces the resource
      *
-     * @param publisher the name of the entity that holds, archives, publishes prints,
-     * distributes, releases, issues, or produces the resource
+     * @param publisher the name of the entity that holds, archives, publishes
+     *            prints, distributes, releases, issues, or produces the
+     *            resource
      */
     public void setPublisher(String publisher)
     {
@@ -256,8 +326,8 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Changes the primary language of the resource.
-     * Allowed values are taken from  IETF BCP 47, ISO 639-1 language codes.
+     * Changes the primary language of the resource. Allowed values are taken
+     * from IETF BCP 47, ISO 639-1 language codes.
      *
      * @param language the primary language of the resource
      */
@@ -281,7 +351,8 @@ public class DataCiteJson implements IDocument, ICleanable
     /**
      * Changes the year when the data was or will be made publicly available.
      *
-     * @param publicationYear the year when the data was or will be made publicly available
+     * @param publicationYear the year when the data was or will be made
+     *            publicly available
      */
     public void setPublicationYear(short publicationYear)
     {
@@ -312,8 +383,8 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Returns the unique but human readable name of the repository.
-     * <br>e.g. Sea Around Us, FAOSTAT
+     * Returns the unique but human readable name of the repository. <br>
+     * e.g. Sea Around Us, FAOSTAT
      *
      * @return a unique but human readable name of the repository
      */
@@ -326,7 +397,8 @@ public class DataCiteJson implements IDocument, ICleanable
     /**
      * Changes the unique but human readable name of the repository.
      *
-     * @param repositoryIdentifier a unique but human readable name of the repository
+     * @param repositoryIdentifier a unique but human readable name of the
+     *            repository
      */
     public void setRepositoryIdentifier(String repositoryIdentifier)
     {
@@ -335,7 +407,8 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Retrieves the list of human readable names of the research disciplines, meaning the topics or domains that this document covers.
+     * Retrieves the list of human readable names of the research disciplines,
+     * meaning the topics or domains that this document covers.
      *
      * @return a list of human readable names of the research disciplines
      */
@@ -346,9 +419,11 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Changes the list of human readable names of the research disciplines, meaning the topics or domains that this document covers.
+     * Changes the list of human readable names of the research disciplines,
+     * meaning the topics or domains that this document covers.
      *
-     * @param researchDisciplines a list of human readable names of the research disciplines
+     * @param researchDisciplines a list of human readable names of the research
+     *            disciplines
      */
     public void setResearchDisciplines(List<AbstractResearch> researchDisciplines)
     {
@@ -368,8 +443,8 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Changes the unstructured size information about the resource.
-     * <br>e.g. "15 pages", "6 MB"
+     * Changes the unstructured size information about the resource. <br>
+     * e.g. "15 pages", "6 MB"
      *
      * @param sizes unstructured size information about the resource
      */
@@ -391,8 +466,9 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Changes technical format of the resource. Use file extension or MIME type where possible.
-     * <br>e.g. PDF, XML, application/pdf, text/xml
+     * Changes technical format of the resource. Use file extension or MIME type
+     * where possible. <br>
+     * e.g. PDF, XML, application/pdf, text/xml
      *
      * @param formats technical format of the resource
      */
@@ -403,8 +479,8 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Returns the main researchers involved in producing the data,
-     * or the authors of the publication, in priority order.
+     * Returns the main researchers involved in producing the data, or the
+     * authors of the publication, in priority order.
      *
      * @return the main researchers and/or the authors of the publication
      */
@@ -415,10 +491,11 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Changes the main researchers involved in producing the data,
-     * or the authors of the publication.
+     * Changes the main researchers involved in producing the data, or the
+     * authors of the publication.
      *
-     * @param creators the main researchers and/or the authors of the publication
+     * @param creators the main researchers and/or the authors of the
+     *            publication
      */
     public void setCreators(List<Creator> creators)
     {
@@ -449,7 +526,8 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Returns all additional information that does not fit in any of the other categories.
+     * Returns all additional information that does not fit in any of the other
+     * categories.
      *
      * @return all additional information
      */
@@ -460,7 +538,8 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Changes all additional information that does not fit in any of the other categories.
+     * Changes all additional information that does not fit in any of the other
+     * categories.
      *
      * @param descriptions all additional information
      */
@@ -471,9 +550,11 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Returns subjects, keywords, classification codes, or key phrases describing the resource.
+     * Returns subjects, keywords, classification codes, or key phrases
+     * describing the resource.
      *
-     * @return subjects, keywords, classification codes, or key phrases describing the resource
+     * @return subjects, keywords, classification codes, or key phrases
+     *         describing the resource
      */
     public List<Subject> getSubjects()
     {
@@ -482,9 +563,11 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Changes the subjects, keywords, classification codes, and key phrases describing the resource.
+     * Changes the subjects, keywords, classification codes, and key phrases
+     * describing the resource.
      *
-     * @param subjects subjects, keywords, classification codes, or key phrases describing the resource
+     * @param subjects subjects, keywords, classification codes, or key phrases
+     *            describing the resource
      */
     public void setSubjects(List<Subject> subjects)
     {
@@ -493,10 +576,12 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Returns the institutions or persons responsible for collecting, managing, distributing,
-     * or otherwise contributing to the development of the resource.
+     * Returns the institutions or persons responsible for collecting, managing,
+     * distributing, or otherwise contributing to the development of the
+     * resource.
      *
-     * @return institutions or persons responsible for contributing to the development of the resource
+     * @return institutions or persons responsible for contributing to the
+     *         development of the resource
      */
     public List<Contributor> getContributors()
     {
@@ -505,10 +590,12 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Changes the institutions or persons responsible for collecting, managing, distributing,
-     * or otherwise contributing to the development of the resource.
+     * Changes the institutions or persons responsible for collecting, managing,
+     * distributing, or otherwise contributing to the development of the
+     * resource.
      *
-     * @param contributors institutions or persons responsible for contributing to the development of the resource
+     * @param contributors institutions or persons responsible for contributing
+     *            to the development of the resource
      */
     public void setContributors(List<Contributor> contributors)
     {
@@ -564,6 +651,7 @@ public class DataCiteJson implements IDocument, ICleanable
 
     /**
      * Returns identifiers of related resources.
+     * 
      * @return identifiers of related resources
      */
     public List<RelatedIdentifier> getRelatedIdentifiers()
@@ -573,8 +661,8 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Changes the identifiers of related resources.
-     * These must be globally unique identifiers.
+     * Changes the identifiers of related resources. These must be globally
+     * unique identifiers.
      *
      * @param relatedIdentifiers identifiers of related resources
      */
@@ -585,7 +673,8 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Returns identifiers other than the primary Identifier applied to the resource being registered.
+     * Returns identifiers other than the primary Identifier applied to the
+     * resource being registered.
      *
      * @return identifiers other than the primary Identifier
      */
@@ -596,7 +685,8 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Changes identifiers other than the primary Identifier applied to the resource being registered.
+     * Changes identifiers other than the primary Identifier applied to the
+     * resource being registered.
      *
      * @param alternateIdentifiers identifiers other than the primary Identifier
      */
@@ -665,6 +755,7 @@ public class DataCiteJson implements IDocument, ICleanable
 
     /**
      * Changes the links to the data provider's website.
+     * 
      * @param webLinks links to the data provider's website
      */
     public void setWebLinks(List<WebLink> webLinks)
