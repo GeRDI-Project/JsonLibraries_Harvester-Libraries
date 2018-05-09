@@ -51,7 +51,6 @@ import de.gerdiproject.json.geo.adapter.PolygonAdapter;
  */
 public final class GsonUtils
 {
-    private static final String ERROR_ALREADY_INITIALIZED = "GsonUtils is already initialized!";
     private static final String ERROR_NOT_INITIALIZED = "GsonUtils was not initialized!";
 
     private static Gson GSON;
@@ -66,9 +65,6 @@ public final class GsonUtils
      */
     public static void init(GsonBuilder builder)
     {
-        if (GSON != null)
-            throw new IllegalStateException(ERROR_ALREADY_INITIALIZED);
-
         builder.registerTypeAdapter(Point.class, new PointAdapter())
         .registerTypeAdapter(MultiPoint.class, new MultiPointAdapter())
         .registerTypeAdapter(LineString.class, new LineStringAdapter())
