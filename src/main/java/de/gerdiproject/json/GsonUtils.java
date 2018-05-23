@@ -16,7 +16,6 @@
 package de.gerdiproject.json;
 
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import de.gerdiproject.json.datacite.Date;
@@ -44,80 +43,50 @@ import de.gerdiproject.json.geo.adapter.PolygonAdapter;
 
 
 /**
- * This is a static utility class that provides methods that are commonly used
- * by this GSON implementation. The init function must be called once prior to calling getGson and getPrettyGson.
+ * This is a static utility class that provides methods that for creating commonly used GSON builders.
  *
  * @author Robin Weiss
  */
 public final class GsonUtils
 {
-    private static final String ERROR_NOT_INITIALIZED = "GsonUtils was not initialized!";
-
-    private static Gson GSON;
-    private static Gson PRETTY_GSON;
-
-
     /**
-     * Initializes the {@linkplain Gson} instances with a specified builder.
-     * GeoJson adapters are automatically added.
+     * Creates a GsonBuilder that is able to (de-) serialize JSON objects of the
+     * GeRDI metadata schema.
      *
-     * @param builder a GsonBuilder instance that may have registered Adapters
+     * @return a GsonBuilder that is able to (de-) serialize JSON objects of the
+     * GeRDI metadata schema
      */
-    public static void init(GsonBuilder builder)
+    public static GsonBuilder createGerdiDocumentGsonBuilder()
     {
-        builder.registerTypeAdapter(Point.class, new PointAdapter())
-        .registerTypeAdapter(MultiPoint.class, new MultiPointAdapter())
-        .registerTypeAdapter(LineString.class, new LineStringAdapter())
-        .registerTypeAdapter(MultiLineString.class, new MultiLineStringAdapter())
-        .registerTypeAdapter(Polygon.class, new PolygonAdapter())
-        .registerTypeAdapter(MultiPolygon.class, new MultiPolygonAdapter())
-        .registerTypeAdapter(GeoJson.class, new GeoJsonAdapter())
-        .registerTypeAdapter(AbstractDate.class, new DateAdapter())
-        .registerTypeAdapter(DateRange.class, new DateAdapter())
-        .registerTypeAdapter(Date.class, new DateAdapter())
-        .registerTypeAdapter(AbstractResearch.class, new ResearchAdapter())
-        .registerTypeAdapter(ResearchArea.class, new ResearchAdapter())
-        .registerTypeAdapter(ResearchDiscipline.class, new ResearchAdapter());
-
-        GSON = builder.create();
-        PRETTY_GSON = builder.setPrettyPrinting().create();
+        return createGeoJsonGsonBuilder()
+               .registerTypeAdapter(AbstractDate.class, new DateAdapter())
+               .registerTypeAdapter(DateRange.class, new DateAdapter())
+               .registerTypeAdapter(Date.class, new DateAdapter())
+               .registerTypeAdapter(AbstractResearch.class, new ResearchAdapter())
+               .registerTypeAdapter(ResearchArea.class, new ResearchAdapter())
+               .registerTypeAdapter(ResearchDiscipline.class, new ResearchAdapter());
     }
 
 
     /**
-     * Retrieves a non-pretty printing {@linkplain Gson} instance, which
-     * can be used for converting JSON objects to Strings or Java objects,
-     * and vice versa.
+     * Creates a GsonBuilder that is able to (de-) serialize {@linkplain GeoJson} objects.
      *
-     * @return a non-pretty printing {@linkplain Gson} instance
+     * @return a GsonBuilder that is able to (de-) serialize {@linkplain GeoJson} objects
      */
-    public static Gson getGson()
+    public static GsonBuilder createGeoJsonGsonBuilder()
     {
-        if (GSON == null)
-            throw new IllegalStateException(ERROR_NOT_INITIALIZED);
-
-        return GSON;
+        return new GsonBuilder().registerTypeAdapter(Point.class, new PointAdapter())
+               .registerTypeAdapter(MultiPoint.class, new MultiPointAdapter())
+               .registerTypeAdapter(LineString.class, new LineStringAdapter())
+               .registerTypeAdapter(MultiLineString.class, new MultiLineStringAdapter())
+               .registerTypeAdapter(Polygon.class, new PolygonAdapter())
+               .registerTypeAdapter(MultiPolygon.class, new MultiPolygonAdapter())
+               .registerTypeAdapter(GeoJson.class, new GeoJsonAdapter());
     }
 
 
     /**
-     * Retrieves a pretty printing {@linkplain Gson} instance, which
-     * can be used for converting JSON objects to Strings or Java objects,
-     * and vice versa.
-     *
-     * @return a pretty printing {@linkplain Gson} instance
-     */
-    public static Gson getPrettyGson()
-    {
-        if (PRETTY_GSON == null)
-            throw new IllegalStateException(ERROR_NOT_INITIALIZED);
-
-        return PRETTY_GSON;
-    }
-
-
-    /**
-     * Empty constructor, because this is a static class.
+     * Private constructor, because this class has only static functions.
      */
     private GsonUtils()
     {

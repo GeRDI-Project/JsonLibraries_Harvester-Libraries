@@ -25,6 +25,7 @@ import com.google.gson.JsonSyntaxException;
 
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.json.GsonUtils;
+import de.gerdiproject.json.geo.constants.GeoJsonConstants;
 
 /**
  * GeoJSON is a format for encoding a variety of geographic data structures.
@@ -33,10 +34,8 @@ import de.gerdiproject.json.GsonUtils;
  */
 public class GeoJson implements ICleanable
 {
-    private static final String PARSE_FAILED = "Could not simplify GeoJson:\n";
-    private static final String INVALID_GEO = "Invalid GeoJson:\n";
-    private static final String INVALID_TYPE = "Invalid";
     private static final Logger LOGGER = LoggerFactory.getLogger(GeoJson.class);
+    private static final Gson GSON = GsonUtils.createGeoJsonGsonBuilder().create();
 
     // exclude this field from serialization, it's only used for performance reasons
     private transient boolean isClean;
@@ -64,7 +63,7 @@ public class GeoJson implements ICleanable
     public void setCoordinates(IGeoCoordinates coordinates)
     {
         if (coordinates == null)
-            this.type = INVALID_TYPE;
+            this.type = GeoJsonConstants.INVALID_TYPE;
         else
             this.type = coordinates.getClass().getSimpleName();
 
@@ -108,9 +107,8 @@ public class GeoJson implements ICleanable
     public void clean()
     {
         if (!isClean && coordinates != null && (coordinates instanceof Polygon  || coordinates instanceof MultiPolygon)) {
-            Gson gson = GsonUtils.getGson();
 
-            String geoJsonString = gson.toJson(this);
+            String geoJsonString = GSON.toJson(this);
 
             try {
                 // map our polygon implementation to the ESRI implementation
@@ -120,7 +118,7 @@ public class GeoJson implements ICleanable
                 String simpleGeoString = polygon.makeSimple().asGeoJson();
 
                 // parse JSON string to a new GeoJson object
-                GeoJson  cleanedGeo = gson.fromJson(simpleGeoString, GeoJson.class);
+                GeoJson  cleanedGeo = GSON.fromJson(simpleGeoString, GeoJson.class);
 
                 // copy the simplified coordinates
                 this.coordinates = cleanedGeo.coordinates;
@@ -128,10 +126,11 @@ public class GeoJson implements ICleanable
                 isClean = true;
 
             } catch (JSONException e) {
-                LOGGER.warn(PARSE_FAILED + geoJsonString);
+                LOGGER.debug(GeoJsonConstants.PARSE_FAILED + geoJsonString);
                 setCoordinates(null);
+
             } catch (JsonSyntaxException e) {
-                LOGGER.warn(INVALID_GEO + geoJsonString);
+                LOGGER.debug(GeoJsonConstants.INVALID_GEO + geoJsonString);
                 setCoordinates(null);
             }
         }

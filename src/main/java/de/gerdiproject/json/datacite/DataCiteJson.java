@@ -15,15 +15,19 @@
  */
 package de.gerdiproject.json.datacite;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.Gson;
+
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.IDocument;
 import de.gerdiproject.json.GsonUtils;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
+import de.gerdiproject.json.datacite.constants.DataCiteConstants;
 import de.gerdiproject.json.datacite.extension.ResearchData;
 import de.gerdiproject.json.datacite.extension.WebLink;
 import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
@@ -41,14 +45,13 @@ import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
  *
  * Source:
  * https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
- * 
+ *
  * @author Mathis Neumann, Robin Weiss
  */
 public class DataCiteJson implements IDocument, ICleanable
 {
-    private static final String ERROR_INVALID_GEO_LOCATION_LIST =
-            "Could not remove invalid GeoLocations! The DataCiteJson.geoLocations list must support remove() operations!";
     private static final Logger LOGGER = LoggerFactory.getLogger(DataCiteJson.class);
+    private static final Gson GSON = GsonUtils.createGerdiDocumentGsonBuilder().create();
 
 
     /**
@@ -201,26 +204,16 @@ public class DataCiteJson implements IDocument, ICleanable
     /**
      * This constructor set the source identifier of the document which allows
      * for persisting it when one of its values change.
-     * 
+     *
      * @param sourceId a unique identifier of the source from which the document
      *            was retrieved
      */
     public DataCiteJson(final String sourceId)
     {
+        if (sourceId == null)
+            throw new NullPointerException();
+
         this.sourceId = sourceId;
-    }
-
-
-    /**
-     * This constructor does not set a sourceId. As a fallback, a hash code of
-     * the harvested document is returned as a source identifier, causing any
-     * reference to this document in the index to be lost if any field value is
-     * updated.
-     */
-    @Deprecated
-    public DataCiteJson()
-    {
-        this.sourceId = null;
     }
 
 
@@ -229,17 +222,14 @@ public class DataCiteJson implements IDocument, ICleanable
      * identifier was set, a hash value of the JSON representation of this
      * document is used as a fallback, causing any reference to this document in
      * the index to be lost if any field value is updated.
-     * 
+     *
      * @return a unique identifier of the source from which the document was
      *         retrieved
      */
     @Override
     public String getSourceId()
     {
-        if (sourceId == null)
-            return String.valueOf(GsonUtils.getGson().toJson(this).hashCode());
-        else
-            return sourceId;
+        return sourceId;
     }
 
 
@@ -651,7 +641,7 @@ public class DataCiteJson implements IDocument, ICleanable
 
     /**
      * Returns identifiers of related resources.
-     * 
+     *
      * @return identifiers of related resources
      */
     public List<RelatedIdentifier> getRelatedIdentifiers()
@@ -755,7 +745,7 @@ public class DataCiteJson implements IDocument, ICleanable
 
     /**
      * Changes the links to the data provider's website.
-     * 
+     *
      * @param webLinks links to the data provider's website
      */
     public void setWebLinks(List<WebLink> webLinks)
@@ -789,232 +779,161 @@ public class DataCiteJson implements IDocument, ICleanable
     @Override
     public void clean()
     {
-        // remove null entries from lists
-        if (creators != null) {
-            int i = creators.size();
+        titles = cleanCleanableList(titles);
+        subjects = cleanCleanableList(subjects);
+        rightsList = cleanCleanableList(rightsList);
+        descriptions = cleanCleanableList(descriptions);
 
-            while (i-- != 0) {
-                if (creators.get(i) == null)
-                    creators.remove(i);
-            }
+        contributors = cleanList(contributors);
+        creators = cleanList(creators);
+        alternateIdentifiers = cleanList(alternateIdentifiers);
+        relatedIdentifiers = cleanList(relatedIdentifiers);
+        sizes = cleanList(sizes);
+        fundingReferences = cleanList(fundingReferences);
+        formats = cleanList(formats);
+        webLinks = cleanList(webLinks);
+        researchDataList = cleanList(researchDataList);
+        researchDisciplines = cleanList(researchDisciplines);
 
-            if (creators.isEmpty())
-                creators = null;
-        }
+        dates = cleanDatesList(dates);
+        geoLocations = cleanGeoLocationList(geoLocations);
+    }
 
-        if (titles != null) {
-            int i = titles.size();
 
-            while (i-- != 0) {
-                Title title = titles.get(i);
-
-                if (title == null)
-                    titles.remove(i);
-                else
-                    title.clean();
-            }
-
-            if (titles.isEmpty())
-                titles = null;
-        }
-
-        if (subjects != null) {
-            int i = subjects.size();
-
-            while (i-- != 0) {
-                Subject subject = subjects.get(i);
-
-                if (subject == null)
-                    subjects.remove(i);
-                else
-                    subject.clean();
-            }
-
-            if (subjects.isEmpty())
-                subjects = null;
-        }
-
-        if (contributors != null) {
-            int i = contributors.size();
-
-            while (i-- != 0) {
-                if (contributors.get(i) == null)
-                    contributors.remove(i);
-            }
-
-            if (contributors.isEmpty())
-                contributors = null;
-        }
-
-        if (alternateIdentifiers != null) {
-            int i = alternateIdentifiers.size();
-
-            while (i-- != 0) {
-                if (alternateIdentifiers.get(i) == null)
-                    alternateIdentifiers.remove(i);
-            }
-
-            if (alternateIdentifiers.isEmpty())
-                alternateIdentifiers = null;
-        }
-
-        if (relatedIdentifiers != null) {
-            int i = relatedIdentifiers.size();
-
-            while (i-- != 0) {
-                if (relatedIdentifiers.get(i) == null)
-                    relatedIdentifiers.remove(i);
-            }
-
-            if (relatedIdentifiers.isEmpty())
-                relatedIdentifiers = null;
-        }
-
-        if (sizes != null) {
-            int i = sizes.size();
-
-            while (i-- != 0) {
-                if (sizes.get(i) == null)
-                    sizes.remove(i);
-            }
-
-            if (sizes.isEmpty())
-                sizes = null;
-        }
-
-        if (formats != null) {
-            int i = formats.size();
-
-            while (i-- != 0) {
-                if (formats.get(i) == null)
-                    formats.remove(i);
-            }
-
-            if (formats.isEmpty())
-                formats = null;
-        }
-
-        if (rightsList != null) {
-            int i = rightsList.size();
-
-            while (i-- != 0) {
-                Rights rights = rightsList.get(i);
-
-                if (rights == null)
-                    rightsList.remove(i);
-                else
-                    rights.clean();
-            }
-
-            if (rightsList.isEmpty())
-                rightsList = null;
-        }
-
-        if (descriptions != null) {
-            int i = descriptions.size();
-
-            while (i-- != 0) {
-                Description description = descriptions.get(i);
-
-                if (description == null)
-                    descriptions.remove(i);
-                else
-                    description.clean();
-            }
-
-            if (descriptions.isEmpty())
-                descriptions = null;
-        }
-
-        if (fundingReferences != null) {
-            int i = fundingReferences.size();
-
-            while (i-- != 0) {
-                if (fundingReferences.get(i) == null)
-                    fundingReferences.remove(i);
-            }
-
-            if (fundingReferences.isEmpty())
-                fundingReferences = null;
-        }
-
-        if (webLinks != null) {
-            int i = webLinks.size();
-
-            while (i-- != 0) {
-                if (webLinks.get(i) == null)
-                    webLinks.remove(i);
-            }
-
-            if (webLinks.isEmpty())
-                webLinks = null;
-        }
-
-        if (researchDataList != null) {
-            int i = researchDataList.size();
-
-            while (i-- != 0) {
-                if (researchDataList.get(i) == null)
-                    researchDataList.remove(i);
-            }
-
-            if (researchDataList.isEmpty())
-                researchDataList = null;
-        }
-
-        if (researchDisciplines != null) {
-            int i = researchDisciplines.size();
-
-            while (i-- != 0) {
-                if (researchDisciplines.get(i) == null)
-                    researchDisciplines.remove(i);
-            }
-
-            if (researchDisciplines.isEmpty())
-                researchDisciplines = null;
-        }
-
-        if (dates != null) {
-            int i = dates.size();
-
-            while (i-- != 0) {
-                AbstractDate d = dates.get(i);
-
-                // remove non-existing dates and dates with null values
-                if (d == null || d.getValue() == null)
-                    dates.remove(i);
-            }
-
-            if (dates.isEmpty())
-                dates = null;
-        }
-
-        if (geoLocations != null) {
+    /**
+     * Removes all null-entries of a list.
+     * @param list the list to be cleaned
+     * @param <T> the type of the list elements
+     *
+     * @return the cleaned list, or null if the list became empty
+     */
+    private <T> List<T> cleanList(List<T> list)
+    {
+        if (list != null) {
             try {
-                int i = geoLocations.size();
+                int i = list.size();
 
-                while (i != 0) {
-                    i--;
-                    GeoLocation geoLoc = geoLocations.get(i);
+                while (i-- != 0) {
+                    if (list.get(i) == null)
+                        list.remove(i);
+                }
 
-                    // remove null entries
-                    if (geoLoc == null)
-                        geoLocations.remove(i);
+            } catch (UnsupportedOperationException e) {
+                LOGGER.warn(DataCiteConstants.ERROR_INVALID_LISTS);
+
+                // convert to list that allows remove operations, and try again
+                return cleanList(new LinkedList<>(list));
+            }
+
+            if (list.isEmpty())
+                list = null;
+        }
+
+        return list;
+    }
+
+
+    /**
+     * Removes all null-entries and invalid dates from a date list.
+     * @param list the date list to be cleaned
+     *
+     * @return the cleaned list, or null if the list became empty
+     */
+    private List<AbstractDate> cleanDatesList(List<AbstractDate> list)
+    {
+        if (list != null) {
+            try {
+
+                int i = list.size();
+
+                while (i-- != 0) {
+                    final AbstractDate date = list.get(i);
+
+                    if (date == null || date.getValue() == null)
+                        list.remove(i);
+                }
+
+            } catch (UnsupportedOperationException e) {
+                LOGGER.warn(DataCiteConstants.ERROR_INVALID_LISTS);
+
+                // convert to list that allows remove operations, and try again
+                return cleanDatesList(new LinkedList<>(list));
+            }
+
+            if (list.isEmpty())
+                list = null;
+        }
+
+        return list;
+    }
+
+
+    /**
+     * Removes all null-entries and invalid dates from a date list.
+     * @param list the date list to be cleaned
+     *
+     * @return the cleaned list, or null if the list became empty
+     */
+    private List<GeoLocation> cleanGeoLocationList(List<GeoLocation> list)
+    {
+        if (list != null) {
+            try {
+
+                int i = list.size();
+
+                while (i-- != 0) {
+                    final GeoLocation geo = list.get(i);
+
+                    if (geo == null)
+                        list.remove(i);
+
                     else {
-                        // clean geo location
-                        geoLoc.clean();
+                        geo.clean();
 
-                        // remove geo location, if it became invalid
-                        if (!geoLoc.isValid())
-                            geoLocations.remove(i);
+                        if (!geo.isValid())
+                            list.remove(i);
                     }
                 }
+
             } catch (UnsupportedOperationException e) {
-                LOGGER.error(ERROR_INVALID_GEO_LOCATION_LIST);
+                LOGGER.warn(DataCiteConstants.ERROR_INVALID_LISTS);
+
+                // convert to list that allows remove operations, and try again
+                return cleanGeoLocationList(new LinkedList<>(list));
             }
 
-            if (geoLocations.isEmpty())
-                geoLocations = null;
+            if (list.isEmpty())
+                list = null;
         }
+
+        return list;
+    }
+
+
+    /**
+     *
+     * Removes all null-entries of a list of {@linkplain ICleanable}, and
+     * calls the clean() function of all remaining objects.
+     *
+     * @param list the list to be cleaned
+     * @param <T> the type of the list elements
+     *
+     * @return the cleaned list, or null if the list became empty
+     */
+    private <T extends ICleanable> List<T> cleanCleanableList(List<T> list)
+    {
+        list = cleanList(list);
+
+        if (list != null)
+            list.forEach((T element) -> element.clean());
+
+        return list;
+    }
+
+
+    @Override
+    public String toJson()
+    {
+        return GSON.toJson(this);
     }
 }

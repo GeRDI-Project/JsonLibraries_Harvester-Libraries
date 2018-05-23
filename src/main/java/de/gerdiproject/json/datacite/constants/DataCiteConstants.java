@@ -13,29 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.gerdiproject.harvest;
+package de.gerdiproject.json.datacite.constants;
+
+import de.gerdiproject.json.datacite.DataCiteJson;
 
 /**
- * The interface for harvested documents.
+ * This static class is a collection of constants that are used by {@linkplain DataCiteJson} objects.
  *
  * @author Robin Weiss
  */
-public interface IDocument
+public class DataCiteConstants
 {
+    public static final String ERROR_INVALID_LISTS =
+        "All lists of the DataCiteJson object must support the remove() operations, for clean removal of invalid values.\n"
+        + "The lists are now fixed during runtime, which costs performance. Please, check your code!";
     /**
-     * Returns an identifier of the source of the document. The identifier must
-     * be unique within the context of the harvester that generates it.
-     *
-     * @return a unique identifier of the source from which the document was
-     *         retrieved
+     * Private constructor, because this is a static class.
      */
-    String getSourceId();
+    private DataCiteConstants()
+    {
 
-
-    /**
-     * Returns a JSON representation of the document.
-     *
-     * @return a JSON representation of the document
-     */
-    String toJson();
+    }
 }
