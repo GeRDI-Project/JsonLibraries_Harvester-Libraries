@@ -42,13 +42,13 @@ public class PointAdapter implements JsonSerializer<Point>, JsonDeserializer<Poi
     @Override
     public JsonElement serialize(Point src, Type srcType, JsonSerializationContext context)
     {
-        boolean hasElevation = Double.isFinite(src.getElevation());
-        JsonArray dest = new JsonArray(hasElevation ? 3 : 2);
+        JsonArray dest = new JsonArray();
 
         dest.add(src.getLongitude());
         dest.add(src.getLatitude());
 
-        if (hasElevation)
+        // check if optional thrird component exists
+        if (Double.isFinite(src.getElevation()))
             dest.add(src.getElevation());
 
         return dest;
