@@ -41,13 +41,13 @@ import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
  *
  * Source:
  * https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
- * 
+ *
  * @author Mathis Neumann, Robin Weiss
  */
 public class DataCiteJson implements IDocument, ICleanable
 {
     private static final String ERROR_INVALID_GEO_LOCATION_LIST =
-            "Could not remove invalid GeoLocations! The DataCiteJson.geoLocations list must support remove() operations!";
+        "Could not remove invalid GeoLocations! The DataCiteJson.geoLocations list must support remove() operations!";
     private static final Logger LOGGER = LoggerFactory.getLogger(DataCiteJson.class);
 
 
@@ -201,7 +201,7 @@ public class DataCiteJson implements IDocument, ICleanable
     /**
      * This constructor set the source identifier of the document which allows
      * for persisting it when one of its values change.
-     * 
+     *
      * @param sourceId a unique identifier of the source from which the document
      *            was retrieved
      */
@@ -229,7 +229,7 @@ public class DataCiteJson implements IDocument, ICleanable
      * identifier was set, a hash value of the JSON representation of this
      * document is used as a fallback, causing any reference to this document in
      * the index to be lost if any field value is updated.
-     * 
+     *
      * @return a unique identifier of the source from which the document was
      *         retrieved
      */
@@ -651,7 +651,7 @@ public class DataCiteJson implements IDocument, ICleanable
 
     /**
      * Returns identifiers of related resources.
-     * 
+     *
      * @return identifiers of related resources
      */
     public List<RelatedIdentifier> getRelatedIdentifiers()
@@ -755,7 +755,7 @@ public class DataCiteJson implements IDocument, ICleanable
 
     /**
      * Changes the links to the data provider's website.
-     * 
+     *
      * @param webLinks links to the data provider's website
      */
     public void setWebLinks(List<WebLink> webLinks)
