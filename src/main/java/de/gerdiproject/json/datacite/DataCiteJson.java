@@ -17,6 +17,7 @@ package de.gerdiproject.json.datacite;
 
 import java.util.List;
 
+import de.gerdiproject.json.datacite.metadata_bowl.soep.Variable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -196,6 +197,14 @@ public class DataCiteJson implements IDocument, ICleanable
      * e.g. Computer Science, Geography
      */
     private List<AbstractResearch> researchDisciplines;
+
+    /**
+     * This is where the discipline-specific metadata are specified in the document
+     *
+     * Research community: SOEP
+     * A set of variables associated with a resource in SOEP study.
+     */
+    private List<Variable> datasetVariables;
 
 
     /**
@@ -786,10 +795,31 @@ public class DataCiteJson implements IDocument, ICleanable
     }
 
 
+    /*
+     * The following section contains the discipline-specific metadata types required during harvesting. Every
+     * community will add their types accordingly.
+     */
+
+    /**
+     * Returns list of variables for a SOEP dataset.
+     *
+     * @return list of variables
+     */
+    public List<Variable> getDatasetVariables() { return datasetVariables; }
+
+
+    /**
+     * Set the list of variables for a dataset.
+     *
+     * @param datasetVariables list of variables
+     */
+    public void setDatasetVariables(List<Variable> datasetVariables) { this.datasetVariables = datasetVariables; }
+
+
     @Override
     public void clean()
     {
-        // remove null entries from lists
+        // Remove null entries from lists
         if (creators != null) {
             int i = creators.size();
 
@@ -1015,6 +1045,18 @@ public class DataCiteJson implements IDocument, ICleanable
 
             if (geoLocations.isEmpty())
                 geoLocations = null;
+        }
+
+        if(datasetVariables != null){
+            int i = datasetVariables.size();
+
+            while (i-- != 0) {
+                if (datasetVariables.get(i) == null)
+                    datasetVariables.remove(i);
+            }
+
+            if (datasetVariables.isEmpty())
+                datasetVariables = null;
         }
     }
 }
