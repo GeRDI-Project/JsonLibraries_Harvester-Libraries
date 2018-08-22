@@ -5,6 +5,7 @@ import lombok.Data;
 
 /**
  * This class models the SOEP-specific metadata: Concepts
+ *
  * @author Fidan Limani
  **/
 @AllArgsConstructor
@@ -12,6 +13,14 @@ import lombok.Data;
 public class Concept
 {
     private String name;
+
+    /**
+     * Concept name in German
+     */
     private String labelDE;
+
+    /**
+     * Concept name in English
+     */
     private String label;
 }
