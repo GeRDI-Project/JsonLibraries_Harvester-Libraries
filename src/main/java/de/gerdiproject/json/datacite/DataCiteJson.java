@@ -50,8 +50,6 @@ import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
  */
 public class DataCiteJson implements IDocument, ICleanable
 {
-    private static final String ERROR_INVALID_GEO_LOCATION_LIST =
-        "Could not remove invalid GeoLocations! The DataCiteJson.geoLocations list must support remove() operations!";
     private static final Logger LOGGER = LoggerFactory.getLogger(DataCiteJson.class);
     private static final Gson GSON = GsonUtils.createGerdiDocumentGsonBuilder().create();
 
