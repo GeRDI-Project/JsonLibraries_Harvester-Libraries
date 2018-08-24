@@ -17,7 +17,7 @@ package de.gerdiproject.json.datacite;
 
 import java.util.List;
 
-import de.gerdiproject.json.datacite.metadata_bowl.soep.Variable;
+import de.gerdiproject.json.datacite.metadataBowl.soep.SoepVariable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -204,7 +204,7 @@ public class DataCiteJson implements IDocument, ICleanable
      * Research community: SOEP
      * A set of variables associated with a resource in SOEP study.
      */
-    private List<Variable> datasetVariables;
+    private List<SoepVariable> soepDatasetVariables;
 
 
     /**
@@ -805,7 +805,7 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @return list of variables
      */
-    public List<Variable> getDatasetVariables() { return datasetVariables; }
+    public List<SoepVariable> getDatasetVariables() { return soepDatasetVariables; }
 
 
     /**
@@ -813,7 +813,10 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @param datasetVariables list of variables
      */
-    public void setDatasetVariables(List<Variable> datasetVariables) { this.datasetVariables = datasetVariables; }
+    public void setDatasetVariables(List<SoepVariable> datasetVariables)
+    {
+        this.soepDatasetVariables = datasetVariables;
+    }
 
 
     @Override
@@ -1047,16 +1050,16 @@ public class DataCiteJson implements IDocument, ICleanable
                 geoLocations = null;
         }
 
-        if(datasetVariables != null){
-            int i = datasetVariables.size();
+        if(soepDatasetVariables != null){
+            int i = soepDatasetVariables.size();
 
             while (i-- != 0) {
-                if (datasetVariables.get(i) == null)
-                    datasetVariables.remove(i);
+                if (soepDatasetVariables.get(i) == null)
+                    soepDatasetVariables.remove(i);
             }
 
-            if (datasetVariables.isEmpty())
-                datasetVariables = null;
+            if (soepDatasetVariables.isEmpty())
+                soepDatasetVariables = null;
         }
     }
 }
