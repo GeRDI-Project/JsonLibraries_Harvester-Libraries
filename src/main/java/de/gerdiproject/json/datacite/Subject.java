@@ -188,4 +188,63 @@ public class Subject implements ICleanable
     {
         value = StringCleaner.clean(value);
     }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((lang == null) ? 0 : lang.hashCode());
+        result = prime * result + ((schemeURI == null) ? 0 : schemeURI.hashCode());
+        result = prime * result + ((subjectScheme == null) ? 0 : subjectScheme.hashCode());
+        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        result = prime * result + ((valueURI == null) ? 0 : valueURI.hashCode());
+        return result;
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof Subject))
+            return false;
+        Subject other = (Subject) obj;
+        if (lang == null) {
+            if (other.lang != null)
+                return false;
+        } else if (!lang.equals(other.lang))
+            return false;
+        if (schemeURI == null) {
+            if (other.schemeURI != null)
+                return false;
+        } else if (!schemeURI.equals(other.schemeURI))
+            return false;
+        if (subjectScheme == null) {
+            if (other.subjectScheme != null)
+                return false;
+        } else if (!subjectScheme.equals(other.subjectScheme))
+            return false;
+        if (value == null) {
+            if (other.value != null)
+                return false;
+        } else if (!value.equals(other.value))
+            return false;
+        if (valueURI == null) {
+            if (other.valueURI != null)
+                return false;
+        } else if (!valueURI.equals(other.valueURI))
+            return false;
+        return true;
+    }
 }

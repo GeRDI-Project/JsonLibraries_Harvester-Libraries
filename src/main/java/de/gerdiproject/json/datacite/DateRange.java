@@ -172,4 +172,45 @@ public class DateRange extends AbstractDate
     {
         this.until = stringToInstant(stringValue);
     }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((since == null) ? 0 : since.hashCode());
+        result = prime * result + ((until == null) ? 0 : until.hashCode());
+        return result;
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (!(obj instanceof DateRange))
+            return false;
+        DateRange other = (DateRange) obj;
+        if (since == null) {
+            if (other.since != null)
+                return false;
+        } else if (!since.equals(other.since))
+            return false;
+        if (until == null) {
+            if (other.until != null)
+                return false;
+        } else if (!until.equals(other.until))
+            return false;
+        return true;
+    }
 }

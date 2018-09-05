@@ -187,4 +187,57 @@ public abstract class AbstractPerson
     {
         this.affiliations = affiliations;
     }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((affiliations == null) ? 0 : affiliations.hashCode());
+        result = prime * result + ((familyName == null) ? 0 : familyName.hashCode());
+        result = prime * result + ((givenName == null) ? 0 : givenName.hashCode());
+        result = prime * result + ((nameIdentifiers == null) ? 0 : nameIdentifiers.hashCode());
+        return result;
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof AbstractPerson))
+            return false;
+        AbstractPerson other = (AbstractPerson) obj;
+        if (affiliations == null) {
+            if (other.affiliations != null)
+                return false;
+        } else if (!affiliations.equals(other.affiliations))
+            return false;
+        if (familyName == null) {
+            if (other.familyName != null)
+                return false;
+        } else if (!familyName.equals(other.familyName))
+            return false;
+        if (givenName == null) {
+            if (other.givenName != null)
+                return false;
+        } else if (!givenName.equals(other.givenName))
+            return false;
+        if (nameIdentifiers == null) {
+            if (other.nameIdentifiers != null)
+                return false;
+        } else if (!nameIdentifiers.equals(other.nameIdentifiers))
+            return false;
+        return true;
+    }
 }

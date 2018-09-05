@@ -100,4 +100,42 @@ public class Contributor extends AbstractPerson
     {
         this.contributorName = name;
     }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((contributorName == null) ? 0 : contributorName.hashCode());
+        result = prime * result + ((contributorType == null) ? 0 : contributorType.hashCode());
+        return result;
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (!super.equals(obj))
+            return false;
+        if (!(obj instanceof Contributor))
+            return false;
+        Contributor other = (Contributor) obj;
+        if (contributorName == null) {
+            if (other.contributorName != null)
+                return false;
+        } else if (!contributorName.equals(other.contributorName))
+            return false;
+        if (contributorType != other.contributorType)
+            return false;
+        return true;
+    }
 }

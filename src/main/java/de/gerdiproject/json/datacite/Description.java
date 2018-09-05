@@ -1,5 +1,5 @@
 /**
- * Copyright © 2017 Robin Weiss, Fidan Limani (http://www.gerdi-project.de)
+wwwwwww * Copyright © 2017 Robin Weiss, Fidan Limani (http://www.gerdi-project.de)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -148,5 +148,47 @@ public class Description implements ICleanable
     public void clean()
     {
         value = StringCleaner.clean(value);
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((descriptionType == null) ? 0 : descriptionType.hashCode());
+        result = prime * result + ((lang == null) ? 0 : lang.hashCode());
+        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        return result;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof Description))
+            return false;
+        Description other = (Description) obj;
+        if (descriptionType != other.descriptionType)
+            return false;
+        if (lang == null) {
+            if (other.lang != null)
+                return false;
+        } else if (!lang.equals(other.lang))
+            return false;
+        if (value == null) {
+            if (other.value != null)
+                return false;
+        } else if (!value.equals(other.value))
+            return false;
+        return true;
     }
 }

@@ -153,4 +153,57 @@ public class FundingReference
     {
         this.awardTitle = awardTitle;
     }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((awardNumber == null) ? 0 : awardNumber.hashCode());
+        result = prime * result + ((awardTitle == null) ? 0 : awardTitle.hashCode());
+        result = prime * result + ((funderIdentifier == null) ? 0 : funderIdentifier.hashCode());
+        result = prime * result + ((funderName == null) ? 0 : funderName.hashCode());
+        return result;
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof FundingReference))
+            return false;
+        FundingReference other = (FundingReference) obj;
+        if (awardNumber == null) {
+            if (other.awardNumber != null)
+                return false;
+        } else if (!awardNumber.equals(other.awardNumber))
+            return false;
+        if (awardTitle == null) {
+            if (other.awardTitle != null)
+                return false;
+        } else if (!awardTitle.equals(other.awardTitle))
+            return false;
+        if (funderIdentifier == null) {
+            if (other.funderIdentifier != null)
+                return false;
+        } else if (!funderIdentifier.equals(other.funderIdentifier))
+            return false;
+        if (funderName == null) {
+            if (other.funderName != null)
+                return false;
+        } else if (!funderName.equals(other.funderName))
+            return false;
+        return true;
+    }
 }

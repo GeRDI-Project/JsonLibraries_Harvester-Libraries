@@ -124,4 +124,51 @@ public class NameIdentifier
     {
         this.schemeURI = schemeURI;
     }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((nameIdentifierScheme == null) ? 0 : nameIdentifierScheme.hashCode());
+        result = prime * result + ((schemeURI == null) ? 0 : schemeURI.hashCode());
+        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        return result;
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof NameIdentifier))
+            return false;
+        NameIdentifier other = (NameIdentifier) obj;
+        if (nameIdentifierScheme == null) {
+            if (other.nameIdentifierScheme != null)
+                return false;
+        } else if (!nameIdentifierScheme.equals(other.nameIdentifierScheme))
+            return false;
+        if (schemeURI == null) {
+            if (other.schemeURI != null)
+                return false;
+        } else if (!schemeURI.equals(other.schemeURI))
+            return false;
+        if (value == null) {
+            if (other.value != null)
+                return false;
+        } else if (!value.equals(other.value))
+            return false;
+        return true;
+    }
 }

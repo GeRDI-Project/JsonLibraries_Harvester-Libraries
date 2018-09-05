@@ -136,4 +136,45 @@ public class GeoJson implements ICleanable
             }
         }
     }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((coordinates == null) ? 0 : coordinates.hashCode());
+        result = prime * result + ((type == null) ? 0 : type.hashCode());
+        return result;
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof GeoJson))
+            return false;
+        GeoJson other = (GeoJson) obj;
+        if (coordinates == null) {
+            if (other.coordinates != null)
+                return false;
+        } else if (!coordinates.equals(other.coordinates))
+            return false;
+        if (type == null) {
+            if (other.type != null)
+                return false;
+        } else if (!type.equals(other.type))
+            return false;
+        return true;
+    }
 }

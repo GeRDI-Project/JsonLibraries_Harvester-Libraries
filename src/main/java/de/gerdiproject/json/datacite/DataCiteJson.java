@@ -793,10 +793,9 @@ public class DataCiteJson implements IDocument, ICleanable
         if (creators != null) {
             int i = creators.size();
 
-            while (i-- != 0) {
+            while (i-- != 0)
                 if (creators.get(i) == null)
                     creators.remove(i);
-            }
 
             if (creators.isEmpty())
                 creators = null;
@@ -837,10 +836,9 @@ public class DataCiteJson implements IDocument, ICleanable
         if (contributors != null) {
             int i = contributors.size();
 
-            while (i-- != 0) {
+            while (i-- != 0)
                 if (contributors.get(i) == null)
                     contributors.remove(i);
-            }
 
             if (contributors.isEmpty())
                 contributors = null;
@@ -849,10 +847,9 @@ public class DataCiteJson implements IDocument, ICleanable
         if (alternateIdentifiers != null) {
             int i = alternateIdentifiers.size();
 
-            while (i-- != 0) {
+            while (i-- != 0)
                 if (alternateIdentifiers.get(i) == null)
                     alternateIdentifiers.remove(i);
-            }
 
             if (alternateIdentifiers.isEmpty())
                 alternateIdentifiers = null;
@@ -861,10 +858,9 @@ public class DataCiteJson implements IDocument, ICleanable
         if (relatedIdentifiers != null) {
             int i = relatedIdentifiers.size();
 
-            while (i-- != 0) {
+            while (i-- != 0)
                 if (relatedIdentifiers.get(i) == null)
                     relatedIdentifiers.remove(i);
-            }
 
             if (relatedIdentifiers.isEmpty())
                 relatedIdentifiers = null;
@@ -873,10 +869,9 @@ public class DataCiteJson implements IDocument, ICleanable
         if (sizes != null) {
             int i = sizes.size();
 
-            while (i-- != 0) {
+            while (i-- != 0)
                 if (sizes.get(i) == null)
                     sizes.remove(i);
-            }
 
             if (sizes.isEmpty())
                 sizes = null;
@@ -885,10 +880,9 @@ public class DataCiteJson implements IDocument, ICleanable
         if (formats != null) {
             int i = formats.size();
 
-            while (i-- != 0) {
+            while (i-- != 0)
                 if (formats.get(i) == null)
                     formats.remove(i);
-            }
 
             if (formats.isEmpty())
                 formats = null;
@@ -929,10 +923,9 @@ public class DataCiteJson implements IDocument, ICleanable
         if (fundingReferences != null) {
             int i = fundingReferences.size();
 
-            while (i-- != 0) {
+            while (i-- != 0)
                 if (fundingReferences.get(i) == null)
                     fundingReferences.remove(i);
-            }
 
             if (fundingReferences.isEmpty())
                 fundingReferences = null;
@@ -941,10 +934,9 @@ public class DataCiteJson implements IDocument, ICleanable
         if (webLinks != null) {
             int i = webLinks.size();
 
-            while (i-- != 0) {
+            while (i-- != 0)
                 if (webLinks.get(i) == null)
                     webLinks.remove(i);
-            }
 
             if (webLinks.isEmpty())
                 webLinks = null;
@@ -953,10 +945,9 @@ public class DataCiteJson implements IDocument, ICleanable
         if (researchDataList != null) {
             int i = researchDataList.size();
 
-            while (i-- != 0) {
+            while (i-- != 0)
                 if (researchDataList.get(i) == null)
                     researchDataList.remove(i);
-            }
 
             if (researchDataList.isEmpty())
                 researchDataList = null;
@@ -965,10 +956,9 @@ public class DataCiteJson implements IDocument, ICleanable
         if (researchDisciplines != null) {
             int i = researchDisciplines.size();
 
-            while (i-- != 0) {
+            while (i-- != 0)
                 if (researchDisciplines.get(i) == null)
                     researchDisciplines.remove(i);
-            }
 
             if (researchDisciplines.isEmpty())
                 researchDisciplines = null;
@@ -1016,5 +1006,169 @@ public class DataCiteJson implements IDocument, ICleanable
             if (geoLocations.isEmpty())
                 geoLocations = null;
         }
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((alternateIdentifiers == null) ? 0 : alternateIdentifiers.hashCode());
+        result = prime * result + ((contributors == null) ? 0 : contributors.hashCode());
+        result = prime * result + ((creators == null) ? 0 : creators.hashCode());
+        result = prime * result + ((dates == null) ? 0 : dates.hashCode());
+        result = prime * result + ((descriptions == null) ? 0 : descriptions.hashCode());
+        result = prime * result + ((formats == null) ? 0 : formats.hashCode());
+        result = prime * result + ((fundingReferences == null) ? 0 : fundingReferences.hashCode());
+        result = prime * result + ((geoLocations == null) ? 0 : geoLocations.hashCode());
+        result = prime * result + ((identifier == null) ? 0 : identifier.hashCode());
+        result = prime * result + ((language == null) ? 0 : language.hashCode());
+        result = prime * result + publicationYear;
+        result = prime * result + ((publisher == null) ? 0 : publisher.hashCode());
+        result = prime * result + ((relatedIdentifiers == null) ? 0 : relatedIdentifiers.hashCode());
+        result = prime * result + ((repositoryIdentifier == null) ? 0 : repositoryIdentifier.hashCode());
+        result = prime * result + ((researchDataList == null) ? 0 : researchDataList.hashCode());
+        result = prime * result + ((researchDisciplines == null) ? 0 : researchDisciplines.hashCode());
+        result = prime * result + ((resourceType == null) ? 0 : resourceType.hashCode());
+        result = prime * result + ((rightsList == null) ? 0 : rightsList.hashCode());
+        result = prime * result + ((sizes == null) ? 0 : sizes.hashCode());
+        result = prime * result + ((subjects == null) ? 0 : subjects.hashCode());
+        result = prime * result + ((titles == null) ? 0 : titles.hashCode());
+        result = prime * result + ((version == null) ? 0 : version.hashCode());
+        result = prime * result + ((webLinks == null) ? 0 : webLinks.hashCode());
+        return result;
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof DataCiteJson))
+            return false;
+        DataCiteJson other = (DataCiteJson) obj;
+        if (alternateIdentifiers == null) {
+            if (other.alternateIdentifiers != null)
+                return false;
+        } else if (!alternateIdentifiers.equals(other.alternateIdentifiers))
+            return false;
+        if (contributors == null) {
+            if (other.contributors != null)
+                return false;
+        } else if (!contributors.equals(other.contributors))
+            return false;
+        if (creators == null) {
+            if (other.creators != null)
+                return false;
+        } else if (!creators.equals(other.creators))
+            return false;
+        if (dates == null) {
+            if (other.dates != null)
+                return false;
+        } else if (!dates.equals(other.dates))
+            return false;
+        if (descriptions == null) {
+            if (other.descriptions != null)
+                return false;
+        } else if (!descriptions.equals(other.descriptions))
+            return false;
+        if (formats == null) {
+            if (other.formats != null)
+                return false;
+        } else if (!formats.equals(other.formats))
+            return false;
+        if (fundingReferences == null) {
+            if (other.fundingReferences != null)
+                return false;
+        } else if (!fundingReferences.equals(other.fundingReferences))
+            return false;
+        if (geoLocations == null) {
+            if (other.geoLocations != null)
+                return false;
+        } else if (!geoLocations.equals(other.geoLocations))
+            return false;
+        if (identifier == null) {
+            if (other.identifier != null)
+                return false;
+        } else if (!identifier.equals(other.identifier))
+            return false;
+        if (language == null) {
+            if (other.language != null)
+                return false;
+        } else if (!language.equals(other.language))
+            return false;
+        if (publicationYear != other.publicationYear)
+            return false;
+        if (publisher == null) {
+            if (other.publisher != null)
+                return false;
+        } else if (!publisher.equals(other.publisher))
+            return false;
+        if (relatedIdentifiers == null) {
+            if (other.relatedIdentifiers != null)
+                return false;
+        } else if (!relatedIdentifiers.equals(other.relatedIdentifiers))
+            return false;
+        if (repositoryIdentifier == null) {
+            if (other.repositoryIdentifier != null)
+                return false;
+        } else if (!repositoryIdentifier.equals(other.repositoryIdentifier))
+            return false;
+        if (researchDataList == null) {
+            if (other.researchDataList != null)
+                return false;
+        } else if (!researchDataList.equals(other.researchDataList))
+            return false;
+        if (researchDisciplines == null) {
+            if (other.researchDisciplines != null)
+                return false;
+        } else if (!researchDisciplines.equals(other.researchDisciplines))
+            return false;
+        if (resourceType == null) {
+            if (other.resourceType != null)
+                return false;
+        } else if (!resourceType.equals(other.resourceType))
+            return false;
+        if (rightsList == null) {
+            if (other.rightsList != null)
+                return false;
+        } else if (!rightsList.equals(other.rightsList))
+            return false;
+        if (sizes == null) {
+            if (other.sizes != null)
+                return false;
+        } else if (!sizes.equals(other.sizes))
+            return false;
+        if (subjects == null) {
+            if (other.subjects != null)
+                return false;
+        } else if (!subjects.equals(other.subjects))
+            return false;
+        if (titles == null) {
+            if (other.titles != null)
+                return false;
+        } else if (!titles.equals(other.titles))
+            return false;
+        if (version == null) {
+            if (other.version != null)
+                return false;
+        } else if (!version.equals(other.version))
+            return false;
+        if (webLinks == null) {
+            if (other.webLinks != null)
+                return false;
+        } else if (!webLinks.equals(other.webLinks))
+            return false;
+        return true;
     }
 }

@@ -96,4 +96,45 @@ public class AlternateIdentifier
     {
         this.alternateIdentifierType = type;
     }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((alternateIdentifierType == null) ? 0 : alternateIdentifierType.hashCode());
+        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        return result;
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof AlternateIdentifier))
+            return false;
+        AlternateIdentifier other = (AlternateIdentifier) obj;
+        if (alternateIdentifierType == null) {
+            if (other.alternateIdentifierType != null)
+                return false;
+        } else if (!alternateIdentifierType.equals(other.alternateIdentifierType))
+            return false;
+        if (value == null) {
+            if (other.value != null)
+                return false;
+        } else if (!value.equals(other.value))
+            return false;
+        return true;
+    }
 }

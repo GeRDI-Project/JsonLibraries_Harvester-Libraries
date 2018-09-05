@@ -215,4 +215,55 @@ public class GeoLocation implements ICleanable
     {
         return geoLocationBox != null || geoLocationPolygons != null && !geoLocationPolygons.isEmpty() || geoLocationPoint != null;
     }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((geoLocationBox == null) ? 0 : geoLocationBox.hashCode());
+        result = prime * result + ((geoLocationPlace == null) ? 0 : geoLocationPlace.hashCode());
+        result = prime * result + ((geoLocationPoint == null) ? 0 : geoLocationPoint.hashCode());
+        result = prime * result + ((geoLocationPolygons == null) ? 0 : geoLocationPolygons.hashCode());
+        return result;
+    }
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof GeoLocation))
+            return false;
+        GeoLocation other = (GeoLocation) obj;
+        if (geoLocationBox == null) {
+            if (other.geoLocationBox != null)
+                return false;
+        } else if (!geoLocationBox.equals(other.geoLocationBox))
+            return false;
+        if (geoLocationPlace == null) {
+            if (other.geoLocationPlace != null)
+                return false;
+        } else if (!geoLocationPlace.equals(other.geoLocationPlace))
+            return false;
+        if (geoLocationPoint == null) {
+            if (other.geoLocationPoint != null)
+                return false;
+        } else if (!geoLocationPoint.equals(other.geoLocationPoint))
+            return false;
+        if (geoLocationPolygons == null) {
+            if (other.geoLocationPolygons != null)
+                return false;
+        } else if (!geoLocationPolygons.equals(other.geoLocationPolygons))
+            return false;
+        return true;
+    }
 }

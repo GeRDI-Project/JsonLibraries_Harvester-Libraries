@@ -140,4 +140,57 @@ public class ResearchData
     {
         this.researchDataType = type;
     }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((researchDataIdentifier == null) ? 0 : researchDataIdentifier.hashCode());
+        result = prime * result + ((researchDataLabel == null) ? 0 : researchDataLabel.hashCode());
+        result = prime * result + ((researchDataType == null) ? 0 : researchDataType.hashCode());
+        result = prime * result + ((researchDataURL == null) ? 0 : researchDataURL.hashCode());
+        return result;
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof ResearchData))
+            return false;
+        ResearchData other = (ResearchData) obj;
+        if (researchDataIdentifier == null) {
+            if (other.researchDataIdentifier != null)
+                return false;
+        } else if (!researchDataIdentifier.equals(other.researchDataIdentifier))
+            return false;
+        if (researchDataLabel == null) {
+            if (other.researchDataLabel != null)
+                return false;
+        } else if (!researchDataLabel.equals(other.researchDataLabel))
+            return false;
+        if (researchDataType == null) {
+            if (other.researchDataType != null)
+                return false;
+        } else if (!researchDataType.equals(other.researchDataType))
+            return false;
+        if (researchDataURL == null) {
+            if (other.researchDataURL != null)
+                return false;
+        } else if (!researchDataURL.equals(other.researchDataURL))
+            return false;
+        return true;
+    }
 }

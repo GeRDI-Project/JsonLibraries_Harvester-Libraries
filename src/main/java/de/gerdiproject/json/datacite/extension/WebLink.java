@@ -110,4 +110,48 @@ public class WebLink
     {
         this.webLinkType = type;
     }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((webLinkName == null) ? 0 : webLinkName.hashCode());
+        result = prime * result + ((webLinkType == null) ? 0 : webLinkType.hashCode());
+        result = prime * result + ((webLinkURI == null) ? 0 : webLinkURI.hashCode());
+        return result;
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof WebLink))
+            return false;
+        WebLink other = (WebLink) obj;
+        if (webLinkName == null) {
+            if (other.webLinkName != null)
+                return false;
+        } else if (!webLinkName.equals(other.webLinkName))
+            return false;
+        if (webLinkType != other.webLinkType)
+            return false;
+        if (webLinkURI == null) {
+            if (other.webLinkURI != null)
+                return false;
+        } else if (!webLinkURI.equals(other.webLinkURI))
+            return false;
+        return true;
+    }
 }
