@@ -128,18 +128,24 @@ public class FunderIdentifier
     {
         if (this == obj)
             return true;
+
         if (obj == null)
             return false;
+
         if (!(obj instanceof FunderIdentifier))
             return false;
+
         FunderIdentifier other = (FunderIdentifier) obj;
+
         if (funderIdentifierType != other.funderIdentifierType)
             return false;
+
         if (value == null) {
             if (other.value != null)
                 return false;
         } else if (!value.equals(other.value))
             return false;
+
         return true;
     }
 }

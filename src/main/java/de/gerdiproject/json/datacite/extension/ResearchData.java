@@ -166,31 +166,39 @@ public class ResearchData
     {
         if (this == obj)
             return true;
+
         if (obj == null)
             return false;
+
         if (!(obj instanceof ResearchData))
             return false;
+
         ResearchData other = (ResearchData) obj;
+
         if (researchDataIdentifier == null) {
             if (other.researchDataIdentifier != null)
                 return false;
         } else if (!researchDataIdentifier.equals(other.researchDataIdentifier))
             return false;
+
         if (researchDataLabel == null) {
             if (other.researchDataLabel != null)
                 return false;
         } else if (!researchDataLabel.equals(other.researchDataLabel))
             return false;
+
         if (researchDataType == null) {
             if (other.researchDataType != null)
                 return false;
         } else if (!researchDataType.equals(other.researchDataType))
             return false;
+
         if (researchDataURL == null) {
             if (other.researchDataURL != null)
                 return false;
         } else if (!researchDataURL.equals(other.researchDataURL))
             return false;
+
         return true;
     }
 }

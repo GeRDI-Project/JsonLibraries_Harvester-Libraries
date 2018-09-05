@@ -135,23 +135,30 @@ public class WebLink
     {
         if (this == obj)
             return true;
+
         if (obj == null)
             return false;
+
         if (!(obj instanceof WebLink))
             return false;
+
         WebLink other = (WebLink) obj;
+
         if (webLinkName == null) {
             if (other.webLinkName != null)
                 return false;
         } else if (!webLinkName.equals(other.webLinkName))
             return false;
+
         if (webLinkType != other.webLinkType)
             return false;
+
         if (webLinkURI == null) {
             if (other.webLinkURI != null)
                 return false;
         } else if (!webLinkURI.equals(other.webLinkURI))
             return false;
+
         return true;
     }
 }

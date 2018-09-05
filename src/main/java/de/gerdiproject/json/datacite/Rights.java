@@ -164,26 +164,33 @@ public class Rights implements ICleanable
     {
         if (this == obj)
             return true;
+
         if (obj == null)
             return false;
+
         if (!(obj instanceof Rights))
             return false;
+
         Rights other = (Rights) obj;
+
         if (lang == null) {
             if (other.lang != null)
                 return false;
         } else if (!lang.equals(other.lang))
             return false;
+
         if (rightsURI == null) {
             if (other.rightsURI != null)
                 return false;
         } else if (!rightsURI.equals(other.rightsURI))
             return false;
+
         if (value == null) {
             if (other.value != null)
                 return false;
         } else if (!value.equals(other.value))
             return false;
+
         return true;
     }
 }

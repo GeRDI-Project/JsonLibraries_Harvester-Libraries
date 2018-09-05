@@ -132,16 +132,21 @@ public class Date extends AbstractDate
     {
         if (this == obj)
             return true;
+
         if (!super.equals(obj))
             return false;
+
         if (!(obj instanceof Date))
             return false;
+
         Date other = (Date) obj;
+
         if (value == null) {
             if (other.value != null)
                 return false;
         } else if (!value.equals(other.value))
             return false;
+
         return true;
     }
 }

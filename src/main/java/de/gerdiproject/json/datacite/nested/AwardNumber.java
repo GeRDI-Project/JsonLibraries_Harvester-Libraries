@@ -128,21 +128,27 @@ public class AwardNumber
     {
         if (this == obj)
             return true;
+
         if (obj == null)
             return false;
+
         if (!(obj instanceof AwardNumber))
             return false;
+
         AwardNumber other = (AwardNumber) obj;
+
         if (awardURI == null) {
             if (other.awardURI != null)
                 return false;
         } else if (!awardURI.equals(other.awardURI))
             return false;
+
         if (value == null) {
             if (other.value != null)
                 return false;
         } else if (!value.equals(other.value))
             return false;
+
         return true;
     }
 }

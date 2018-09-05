@@ -160,21 +160,27 @@ public class GeoJson implements ICleanable
     {
         if (this == obj)
             return true;
+
         if (obj == null)
             return false;
+
         if (!(obj instanceof GeoJson))
             return false;
+
         GeoJson other = (GeoJson) obj;
+
         if (coordinates == null) {
             if (other.coordinates != null)
                 return false;
         } else if (!coordinates.equals(other.coordinates))
             return false;
+
         if (type == null) {
             if (other.type != null)
                 return false;
         } else if (!type.equals(other.type))
             return false;
+
         return true;
     }
 }

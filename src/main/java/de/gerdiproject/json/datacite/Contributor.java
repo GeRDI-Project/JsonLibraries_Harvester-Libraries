@@ -124,18 +124,24 @@ public class Contributor extends AbstractPerson
     {
         if (this == obj)
             return true;
+
         if (!super.equals(obj))
             return false;
+
         if (!(obj instanceof Contributor))
             return false;
+
         Contributor other = (Contributor) obj;
+
         if (contributorName == null) {
             if (other.contributorName != null)
                 return false;
         } else if (!contributorName.equals(other.contributorName))
             return false;
+
         if (contributorType != other.contributorType)
             return false;
+
         return true;
     }
 }

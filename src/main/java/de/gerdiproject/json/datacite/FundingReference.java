@@ -179,31 +179,39 @@ public class FundingReference
     {
         if (this == obj)
             return true;
+
         if (obj == null)
             return false;
+
         if (!(obj instanceof FundingReference))
             return false;
+
         FundingReference other = (FundingReference) obj;
+
         if (awardNumber == null) {
             if (other.awardNumber != null)
                 return false;
         } else if (!awardNumber.equals(other.awardNumber))
             return false;
+
         if (awardTitle == null) {
             if (other.awardTitle != null)
                 return false;
         } else if (!awardTitle.equals(other.awardTitle))
             return false;
+
         if (funderIdentifier == null) {
             if (other.funderIdentifier != null)
                 return false;
         } else if (!funderIdentifier.equals(other.funderIdentifier))
             return false;
+
         if (funderName == null) {
             if (other.funderName != null)
                 return false;
         } else if (!funderName.equals(other.funderName))
             return false;
+
         return true;
     }
 }

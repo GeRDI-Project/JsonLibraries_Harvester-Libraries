@@ -213,31 +213,39 @@ public abstract class AbstractPerson
     {
         if (this == obj)
             return true;
+
         if (obj == null)
             return false;
+
         if (!(obj instanceof AbstractPerson))
             return false;
+
         AbstractPerson other = (AbstractPerson) obj;
+
         if (affiliations == null) {
             if (other.affiliations != null)
                 return false;
         } else if (!affiliations.equals(other.affiliations))
             return false;
+
         if (familyName == null) {
             if (other.familyName != null)
                 return false;
         } else if (!familyName.equals(other.familyName))
             return false;
+
         if (givenName == null) {
             if (other.givenName != null)
                 return false;
         } else if (!givenName.equals(other.givenName))
             return false;
+
         if (nameIdentifiers == null) {
             if (other.nameIdentifiers != null)
                 return false;
         } else if (!nameIdentifiers.equals(other.nameIdentifiers))
             return false;
+
         return true;
     }
 }

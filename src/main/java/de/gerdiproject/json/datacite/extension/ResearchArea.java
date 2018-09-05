@@ -103,21 +103,27 @@ public class ResearchArea extends AbstractResearch
     {
         if (this == obj)
             return true;
+
         if (!super.equals(obj))
             return false;
+
         if (!(obj instanceof ResearchArea))
             return false;
+
         ResearchArea other = (ResearchArea) obj;
+
         if (category == null) {
             if (other.category != null)
                 return false;
         } else if (!category.equals(other.category))
             return false;
+
         if (name == null) {
             if (other.name != null)
                 return false;
         } else if (!name.equals(other.name))
             return false;
+
         return true;
     }
 }

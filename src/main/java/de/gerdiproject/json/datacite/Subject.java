@@ -215,36 +215,45 @@ public class Subject implements ICleanable
     {
         if (this == obj)
             return true;
+
         if (obj == null)
             return false;
+
         if (!(obj instanceof Subject))
             return false;
+
         Subject other = (Subject) obj;
+
         if (lang == null) {
             if (other.lang != null)
                 return false;
         } else if (!lang.equals(other.lang))
             return false;
+
         if (schemeURI == null) {
             if (other.schemeURI != null)
                 return false;
         } else if (!schemeURI.equals(other.schemeURI))
             return false;
+
         if (subjectScheme == null) {
             if (other.subjectScheme != null)
                 return false;
         } else if (!subjectScheme.equals(other.subjectScheme))
             return false;
+
         if (value == null) {
             if (other.value != null)
                 return false;
         } else if (!value.equals(other.value))
             return false;
+
         if (valueURI == null) {
             if (other.valueURI != null)
                 return false;
         } else if (!valueURI.equals(other.valueURI))
             return false;
+
         return true;
     }
 }

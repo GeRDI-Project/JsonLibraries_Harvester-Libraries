@@ -115,21 +115,27 @@ public class ResearchDiscipline extends AbstractResearch
     {
         if (this == obj)
             return true;
+
         if (!super.equals(obj))
             return false;
+
         if (!(obj instanceof ResearchDiscipline))
             return false;
+
         ResearchDiscipline other = (ResearchDiscipline) obj;
+
         if (area == null) {
             if (other.area != null)
                 return false;
         } else if (!area.equals(other.area))
             return false;
+
         if (name == null) {
             if (other.name != null)
                 return false;
         } else if (!name.equals(other.name))
             return false;
+
         return true;
     }
 }

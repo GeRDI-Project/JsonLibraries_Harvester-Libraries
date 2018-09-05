@@ -101,13 +101,18 @@ public abstract class AbstractResearch
     {
         if (this == obj)
             return true;
+
         if (obj == null)
             return false;
+
         if (!(obj instanceof AbstractResearch))
             return false;
+
         AbstractResearch other = (AbstractResearch) obj;
+
         if (rbnr != other.rbnr)
             return false;
+
         return true;
     }
 }

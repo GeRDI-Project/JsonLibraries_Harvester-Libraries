@@ -228,18 +228,24 @@ public abstract class AbstractDate
     {
         if (this == obj)
             return true;
+
         if (obj == null)
             return false;
+
         if (!(obj instanceof AbstractDate))
             return false;
+
         AbstractDate other = (AbstractDate) obj;
+
         if (dateInformation == null) {
             if (other.dateInformation != null)
                 return false;
         } else if (!dateInformation.equals(other.dateInformation))
             return false;
+
         if (dateType != other.dateType)
             return false;
+
         return true;
     }
 }

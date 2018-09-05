@@ -149,26 +149,33 @@ public class NameIdentifier
     {
         if (this == obj)
             return true;
+
         if (obj == null)
             return false;
+
         if (!(obj instanceof NameIdentifier))
             return false;
+
         NameIdentifier other = (NameIdentifier) obj;
+
         if (nameIdentifierScheme == null) {
             if (other.nameIdentifierScheme != null)
                 return false;
         } else if (!nameIdentifierScheme.equals(other.nameIdentifierScheme))
             return false;
+
         if (schemeURI == null) {
             if (other.schemeURI != null)
                 return false;
         } else if (!schemeURI.equals(other.schemeURI))
             return false;
+
         if (value == null) {
             if (other.value != null)
                 return false;
         } else if (!value.equals(other.value))
             return false;
+
         return true;
     }
 }

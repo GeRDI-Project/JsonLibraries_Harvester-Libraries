@@ -196,21 +196,27 @@ public class DateRange extends AbstractDate
     {
         if (this == obj)
             return true;
+
         if (!super.equals(obj))
             return false;
+
         if (!(obj instanceof DateRange))
             return false;
+
         DateRange other = (DateRange) obj;
+
         if (since == null) {
             if (other.since != null)
                 return false;
         } else if (!since.equals(other.since))
             return false;
+
         if (until == null) {
             if (other.until != null)
                 return false;
         } else if (!until.equals(other.until))
             return false;
+
         return true;
     }
 }

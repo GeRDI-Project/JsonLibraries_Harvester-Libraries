@@ -128,18 +128,24 @@ public class PersonName
     {
         if (this == obj)
             return true;
+
         if (obj == null)
             return false;
+
         if (!(obj instanceof PersonName))
             return false;
+
         PersonName other = (PersonName) obj;
+
         if (nameType != other.nameType)
             return false;
+
         if (value == null) {
             if (other.value != null)
                 return false;
         } else if (!value.equals(other.value))
             return false;
+
         return true;
     }
 }

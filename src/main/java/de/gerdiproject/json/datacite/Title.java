@@ -157,23 +157,30 @@ public class Title implements ICleanable
     {
         if (this == obj)
             return true;
+
         if (obj == null)
             return false;
+
         if (!(obj instanceof Title))
             return false;
+
         Title other = (Title) obj;
+
         if (lang == null) {
             if (other.lang != null)
                 return false;
         } else if (!lang.equals(other.lang))
             return false;
+
         if (titleType != other.titleType)
             return false;
+
         if (value == null) {
             if (other.value != null)
                 return false;
         } else if (!value.equals(other.value))
             return false;
+
         return true;
     }
 }

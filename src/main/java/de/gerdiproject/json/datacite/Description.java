@@ -172,23 +172,30 @@ public class Description implements ICleanable
     {
         if (this == obj)
             return true;
+
         if (obj == null)
             return false;
+
         if (!(obj instanceof Description))
             return false;
+
         Description other = (Description) obj;
+
         if (descriptionType != other.descriptionType)
             return false;
+
         if (lang == null) {
             if (other.lang != null)
                 return false;
         } else if (!lang.equals(other.lang))
             return false;
+
         if (value == null) {
             if (other.value != null)
                 return false;
         } else if (!value.equals(other.value))
             return false;
+
         return true;
     }
 }

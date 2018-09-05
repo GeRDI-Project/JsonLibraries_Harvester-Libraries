@@ -90,16 +90,21 @@ public class Creator extends AbstractPerson
     {
         if (this == obj)
             return true;
+
         if (!super.equals(obj))
             return false;
+
         if (!(obj instanceof Creator))
             return false;
+
         Creator other = (Creator) obj;
+
         if (creatorName == null) {
             if (other.creatorName != null)
                 return false;
         } else if (!creatorName.equals(other.creatorName))
             return false;
+
         return true;
     }
 }

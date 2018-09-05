@@ -270,37 +270,48 @@ public class RelatedIdentifier
     {
         if (this == obj)
             return true;
+
         if (obj == null)
             return false;
+
         if (!(obj instanceof RelatedIdentifier))
             return false;
+
         RelatedIdentifier other = (RelatedIdentifier) obj;
+
         if (relatedIdentifierType != other.relatedIdentifierType)
             return false;
+
         if (relatedMetadataScheme == null) {
             if (other.relatedMetadataScheme != null)
                 return false;
         } else if (!relatedMetadataScheme.equals(other.relatedMetadataScheme))
             return false;
+
         if (relationType != other.relationType)
             return false;
+
         if (resourceTypeGeneral != other.resourceTypeGeneral)
             return false;
+
         if (schemeType == null) {
             if (other.schemeType != null)
                 return false;
         } else if (!schemeType.equals(other.schemeType))
             return false;
+
         if (schemeURI == null) {
             if (other.schemeURI != null)
                 return false;
         } else if (!schemeURI.equals(other.schemeURI))
             return false;
+
         if (value == null) {
             if (other.value != null)
                 return false;
         } else if (!value.equals(other.value))
             return false;
+
         return true;
     }
 }

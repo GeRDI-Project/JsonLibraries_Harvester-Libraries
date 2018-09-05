@@ -120,21 +120,27 @@ public class AlternateIdentifier
     {
         if (this == obj)
             return true;
+
         if (obj == null)
             return false;
+
         if (!(obj instanceof AlternateIdentifier))
             return false;
+
         AlternateIdentifier other = (AlternateIdentifier) obj;
+
         if (alternateIdentifierType == null) {
             if (other.alternateIdentifierType != null)
                 return false;
         } else if (!alternateIdentifierType.equals(other.alternateIdentifierType))
             return false;
+
         if (value == null) {
             if (other.value != null)
                 return false;
         } else if (!value.equals(other.value))
             return false;
+
         return true;
     }
 }

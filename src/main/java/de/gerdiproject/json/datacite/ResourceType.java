@@ -120,18 +120,24 @@ public class ResourceType
     {
         if (this == obj)
             return true;
+
         if (obj == null)
             return false;
+
         if (!(obj instanceof ResourceType))
             return false;
+
         ResourceType other = (ResourceType) obj;
+
         if (resourceTypeGeneral != other.resourceTypeGeneral)
             return false;
+
         if (value == null) {
             if (other.value != null)
                 return false;
         } else if (!value.equals(other.value))
             return false;
+
         return true;
     }
 }

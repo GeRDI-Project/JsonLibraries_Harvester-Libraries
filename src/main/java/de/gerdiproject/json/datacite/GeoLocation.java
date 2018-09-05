@@ -239,31 +239,39 @@ public class GeoLocation implements ICleanable
     {
         if (this == obj)
             return true;
+
         if (obj == null)
             return false;
+
         if (!(obj instanceof GeoLocation))
             return false;
+
         GeoLocation other = (GeoLocation) obj;
+
         if (geoLocationBox == null) {
             if (other.geoLocationBox != null)
                 return false;
         } else if (!geoLocationBox.equals(other.geoLocationBox))
             return false;
+
         if (geoLocationPlace == null) {
             if (other.geoLocationPlace != null)
                 return false;
         } else if (!geoLocationPlace.equals(other.geoLocationPlace))
             return false;
+
         if (geoLocationPoint == null) {
             if (other.geoLocationPoint != null)
                 return false;
         } else if (!geoLocationPoint.equals(other.geoLocationPoint))
             return false;
+
         if (geoLocationPolygons == null) {
             if (other.geoLocationPolygons != null)
                 return false;
         } else if (!geoLocationPolygons.equals(other.geoLocationPolygons))
             return false;
+
         return true;
     }
 }
