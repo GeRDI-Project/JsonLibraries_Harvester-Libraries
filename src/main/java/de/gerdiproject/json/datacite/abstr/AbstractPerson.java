@@ -15,7 +15,10 @@
  */
 package de.gerdiproject.json.datacite.abstr;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -45,17 +48,17 @@ public abstract class AbstractPerson
     private String familyName;
 
     /**
-     * A unique identifier for an individual or legal entity, according to various schemes.
+     * Unique identifiers for an individual or legal entity, according to various schemes.
      * <br>e.g. Orcid ID
      */
-    private List<NameIdentifier> nameIdentifiers;
+    private Set<NameIdentifier> nameIdentifiers;
 
     /**
-     * The organisational or institutional affiliation of the person.
+     * The organisational or institutional affiliations of the person.
      * <br>e.g. Council of Ricks
      */
     @SerializedName("affiliation")
-    private List<String> affiliations;
+    private Set<String> affiliations;
 
 
     /**
@@ -148,7 +151,7 @@ public abstract class AbstractPerson
      *
      * @return unique identifiers of an individual or legal entity
      */
-    public List<NameIdentifier> getNameIdentifiers()
+    public Set<NameIdentifier> getNameIdentifiers()
     {
         return nameIdentifiers;
     }
@@ -160,9 +163,9 @@ public abstract class AbstractPerson
      *
      * @param nameIdentifiers unique identifiers of an individual or legal entity
      */
-    public void setNameIdentifiers(List<NameIdentifier> nameIdentifiers)
+    public void setNameIdentifiers(NameIdentifier... nameIdentifiers)
     {
-        this.nameIdentifiers = nameIdentifiers;
+        this.nameIdentifiers = new HashSet<>(Arrays.asList(nameIdentifiers));
     }
 
 
@@ -171,7 +174,7 @@ public abstract class AbstractPerson
      *
      * @return the organisational or institutional affiliations of the person
      */
-    public List<String> getAffiliations()
+    public Set<String> getAffiliations()
     {
         return affiliations;
     }
@@ -183,9 +186,9 @@ public abstract class AbstractPerson
      *
      * @param affiliations the organisational or institutional affiliations of the person
      */
-    public void setAffiliations(List<String> affiliations)
+    public void setAffiliations(String... affiliations)
     {
-        this.affiliations = affiliations;
+        this.affiliations = new HashSet<>(Arrays.asList(affiliations));
     }
 
 
