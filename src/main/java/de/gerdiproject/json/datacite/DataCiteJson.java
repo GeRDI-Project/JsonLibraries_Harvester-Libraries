@@ -15,6 +15,7 @@
  */
 package de.gerdiproject.json.datacite;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -63,8 +64,8 @@ public class DataCiteJson implements IDocument, ICleanable
     private Identifier identifier;
 
     /**
-     * The main researchers involved in producing the data, or the authors of
-     * the publication, in priority order.
+     * The main researchers involved in producing the data, or the authors of the
+     * publication. These are sorted by priority (most important as first element)
      */
     private List<Creator> creators;
 
@@ -448,28 +449,31 @@ public class DataCiteJson implements IDocument, ICleanable
 
     }
 
+
     /**
-     * Returns the main researchers involved in producing the data, or the
-     * authors of the publication, in priority order.
+     * Returns the main researchers involved in producing the data, or the authors
+     * of the publication. These are sorted by priority (most important as first element)
      *
      * @return the main researchers and/or the authors of the publication
      */
     public List<Creator> getCreators()
     {
-        return creators;
+        return this.creators;
     }
 
-
     /**
-     * Changes the main researchers involved in producing the data, or the
-     * authors of the publication.
+     * Sets the main researchers involved in producing the data, or the authors
+     * of the publication, sorted by priority (most important as first element).
+     * Duplicate entries are ignored.
      *
-     * @param creators the main researchers and/or the authors of the
-     *            publication
+     * @param creators the main researchers and/or the authors of the publication
      */
-    public void setCreators(List<Creator> creators)
+    public void setCreators(Creator... creators)
     {
-        this.creators = creators;
+        this.creators = new ArrayList<>();
+        for (Creator creator : creators)
+            if (! this.creators.contains(creator))
+                this.creators.add(creator);
     }
 
     /**
