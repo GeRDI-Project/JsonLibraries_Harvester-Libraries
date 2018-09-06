@@ -45,7 +45,7 @@ import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
  * Source:
  * https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  *
- * @author Mathis Neumann, Robin Weiss
+ * @author Mathis Neumann, Robin Weiss, Ingo Thomsen
  */
 public class DataCiteJson implements IDocument, ICleanable
 {
@@ -449,10 +449,10 @@ public class DataCiteJson implements IDocument, ICleanable
 
     }
 
-
     /**
      * Returns the main researchers involved in producing the data, or the authors
-     * of the publication. These are sorted by priority (most important as first element)
+     * of the publication. These are sorted by priority (most important as first
+     * element)
      *
      * @return the main researchers and/or the authors of the publication
      */
@@ -462,8 +462,8 @@ public class DataCiteJson implements IDocument, ICleanable
     }
 
     /**
-     * Sets the main researchers involved in producing the data, or the authors
-     * of the publication, sorted by priority (most important as first element).
+     * Sets the main researchers involved in producing the data, or the authors of
+     * the publication, sorted by priority (most important as first element).
      * Duplicate entries are ignored.
      *
      * @param creators the main researchers and/or the authors of the publication
@@ -471,8 +471,9 @@ public class DataCiteJson implements IDocument, ICleanable
     public void setCreators(Creator... creators)
     {
         this.creators = new ArrayList<>();
+
         for (Creator creator : creators)
-            if (! this.creators.contains(creator))
+            if (!this.creators.contains(creator))
                 this.creators.add(creator);
     }
 
@@ -736,222 +737,153 @@ public class DataCiteJson implements IDocument, ICleanable
     @Override
     public void clean()
     {
-        // remove null entries from lists
+        // remove null entries from (creator) list
         if (creators != null) {
-            int i = creators.size();
-
-            while (i-- != 0)
-                if (creators.get(i) == null)
-                    creators.remove(i);
+            creators.removeAll(null);
 
             if (creators.isEmpty())
                 creators = null;
         }
 
-        if (titles != null) {
-            int i = titles.size();
 
-            while (i-- != 0) {
-                Title title = titles.get(i);
-
-                if (title == null)
-                    titles.remove(i);
-                else
-                    title.clean();
-            }
-
-            if (titles.isEmpty())
-                titles = null;
-        }
-
-        if (subjects != null) {
-            int i = subjects.size();
-
-            while (i-- != 0) {
-                Subject subject = subjects.get(i);
-
-                if (subject == null)
-                    subjects.remove(i);
-                else
-                    subject.clean();
-            }
-
-            if (subjects.isEmpty())
-                subjects = null;
-        }
+        //
+        // remove null entries from sets
+        //
 
         if (contributors != null) {
-            int i = contributors.size();
-
-            while (i-- != 0)
-                if (contributors.get(i) == null)
-                    contributors.remove(i);
+            contributors.remove(null);
 
             if (contributors.isEmpty())
                 contributors = null;
         }
 
         if (alternateIdentifiers != null) {
-            int i = alternateIdentifiers.size();
-
-            while (i-- != 0)
-                if (alternateIdentifiers.get(i) == null)
-                    alternateIdentifiers.remove(i);
+            alternateIdentifiers.remove(null);
 
             if (alternateIdentifiers.isEmpty())
                 alternateIdentifiers = null;
         }
 
         if (relatedIdentifiers != null) {
-            int i = relatedIdentifiers.size();
-
-            while (i-- != 0)
-                if (relatedIdentifiers.get(i) == null)
-                    relatedIdentifiers.remove(i);
+            relatedIdentifiers.remove(null);
 
             if (relatedIdentifiers.isEmpty())
                 relatedIdentifiers = null;
         }
 
         if (sizes != null) {
-            int i = sizes.size();
-
-            while (i-- != 0)
-                if (sizes.get(i) == null)
-                    sizes.remove(i);
+            sizes.remove(null);
 
             if (sizes.isEmpty())
                 sizes = null;
         }
 
         if (formats != null) {
-            int i = formats.size();
-
-            while (i-- != 0)
-                if (formats.get(i) == null)
-                    formats.remove(i);
+            formats.remove(null);
 
             if (formats.isEmpty())
                 formats = null;
         }
 
-        if (rightsList != null) {
-            int i = rightsList.size();
-
-            while (i-- != 0) {
-                Rights rights = rightsList.get(i);
-
-                if (rights == null)
-                    rightsList.remove(i);
-                else
-                    rights.clean();
-            }
-
-            if (rightsList.isEmpty())
-                rightsList = null;
-        }
-
-        if (descriptions != null) {
-            int i = descriptions.size();
-
-            while (i-- != 0) {
-                Description description = descriptions.get(i);
-
-                if (description == null)
-                    descriptions.remove(i);
-                else
-                    description.clean();
-            }
-
-            if (descriptions.isEmpty())
-                descriptions = null;
-        }
-
         if (fundingReferences != null) {
-            int i = fundingReferences.size();
-
-            while (i-- != 0)
-                if (fundingReferences.get(i) == null)
-                    fundingReferences.remove(i);
+            fundingReferences.remove(null);
 
             if (fundingReferences.isEmpty())
                 fundingReferences = null;
         }
 
         if (webLinks != null) {
-            int i = webLinks.size();
-
-            while (i-- != 0)
-                if (webLinks.get(i) == null)
-                    webLinks.remove(i);
+            webLinks.remove(null);
 
             if (webLinks.isEmpty())
                 webLinks = null;
         }
 
         if (researchDataList != null) {
-            int i = researchDataList.size();
-
-            while (i-- != 0)
-                if (researchDataList.get(i) == null)
-                    researchDataList.remove(i);
+            researchDataList.remove(null);
 
             if (researchDataList.isEmpty())
                 researchDataList = null;
         }
 
         if (researchDisciplines != null) {
-            int i = researchDisciplines.size();
-
-            while (i-- != 0)
-                if (researchDisciplines.get(i) == null)
-                    researchDisciplines.remove(i);
+            researchDataList.remove(null);
 
             if (researchDisciplines.isEmpty())
                 researchDisciplines = null;
         }
 
+
+        //
+        // remove null entries from sets and for non-null
+        // entries ensure, that the are clean
+        //
+
+        if (titles != null) {
+            titles.remove(null);
+
+            if (titles.isEmpty())
+                titles = null;
+            else
+                for (Title title : titles)
+                    title.clean();
+        }
+
+        if (subjects != null) {
+            subjects.remove(null);
+
+            if (subjects.isEmpty())
+                subjects = null;
+            else
+                for (Subject subject : subjects)
+                    subject.clean();
+        }
+
+        if (rightsList != null) {
+            rightsList.remove(null);
+
+            if (rightsList.isEmpty())
+                rightsList = null;
+            else
+                for (Rights rights : rightsList)
+                    rights.clean();
+        }
+
+        if (descriptions != null) {
+            descriptions.remove(null);
+
+            if (descriptions.isEmpty())
+                descriptions = null;
+            else
+                for (Description description : descriptions)
+                    description.clean();
+        }
+
+
         if (dates != null) {
-            int i = dates.size();
-
-            while (i-- != 0) {
-                AbstractDate d = dates.get(i);
-
-                // remove non-existing dates and dates with null values
-                if (d == null || d.getValue() == null)
-                    dates.remove(i);
-            }
+            dates.remove(null);
 
             if (dates.isEmpty())
                 dates = null;
+            else
+                for (AbstractDate date : dates)
+                    if (date.getValue() == null)
+                        dates.remove(date);
         }
 
         if (geoLocations != null) {
-            try {
-                int i = geoLocations.size();
-
-                while (i != 0) {
-                    i--;
-                    GeoLocation geoLoc = geoLocations.get(i);
-
-                    // remove null entries
-                    if (geoLoc == null)
-                        geoLocations.remove(i);
-                    else {
-                        // clean geo location
-                        geoLoc.clean();
-
-                        // remove geo location, if it became invalid
-                        if (!geoLoc.isValid())
-                            geoLocations.remove(i);
-                    }
-                }
-            } catch (UnsupportedOperationException e) {
-                LOGGER.error(ERROR_INVALID_GEO_LOCATION_LIST);
-            }
+            geoLocations.remove(null);
 
             if (geoLocations.isEmpty())
                 geoLocations = null;
+            else
+                for (GeoLocation geoLocation : geoLocations) {
+                    geoLocation.clean();
+
+                    // remove invalid geo location
+                    if (!geoLocation.isValid())
+                        geoLocations.remove(geoLocation);
+                }
         }
     }
 
