@@ -776,7 +776,9 @@ public class DataCiteJson implements IDocument, ICleanable
 
         // remove null and invalid entries from geoLocations set
         if (geoLocations != null) {
-            geoLocations.removeIf(geoLocation -> geoLocation == null || !geoLocation.isValid());
+            geoLocations.removeAll(null);
+            geoLocations.forEach(geoLocation -> geoLocation.clean());
+            geoLocations.removeIf(geoLocation -> !geoLocation.isValid());
             if (geoLocations.isEmpty())
                 geoLocations = null;
         }
