@@ -17,6 +17,7 @@ package de.gerdiproject.json.datacite;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -729,160 +730,61 @@ public class DataCiteJson implements IDocument, ICleanable
         this.researchDataList = new HashSet<>(Arrays.asList(files));
     }
 
+    /**
+     * Static helper to remove null values from a collection (e.g. Set or List),
+     * call clean() on each remaining entry if it is {@linkplain ICleanable}}.
+     * Instead of a resulting empty {@linkplain Collection}} null is returned.
+     *
+     * @param set Collection to be freed of null and to be cleaned
+     * @return set Null or a cleaned Collection with at least one element
+     */
+    private static <C extends Collection<?>> C collectionCleaner(C collection)
+    {
+        collection.removeAll(null);
+        collection.forEach(e -> {
+            if (e instanceof ICleanable)
+                ((ICleanable) e).clean();
+        });
+        return collection.isEmpty() ? null : collection;
+    }
+
     @Override
     public void clean()
     {
-        // remove null entries from (creator) list
-        if (creators != null) {
-            creators.removeAll(null);
+        // remove null from and possibly call clean() on Set or List fields
+        contributors = collectionCleaner(contributors);
+        alternateIdentifiers = collectionCleaner(alternateIdentifiers);
+        relatedIdentifiers = collectionCleaner(relatedIdentifiers);
+        sizes = collectionCleaner(sizes);
+        formats = collectionCleaner(formats);
+        fundingReferences = collectionCleaner(fundingReferences);
+        webLinks = collectionCleaner(webLinks);
+        researchDataList = collectionCleaner(researchDataList);
+        researchDisciplines = collectionCleaner(researchDisciplines);
+        titles = collectionCleaner(titles);
+        subjects = collectionCleaner(subjects);
+        rightsList = collectionCleaner(rightsList);
+        descriptions = collectionCleaner(descriptions);
+        creators = collectionCleaner(creators); // this is actually the only List
 
-            if (creators.isEmpty())
-                creators = null;
-        }
-
-
-        //
-        // remove null entries from sets
-        //
-
-        if (contributors != null) {
-            contributors.remove(null);
-
-            if (contributors.isEmpty())
-                contributors = null;
-        }
-
-        if (alternateIdentifiers != null) {
-            alternateIdentifiers.remove(null);
-
-            if (alternateIdentifiers.isEmpty())
-                alternateIdentifiers = null;
-        }
-
-        if (relatedIdentifiers != null) {
-            relatedIdentifiers.remove(null);
-
-            if (relatedIdentifiers.isEmpty())
-                relatedIdentifiers = null;
-        }
-
-        if (sizes != null) {
-            sizes.remove(null);
-
-            if (sizes.isEmpty())
-                sizes = null;
-        }
-
-        if (formats != null) {
-            formats.remove(null);
-
-            if (formats.isEmpty())
-                formats = null;
-        }
-
-        if (fundingReferences != null) {
-            fundingReferences.remove(null);
-
-            if (fundingReferences.isEmpty())
-                fundingReferences = null;
-        }
-
-        if (webLinks != null) {
-            webLinks.remove(null);
-
-            if (webLinks.isEmpty())
-                webLinks = null;
-        }
-
-        if (researchDataList != null) {
-            researchDataList.remove(null);
-
-            if (researchDataList.isEmpty())
-                researchDataList = null;
-        }
-
-        if (researchDisciplines != null) {
-            researchDataList.remove(null);
-
-            if (researchDisciplines.isEmpty())
-                researchDisciplines = null;
-        }
-
-
-        //
-        // remove null entries from sets and for non-null
-        // entries ensure, that the are clean
-        //
-
-        if (titles != null) {
-            titles.remove(null);
-
-            if (titles.isEmpty())
-                titles = null;
-            else
-                for (Title title : titles)
-                    title.clean();
-        }
-
-        if (subjects != null) {
-            subjects.remove(null);
-
-            if (subjects.isEmpty())
-                subjects = null;
-            else
-                for (Subject subject : subjects)
-                    subject.clean();
-        }
-
-        if (rightsList != null) {
-            rightsList.remove(null);
-
-            if (rightsList.isEmpty())
-                rightsList = null;
-            else
-                for (Rights rights : rightsList)
-                    rights.clean();
-        }
-
-        if (descriptions != null) {
-            descriptions.remove(null);
-
-            if (descriptions.isEmpty())
-                descriptions = null;
-            else
-                for (Description description : descriptions)
-                    description.clean();
-        }
-
-
+        // remove null entries from dates set
         if (dates != null) {
-            dates.remove(null);
-
+            dates.removeIf(date -> date == null || date.getValue() == null);
             if (dates.isEmpty())
                 dates = null;
-            else
-                for (AbstractDate date : dates)
-                    if (date.getValue() == null)
-                        dates.remove(date);
         }
 
+        // remove null and invalid entries from geoLocations set
         if (geoLocations != null) {
-            geoLocations.remove(null);
-
+            geoLocations.removeIf(geoLocation -> geoLocation == null || !geoLocation.isValid());
             if (geoLocations.isEmpty())
                 geoLocations = null;
-            else
-                for (GeoLocation geoLocation : geoLocations) {
-                    geoLocation.clean();
-
-                    // remove invalid geo location
-                    if (!geoLocation.isValid())
-                        geoLocations.remove(geoLocation);
-                }
         }
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -916,7 +818,9 @@ public class DataCiteJson implements IDocument, ICleanable
         return result;
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -1043,5 +947,4 @@ public class DataCiteJson implements IDocument, ICleanable
             return false;
         return true;
     }
-
 }
