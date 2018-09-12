@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import de.gerdiproject.harvest.ICleanable;
@@ -740,7 +741,7 @@ public class DataCiteJson implements IDocument, ICleanable
      */
     private static <C extends Collection<?>> C collectionCleaner(C collection)
     {
-        collection.removeAll(null);
+        collection.removeIf(Objects::isNull);
         collection.forEach(e -> {
             if (e instanceof ICleanable)
                 ((ICleanable) e).clean();
@@ -776,7 +777,7 @@ public class DataCiteJson implements IDocument, ICleanable
 
         // remove null and invalid entries from geoLocations set
         if (geoLocations != null) {
-            geoLocations.removeAll(null);
+            geoLocations.removeIf(Objects::isNull);
             geoLocations.forEach(geoLocation -> geoLocation.clean());
             geoLocations.removeIf(geoLocation -> !geoLocation.isValid());
             if (geoLocations.isEmpty())
