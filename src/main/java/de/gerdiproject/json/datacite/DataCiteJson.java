@@ -1,17 +1,12 @@
 /**
  * Copyright © 2017 Robin Weiss, Fidan Limani (http://www.gerdi-project.de)
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by
+ * applicable law or agreed to in writing, software distributed under the
+ * License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS
+ * OF ANY KIND, either express or implied. See the License for the specific
+ * language governing permissions and limitations under the License.
  */
 package de.gerdiproject.json.datacite;
 
@@ -19,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -36,12 +32,8 @@ import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
  * metadata properties chosen for an accurate and consistent identification of a
  * resource for citation. The resource that is being identified can be of any
  * kind, but it is typically a dataset. It may include not only numerical data,
- * but any other research data outputs.
- *
- * The metadata schema is extended by fields that are required by GeRDI
- * features.
- *
- * Source:
+ * but any other research data outputs. The metadata schema is extended by
+ * fields that are required by GeRDI features. Source:
  * https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  *
  * @author Mathis Neumann, Robin Weiss, Ingo Thomsen
@@ -804,6 +796,36 @@ public class DataCiteJson implements IDocument, ICleanable
     }
 
 
+    /**
+     * Static helper to clean a {@linkplain GeoLocation}} Set: Null values are
+     * removed and each geolocation is cleaned - and also removed if thereby
+     * rendered invalid.
+     *
+     * @param geoLocationSet
+     * @return
+     */
+    private static Set<GeoLocation> cleanGeoLocationSet(Set<GeoLocation> geoLocationSet)
+    {
+        if (geoLocationSet == null)
+            return null;
+
+        final Iterator<GeoLocation> iter = geoLocationSet.iterator();
+
+        while (iter.hasNext()) {
+            final GeoLocation geo = iter.next();
+
+            if (geo == null)
+                iter.remove();
+            else {
+                geo.clean();
+
+                if (!geo.isValid())
+                    iter.remove();
+            }
+        }
+
+        return geoLocationSet.isEmpty() ? null : geoLocationSet;
+    }
 
 
     @Override
@@ -834,20 +856,12 @@ public class DataCiteJson implements IDocument, ICleanable
         }
 
         // remove null and invalid entries from geoLocations set
-        if (geoLocations != null) {
-            geoLocations.removeIf(Objects::isNull);
-            geoLocations.forEach(geoLocation -> geoLocation.clean());
-            geoLocations.removeIf(geoLocation -> !geoLocation.isValid());
-
-            if (geoLocations.isEmpty())
-                geoLocations = null;
-        }
+        geoLocations = cleanGeoLocationSet(geoLocations);
     }
 
 
     /*
      * (non-Javadoc)
-     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -884,7 +898,6 @@ public class DataCiteJson implements IDocument, ICleanable
 
     /*
      * (non-Javadoc)
-     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
