@@ -122,9 +122,6 @@ public class Contributor extends AbstractPerson
     @Override
     public boolean equals(Object obj)
     {
-        if (this == obj)
-            return true;
-
         if (!super.equals(obj))
             return false;
 
