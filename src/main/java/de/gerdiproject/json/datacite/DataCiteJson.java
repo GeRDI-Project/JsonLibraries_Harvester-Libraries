@@ -62,7 +62,7 @@ public class DataCiteJson implements IDocument, ICleanable
 
     /**
      * The main researchers involved in producing the data, or the authors of the
-     * publication. These are sorted by priority (most important as first element)
+     * publication, in priority order.
      */
     private List<Creator> creators;
 
@@ -190,6 +190,7 @@ public class DataCiteJson implements IDocument, ICleanable
      */
     private Set<AbstractResearch> researchDisciplines;
 
+
     /**
      * This constructor set the source identifier of the document which allows for
      * persisting it when one of its values change.
@@ -202,6 +203,7 @@ public class DataCiteJson implements IDocument, ICleanable
         this.sourceId = sourceId;
     }
 
+
     /**
      * This constructor does not set a sourceId. As a fallback, a hash code of the
      * harvested document is returned as a source identifier, causing any reference
@@ -212,6 +214,7 @@ public class DataCiteJson implements IDocument, ICleanable
     {
         this.sourceId = null;
     }
+
 
     /**
      * Returns an identifier of the source of the document. If no such identifier
@@ -231,6 +234,7 @@ public class DataCiteJson implements IDocument, ICleanable
             return sourceId;
     }
 
+
     /**
      * Returns a unique identifier of the resource.
      *
@@ -241,6 +245,7 @@ public class DataCiteJson implements IDocument, ICleanable
         return identifier;
     }
 
+
     /**
      * Changes the unique identifier of the resource.
      *
@@ -250,6 +255,7 @@ public class DataCiteJson implements IDocument, ICleanable
     {
         this.identifier = identifier;
     }
+
 
     /**
      * Returns the name of the entity that holds, archives, publishes prints,
@@ -263,6 +269,7 @@ public class DataCiteJson implements IDocument, ICleanable
         return publisher;
     }
 
+
     /**
      * Changes the name of the entity that holds, archives, publishes prints,
      * distributes, releases, issues, or produces the resource
@@ -275,6 +282,7 @@ public class DataCiteJson implements IDocument, ICleanable
         this.publisher = publisher;
     }
 
+
     /**
      * Returns the version number of the resource.
      *
@@ -284,6 +292,7 @@ public class DataCiteJson implements IDocument, ICleanable
     {
         return version;
     }
+
 
     /**
      * Changes the version number of the resource.
@@ -295,6 +304,7 @@ public class DataCiteJson implements IDocument, ICleanable
         this.version = version;
     }
 
+
     /**
      * Returns the primary language of the resource.
      *
@@ -304,6 +314,7 @@ public class DataCiteJson implements IDocument, ICleanable
     {
         return language;
     }
+
 
     /**
      * Changes the primary language of the resource. Allowed values are taken from
@@ -316,6 +327,7 @@ public class DataCiteJson implements IDocument, ICleanable
         this.language = language;
     }
 
+
     /**
      * Returns the year when the data was or will be made publicly available.
      *
@@ -325,6 +337,7 @@ public class DataCiteJson implements IDocument, ICleanable
     {
         return publicationYear;
     }
+
 
     /**
      * Changes the year when the data was or will be made publicly available.
@@ -337,6 +350,7 @@ public class DataCiteJson implements IDocument, ICleanable
         this.publicationYear = publicationYear;
     }
 
+
     /**
      * Returns a description of the resource.
      *
@@ -347,6 +361,7 @@ public class DataCiteJson implements IDocument, ICleanable
         return resourceType;
     }
 
+
     /**
      * Changes the description of the resource.
      *
@@ -356,6 +371,7 @@ public class DataCiteJson implements IDocument, ICleanable
     {
         this.resourceType = resourceType;
     }
+
 
     /**
      * Returns the unique but human readable name of the repository. <br>
@@ -368,6 +384,7 @@ public class DataCiteJson implements IDocument, ICleanable
         return repositoryIdentifier;
     }
 
+
     /**
      * Changes the unique but human readable name of the repository.
      *
@@ -379,6 +396,7 @@ public class DataCiteJson implements IDocument, ICleanable
         this.repositoryIdentifier = repositoryIdentifier;
     }
 
+
     /**
      * Retrieves the list of human readable names of the research disciplines,
      * meaning the topics or domains that this document covers.
@@ -389,6 +407,7 @@ public class DataCiteJson implements IDocument, ICleanable
     {
         return researchDisciplines;
     }
+
 
     /**
      * Changes the list of human readable names of the research disciplines, meaning
@@ -402,6 +421,7 @@ public class DataCiteJson implements IDocument, ICleanable
         this.researchDisciplines = new HashSet<>(Arrays.asList(researchDisciplines));
     }
 
+
     /**
      * Returns unstructured size information about the resource.
      *
@@ -411,6 +431,7 @@ public class DataCiteJson implements IDocument, ICleanable
     {
         return sizes;
     }
+
 
     /**
      * Changes the unstructured size information about the resource. <br>
@@ -423,6 +444,7 @@ public class DataCiteJson implements IDocument, ICleanable
         this.sizes = new HashSet<>(Arrays.asList(sizes));
     }
 
+
     /**
      * Returns technical format of the resource.
      *
@@ -432,6 +454,7 @@ public class DataCiteJson implements IDocument, ICleanable
     {
         return formats;
     }
+
 
     /**
      * Changes technical format of the resource. Use file extension or MIME type
@@ -446,6 +469,7 @@ public class DataCiteJson implements IDocument, ICleanable
 
     }
 
+
     /**
      * Returns the main researchers involved in producing the data, or the authors
      * of the publication. These are sorted by priority (most important as first
@@ -457,6 +481,7 @@ public class DataCiteJson implements IDocument, ICleanable
     {
         return this.creators;
     }
+
 
     /**
      * Sets the main researchers involved in producing the data, or the authors of
@@ -474,6 +499,7 @@ public class DataCiteJson implements IDocument, ICleanable
                 this.creators.add(creator);
     }
 
+
     /**
      * Returns names or titles by which the resource is known.
      *
@@ -484,6 +510,7 @@ public class DataCiteJson implements IDocument, ICleanable
         return this.titles;
     }
 
+
     /**
      * Changes names or titles by which the resource is known.
      *
@@ -493,6 +520,7 @@ public class DataCiteJson implements IDocument, ICleanable
     {
         this.titles = new HashSet<>(Arrays.asList(titles));
     }
+
 
     /**
      * Returns all additional information that does not fit in any of the other
@@ -505,6 +533,7 @@ public class DataCiteJson implements IDocument, ICleanable
         return descriptions;
     }
 
+
     /**
      * Changes all additional information that does not fit in any of the other
      * categories.
@@ -515,6 +544,7 @@ public class DataCiteJson implements IDocument, ICleanable
     {
         this.descriptions = new HashSet<>(Arrays.asList(descriptions));
     }
+
 
     /**
      * Returns subjects, keywords, classification codes, or key phrases describing
@@ -528,6 +558,7 @@ public class DataCiteJson implements IDocument, ICleanable
         return subjects;
     }
 
+
     /**
      * Changes the subjects, keywords, classification codes, and key phrases
      * describing the resource.
@@ -539,6 +570,7 @@ public class DataCiteJson implements IDocument, ICleanable
     {
         this.subjects = new HashSet<>(Arrays.asList(subjects));
     }
+
 
     /**
      * Returns the institutions or persons responsible for collecting, managing,
@@ -552,6 +584,7 @@ public class DataCiteJson implements IDocument, ICleanable
         return contributors;
     }
 
+
     /**
      * Changes the institutions or persons responsible for collecting, managing,
      * distributing, or otherwise contributing to the development of the resource.
@@ -564,6 +597,7 @@ public class DataCiteJson implements IDocument, ICleanable
         this.contributors = new HashSet<>(Arrays.asList(contributors));
     }
 
+
     /**
      * Returns different dates relevant to the work.
      *
@@ -574,6 +608,7 @@ public class DataCiteJson implements IDocument, ICleanable
         return dates;
     }
 
+
     /**
      * Changes dates relevant to the work.
      *
@@ -583,6 +618,7 @@ public class DataCiteJson implements IDocument, ICleanable
     {
         this.dates = new HashSet<>(Arrays.asList(dates));
     }
+
 
     /**
      * Returns the spatial regions or named places where the data was gathered or
@@ -595,6 +631,7 @@ public class DataCiteJson implements IDocument, ICleanable
         return geoLocations;
     }
 
+
     /**
      * Changes the spatial regions or named places where the data was gathered or
      * about which the data is focused.
@@ -606,6 +643,7 @@ public class DataCiteJson implements IDocument, ICleanable
         this.geoLocations = new HashSet<>(Arrays.asList(geoLocations));
     }
 
+
     /**
      * Returns identifiers of related resources.
      *
@@ -615,6 +653,7 @@ public class DataCiteJson implements IDocument, ICleanable
     {
         return relatedIdentifiers;
     }
+
 
     /**
      * Changes the identifiers of related resources. These must be globally unique
@@ -627,6 +666,7 @@ public class DataCiteJson implements IDocument, ICleanable
         this.relatedIdentifiers = new HashSet<>(Arrays.asList(relatedIdentifiers));
     }
 
+
     /**
      * Returns identifiers other than the primary Identifier applied to the resource
      * being registered.
@@ -637,6 +677,7 @@ public class DataCiteJson implements IDocument, ICleanable
     {
         return alternateIdentifiers;
     }
+
 
     /**
      * Changes identifiers other than the primary Identifier applied to the resource
@@ -649,6 +690,7 @@ public class DataCiteJson implements IDocument, ICleanable
         this.alternateIdentifiers = new HashSet<>(Arrays.asList(alternateIdentifiers));
     }
 
+
     /**
      * Returns any rights information for this resource.
      *
@@ -659,6 +701,7 @@ public class DataCiteJson implements IDocument, ICleanable
         return rightsList;
     }
 
+
     /**
      * Changes rights information for this resource.
      *
@@ -668,6 +711,7 @@ public class DataCiteJson implements IDocument, ICleanable
     {
         this.rightsList = new HashSet<>(Arrays.asList(rightsList));
     }
+
 
     /**
      * Returns information about financial support (funding) for the resource being
@@ -680,6 +724,7 @@ public class DataCiteJson implements IDocument, ICleanable
         return fundingReferences;
     }
 
+
     /**
      * Changes information about financial support (funding) for the resource being
      * registered.
@@ -691,6 +736,7 @@ public class DataCiteJson implements IDocument, ICleanable
         this.fundingReferences = new HashSet<>(Arrays.asList(fundingReferences));
     }
 
+
     /**
      * Returns links to the data provider's website.
      *
@@ -700,6 +746,7 @@ public class DataCiteJson implements IDocument, ICleanable
     {
         return webLinks;
     }
+
 
     /**
      * Changes the links to the data provider's website.
@@ -711,6 +758,7 @@ public class DataCiteJson implements IDocument, ICleanable
         this.webLinks = new HashSet<>(Arrays.asList(webLinks));
     }
 
+
     /**
      * Returns downloadable source data files.
      *
@@ -721,6 +769,7 @@ public class DataCiteJson implements IDocument, ICleanable
         return researchDataList;
     }
 
+
     /**
      * Changes the downloadable source data files.
      *
@@ -730,6 +779,7 @@ public class DataCiteJson implements IDocument, ICleanable
     {
         this.researchDataList = new HashSet<>(Arrays.asList(files));
     }
+
 
     /**
      * Static helper to remove null values from a collection (e.g. Set or List),
@@ -748,6 +798,7 @@ public class DataCiteJson implements IDocument, ICleanable
         });
         return collection.isEmpty() ? null : collection;
     }
+
 
     @Override
     public void clean()
@@ -785,6 +836,7 @@ public class DataCiteJson implements IDocument, ICleanable
         }
     }
 
+
     /*
      * (non-Javadoc)
      *
@@ -820,6 +872,7 @@ public class DataCiteJson implements IDocument, ICleanable
         result = prime * result + ((webLinks == null) ? 0 : webLinks.hashCode());
         return result;
     }
+
 
     /*
      * (non-Javadoc)
