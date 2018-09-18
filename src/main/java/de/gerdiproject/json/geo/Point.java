@@ -172,4 +172,3 @@ public class Point implements IGeoCoordinates
         return true;
     }
 }
-

@@ -59,6 +59,7 @@ public class Description implements ICleanable
         this.descriptionType = type;
     }
 
+
     /**
      * Constructor that requires all fields.
      *
@@ -150,6 +151,7 @@ public class Description implements ICleanable
         value = StringCleaner.clean(value);
     }
 
+
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
@@ -163,6 +165,7 @@ public class Description implements ICleanable
         result = prime * result + ((value == null) ? 0 : value.hashCode());
         return result;
     }
+
 
     /* (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)

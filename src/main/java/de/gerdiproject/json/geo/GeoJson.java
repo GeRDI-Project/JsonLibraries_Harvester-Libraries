@@ -34,14 +34,14 @@ import de.gerdiproject.json.GsonUtils;
 public class GeoJson implements ICleanable
 {
     private static final String PARSE_FAILED = "Could not simplify GeoJson:\n";
-    private static final String INVALID_GEO = "Invalid GeoJson:\n";
+    private static final String INVALID_GEO  = "Invalid GeoJson:\n";
     private static final String INVALID_TYPE = "Invalid";
-    private static final Logger LOGGER = LoggerFactory.getLogger(GeoJson.class);
+    private static final Logger LOGGER       = LoggerFactory.getLogger(GeoJson.class);
 
     // exclude this field from serialization, it's only used for performance reasons
     private transient boolean isClean;
 
-    private String type;
+    private String          type;
     private IGeoCoordinates coordinates;
 
 
@@ -107,7 +107,7 @@ public class GeoJson implements ICleanable
     @Override
     public void clean()
     {
-        if (!isClean && coordinates != null && (coordinates instanceof Polygon  || coordinates instanceof MultiPolygon)) {
+        if (!isClean && coordinates != null && (coordinates instanceof Polygon || coordinates instanceof MultiPolygon)) {
             Gson gson = GsonUtils.getGson();
 
             String geoJsonString = gson.toJson(this);
@@ -120,7 +120,7 @@ public class GeoJson implements ICleanable
                 String simpleGeoString = polygon.makeSimple().asGeoJson();
 
                 // parse JSON string to a new GeoJson object
-                GeoJson  cleanedGeo = gson.fromJson(simpleGeoString, GeoJson.class);
+                GeoJson cleanedGeo = gson.fromJson(simpleGeoString, GeoJson.class);
 
                 // copy the simplified coordinates
                 this.coordinates = cleanedGeo.coordinates;

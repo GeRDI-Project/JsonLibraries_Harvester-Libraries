@@ -70,6 +70,7 @@ public class GeoLocation implements ICleanable
         return geoLocationPlace;
     }
 
+
     /**
      * Changes the description of the geographic location.
      *
@@ -146,15 +147,18 @@ public class GeoLocation implements ICleanable
      * @param southBoundLatitude southern latitudinal dimension of the box
      * @param northBoundLatitude northern latitudinal dimension of the box
      */
-    public void setBox(double westBoundLongitude, double eastBoundLongitude, double southBoundLatitude, double northBoundLatitude)
+    public void setBox(
+        double westBoundLongitude,
+        double eastBoundLongitude,
+        double southBoundLatitude,
+        double northBoundLatitude
+    )
     {
-        List<Point> boxShape = Arrays.asList(
-                                   new Point(westBoundLongitude, northBoundLatitude),
-                                   new Point(eastBoundLongitude, northBoundLatitude),
-                                   new Point(eastBoundLongitude, southBoundLatitude),
-                                   new Point(westBoundLongitude, southBoundLatitude),
-                                   new Point(westBoundLongitude, northBoundLatitude)
-                               );
+        List<Point> boxShape = Arrays.asList(new Point(westBoundLongitude, northBoundLatitude),
+                                             new Point(eastBoundLongitude, northBoundLatitude),
+                                             new Point(eastBoundLongitude, southBoundLatitude),
+                                             new Point(westBoundLongitude, southBoundLatitude),
+                                             new Point(westBoundLongitude, northBoundLatitude));
         this.geoLocationBox = new GeoJson(new Polygon(boxShape));
     }
 
@@ -206,6 +210,7 @@ public class GeoLocation implements ICleanable
         }
     }
 
+
     /**
      * Returns true if the GeoLocation has any geographical data.
      *
@@ -213,8 +218,10 @@ public class GeoLocation implements ICleanable
      */
     public boolean isValid()
     {
-        return geoLocationBox != null || geoLocationPolygons != null && !geoLocationPolygons.isEmpty() || geoLocationPoint != null;
+        return geoLocationBox != null || geoLocationPolygons != null && !geoLocationPolygons
+               .isEmpty() || geoLocationPoint != null;
     }
+
 
     /* (non-Javadoc)
      * @see java.lang.Object#hashCode()
@@ -230,6 +237,7 @@ public class GeoLocation implements ICleanable
         result = prime * result + ((geoLocationPolygons == null) ? 0 : geoLocationPolygons.hashCode());
         return result;
     }
+
 
     /* (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)

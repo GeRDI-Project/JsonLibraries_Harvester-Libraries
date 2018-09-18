@@ -45,7 +45,6 @@ public class RelatedIdentifier
      */
     private ResourceTypeGeneral resourceTypeGeneral;
 
-
     /**
      * Description of the relationship of the resource being registered (A)
      * and the related resource (B).
@@ -68,6 +67,7 @@ public class RelatedIdentifier
      * The type of the relatedMetadataScheme, linked with the schemeURI.
      */
     private String schemeType;
+
 
     /**
      * Simple constructor that requires all mandatory fields.

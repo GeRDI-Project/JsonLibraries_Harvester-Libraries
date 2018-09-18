@@ -42,7 +42,6 @@ public class DateRange extends AbstractDate
     private Instant until;
 
 
-
     /**
      * Simple constructor that requires all mandatory fields.
      *
@@ -69,6 +68,7 @@ public class DateRange extends AbstractDate
         setRangeFrom(epochMilliSince);
         setRangeUntil(epochMilliUntil);
     }
+
 
     /**
      * Simple constructor that requires all mandatory fields.
@@ -107,6 +107,7 @@ public class DateRange extends AbstractDate
         return sinceVal + DataCiteDateConstants.DATE_RANGE_SPLITTER + untilVal;
     }
 
+
     /**
      * Tries to set the date by parsing a Dublin-Core-compliant String.
      * <br>e.g. 1997-07-16T19:30Z/1997-07-17T15:30Z
@@ -142,6 +143,7 @@ public class DateRange extends AbstractDate
         this.since = unixTimestampToInstant(epochMilli);
     }
 
+
     /**
      * Changes the since-value by parsing a date-string.
      *
@@ -151,6 +153,7 @@ public class DateRange extends AbstractDate
     {
         this.since = stringToInstant(stringValue);
     }
+
 
     /**
      * Changes the until-value using the amount of milliseconds that passed
@@ -162,6 +165,7 @@ public class DateRange extends AbstractDate
     {
         this.until = unixTimestampToInstant(epochMilli);
     }
+
 
     /**
      * Changes the since-value by parsing a date-string.

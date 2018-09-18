@@ -51,7 +51,6 @@ public class Rights implements ICleanable
     private String lang;
 
 
-
     /**
      * Constructor that requires all mandatory fields.
      *
