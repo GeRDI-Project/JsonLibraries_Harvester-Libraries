@@ -786,11 +786,15 @@ public class DataCiteJson implements IDocument, ICleanable
      * call clean() on each remaining entry if it is {@linkplain ICleanable}}.
      * Instead of a resulting empty {@linkplain Collection}} null is returned.
      *
+     * @param <C> The collection type (e. g. Set or List)
      * @param set Collection to be freed of null and to be cleaned
      * @return set Null or a cleaned Collection with at least one element
      */
-    private static <C extends Collection<?>> C collectionCleaner(C collection)
+    private static <C extends Collection<?>> C cleanCollection(C collection)
     {
+        if (collection == null)
+            return null;
+
         collection.removeIf(Objects::isNull);
         collection.forEach(e -> {
             if (e instanceof ICleanable)
@@ -800,24 +804,26 @@ public class DataCiteJson implements IDocument, ICleanable
     }
 
 
+
+
     @Override
     public void clean()
     {
         // remove null from and possibly call clean() on Set or List fields
-        contributors = collectionCleaner(contributors);
-        alternateIdentifiers = collectionCleaner(alternateIdentifiers);
-        relatedIdentifiers = collectionCleaner(relatedIdentifiers);
-        sizes = collectionCleaner(sizes);
-        formats = collectionCleaner(formats);
-        fundingReferences = collectionCleaner(fundingReferences);
-        webLinks = collectionCleaner(webLinks);
-        researchDataList = collectionCleaner(researchDataList);
-        researchDisciplines = collectionCleaner(researchDisciplines);
-        titles = collectionCleaner(titles);
-        subjects = collectionCleaner(subjects);
-        rightsList = collectionCleaner(rightsList);
-        descriptions = collectionCleaner(descriptions);
-        creators = collectionCleaner(creators); // this is actually the only List
+        contributors = cleanCollection(contributors);
+        alternateIdentifiers = cleanCollection(alternateIdentifiers);
+        relatedIdentifiers = cleanCollection(relatedIdentifiers);
+        sizes = cleanCollection(sizes);
+        formats = cleanCollection(formats);
+        fundingReferences = cleanCollection(fundingReferences);
+        webLinks = cleanCollection(webLinks);
+        researchDataList = cleanCollection(researchDataList);
+        researchDisciplines = cleanCollection(researchDisciplines);
+        titles = cleanCollection(titles);
+        subjects = cleanCollection(subjects);
+        rightsList = cleanCollection(rightsList);
+        descriptions = cleanCollection(descriptions);
+        creators = cleanCollection(creators); // this is actually the only List
 
         // remove null entries from dates set
         if (dates != null) {
