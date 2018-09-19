@@ -155,12 +155,11 @@ public abstract class AbstractDate
                               DataCiteDateConstants.WORD_BEFORE_NUMBER_REGEX,
                               DataCiteDateConstants.FIRST_MATCH);
 
-            for (SimpleDateFormat format : DataCiteDateConstants.DATE_FORMATS_STARTING_WITH_CHAR) {
+            for (SimpleDateFormat format : DataCiteDateConstants.DATE_FORMATS_STARTING_WITH_CHAR)
                 try {
                     return format.parse(cleanString).toInstant();
 
                 } catch (ParseException e) {}  // NOPMD - nothing to do here, just keep parsing
-            }
 
             // remove all text before the first number (if it exists)
             // this converts "Annual data for the period 1997 onwards" to "1997 onwards"
@@ -181,12 +180,11 @@ public abstract class AbstractDate
             } catch (IllegalArgumentException e) {} // NOPMD - nothing to do here, just keep parsing
 
             // try to parse less common formats
-            for (SimpleDateFormat format : DataCiteDateConstants.DATE_FORMATS_STARTING_WITH_NUM) {
+            for (SimpleDateFormat format : DataCiteDateConstants.DATE_FORMATS_STARTING_WITH_NUM)
                 try {
                     return format.parse(cleanString).toInstant();
 
                 } catch (ParseException e) {} // NOPMD - nothing to do here, just keep parsing
-            }
         }
 
         LOGGER.warn(String.format(DataCiteDateConstants.PARSE_ERROR, stringValue));
@@ -205,5 +203,49 @@ public abstract class AbstractDate
     protected static Instant unixTimestampToInstant(long epochMilli)
     {
         return Instant.ofEpochMilli(epochMilli);
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((dateInformation == null) ? 0 : dateInformation.hashCode());
+        result = prime * result + ((dateType == null) ? 0 : dateType.hashCode());
+        return result;
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+
+        if (obj == null)
+            return false;
+
+        if (!(obj instanceof AbstractDate))
+            return false;
+
+        AbstractDate other = (AbstractDate) obj;
+
+        if (dateInformation == null) {
+            if (other.dateInformation != null)
+                return false;
+        } else if (!dateInformation.equals(other.dateInformation))
+            return false;
+
+        if (dateType != other.dateType)
+            return false;
+
+        return true;
     }
 }

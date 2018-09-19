@@ -30,6 +30,7 @@ public class LineString extends LinkedList<Point> implements IGeoCoordinates
 {
     private static final long serialVersionUID = 7723930710768293586L;
 
+
     /**
      * Constructor that requires an arbitrary number of coordinates.
      *
@@ -63,8 +64,6 @@ public class LineString extends LinkedList<Point> implements IGeoCoordinates
     public LineString(JsonArray array)
     {
         super();
-        array.forEach((JsonElement ele) ->
-                      add(new Point(ele.getAsJsonArray()))
-                     );
+        array.forEach((JsonElement ele) -> add(new Point(ele.getAsJsonArray())));
     }
 }

@@ -45,7 +45,6 @@ public class RelatedIdentifier
      */
     private ResourceTypeGeneral resourceTypeGeneral;
 
-
     /**
      * Description of the relationship of the resource being registered (A)
      * and the related resource (B).
@@ -68,6 +67,7 @@ public class RelatedIdentifier
      * The type of the relatedMetadataScheme, linked with the schemeURI.
      */
     private String schemeType;
+
 
     /**
      * Simple constructor that requires all mandatory fields.
@@ -240,5 +240,78 @@ public class RelatedIdentifier
     public void setRelationType(RelationType relationType)
     {
         this.relationType = relationType;
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((relatedIdentifierType == null) ? 0 : relatedIdentifierType.hashCode());
+        result = prime * result + ((relatedMetadataScheme == null) ? 0 : relatedMetadataScheme.hashCode());
+        result = prime * result + ((relationType == null) ? 0 : relationType.hashCode());
+        result = prime * result + ((resourceTypeGeneral == null) ? 0 : resourceTypeGeneral.hashCode());
+        result = prime * result + ((schemeType == null) ? 0 : schemeType.hashCode());
+        result = prime * result + ((schemeURI == null) ? 0 : schemeURI.hashCode());
+        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        return result;
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+
+        if (obj == null)
+            return false;
+
+        if (!(obj instanceof RelatedIdentifier))
+            return false;
+
+        RelatedIdentifier other = (RelatedIdentifier) obj;
+
+        if (relatedIdentifierType != other.relatedIdentifierType)
+            return false;
+
+        if (relatedMetadataScheme == null) {
+            if (other.relatedMetadataScheme != null)
+                return false;
+        } else if (!relatedMetadataScheme.equals(other.relatedMetadataScheme))
+            return false;
+
+        if (relationType != other.relationType)
+            return false;
+
+        if (resourceTypeGeneral != other.resourceTypeGeneral)
+            return false;
+
+        if (schemeType == null) {
+            if (other.schemeType != null)
+                return false;
+        } else if (!schemeType.equals(other.schemeType))
+            return false;
+
+        if (schemeURI == null) {
+            if (other.schemeURI != null)
+                return false;
+        } else if (!schemeURI.equals(other.schemeURI))
+            return false;
+
+        if (value == null) {
+            if (other.value != null)
+                return false;
+        } else if (!value.equals(other.value))
+            return false;
+
+        return true;
     }
 }

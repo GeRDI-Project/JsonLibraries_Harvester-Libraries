@@ -15,12 +15,10 @@
  */
 package de.gerdiproject.json.geo;
 
-
 /**
  * An interface for objects that represent coordinates of a {@linkplain GeoJson} object.
  *
  * @author Robin Weiss
  */
 public interface IGeoCoordinates
-{
-}
+{}

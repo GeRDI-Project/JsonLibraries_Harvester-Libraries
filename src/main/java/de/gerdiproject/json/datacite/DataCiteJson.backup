@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -37,8 +36,12 @@ import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
  * metadata properties chosen for an accurate and consistent identification of a
  * resource for citation. The resource that is being identified can be of any
  * kind, but it is typically a dataset. It may include not only numerical data,
- * but any other research data outputs. The metadata schema is extended by
- * fields that are required by GeRDI features. Source:
+ * but any other research data outputs.
+ *
+ * The metadata schema is extended by fields that are required by GeRDI
+ * features.
+ *
+ * Source:
  * https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  *
  * @author Mathis Neumann, Robin Weiss, Ingo Thomsen
@@ -779,12 +782,14 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Static helper to clean a collection by remove null values and returning null
-     * if the resulting collection is empty.
+     * Static helper to remove null values from a collection (e.g. Set or List),
+     * call clean() on each remaining entry if it is {@linkplain ICleanable}}.
+     * Instead of a resulting empty {@linkplain Collection}} null is returned.
      *
-     * @param <C> The collection type (e. g. Set or List)
-     * @param set Collection to be freed of null and to be cleaned
-     * @return set Null or a cleaned Collection with at least one element
+     * @param <C> Type of the elements held by the collection, namely Set or List
+     *
+     * @param collection The collection be freed of null and to be cleaned
+     * @return Null or a cleaned Collection with at least one element
      */
     private static <C extends Collection<?>> C cleanCollection(C collection)
     {
@@ -792,76 +797,18 @@ public class DataCiteJson implements IDocument, ICleanable
             return null;
 
         collection.removeIf(Objects::isNull);
-
+        collection.forEach(e -> {
+            if (e instanceof ICleanable)
+                ((ICleanable) e).clean();
+        });
         return collection.isEmpty() ? null : collection;
-    }
-
-
-    /**
-     * Static helper to remove null values from a collection (e.g. Set or List) of
-     * {@linkplain ICleanable} objects: Null values are removed and each remaining
-     * element is cleaned.
-     *
-     * @param <C> The collection type (e. g. Set or List)
-     * @param set Collection to be freed of null and to be cleaned
-     * @return set Null or a cleaned Collection with at least one element
-     */
-    private static <C extends Collection<? extends ICleanable>> C cleanICleanableCollection(C collection)
-    {
-        if (collection == null)
-            return null;
-
-        Iterator<? extends ICleanable> iter = collection.iterator();
-
-        while (iter.hasNext()) {
-            final ICleanable elem = iter.next();
-
-            if (elem == null)
-                iter.remove();
-            else
-                elem.clean();
-        }
-
-        return collection.isEmpty() ? null : collection;
-    }
-
-
-    /**
-     * Static helper to clean a {@linkplain GeoLocation}} Set: Null values are
-     * removed and each geolocation is cleaned - and also removed if thereby
-     * rendered invalid.
-     *
-     * @param geoLocationSet
-     * @return
-     */
-    private static Set<GeoLocation> cleanGeoLocationSet(Set<GeoLocation> geoLocationSet)
-    {
-        if (geoLocationSet == null)
-            return null;
-
-        final Iterator<GeoLocation> iter = geoLocationSet.iterator();
-
-        while (iter.hasNext()) {
-            final GeoLocation geo = iter.next();
-
-            if (geo == null)
-                iter.remove();
-            else {
-                geo.clean();
-
-                if (!geo.isValid())
-                    iter.remove();
-            }
-        }
-
-        return geoLocationSet.isEmpty() ? null : geoLocationSet;
     }
 
 
     @Override
     public void clean()
     {
-        // clean these collections
+        // remove null from and possibly call clean() on Set or List fields
         contributors = cleanCollection(contributors);
         alternateIdentifiers = cleanCollection(alternateIdentifiers);
         relatedIdentifiers = cleanCollection(relatedIdentifiers);
@@ -871,17 +818,14 @@ public class DataCiteJson implements IDocument, ICleanable
         webLinks = cleanCollection(webLinks);
         researchDataList = cleanCollection(researchDataList);
         researchDisciplines = cleanCollection(researchDisciplines);
-        creators = cleanCollection(creators);
+        titles = cleanCollection(titles);
+        subjects = cleanCollection(subjects);
+        rightsList = cleanCollection(rightsList);
+        descriptions = cleanCollection(descriptions);
+        creators = cleanCollection(creators); // this is actually the only List
 
-        // clean these collections of elements, that can each be cleaned
-        titles = cleanICleanableCollection(titles);
-        subjects = cleanICleanableCollection(subjects);
-        rightsList = cleanICleanableCollection(rightsList);
-        descriptions = cleanICleanableCollection(descriptions);
-
-        // clean the dates set from null or "invalid" entries.
+        // remove null entries from dates set
         if (dates != null) {
-
             dates.removeIf(date -> date == null || date.getValue() == null);
 
             if (dates.isEmpty())
@@ -889,12 +833,20 @@ public class DataCiteJson implements IDocument, ICleanable
         }
 
         // remove null and invalid entries from geoLocations set
-        geoLocations = cleanGeoLocationSet(geoLocations);
+        if (geoLocations != null) {
+            geoLocations.removeIf(Objects::isNull);
+            geoLocations.forEach(geoLocation -> geoLocation.clean());
+            geoLocations.removeIf(geoLocation -> !geoLocation.isValid());
+
+            if (geoLocations.isEmpty())
+                geoLocations = null;
+        }
     }
 
 
     /*
      * (non-Javadoc)
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -931,6 +883,7 @@ public class DataCiteJson implements IDocument, ICleanable
 
     /*
      * (non-Javadoc)
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -1084,4 +1037,5 @@ public class DataCiteJson implements IDocument, ICleanable
 
         return true;
     }
+
 }

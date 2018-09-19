@@ -61,8 +61,6 @@ public class MultiPoint extends LinkedList<Point> implements IGeoCoordinates
     public MultiPoint(JsonArray array)
     {
         super();
-        array.forEach((JsonElement ele) ->
-                      add(new Point(ele.getAsJsonArray()))
-                     );
+        array.forEach((JsonElement ele) -> add(new Point(ele.getAsJsonArray())));
     }
 }
