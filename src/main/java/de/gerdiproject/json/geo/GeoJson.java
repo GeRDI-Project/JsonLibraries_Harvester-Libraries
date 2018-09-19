@@ -15,7 +15,6 @@
  */
 package de.gerdiproject.json.geo;
 
-import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -124,13 +123,10 @@ public class GeoJson implements ICleanable
                 this.coordinates = cleanedGeo.coordinates;
                 this.type = cleanedGeo.type;
                 isClean = true;
-
-            } catch (JSONException e) {
-                LOGGER.debug(GeoJsonConstants.PARSE_FAILED + geoJsonString);
-                setCoordinates(null);
-
             } catch (JsonSyntaxException e) {
-                LOGGER.debug(GeoJsonConstants.INVALID_GEO + geoJsonString);
+                if (LOGGER.isDebugEnabled())
+                    LOGGER.debug(GeoJsonConstants.INVALID_GEO + geoJsonString);
+
                 setCoordinates(null);
             }
         }

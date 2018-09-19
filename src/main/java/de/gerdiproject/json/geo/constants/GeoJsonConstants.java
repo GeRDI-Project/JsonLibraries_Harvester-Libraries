@@ -22,7 +22,6 @@ package de.gerdiproject.json.geo.constants;
  */
 public class GeoJsonConstants
 {
-    public static final String PARSE_FAILED = "Could not simplify GeoJson:\n";
     public static final String INVALID_GEO = "Invalid GeoJson:\n";
     public static final String INVALID_TYPE = "Invalid";
 
