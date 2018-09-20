@@ -64,8 +64,6 @@ public class MultiLineString extends LinkedList<LineString> implements IGeoCoord
     public MultiLineString(JsonArray array)
     {
         super();
-        array.forEach((JsonElement ele) ->
-                      add(new LineString(ele.getAsJsonArray()))
-                     );
+        array.forEach((JsonElement ele) -> add(new LineString(ele.getAsJsonArray())));
     }
 }
