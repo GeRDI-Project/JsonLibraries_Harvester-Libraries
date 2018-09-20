@@ -1047,12 +1047,13 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Static helper to clean a collection by remove null values and returning null
+     * Static helper to clean a {@linkplain Collection} by removing null values and returning null
      * if the resulting collection is empty.
      *
      * @param <C> The collection type (e. g. Set or List)
-     * @param set Collection to be freed of null and to be cleaned
-     * @return set Null or a cleaned Collection with at least one element
+     * @param collection Collection to be freed of null and to be cleaned
+     *
+     * @return null if the collection becomes empty after removing null entries or a Collection with at least one element
      */
     private static <C extends Collection<?>> C cleanCollection(C collection)
     {
@@ -1071,8 +1072,9 @@ public class DataCiteJson implements IDocument, ICleanable
      * element is cleaned.
      *
      * @param <C> The collection type (e. g. Set or List)
-     * @param set Collection to be freed of null and to be cleaned
-     * @return set Null or a cleaned Collection with at least one element
+     * @param collection Collection to be freed of null and to be cleaned
+     *
+     * @return null if the collection becomes empty after cleaning it or a cleaned Collection
      */
     private static <C extends Collection<? extends ICleanable>> C cleanICleanableCollection(C collection)
     {
@@ -1095,19 +1097,20 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Static helper to clean a {@linkplain GeoLocation}} Set: Null values are
-     * removed and each geolocation is cleaned - and also removed if thereby
+     * Static helper to clean a {@linkplain GeoLocation} {@linkplain Set}. Null values are
+     * removed and each {@linkplain GeoLocation} is cleaned and subsequently removed if thereby
      * rendered invalid.
      *
-     * @param geoLocationSet
-     * @return
+     * @param geoLocations the {@linkplain Set} of {@linkplain GeoLocation}s that is to be cleaned
+     *
+     * @return null if the set is empty or entirely invalid or a cleaned {@linkplain Set} of {@linkplain GeoLocation}s
      */
-    private static Set<GeoLocation> cleanGeoLocationSet(Set<GeoLocation> geoLocationSet)
+    private static Set<GeoLocation> cleanGeoLocationSet(Set<GeoLocation> geoLocations)
     {
-        if (geoLocationSet == null)
+        if (geoLocations == null)
             return null;
 
-        final Iterator<GeoLocation> iter = geoLocationSet.iterator();
+        final Iterator<GeoLocation> iter = geoLocations.iterator();
 
         while (iter.hasNext()) {
             final GeoLocation geo = iter.next();
@@ -1122,6 +1125,6 @@ public class DataCiteJson implements IDocument, ICleanable
             }
         }
 
-        return geoLocationSet.isEmpty() ? null : geoLocationSet;
+        return geoLocations.isEmpty() ? null : geoLocations;
     }
 }
