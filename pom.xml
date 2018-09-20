@@ -10,7 +10,7 @@
 	</parent>
 	
 	<artifactId>GSON</artifactId>
-	<version>4.3.0</version>
+	<version>4.3.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 	<name>GSON</name>
 	<description>This library provides helper functions and common JSON structures using GSON.</description>
@@ -185,6 +185,14 @@
 			<classifier>resources</classifier>
 			<type>zip</type>
 			<!-- Make sure this isn't included on any classpath-->
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.2</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
