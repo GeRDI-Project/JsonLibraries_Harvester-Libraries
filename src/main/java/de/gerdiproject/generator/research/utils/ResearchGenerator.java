@@ -15,6 +15,19 @@
  */
 package de.gerdiproject.generator.research.utils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
@@ -29,19 +42,6 @@ import de.gerdiproject.json.datacite.extension.constants.ResearchAreaConstants;
 import de.gerdiproject.json.datacite.extension.constants.ResearchCategoryConstants;
 import de.gerdiproject.json.datacite.extension.constants.ResearchDisciplineConstants;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.lang.reflect.Type;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-
 /**
  * Generator class that wraps reads the DFG vocabulary from a JSON source file and generates constants files.
  *
@@ -49,6 +49,7 @@ import java.util.List;
  */
 public class ResearchGenerator
 {
+    private static final Type RESEARCH_CATEGORY_LIST_TYPE = new TypeToken<List<ResearchCategorySource>>() {} .getType();
     private static final Logger LOGGER = LoggerFactory.getLogger(ResearchGenerator.class);
 
 
@@ -295,9 +296,6 @@ public class ResearchGenerator
     {
         List<ResearchCategorySource> researchList = null;
 
-        // define type of list
-        final Type listType = new TypeToken<List<ResearchCategorySource>>() {} .getType();
-
         // load JSON file
         JsonReader reader = new JsonReader(
             new InputStreamReader(
@@ -305,7 +303,7 @@ public class ResearchGenerator
                 StandardCharsets.UTF_8));
 
         // parse list from JSON content
-        researchList = new Gson().fromJson(reader, listType);
+        researchList = new Gson().fromJson(reader, RESEARCH_CATEGORY_LIST_TYPE);
 
         return researchList;
     }

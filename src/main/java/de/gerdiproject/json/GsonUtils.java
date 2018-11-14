@@ -16,11 +16,7 @@
 package de.gerdiproject.json;
 
 
-import java.lang.reflect.Type;
-
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 import de.gerdiproject.json.datacite.Date;
 import de.gerdiproject.json.datacite.DateRange;
@@ -86,21 +82,6 @@ public final class GsonUtils
                .registerTypeAdapter(Polygon.class, new PolygonAdapter())
                .registerTypeAdapter(MultiPolygon.class, new MultiPolygonAdapter())
                .registerTypeAdapter(GeoJson.class, new GeoJsonAdapter());
-    }
-
-
-    /**
-     * Creates a {@linkplain Type} of a specified object in order to retrieve types of
-     * generic classes. The operation is expansive, so it should be used carefully.<br>
-     * @see Gson#fromJson(com.google.gson.JsonElement, Type)
-     *
-     * @param <T> the class of which the type is to be retrieved
-     *
-     * @return a {@linkplain Type} of the specified class
-     */
-    public static <T> Type createType()
-    {
-        return new TypeToken<T>() {} .getType();
     }
 
 
