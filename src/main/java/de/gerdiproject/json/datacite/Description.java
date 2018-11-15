@@ -146,9 +146,10 @@ public class Description implements ICleanable
      * Cleans the description text, removing HTML and unescaping special characters.
      */
     @Override
-    public void clean()
+    public boolean clean()
     {
         value = StringCleaner.clean(value);
+        return true;
     }
 
 

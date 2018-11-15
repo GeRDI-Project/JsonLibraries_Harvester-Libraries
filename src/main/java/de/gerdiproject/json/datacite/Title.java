@@ -128,9 +128,10 @@ public class Title implements ICleanable
 
 
     @Override
-    public void clean()
+    public boolean clean()
     {
         value = StringCleaner.clean(value);
+        return true;
     }
 
 

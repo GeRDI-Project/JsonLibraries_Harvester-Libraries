@@ -184,9 +184,10 @@ public class Subject implements ICleanable
 
 
     @Override
-    public void clean()
+    public boolean clean()
     {
         value = StringCleaner.clean(value);
+        return true;
     }
 
 

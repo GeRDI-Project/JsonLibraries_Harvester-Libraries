@@ -16,12 +16,9 @@
 package de.gerdiproject.json.datacite;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 import com.google.gson.Gson;
@@ -46,7 +43,7 @@ import de.gerdiproject.json.datacite.extension.metadatabowl.soep.SoepVariable;
  *
  * @author Mathis Neumann, Robin Weiss, Ingo Thomsen
  */
-public class DataCiteJson implements IDocument, ICleanable
+public class DataCiteJson implements IDocument
 {
     private static final Gson GSON = GsonUtils.createGerdiDocumentGsonBuilder().create();
 
@@ -206,7 +203,7 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @param sourceId a unique identifier of the source from which the document was
      *            retrieved
-     *            
+     *
      * @throws NullPointerException if the sourceId is null
      */
     public DataCiteJson(final String sourceId) throws NullPointerException
@@ -415,9 +412,9 @@ public class DataCiteJson implements IDocument, ICleanable
      * @param researchDisciplines a list of human readable names of the research
      *            disciplines
      */
-    public void setResearchDisciplines(AbstractResearch... researchDisciplines)
+    public void addResearchDisciplines(Collection<AbstractResearch> researchDisciplines)
     {
-        this.researchDisciplines = new HashSet<>(Arrays.asList(researchDisciplines));
+        this.researchDisciplines = addToSet(this.researchDisciplines, researchDisciplines);
     }
 
 
@@ -438,9 +435,9 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @param sizes unstructured size information about the resource
      */
-    public void setSizes(String... sizes)
+    public void addSizes(Collection<String> sizes)
     {
-        this.sizes = new HashSet<>(Arrays.asList(sizes));
+        this.sizes = addToSet(this.sizes, sizes);
     }
 
 
@@ -462,9 +459,9 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @param formats technical format of the resource
      */
-    public void setFormats(String... formats)
+    public void addFormats(Collection<String> formats)
     {
-        this.formats = new HashSet<>(Arrays.asList(formats));
+        this.formats = addToSet(this.formats, formats);
 
     }
 
@@ -489,13 +486,20 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @param creators the main researchers and/or the authors of the publication
      */
-    public void setCreators(Creator... creators)
+    public void addCreators(List<Creator> creators)
     {
-        this.creators = new ArrayList<>();
+        // abort if we have nothing to add
+        if (creators == null || creators.isEmpty())
+            return;
 
-        for (Creator creator : creators)
-            if (!this.creators.contains(creator))
-                this.creators.add(creator);
+        final List<Creator> tempList = this.creators == null ? new ArrayList<>() : this.creators;
+
+        for (Creator element : creators) {
+            if (element != null && !tempList.contains(element))
+                tempList.add(element);
+        }
+
+        this.creators = tempList.isEmpty() ? null : tempList;
     }
 
 
@@ -515,9 +519,9 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @param titles names or titles by which the resource is known
      */
-    public void setTitles(Title... titles)
+    public void addTitles(Collection<Title> titles)
     {
-        this.titles = new HashSet<>(Arrays.asList(titles));
+        this.titles = addToSet(this.titles, titles);
     }
 
 
@@ -539,9 +543,9 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @param descriptions all additional information
      */
-    public void setDescriptions(Description... descriptions)
+    public void addDescriptions(Collection<Description> descriptions)
     {
-        this.descriptions = new HashSet<>(Arrays.asList(descriptions));
+        this.descriptions = addToSet(this.descriptions, descriptions);
     }
 
 
@@ -565,9 +569,9 @@ public class DataCiteJson implements IDocument, ICleanable
      * @param subjects subjects, keywords, classification codes, or key phrases
      *            describing the resource
      */
-    public void setSubjects(Subject... subjects)
+    public void addSubjects(Collection<Subject> subjects)
     {
-        this.subjects = new HashSet<>(Arrays.asList(subjects));
+        this.subjects = addToSet(this.subjects, subjects);
     }
 
 
@@ -591,9 +595,9 @@ public class DataCiteJson implements IDocument, ICleanable
      * @param contributors institutions or persons responsible for contributing to
      *            the development of the resource
      */
-    public void setContributors(Contributor... contributors)
+    public void addContributors(Collection<Contributor> contributors)
     {
-        this.contributors = new HashSet<>(Arrays.asList(contributors));
+        this.contributors = addToSet(this.contributors, contributors);
     }
 
 
@@ -613,9 +617,9 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @param dates dates relevant to the work
      */
-    public void setDates(AbstractDate... dates)
+    public void addDates(Collection<AbstractDate> dates)
     {
-        this.dates = new HashSet<>(Arrays.asList(dates));
+        this.dates = addToSet(this.dates, dates);
     }
 
 
@@ -637,9 +641,9 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @param geoLocations spatial regions and/or named places
      */
-    public void setGeoLocations(GeoLocation... geoLocations)
+    public void addGeoLocations(Collection<GeoLocation> geoLocations)
     {
-        this.geoLocations = new HashSet<>(Arrays.asList(geoLocations));
+        this.geoLocations = addToSet(this.geoLocations, geoLocations);
     }
 
 
@@ -660,9 +664,9 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @param relatedIdentifiers identifiers of related resources
      */
-    public void setRelatedIdentifiers(RelatedIdentifier... relatedIdentifiers)
+    public void addRelatedIdentifiers(Collection<RelatedIdentifier> relatedIdentifiers)
     {
-        this.relatedIdentifiers = new HashSet<>(Arrays.asList(relatedIdentifiers));
+        this.relatedIdentifiers = addToSet(this.relatedIdentifiers, relatedIdentifiers);
     }
 
 
@@ -684,9 +688,9 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @param alternateIdentifiers identifiers other than the primary Identifier
      */
-    public void setAlternateIdentifiers(AlternateIdentifier... alternateIdentifiers)
+    public void addAlternateIdentifiers(Collection<AlternateIdentifier> alternateIdentifiers)
     {
-        this.alternateIdentifiers = new HashSet<>(Arrays.asList(alternateIdentifiers));
+        this.alternateIdentifiers = addToSet(this.alternateIdentifiers, alternateIdentifiers);
     }
 
 
@@ -706,9 +710,9 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @param rightsList rights information for this resource
      */
-    public void setRightsList(Rights... rightsList)
+    public void addRights(Collection<Rights> rightsList)
     {
-        this.rightsList = new HashSet<>(Arrays.asList(rightsList));
+        this.rightsList = addToSet(this.rightsList, rightsList);
     }
 
 
@@ -730,9 +734,9 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @param fundingReferences information about financial support
      */
-    public void setFundingReferences(FundingReference... fundingReferences)
+    public void addFundingReferences(Collection<FundingReference> fundingReferences)
     {
-        this.fundingReferences = new HashSet<>(Arrays.asList(fundingReferences));
+        this.fundingReferences = addToSet(this.fundingReferences, fundingReferences);
     }
 
 
@@ -752,9 +756,9 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @param webLinks links to the data provider's website
      */
-    public void setWebLinks(WebLink... webLinks)
+    public void addWebLinks(Collection<WebLink> webLinks)
     {
-        this.webLinks = new HashSet<>(Arrays.asList(webLinks));
+        this.webLinks = addToSet(this.webLinks, webLinks);
     }
 
 
@@ -772,23 +776,23 @@ public class DataCiteJson implements IDocument, ICleanable
     /**
      * Changes the downloadable source data files.
      *
-     * @param files downloadable files
+     * @param researchDataList downloadable files
      */
-    public void setResearchDataList(ResearchData... files)
+    public void addResearchDataList(Collection<ResearchData> researchDataList)
     {
-        this.researchDataList = new HashSet<>(Arrays.asList(files));
+        this.researchDataList = addToSet(this.researchDataList, researchDataList);
     }
 
 
     /**
      * Changes the SOEP dataset variables.
      *
-     * @param soepVariables the soep variables that are to be set
+     * @param soepDatasetVariables the soep variables that are to be set
      *
      */
-    public void setSoepDatasetVariables(SoepVariable... soepVariables)
+    public void addSoepDatasetVariables(Collection<SoepVariable> soepDatasetVariables)
     {
-        this.soepDatasetVariables = new HashSet<>(Arrays.asList(soepVariables));
+        this.soepDatasetVariables = addToSet(this.soepDatasetVariables, soepDatasetVariables);
     }
 
 
@@ -803,10 +807,6 @@ public class DataCiteJson implements IDocument, ICleanable
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
     @Override
     public int hashCode()
     {
@@ -840,10 +840,6 @@ public class DataCiteJson implements IDocument, ICleanable
     }
 
 
-    /*
-     * (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
     @Override
     public boolean equals(Object obj)
     {
@@ -1004,128 +1000,45 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     @Override
-    public void clean()
-    {
-        // clean these collections
-        contributors = cleanCollection(contributors);
-        alternateIdentifiers = cleanCollection(alternateIdentifiers);
-        relatedIdentifiers = cleanCollection(relatedIdentifiers);
-        sizes = cleanCollection(sizes);
-        formats = cleanCollection(formats);
-        fundingReferences = cleanCollection(fundingReferences);
-        webLinks = cleanCollection(webLinks);
-        researchDataList = cleanCollection(researchDataList);
-        researchDisciplines = cleanCollection(researchDisciplines);
-        creators = cleanCollection(creators);
-        soepDatasetVariables = cleanCollection(soepDatasetVariables);
-
-        // clean these collections of elements, that can each be cleaned
-        titles = cleanICleanableCollection(titles);
-        subjects = cleanICleanableCollection(subjects);
-        rightsList = cleanICleanableCollection(rightsList);
-        descriptions = cleanICleanableCollection(descriptions);
-
-        // clean the dates set from null or "invalid" entries.
-        if (dates != null) {
-
-            dates.removeIf(date -> date == null || date.getValue() == null);
-
-            if (dates.isEmpty())
-                dates = null;
-        }
-
-        // remove null and invalid entries from geoLocations set
-        geoLocations = cleanGeoLocationSet(geoLocations);
-    }
-    
-    
-    @Override
     public String toJson()
     {
         return GSON.toJson(this);
     }
 
 
-
     /**
-     * Static helper to clean a {@linkplain Collection} by removing null values and returning null
-     * if the resulting collection is empty.
+     * Static helper that adds elements to an existing {@linkplain Set}, or
+     * creates a new set if nothing was added before. Also removes null elements
+     * and cleans the items prior to adding them, if they implement {@linkplain ICleanable}.
      *
-     * @param <C> The collection type (e. g. Set or List)
-     * @param collection Collection to be freed of null and to be cleaned
+     * @param set the set to which the elements are added, or null if no set exists yet
+     * @param addedElements the elements that are to be added to the set
      *
-     * @return null if the collection becomes empty after removing null entries or a Collection with at least one element
+     * @return a set with the added elements, or null if the set is empty after the operation
      */
-    private static <C extends Collection<?>> C cleanCollection(C collection)
+    private static <T> Set<T> addToSet(Set<T> set, Collection<T> addedElements)
     {
-        if (collection == null)
-            return null;
+        // abort if we have nothing to add
+        if (addedElements == null || addedElements.isEmpty())
+            return set;
 
-        collection.removeIf(Objects::isNull);
+        // create a new set or use an existing one
+        final Set<T> tempSet = (set == null) ? new HashSet<>() : set;
 
-        return collection.isEmpty() ? null : collection;
-    }
+        for (T element : addedElements) {
+            if (element == null)
+                continue;
 
+            if (element instanceof ICleanable) {
+                // if element can be cleaned, do it and add it only if it is valid
+                final ICleanable cleanableElement = (ICleanable) element;
 
-    /**
-     * Static helper to remove null values from a collection of
-     * {@linkplain ICleanable} objects: Null values are removed and each remaining
-     * element is cleaned.
-     *
-     * @param <C> The collection type (e. g. Set or List)
-     * @param collection Collection to be freed of null and to be cleaned
-     *
-     * @return null if the collection becomes empty after cleaning it or a cleaned Collection
-     */
-    private static <C extends Collection<? extends ICleanable>> C cleanICleanableCollection(C collection)
-    {
-        if (collection == null)
-            return null;
-
-        Iterator<? extends ICleanable> iter = collection.iterator();
-
-        while (iter.hasNext()) {
-            final ICleanable elem = iter.next();
-
-            if (elem == null)
-                iter.remove();
-            else
-                elem.clean();
+                if (cleanableElement.clean())
+                    tempSet.add(element);
+            } else
+                tempSet.add(element);
         }
 
-        return collection.isEmpty() ? null : collection;
-    }
-
-
-    /**
-     * Static helper to clean a {@linkplain GeoLocation} {@linkplain Set}. Null values are
-     * removed and each {@linkplain GeoLocation} is cleaned and subsequently removed if thereby
-     * rendered invalid.
-     *
-     * @param geoLocations the {@linkplain Set} of {@linkplain GeoLocation}s that is to be cleaned
-     *
-     * @return null if the set is empty or entirely invalid or a cleaned {@linkplain Set} of {@linkplain GeoLocation}s
-     */
-    private static Set<GeoLocation> cleanGeoLocationSet(Set<GeoLocation> geoLocations)
-    {
-        if (geoLocations == null)
-            return null;
-
-        final Iterator<GeoLocation> iter = geoLocations.iterator();
-
-        while (iter.hasNext()) {
-            final GeoLocation geo = iter.next();
-
-            if (geo == null)
-                iter.remove();
-            else {
-                geo.clean();
-
-                if (!geo.isValid())
-                    iter.remove();
-            }
-        }
-
-        return geoLocations.isEmpty() ? null : geoLocations;
+        return tempSet.isEmpty() ? null : tempSet;
     }
 }

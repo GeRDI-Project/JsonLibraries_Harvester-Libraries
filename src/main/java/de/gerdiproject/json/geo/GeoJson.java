@@ -103,7 +103,7 @@ public class GeoJson implements ICleanable
      * rendering the GeoJson invalid.
      */
     @Override
-    public void clean()
+    public boolean clean()
     {
         if (!isClean && coordinates != null && (coordinates instanceof Polygon  || coordinates instanceof MultiPolygon)) {
 
@@ -128,8 +128,11 @@ public class GeoJson implements ICleanable
                     LOGGER.debug(GeoJsonConstants.INVALID_GEO + geoJsonString);
 
                 setCoordinates(null);
+                return false;
             }
         }
+
+        return true;
     }
 
 

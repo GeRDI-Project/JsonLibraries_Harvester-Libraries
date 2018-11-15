@@ -17,6 +17,7 @@ package de.gerdiproject.json.datacite;
 
 import java.time.Instant;
 
+import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.enums.DateType;
 
@@ -26,7 +27,7 @@ import de.gerdiproject.json.datacite.enums.DateType;
  * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
-public class Date extends AbstractDate
+public class Date extends AbstractDate implements ICleanable
 {
     /**
      *  The date value.
@@ -109,6 +110,14 @@ public class Date extends AbstractDate
     public void setDate(Instant date)
     {
         this.value = date;
+    }
+
+
+    @Override
+    public boolean clean()
+    {
+        // nothing to clean, but it invalidates if it is null
+        return getValue() != null;
     }
 
 

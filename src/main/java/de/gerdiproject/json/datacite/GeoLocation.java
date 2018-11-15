@@ -168,7 +168,7 @@ public class GeoLocation implements ICleanable
      * Each invalid GeoJsons will become null.
      */
     @Override
-    public void clean()
+    public boolean clean()
     {
         if (geoLocationPoint != null) {
             geoLocationPoint.clean();
@@ -208,6 +208,8 @@ public class GeoLocation implements ICleanable
             if (!geoLocationBox.isValid())
                 geoLocationBox = null;
         }
+
+        return isValid();
     }
 
 
