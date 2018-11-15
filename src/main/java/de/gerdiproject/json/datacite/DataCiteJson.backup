@@ -19,12 +19,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-
-import com.google.gson.Gson;
 
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.IDocument;
@@ -33,22 +30,24 @@ import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.extension.ResearchData;
 import de.gerdiproject.json.datacite.extension.WebLink;
 import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
-import de.gerdiproject.json.datacite.extension.metadatabowl.soep.SoepVariable;
 
 /**
  * A JSON object representing an extended DataCite document, representing core
  * metadata properties chosen for an accurate and consistent identification of a
  * resource for citation. The resource that is being identified can be of any
  * kind, but it is typically a dataset. It may include not only numerical data,
- * but any other research data outputs. The metadata schema is extended by
- * fields that are required by GeRDI features. Source:
+ * but any other research data outputs.
+ *
+ * The metadata schema is extended by fields that are required by GeRDI
+ * features.
+ *
+ * Source:
  * https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  *
  * @author Mathis Neumann, Robin Weiss, Ingo Thomsen
  */
 public class DataCiteJson implements IDocument, ICleanable
 {
-    private static final Gson GSON = GsonUtils.createGerdiDocumentGsonBuilder().create();
 
     /**
      * An identifier of the source of the document. The identifier must be unique
@@ -191,14 +190,6 @@ public class DataCiteJson implements IDocument, ICleanable
      */
     private Set<AbstractResearch> researchDisciplines;
 
-    /**
-     * This is where the discipline-specific metadata are specified in the document
-     *
-     * Research community: SOEP
-     * A set of variables associated with a resource in SOEP study.
-     */
-    private Set<SoepVariable> soepDatasetVariables;
-
 
     /**
      * This constructor set the source identifier of the document which allows for
@@ -206,15 +197,22 @@ public class DataCiteJson implements IDocument, ICleanable
      *
      * @param sourceId a unique identifier of the source from which the document was
      *            retrieved
-     *            
-     * @throws NullPointerException if the sourceId is null
      */
-    public DataCiteJson(final String sourceId) throws NullPointerException
+    public DataCiteJson(final String sourceId)
     {
-        if (sourceId == null)
-            throw new NullPointerException();
-
         this.sourceId = sourceId;
+    }
+
+
+    /**
+     * This constructor does not set a sourceId. As a fallback, a hash code of the
+     * harvested document is returned as a source identifier, causing any reference
+     * to this document in the index to be lost if any field value is updated.
+     */
+    @Deprecated
+    public DataCiteJson()
+    {
+        this.sourceId = null;
     }
 
 
@@ -230,7 +228,10 @@ public class DataCiteJson implements IDocument, ICleanable
     @Override
     public String getSourceId()
     {
-        return sourceId;
+        if (sourceId == null)
+            return String.valueOf(GsonUtils.getGson().toJson(this).hashCode());
+        else
+            return sourceId;
     }
 
 
@@ -781,30 +782,71 @@ public class DataCiteJson implements IDocument, ICleanable
 
 
     /**
-     * Changes the SOEP dataset variables.
+     * Static helper to remove null values from a collection (e.g. Set or List),
+     * call clean() on each remaining entry if it is {@linkplain ICleanable}}.
+     * Instead of a resulting empty {@linkplain Collection}} null is returned.
      *
-     * @param soepVariables the soep variables that are to be set
+     * @param <C> Type of the elements held by the collection, namely Set or List
      *
+     * @param collection The collection be freed of null and to be cleaned
+     * @return Null or a cleaned Collection with at least one element
      */
-    public void setSoepDatasetVariables(SoepVariable... soepVariables)
+    private static <C extends Collection<?>> C cleanCollection(C collection)
     {
-        this.soepDatasetVariables = new HashSet<>(Arrays.asList(soepVariables));
+        if (collection == null)
+            return null;
+
+        collection.removeIf(Objects::isNull);
+        collection.forEach(e -> {
+            if (e instanceof ICleanable)
+                ((ICleanable) e).clean();
+        });
+        return collection.isEmpty() ? null : collection;
     }
 
 
-    /**
-     * Returns SOEP dataset variables.
-     *
-     * @return a set of variables
-     */
-    public Set<SoepVariable> getSoepDatasetVariables()
+    @Override
+    public void clean()
     {
-        return soepDatasetVariables;
+        // remove null from and possibly call clean() on Set or List fields
+        contributors = cleanCollection(contributors);
+        alternateIdentifiers = cleanCollection(alternateIdentifiers);
+        relatedIdentifiers = cleanCollection(relatedIdentifiers);
+        sizes = cleanCollection(sizes);
+        formats = cleanCollection(formats);
+        fundingReferences = cleanCollection(fundingReferences);
+        webLinks = cleanCollection(webLinks);
+        researchDataList = cleanCollection(researchDataList);
+        researchDisciplines = cleanCollection(researchDisciplines);
+        titles = cleanCollection(titles);
+        subjects = cleanCollection(subjects);
+        rightsList = cleanCollection(rightsList);
+        descriptions = cleanCollection(descriptions);
+        creators = cleanCollection(creators); // this is actually the only List
+
+        // remove null entries from dates set
+        if (dates != null) {
+            dates.removeIf(date -> date == null || date.getValue() == null);
+
+            if (dates.isEmpty())
+                dates = null;
+        }
+
+        // remove null and invalid entries from geoLocations set
+        if (geoLocations != null) {
+            geoLocations.removeIf(Objects::isNull);
+            geoLocations.forEach(geoLocation -> geoLocation.clean());
+            geoLocations.removeIf(geoLocation -> !geoLocation.isValid());
+
+            if (geoLocations.isEmpty())
+                geoLocations = null;
+        }
     }
 
 
     /*
      * (non-Javadoc)
+     *
      * @see java.lang.Object#hashCode()
      */
     @Override
@@ -835,13 +877,13 @@ public class DataCiteJson implements IDocument, ICleanable
         result = prime * result + ((titles == null) ? 0 : titles.hashCode());
         result = prime * result + ((version == null) ? 0 : version.hashCode());
         result = prime * result + ((webLinks == null) ? 0 : webLinks.hashCode());
-        result = prime * result + ((soepDatasetVariables == null) ? 0 : soepDatasetVariables.hashCode());
         return result;
     }
 
 
     /*
      * (non-Javadoc)
+     *
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
@@ -993,139 +1035,7 @@ public class DataCiteJson implements IDocument, ICleanable
         } else if (!webLinks.equals(other.webLinks))
             return false;
 
-        if (soepDatasetVariables == null) {
-            if (other.soepDatasetVariables != null)
-                return false;
-        } else if (!soepDatasetVariables.equals(other.soepDatasetVariables))
-            return false;
-
         return true;
     }
 
-
-    @Override
-    public void clean()
-    {
-        // clean these collections
-        contributors = cleanCollection(contributors);
-        alternateIdentifiers = cleanCollection(alternateIdentifiers);
-        relatedIdentifiers = cleanCollection(relatedIdentifiers);
-        sizes = cleanCollection(sizes);
-        formats = cleanCollection(formats);
-        fundingReferences = cleanCollection(fundingReferences);
-        webLinks = cleanCollection(webLinks);
-        researchDataList = cleanCollection(researchDataList);
-        researchDisciplines = cleanCollection(researchDisciplines);
-        creators = cleanCollection(creators);
-        soepDatasetVariables = cleanCollection(soepDatasetVariables);
-
-        // clean these collections of elements, that can each be cleaned
-        titles = cleanICleanableCollection(titles);
-        subjects = cleanICleanableCollection(subjects);
-        rightsList = cleanICleanableCollection(rightsList);
-        descriptions = cleanICleanableCollection(descriptions);
-
-        // clean the dates set from null or "invalid" entries.
-        if (dates != null) {
-
-            dates.removeIf(date -> date == null || date.getValue() == null);
-
-            if (dates.isEmpty())
-                dates = null;
-        }
-
-        // remove null and invalid entries from geoLocations set
-        geoLocations = cleanGeoLocationSet(geoLocations);
-    }
-    
-    
-    @Override
-    public String toJson()
-    {
-        return GSON.toJson(this);
-    }
-
-
-
-    /**
-     * Static helper to clean a {@linkplain Collection} by removing null values and returning null
-     * if the resulting collection is empty.
-     *
-     * @param <C> The collection type (e. g. Set or List)
-     * @param collection Collection to be freed of null and to be cleaned
-     *
-     * @return null if the collection becomes empty after removing null entries or a Collection with at least one element
-     */
-    private static <C extends Collection<?>> C cleanCollection(C collection)
-    {
-        if (collection == null)
-            return null;
-
-        collection.removeIf(Objects::isNull);
-
-        return collection.isEmpty() ? null : collection;
-    }
-
-
-    /**
-     * Static helper to remove null values from a collection of
-     * {@linkplain ICleanable} objects: Null values are removed and each remaining
-     * element is cleaned.
-     *
-     * @param <C> The collection type (e. g. Set or List)
-     * @param collection Collection to be freed of null and to be cleaned
-     *
-     * @return null if the collection becomes empty after cleaning it or a cleaned Collection
-     */
-    private static <C extends Collection<? extends ICleanable>> C cleanICleanableCollection(C collection)
-    {
-        if (collection == null)
-            return null;
-
-        Iterator<? extends ICleanable> iter = collection.iterator();
-
-        while (iter.hasNext()) {
-            final ICleanable elem = iter.next();
-
-            if (elem == null)
-                iter.remove();
-            else
-                elem.clean();
-        }
-
-        return collection.isEmpty() ? null : collection;
-    }
-
-
-    /**
-     * Static helper to clean a {@linkplain GeoLocation} {@linkplain Set}. Null values are
-     * removed and each {@linkplain GeoLocation} is cleaned and subsequently removed if thereby
-     * rendered invalid.
-     *
-     * @param geoLocations the {@linkplain Set} of {@linkplain GeoLocation}s that is to be cleaned
-     *
-     * @return null if the set is empty or entirely invalid or a cleaned {@linkplain Set} of {@linkplain GeoLocation}s
-     */
-    private static Set<GeoLocation> cleanGeoLocationSet(Set<GeoLocation> geoLocations)
-    {
-        if (geoLocations == null)
-            return null;
-
-        final Iterator<GeoLocation> iter = geoLocations.iterator();
-
-        while (iter.hasNext()) {
-            final GeoLocation geo = iter.next();
-
-            if (geo == null)
-                iter.remove();
-            else {
-                geo.clean();
-
-                if (!geo.isValid())
-                    iter.remove();
-            }
-        }
-
-        return geoLocations.isEmpty() ? null : geoLocations;
-    }
 }

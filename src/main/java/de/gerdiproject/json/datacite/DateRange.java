@@ -42,7 +42,6 @@ public class DateRange extends AbstractDate
     private Instant until;
 
 
-
     /**
      * Simple constructor that requires all mandatory fields.
      *
@@ -69,6 +68,7 @@ public class DateRange extends AbstractDate
         setRangeFrom(epochMilliSince);
         setRangeUntil(epochMilliUntil);
     }
+
 
     /**
      * Simple constructor that requires all mandatory fields.
@@ -107,6 +107,7 @@ public class DateRange extends AbstractDate
         return sinceVal + DataCiteDateConstants.DATE_RANGE_SPLITTER + untilVal;
     }
 
+
     /**
      * Tries to set the date by parsing a Dublin-Core-compliant String.
      * <br>e.g. 1997-07-16T19:30Z/1997-07-17T15:30Z
@@ -142,6 +143,7 @@ public class DateRange extends AbstractDate
         this.since = unixTimestampToInstant(epochMilli);
     }
 
+
     /**
      * Changes the since-value by parsing a date-string.
      *
@@ -151,6 +153,7 @@ public class DateRange extends AbstractDate
     {
         this.since = stringToInstant(stringValue);
     }
+
 
     /**
      * Changes the until-value using the amount of milliseconds that passed
@@ -163,6 +166,7 @@ public class DateRange extends AbstractDate
         this.until = unixTimestampToInstant(epochMilli);
     }
 
+
     /**
      * Changes the since-value by parsing a date-string.
      *
@@ -171,5 +175,49 @@ public class DateRange extends AbstractDate
     public void setRangeUntil(String stringValue)
     {
         this.until = stringToInstant(stringValue);
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((since == null) ? 0 : since.hashCode());
+        result = prime * result + ((until == null) ? 0 : until.hashCode());
+        return result;
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (!super.equals(obj))
+            return false;
+
+        if (!(obj instanceof DateRange))
+            return false;
+
+        DateRange other = (DateRange) obj;
+
+        if (since == null) {
+            if (other.since != null)
+                return false;
+        } else if (!since.equals(other.since))
+            return false;
+
+        if (until == null) {
+            if (other.until != null)
+                return false;
+        } else if (!until.equals(other.until))
+            return false;
+
+        return true;
     }
 }

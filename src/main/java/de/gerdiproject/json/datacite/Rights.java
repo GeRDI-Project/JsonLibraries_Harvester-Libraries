@@ -51,7 +51,6 @@ public class Rights implements ICleanable
     private String lang;
 
 
-
     /**
      * Constructor that requires all mandatory fields.
      *
@@ -138,5 +137,59 @@ public class Rights implements ICleanable
     public void clean()
     {
         value = StringCleaner.clean(value);
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((lang == null) ? 0 : lang.hashCode());
+        result = prime * result + ((rightsURI == null) ? 0 : rightsURI.hashCode());
+        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        return result;
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj)
+            return true;
+
+        if (obj == null)
+            return false;
+
+        if (!(obj instanceof Rights))
+            return false;
+
+        Rights other = (Rights) obj;
+
+        if (lang == null) {
+            if (other.lang != null)
+                return false;
+        } else if (!lang.equals(other.lang))
+            return false;
+
+        if (rightsURI == null) {
+            if (other.rightsURI != null)
+                return false;
+        } else if (!rightsURI.equals(other.rightsURI))
+            return false;
+
+        if (value == null) {
+            if (other.value != null)
+                return false;
+        } else if (!value.equals(other.value))
+            return false;
+
+        return true;
     }
 }

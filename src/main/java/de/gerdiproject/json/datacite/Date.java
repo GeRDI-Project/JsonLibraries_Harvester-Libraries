@@ -74,6 +74,7 @@ public class Date extends AbstractDate
         return value != null ? value.toString() : null;
     }
 
+
     /**
      * Tries to set the date by parsing an ISO 8601 compliant String.
      * <br>e.g. 1994-11-05T13:15:30Z
@@ -108,5 +109,42 @@ public class Date extends AbstractDate
     public void setDate(Instant date)
     {
         this.value = date;
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#hashCode()
+     */
+    @Override
+    public int hashCode()
+    {
+        final int prime = 31;
+        int result = super.hashCode();
+        result = prime * result + ((value == null) ? 0 : value.hashCode());
+        return result;
+    }
+
+
+    /* (non-Javadoc)
+     * @see java.lang.Object#equals(java.lang.Object)
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (!super.equals(obj))
+            return false;
+
+        if (!(obj instanceof Date))
+            return false;
+
+        Date other = (Date) obj;
+
+        if (value == null) {
+            if (other.value != null)
+                return false;
+        } else if (!value.equals(other.value))
+            return false;
+
+        return true;
     }
 }

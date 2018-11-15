@@ -84,9 +84,7 @@ public class Polygon extends LinkedList<List<Point>> implements IGeoCoordinates
             List<Point> shape = new LinkedList<>();
 
             // create list of points for each shape
-            ring.forEach((JsonElement point) ->
-                         shape.add(new Point(point.getAsJsonArray()))
-                        );
+            ring.forEach((JsonElement point) -> shape.add(new Point(point.getAsJsonArray())));
             add(shape);
         });
     }

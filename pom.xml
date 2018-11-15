@@ -27,6 +27,7 @@
 		<gson.dependency.version>2.8.5</gson.dependency.version>
 		<esri.dependency.version>2.2.0</esri.dependency.version>
 		<jsoup.dependency.version>1.11.3</jsoup.dependency.version>
+		<lombok.dependency.version>1.18.2</lombok.dependency.version>
 		<harvesterutils.dependency.version>1.4.1</harvesterutils.dependency.version>
 	</properties>
 	
@@ -185,6 +186,14 @@
 			<classifier>resources</classifier>
 			<type>zip</type>
 			<!-- Make sure this isn't included on any classpath-->
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>${lombok.dependency-version}</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>

@@ -1,5 +1,5 @@
-/**
- * Copyright © 2017 Robin Weiss, Fidan Limani (http://www.gerdi-project.de)
+/*
+ * Copyright © 2018 Fidan Limani (http://www.gerdi-project.de)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.gerdiproject.json.geo;
 
 /**
- * An interface for objects that represent coordinates of a {@linkplain GeoJson} object.
+ * This package contains the class(es) that typify the SOPE-specific metadata. In order to enable SOEP harvesting to its
+ * fullest, the class(es) needs to extend GeRDI Schema JsonLibrary.
  *
- * @author Robin Weiss
+ * @author Fidan Limani
  */
-public interface IGeoCoordinates
-{}
+package de.gerdiproject.json.datacite.extension.metadatabowl.soep;
