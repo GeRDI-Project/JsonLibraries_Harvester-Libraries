@@ -15,16 +15,14 @@
  */
 package de.gerdiproject.json.datacite;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import com.google.gson.Gson;
 
-import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.IDocument;
+import de.gerdiproject.harvest.utils.CollectionUtils;
 import de.gerdiproject.json.GsonUtils;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.extension.ResearchData;
@@ -414,7 +412,7 @@ public class DataCiteJson implements IDocument
      */
     public void addResearchDisciplines(Collection<AbstractResearch> researchDisciplines)
     {
-        this.researchDisciplines = addToSet(this.researchDisciplines, researchDisciplines);
+        this.researchDisciplines = CollectionUtils.addToSet(this.researchDisciplines, researchDisciplines);
     }
 
 
@@ -437,7 +435,7 @@ public class DataCiteJson implements IDocument
      */
     public void addSizes(Collection<String> sizes)
     {
-        this.sizes = addToSet(this.sizes, sizes);
+        this.sizes = CollectionUtils.addToSet(this.sizes, sizes);
     }
 
 
@@ -461,7 +459,7 @@ public class DataCiteJson implements IDocument
      */
     public void addFormats(Collection<String> formats)
     {
-        this.formats = addToSet(this.formats, formats);
+        this.formats = CollectionUtils.addToSet(this.formats, formats);
 
     }
 
@@ -488,18 +486,7 @@ public class DataCiteJson implements IDocument
      */
     public void addCreators(List<Creator> creators)
     {
-        // abort if we have nothing to add
-        if (creators == null || creators.isEmpty())
-            return;
-
-        final List<Creator> tempList = this.creators == null ? new ArrayList<>() : this.creators;
-
-        for (Creator element : creators) {
-            if (element != null && !tempList.contains(element))
-                tempList.add(element);
-        }
-
-        this.creators = tempList.isEmpty() ? null : tempList;
+        this.creators = CollectionUtils.addToList(this.creators, creators);
     }
 
 
@@ -521,7 +508,7 @@ public class DataCiteJson implements IDocument
      */
     public void addTitles(Collection<Title> titles)
     {
-        this.titles = addToSet(this.titles, titles);
+        this.titles = CollectionUtils.addToSet(this.titles, titles);
     }
 
 
@@ -545,7 +532,7 @@ public class DataCiteJson implements IDocument
      */
     public void addDescriptions(Collection<Description> descriptions)
     {
-        this.descriptions = addToSet(this.descriptions, descriptions);
+        this.descriptions = CollectionUtils.addToSet(this.descriptions, descriptions);
     }
 
 
@@ -571,7 +558,7 @@ public class DataCiteJson implements IDocument
      */
     public void addSubjects(Collection<Subject> subjects)
     {
-        this.subjects = addToSet(this.subjects, subjects);
+        this.subjects = CollectionUtils.addToSet(this.subjects, subjects);
     }
 
 
@@ -597,7 +584,7 @@ public class DataCiteJson implements IDocument
      */
     public void addContributors(Collection<Contributor> contributors)
     {
-        this.contributors = addToSet(this.contributors, contributors);
+        this.contributors = CollectionUtils.addToSet(this.contributors, contributors);
     }
 
 
@@ -619,7 +606,7 @@ public class DataCiteJson implements IDocument
      */
     public void addDates(Collection<AbstractDate> dates)
     {
-        this.dates = addToSet(this.dates, dates);
+        this.dates = CollectionUtils.addToSet(this.dates, dates);
     }
 
 
@@ -643,7 +630,7 @@ public class DataCiteJson implements IDocument
      */
     public void addGeoLocations(Collection<GeoLocation> geoLocations)
     {
-        this.geoLocations = addToSet(this.geoLocations, geoLocations);
+        this.geoLocations = CollectionUtils.addToSet(this.geoLocations, geoLocations);
     }
 
 
@@ -666,7 +653,7 @@ public class DataCiteJson implements IDocument
      */
     public void addRelatedIdentifiers(Collection<RelatedIdentifier> relatedIdentifiers)
     {
-        this.relatedIdentifiers = addToSet(this.relatedIdentifiers, relatedIdentifiers);
+        this.relatedIdentifiers = CollectionUtils.addToSet(this.relatedIdentifiers, relatedIdentifiers);
     }
 
 
@@ -690,7 +677,7 @@ public class DataCiteJson implements IDocument
      */
     public void addAlternateIdentifiers(Collection<AlternateIdentifier> alternateIdentifiers)
     {
-        this.alternateIdentifiers = addToSet(this.alternateIdentifiers, alternateIdentifiers);
+        this.alternateIdentifiers = CollectionUtils.addToSet(this.alternateIdentifiers, alternateIdentifiers);
     }
 
 
@@ -712,7 +699,7 @@ public class DataCiteJson implements IDocument
      */
     public void addRights(Collection<Rights> rightsList)
     {
-        this.rightsList = addToSet(this.rightsList, rightsList);
+        this.rightsList = CollectionUtils.addToSet(this.rightsList, rightsList);
     }
 
 
@@ -736,7 +723,7 @@ public class DataCiteJson implements IDocument
      */
     public void addFundingReferences(Collection<FundingReference> fundingReferences)
     {
-        this.fundingReferences = addToSet(this.fundingReferences, fundingReferences);
+        this.fundingReferences = CollectionUtils.addToSet(this.fundingReferences, fundingReferences);
     }
 
 
@@ -758,7 +745,7 @@ public class DataCiteJson implements IDocument
      */
     public void addWebLinks(Collection<WebLink> webLinks)
     {
-        this.webLinks = addToSet(this.webLinks, webLinks);
+        this.webLinks = CollectionUtils.addToSet(this.webLinks, webLinks);
     }
 
 
@@ -780,7 +767,7 @@ public class DataCiteJson implements IDocument
      */
     public void addResearchDataList(Collection<ResearchData> researchDataList)
     {
-        this.researchDataList = addToSet(this.researchDataList, researchDataList);
+        this.researchDataList = CollectionUtils.addToSet(this.researchDataList, researchDataList);
     }
 
 
@@ -792,7 +779,7 @@ public class DataCiteJson implements IDocument
      */
     public void addSoepDatasetVariables(Collection<SoepVariable> soepDatasetVariables)
     {
-        this.soepDatasetVariables = addToSet(this.soepDatasetVariables, soepDatasetVariables);
+        this.soepDatasetVariables = CollectionUtils.addToSet(this.soepDatasetVariables, soepDatasetVariables);
     }
 
 
@@ -1003,42 +990,5 @@ public class DataCiteJson implements IDocument
     public String toJson()
     {
         return GSON.toJson(this);
-    }
-
-
-    /**
-     * Static helper that adds elements to an existing {@linkplain Set}, or
-     * creates a new set if nothing was added before. Also removes null elements
-     * and cleans the items prior to adding them, if they implement {@linkplain ICleanable}.
-     *
-     * @param set the set to which the elements are added, or null if no set exists yet
-     * @param addedElements the elements that are to be added to the set
-     *
-     * @return a set with the added elements, or null if the set is empty after the operation
-     */
-    private static <T> Set<T> addToSet(Set<T> set, Collection<T> addedElements)
-    {
-        // abort if we have nothing to add
-        if (addedElements == null || addedElements.isEmpty())
-            return set;
-
-        // create a new set or use an existing one
-        final Set<T> tempSet = (set == null) ? new HashSet<>() : set;
-
-        for (T element : addedElements) {
-            if (element == null)
-                continue;
-
-            if (element instanceof ICleanable) {
-                // if element can be cleaned, do it and add it only if it is valid
-                final ICleanable cleanableElement = (ICleanable) element;
-
-                if (cleanableElement.clean())
-                    tempSet.add(element);
-            } else
-                tempSet.add(element);
-        }
-
-        return tempSet.isEmpty() ? null : tempSet;
     }
 }

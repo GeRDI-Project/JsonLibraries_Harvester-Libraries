@@ -15,12 +15,12 @@
  */
 package de.gerdiproject.json.datacite.abstr;
 
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.Collection;
 import java.util.Set;
 
 import com.google.gson.annotations.SerializedName;
 
+import de.gerdiproject.harvest.utils.CollectionUtils;
 import de.gerdiproject.json.datacite.Contributor;
 import de.gerdiproject.json.datacite.Creator;
 import de.gerdiproject.json.datacite.nested.NameIdentifier;
@@ -162,9 +162,9 @@ public abstract class AbstractPerson
      *
      * @param nameIdentifiers unique identifiers of an individual or legal entity
      */
-    public void setNameIdentifiers(NameIdentifier... nameIdentifiers)
+    public void addNameIdentifiers(Collection<NameIdentifier> nameIdentifiers)
     {
-        this.nameIdentifiers = new HashSet<>(Arrays.asList(nameIdentifiers));
+        this.nameIdentifiers = CollectionUtils.addToSet(this.nameIdentifiers, nameIdentifiers);
     }
 
 
@@ -185,9 +185,9 @@ public abstract class AbstractPerson
      *
      * @param affiliations the organisational or institutional affiliations of the person
      */
-    public void setAffiliations(String... affiliations)
+    public void addAffiliations(Collection<String> affiliations)
     {
-        this.affiliations = new HashSet<>(Arrays.asList(affiliations));
+        this.affiliations = CollectionUtils.addToSet(this.affiliations, affiliations);
     }
 
 

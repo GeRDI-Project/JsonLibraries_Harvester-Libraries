@@ -193,7 +193,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>${lombok.dependency-version}</version>
+			<version>${lombok.dependency.version}</version>
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
