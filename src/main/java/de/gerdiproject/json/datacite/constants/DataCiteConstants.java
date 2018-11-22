@@ -27,6 +27,7 @@ public class DataCiteConstants
     public static final String ERROR_INVALID_LISTS =
         "All lists of the DataCiteJson object must support the remove() operations, for clean removal of invalid values.\n"
         + "The lists are now fixed during runtime, which costs performance. Please, check your code!";
+
     /**
      * Private constructor, because this is a static class.
      */

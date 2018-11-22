@@ -16,6 +16,7 @@
 package de.gerdiproject.json.datacite.constants;
 
 import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -49,6 +50,7 @@ public class DataCiteDateConstants
     public static final String FIRST_NUMBER_REGEX = "^\\D+(\\d[\\d\\D]+)$";
     public static final String FIRST_MATCH = "$1";
     public static final String STANDARD_TIMEZONE = "UTC";
+    public static final ZoneId Z_ZONE_ID = ZoneId.of("Z");
     public static final List<SimpleDateFormat> DATE_FORMATS_STARTING_WITH_CHAR = createDateFormatsStartingWithChar(STANDARD_TIMEZONE);
     public static final List<SimpleDateFormat> DATE_FORMATS_STARTING_WITH_NUM = createDateFormatsStartingWithDigit(STANDARD_TIMEZONE);
 

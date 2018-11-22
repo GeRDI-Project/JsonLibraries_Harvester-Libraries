@@ -16,6 +16,7 @@
 package de.gerdiproject.json.datacite;
 
 import java.time.Instant;
+import java.time.ZonedDateTime;
 
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.constants.DataCiteDateConstants;
@@ -131,6 +132,19 @@ public class DateRange extends AbstractDate
             LOGGER.error(String.format(DataCiteDateConstants.PARSE_ERROR, stringValue));
     }
 
+    /**
+     * Retrieves the since-value as {@linkplain ZonedDateTime}, allowing
+     * for subsequent operations such as retrieving the year.
+     *
+     * @return the since-value as {@linkplain ZonedDateTime}
+     */
+    public ZonedDateTime getRangeFromAsDateTime()
+    {
+        return since == null
+               ? null
+               : ZonedDateTime.ofInstant(since, DataCiteDateConstants.Z_ZONE_ID);
+    }
+
 
     /**
      * Changes the since-value using the amount of milliseconds that passed
@@ -152,6 +166,20 @@ public class DateRange extends AbstractDate
     public void setRangeFrom(String stringValue)
     {
         this.since = stringToInstant(stringValue);
+    }
+
+
+    /**
+     * Retrieves the until-value as {@linkplain ZonedDateTime}, allowing
+     * for subsequent operations such as retrieving the year.
+     *
+     * @return the until-value as {@linkplain ZonedDateTime}
+     */
+    public ZonedDateTime getRangeUntilAsDateTime()
+    {
+        return until == null
+               ? null
+               : ZonedDateTime.ofInstant(until, DataCiteDateConstants.Z_ZONE_ID);
     }
 
 

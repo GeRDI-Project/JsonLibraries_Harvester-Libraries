@@ -16,9 +16,11 @@
 package de.gerdiproject.json.datacite;
 
 import java.time.Instant;
+import java.time.ZonedDateTime;
 
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
+import de.gerdiproject.json.datacite.constants.DataCiteDateConstants;
 import de.gerdiproject.json.datacite.enums.DateType;
 
 /**
@@ -73,6 +75,20 @@ public class Date extends AbstractDate implements ICleanable
     public String getValue()
     {
         return value != null ? value.toString() : null;
+    }
+
+
+    /**
+     * Retrieves the value as {@linkplain ZonedDateTime}, allowing
+     * for subsequent operations such as retrieving the year.
+     *
+     * @return the value as {@linkplain ZonedDateTime}
+     */
+    public ZonedDateTime getValueAsDateTime()
+    {
+        return value == null
+               ? null
+               : ZonedDateTime.ofInstant(value, DataCiteDateConstants.Z_ZONE_ID);
     }
 
 
