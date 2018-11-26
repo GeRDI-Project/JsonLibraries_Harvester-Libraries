@@ -180,7 +180,7 @@ public class DataCiteJson implements IDocument
     private String repositoryIdentifier;
 
     /**
-     * A list of human readable names of the research disciplines, meaning the
+     * A set of human readable names of the research disciplines, meaning the
      * topics or domains that this document covers. <br>
      * e.g. Computer Science, Geography
      */
@@ -392,10 +392,10 @@ public class DataCiteJson implements IDocument
 
 
     /**
-     * Retrieves the list of human readable names of the research disciplines,
+     * Retrieves the set of human readable names of the research disciplines,
      * meaning the topics or domains that this document covers.
      *
-     * @return a list of human readable names of the research disciplines
+     * @return a set of human readable names of the research disciplines
      */
     public Set<AbstractResearch> getResearchDisciplines()
     {
@@ -404,10 +404,10 @@ public class DataCiteJson implements IDocument
 
 
     /**
-     * Changes the list of human readable names of the research disciplines, meaning
+     * Changes the set of human readable names of the research disciplines, meaning
      * the topics or domains that this document covers.
      *
-     * @param researchDisciplines a list of human readable names of the research
+     * @param researchDisciplines a collection of human readable names of the research
      *            disciplines
      */
     public void addResearchDisciplines(Collection<AbstractResearch> researchDisciplines)
@@ -484,7 +484,7 @@ public class DataCiteJson implements IDocument
      *
      * @param creators the main researchers and/or the authors of the publication
      */
-    public void addCreators(List<Creator> creators)
+    public void addCreators(Collection<Creator> creators)
     {
         this.creators = CollectionUtils.addToList(this.creators, creators);
     }
@@ -765,7 +765,7 @@ public class DataCiteJson implements IDocument
      *
      * @param researchDataList downloadable files
      */
-    public void addResearchDataList(Collection<ResearchData> researchDataList)
+    public void addResearchData(Collection<ResearchData> researchDataList)
     {
         this.researchDataList = CollectionUtils.addToSet(this.researchDataList, researchDataList);
     }
