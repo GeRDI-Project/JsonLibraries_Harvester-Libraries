@@ -197,10 +197,10 @@ public class DataCiteJson implements IDocument
 
     /**
      * This constructor set the source identifier of the document which allows for
-     * persisting it when one of its values change.
+     * persisting it when the corresponding metadata is updated.
      *
      * @param sourceId a unique identifier of the source from which the document was
-     *            retrieved
+     *         retrieved
      *
      * @throws NullPointerException if the sourceId is null
      */
