@@ -107,32 +107,30 @@ public class GeoJson implements ICleanable
     {
         if (!isClean && coordinates != null && (coordinates instanceof Polygon  || coordinates instanceof MultiPolygon)) {
 
-            String geoJsonString = GSON.toJson(this);
+            final String geoJsonString = GSON.toJson(this);
 
             try {
                 // map our polygon implementation to the ESRI implementation
-                OGCGeometry polygon = OGCGeometry.fromGeoJson(geoJsonString);
+                final OGCGeometry polygon = OGCGeometry.fromGeoJson(geoJsonString);
 
                 // simplify ESRI polygon and convert it to JSON string
-                String simpleGeoString = polygon.makeSimple().asGeoJson();
+                final String simpleGeoString = polygon.makeSimple().asGeoJson();
 
                 // parse JSON string to a new GeoJson object
-                GeoJson  cleanedGeo = GSON.fromJson(simpleGeoString, GeoJson.class);
+                final GeoJson  cleanedGeo = GSON.fromJson(simpleGeoString, GeoJson.class);
 
                 // copy the simplified coordinates
-                this.coordinates = cleanedGeo.coordinates;
-                this.type = cleanedGeo.type;
-                isClean = true;
+                setCoordinates(cleanedGeo.coordinates);
+                this.isClean = true;
             } catch (JsonSyntaxException e) {
                 if (LOGGER.isDebugEnabled())
-                    LOGGER.debug(GeoJsonConstants.INVALID_GEO + geoJsonString);
+                    LOGGER.debug(String.format(GeoJsonConstants.INVALID_GEOJSON_ERROR, geoJsonString));
 
                 setCoordinates(null);
-                return false;
             }
         }
 
-        return true;
+        return isValid();
     }
 
 

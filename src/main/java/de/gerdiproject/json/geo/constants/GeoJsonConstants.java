@@ -22,7 +22,7 @@ package de.gerdiproject.json.geo.constants;
  */
 public class GeoJsonConstants
 {
-    public static final String INVALID_GEO = "Invalid GeoJson:\n";
+    public static final String INVALID_GEOJSON_ERROR = "Invalid GeoJson:%n%s";
     public static final String INVALID_TYPE = "Invalid";
 
 
