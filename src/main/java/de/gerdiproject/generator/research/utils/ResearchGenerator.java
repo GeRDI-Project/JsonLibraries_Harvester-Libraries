@@ -36,11 +36,11 @@ import de.gerdiproject.generator.research.constants.ResearchGeneratorConstants;
 import de.gerdiproject.generator.research.source.json.ResearchAreaSource;
 import de.gerdiproject.generator.research.source.json.ResearchCategorySource;
 import de.gerdiproject.generator.research.source.json.ResearchDisciplineSource;
-import de.gerdiproject.json.datacite.extension.ResearchArea;
-import de.gerdiproject.json.datacite.extension.ResearchDiscipline;
-import de.gerdiproject.json.datacite.extension.constants.ResearchAreaConstants;
-import de.gerdiproject.json.datacite.extension.constants.ResearchCategoryConstants;
-import de.gerdiproject.json.datacite.extension.constants.ResearchDisciplineConstants;
+import de.gerdiproject.json.datacite.extension.generic.ResearchArea;
+import de.gerdiproject.json.datacite.extension.generic.ResearchDiscipline;
+import de.gerdiproject.json.datacite.extension.generic.constants.ResearchAreaConstants;
+import de.gerdiproject.json.datacite.extension.generic.constants.ResearchCategoryConstants;
+import de.gerdiproject.json.datacite.extension.generic.constants.ResearchDisciplineConstants;
 
 /**
  * Generator class that wraps reads the DFG vocabulary from a JSON source file and generates constants files.

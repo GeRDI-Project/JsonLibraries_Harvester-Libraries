@@ -1,5 +1,5 @@
 /**
- * Copyright © 2018 Fidan Limani (http://www.gerdi-project.de)
+ * Copyright © 2017 Robin Weiss, Fidan Limani (http://www.gerdi-project.de)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,30 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package de.gerdiproject.json.datacite.extension.metadatabowl.soep;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
 /**
- * This class models the SOEP-specific metadata: Concepts
+ * This package contains constant collections that are used by the
+ * GeRDI extension of the DataCite schema.
  *
- * @author Fidan Limani
- **/
-@AllArgsConstructor
-@Data
-public class SoepConcept
-{
-    private String name;
-
-    /**
-     * Concept name in German
-     */
-    private String labelDE;
-
-    /**
-     * Concept name in English
-     */
-    private String label;
-}
+ * @author Fidan Limani, Robin Weiss
+ */
+package de.gerdiproject.json.datacite.extension.generic.constants;

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.gerdiproject.json.datacite.extension.adapter;
+package de.gerdiproject.json.datacite.extension.generic.adapter;
 
 import java.lang.reflect.Type;
 import com.google.gson.JsonDeserializationContext;
@@ -25,9 +25,9 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 import de.gerdiproject.json.datacite.constants.DataCiteResearchConstants;
-import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
-import de.gerdiproject.json.datacite.extension.constants.ResearchAreaConstants;
-import de.gerdiproject.json.datacite.extension.constants.ResearchDisciplineConstants;
+import de.gerdiproject.json.datacite.extension.generic.AbstractResearch;
+import de.gerdiproject.json.datacite.extension.generic.constants.ResearchAreaConstants;
+import de.gerdiproject.json.datacite.extension.generic.constants.ResearchDisciplineConstants;
 
 /**
  * This adapter can convert {@linkplain AbstractResearch} objects to JSON and vice-versa.

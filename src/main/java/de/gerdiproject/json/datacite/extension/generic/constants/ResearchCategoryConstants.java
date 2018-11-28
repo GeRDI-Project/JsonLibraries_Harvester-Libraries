@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.gerdiproject.json.datacite.extension.constants;
+package de.gerdiproject.json.datacite.extension.generic.constants;
 
 import de.gerdiproject.generator.research.utils.ResearchGenerator;
 

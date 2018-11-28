@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.gerdiproject.json.datacite.extension;
+package de.gerdiproject.json.datacite.extension.generic;
 
 import com.google.gson.annotations.SerializedName;
 

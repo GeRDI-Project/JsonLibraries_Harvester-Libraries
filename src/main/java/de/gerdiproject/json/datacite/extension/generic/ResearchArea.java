@@ -13,10 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.gerdiproject.json.datacite.extension;
+package de.gerdiproject.json.datacite.extension.generic;
 
 import de.gerdiproject.json.datacite.constants.DataCiteResearchConstants;
-import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

@@ -17,18 +17,21 @@ package de.gerdiproject.json.datacite;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.google.gson.Gson;
+import com.google.gson.annotations.SerializedName;
 
 import de.gerdiproject.harvest.IDocument;
 import de.gerdiproject.harvest.utils.CollectionUtils;
 import de.gerdiproject.json.GsonUtils;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
-import de.gerdiproject.json.datacite.extension.ResearchData;
-import de.gerdiproject.json.datacite.extension.WebLink;
-import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
-import de.gerdiproject.json.datacite.extension.metadatabowl.soep.SoepVariable;
+import de.gerdiproject.json.datacite.extension.IDataCiteExtension;
+import de.gerdiproject.json.datacite.extension.generic.AbstractResearch;
+import de.gerdiproject.json.datacite.extension.generic.GerdiDataCiteExtension;
+import de.gerdiproject.json.datacite.extension.generic.ResearchData;
+import de.gerdiproject.json.datacite.extension.generic.WebLink;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NonNull;
@@ -184,52 +187,33 @@ public class DataCiteJson implements IDocument
     @Setter(AccessLevel.NONE)
     private Set<FundingReference> fundingReferences;
 
-    /**
-     * Links to the data provider's website.
-     */
-    @Setter(AccessLevel.NONE)
-    private Set<WebLink> webLinks;
 
     /**
-     * Downloadable source data files.
+     * Different dates relevant to the work.
      */
-    @Setter(AccessLevel.NONE)
-    private Set<ResearchData> researchDataList;
+    @SerializedName("extension") @Setter(AccessLevel.NONE)
+    private Map<String, IDataCiteExtension> extensions;
+    private final transient GerdiDataCiteExtension gerdiExtension;
+
 
     /**
-     * A unique but human readable name of the repository. <br>
-     * e.g. Sea Around Us, FAOSTAT
-     */
-    private String repositoryIdentifier;
-
-    /**
-     * A set of human readable names of the research disciplines, meaning the
-     * topics or domains that this document covers. <br>
-     * e.g. Computer Science, Geography
-     */
-    @Setter(AccessLevel.NONE)
-    private Set<AbstractResearch> researchDisciplines;
-
-    /**
-     * This is where the discipline-specific metadata are specified in the document
+     * Constructor that sets up the GeRDI extension.
      *
-     * Research community: SOEP
-     * A set of variables associated with a resource in SOEP study.
-     */
-    @Setter(AccessLevel.NONE)
-    private Set<SoepVariable> soepDatasetVariables;
-
-
-    /**
-     * Changes the set of human readable names of the research disciplines, meaning
-     * the topics or domains that this document covers.
+     * @param sourceId a unique identifier of the source from which the document was
+     *         retrieved
      *
-     * @param researchDisciplines a collection of human readable names of the research
-     *            disciplines
+     * @throws NullPointerException if the sourceId is null
      */
-    public void addResearchDisciplines(Collection<AbstractResearch> researchDisciplines)
+    public DataCiteJson(String sourceId) throws NullPointerException
     {
-        this.researchDisciplines = CollectionUtils.addToSet(this.researchDisciplines, researchDisciplines);
+        if (sourceId == null)
+            throw new NullPointerException();
+
+        this.sourceId = sourceId;
+
+        // create empty GeRDI extension
+        this.gerdiExtension = new GerdiDataCiteExtension();
+        addExtension(gerdiExtension);
     }
 
 
@@ -397,7 +381,7 @@ public class DataCiteJson implements IDocument
      */
     public void addWebLinks(Collection<WebLink> webLinks)
     {
-        this.webLinks = CollectionUtils.addToSet(this.webLinks, webLinks);
+        this.gerdiExtension.addWebLinks(webLinks);
     }
 
 
@@ -408,21 +392,44 @@ public class DataCiteJson implements IDocument
      */
     public void addResearchData(Collection<ResearchData> researchDataList)
     {
-        this.researchDataList = CollectionUtils.addToSet(this.researchDataList, researchDataList);
+        this.gerdiExtension.addResearchData(researchDataList);
     }
 
 
     /**
-     * Changes the SOEP dataset variables.
+     * Changes the set of human readable names of the research disciplines, meaning
+     * the topics or domains that this document covers.
      *
-     * @param soepDatasetVariables the soep variables that are to be set
-     *
+     * @param researchDisciplines a collection of human readable names of the research
+     *            disciplines
      */
-    public void addSoepDatasetVariables(Collection<SoepVariable> soepDatasetVariables)
+    public void addResearchDisciplines(Collection<AbstractResearch> researchDisciplines)
     {
-        this.soepDatasetVariables = CollectionUtils.addToSet(this.soepDatasetVariables, soepDatasetVariables);
+        this.gerdiExtension.addResearchDisciplines(researchDisciplines);
     }
 
+
+    /**
+     * Changes the unique but human readable name of the repository.
+     *
+     * @param repositoryIdentifier a unique but human readable name of the
+     *            repository
+     */
+    public void setRepositoryIdentifier(String repositoryIdentifier)
+    {
+        this.gerdiExtension.setRepositoryIdentifier(repositoryIdentifier);
+    }
+
+
+    /**
+     * Adds an {@linkplain IDataCiteExtension} to the metadata.
+     *
+     * @param extension the extension to be added
+     */
+    public void addExtension(IDataCiteExtension extension)
+    {
+        this.extensions = CollectionUtils.addToMap(this.extensions, extension.getKey(), extension);
+    }
 
 
     @Override

@@ -15,7 +15,7 @@
  */
 package de.gerdiproject.json.datacite.constants;
 
-import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
+import de.gerdiproject.json.datacite.extension.generic.AbstractResearch;
 
 /**
  * This static class is a collection of constants that are used by {@linkplain AbstractResearch} and its sub-classes.

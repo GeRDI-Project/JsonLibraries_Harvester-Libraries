@@ -14,10 +14,8 @@
  * limitations under the License.
  */
 /**
- * This package contains GSON {@linkplain com.google.gson.JsonSerializer}s and {@linkplain com.google.gson.JsonDeserializer}s
- * for parsing and writing JSON objects that are part of the GeRDI extension of the
- * {@linkplain de.gerdiproject.json.datacite.DataCiteJson}.
+ * This package contains enumerations for controlled list values of the extension of DataCite JSON objects.
  *
  * @author Robin Weiss
  */
-package de.gerdiproject.json.datacite.extension.adapter;
+package de.gerdiproject.json.datacite.extension.generic.enums;

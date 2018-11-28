@@ -17,9 +17,11 @@
 package de.gerdiproject.harvest.utils;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import de.gerdiproject.harvest.ICleanable;
@@ -82,6 +84,7 @@ public class CollectionUtils
      * Static helper that adds elements to an existing {@linkplain List}, or
      * creates a new {@linkplain LinkedList} if nothing was added before. Also removes null- and duplicate
      * elements and cleans the items prior to adding them, if they implement {@linkplain ICleanable}.
+     * Elements that cannot be cleaned are not added to the list
      *
      * @param list the list to which the elements are added, or null if no list exists yet
      * @param addedElements the elements that are to be added
@@ -101,16 +104,37 @@ public class CollectionUtils
             if (element == null || tempList.contains(element))
                 continue;
 
-            if (element instanceof ICleanable) {
-                // if element can be cleaned, do it and add it only if it is valid
-                final ICleanable cleanableElement = (ICleanable) element;
-
-                if (cleanableElement.clean())
-                    tempList.add(element);
-            } else
+            if (!(element instanceof ICleanable) || ((ICleanable) element).clean())
                 tempList.add(element);
         }
 
         return tempList.isEmpty() ? null : tempList;
+    }
+
+
+    /**
+     * Static helper that puts a value to an existing {@linkplain Map}, or
+     * creates a new {@linkplain HashMap} if nothing was added before.
+     * Also removes cleans the value  prior to adding it, if it implements {@linkplain ICleanable}.
+     * Values that cannot be cleaned are not put into the map.
+     *
+     * @param map the map to which the value is added, or null if no map exists yet
+     * @param key the key at which the value is stored in the map
+     * @param value the value that is to be put into the map
+     * @param <T> the type of the added value
+     *
+     * @return a map with the added value, or null if the map is empty after the operation
+     */
+    public static <T> Map<String, T> addToMap(Map<String, T> map, String key, T value)
+    {
+        if (value == null)
+            return map;
+
+        final Map<String, T> tempMap = map == null ? new HashMap<>() : map;
+
+        if (!(value instanceof ICleanable) || ((ICleanable) value).clean())
+            tempMap.put(key, value);
+
+        return tempMap.isEmpty() ? null : tempMap;
     }
 }
