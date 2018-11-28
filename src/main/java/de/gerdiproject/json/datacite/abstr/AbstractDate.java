@@ -28,9 +28,12 @@ import javax.xml.bind.DatatypeConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.gson.annotations.SerializedName;
+
 import de.gerdiproject.harvest.utils.StringCleaner;
 import de.gerdiproject.json.datacite.constants.DataCiteDateConstants;
 import de.gerdiproject.json.datacite.enums.DateType;
+import lombok.Data;
 
 /**
  * This JsonObject describes a date that has been relevant to the work.
@@ -38,6 +41,7 @@ import de.gerdiproject.json.datacite.enums.DateType;
  * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
+@Data
 public abstract class AbstractDate
 {
     protected static final Logger LOGGER = LoggerFactory.getLogger(AbstractDate.class);
@@ -45,23 +49,13 @@ public abstract class AbstractDate
     /**
      * The event that is marked by this date.
      */
-    private DateType dateType;
+    @SerializedName("dateType")
+    private final DateType type;
 
     /**
      * Specific free text information about the date, if appropriate.
      */
     private String dateInformation;
-
-
-    /**
-     * Simple constructor that requires all mandatory fields.
-     *
-     * @param type the event that is marked by this date
-     */
-    public AbstractDate(DateType type)
-    {
-        this.dateType = type;
-    }
 
 
     /**
@@ -78,50 +72,6 @@ public abstract class AbstractDate
      * @param value the new value
      */
     abstract public void setValue(String value);
-
-
-    /**
-     * Returns the event that is marked by this date.
-     *
-     * @return the event that is marked by this date
-     */
-    public DateType getType()
-    {
-        return dateType;
-    }
-
-
-    /**
-     * Changes the event that is marked by this date.
-     *
-     * @param type the event that is marked by this date
-     */
-    public void setType(DateType type)
-    {
-        this.dateType = type;
-    }
-
-
-    /**
-     * Returns specific free text information about the date.
-     *
-     * @return specific free text information about the date
-     */
-    public String getDateInformation()
-    {
-        return dateInformation;
-    }
-
-
-    /**
-     * Changes the specific free text information about the date.
-     *
-     * @param dateInformation specific free text information about the date
-     */
-    public void setDateInformation(String dateInformation)
-    {
-        this.dateInformation = dateInformation;
-    }
 
 
     /**
@@ -203,49 +153,5 @@ public abstract class AbstractDate
     protected static Instant unixTimestampToInstant(long epochMilli)
     {
         return Instant.ofEpochMilli(epochMilli);
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((dateInformation == null) ? 0 : dateInformation.hashCode());
-        result = prime * result + ((dateType == null) ? 0 : dateType.hashCode());
-        return result;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-            return true;
-
-        if (obj == null)
-            return false;
-
-        if (!(obj instanceof AbstractDate))
-            return false;
-
-        AbstractDate other = (AbstractDate) obj;
-
-        if (dateInformation == null) {
-            if (other.dateInformation != null)
-                return false;
-        } else if (!dateInformation.equals(other.dateInformation))
-            return false;
-
-        if (dateType != other.dateType)
-            return false;
-
-        return true;
     }
 }

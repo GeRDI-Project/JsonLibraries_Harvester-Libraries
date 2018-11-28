@@ -15,37 +15,47 @@
  */
 package de.gerdiproject.json.datacite.extension;
 
+import com.google.gson.annotations.SerializedName;
+
+import lombok.Data;
+
 /**
  * A downloadable file.
  *
  * This object is NOT part of the original DataCite schema.
+ *
  * @author Mathis Neumann, Robin Weiss
  */
+@Data
 public class ResearchData
 {
     /**
      * The URL that is used to access the file.
      * <br>e.g. http://fenixservices.fao.org/faostat/static/documents/QC/QC_methodology_e.pdf
      */
-    private String researchDataURL;
+    @SerializedName("researchDataURL")
+    private final String url;
 
     /**
      * Human readable name for the file.
      * <br>e.g. "Methodology - Crops Primary"
      */
-    private String researchDataLabel;
+    @SerializedName("researchDataLabel")
+    private final String label;
 
     /**
      * Locally (within this document) unique identifier for the file.
      * The identifier is generated from a hash value of the target URL.
      */
-    private String researchDataIdentifier;
+    @SerializedName("researchDataIdentifier")
+    private String identifier;
 
     /**
      * File format, extension or mimetype.
      * <br>e.g. pdf, application/json
      */
-    private String researchDataType;
+    @SerializedName("researchDataType")
+    private String type;
 
 
     /**
@@ -55,150 +65,8 @@ public class ResearchData
      */
     public ResearchData(String url, String label)
     {
-        this.researchDataURL = url;
-        this.researchDataLabel = label;
-        this.researchDataIdentifier = String.valueOf(url.hashCode());
-    }
-
-
-    /**
-     * Returns the URL that is used to access the file.
-     *
-     * @return the URL that is used to access the file
-     */
-    public String getUrl()
-    {
-        return researchDataURL;
-    }
-
-
-    /**
-     * Changes the URL that is used to access the file.
-     * <br>e.g. http://fenixservices.fao.org/faostat/static/documents/QC/QC_methodology_e.pdf
-     *
-     * @param url the URL that is used to access the file
-     */
-    public void setUrl(String url)
-    {
-        this.researchDataURL = url;
-        this.researchDataIdentifier = String.valueOf(url.hashCode());
-    }
-
-
-    /**
-     * Returns the human readable name for the file.
-     *
-     * @return the human readable name for the file
-     */
-    public String getLabel()
-    {
-        return researchDataLabel;
-    }
-
-
-    /**
-     * Changes the human readable name for the file.
-     * <br>e.g. "Methodology - Crops Primary"
-     *
-     * @param label a human readable name for the file
-     */
-    public void setLabel(String label)
-    {
-        this.researchDataLabel = label;
-    }
-
-    /**
-     * Returns the locally unique identifier for the file.
-     * The identifier is generated from a hash value of the target URL.
-     *
-     * @return the locally unique identifier for the file
-     */
-    public String getIdentifier()
-    {
-        return researchDataIdentifier;
-    }
-
-
-    /**
-     * Returns the file format, extension or mimetype of the file.
-     *
-     * @return a file format, extension or mimetype
-     */
-    public String getType()
-    {
-        return researchDataType;
-    }
-
-
-    /**
-     * Changes the file format, extension or mimetype.
-     * <br>e.g. pdf, application/json
-     *
-     * @param type a file format, extension or mimetype
-     */
-    public void setType(String type)
-    {
-        this.researchDataType = type;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((researchDataIdentifier == null) ? 0 : researchDataIdentifier.hashCode());
-        result = prime * result + ((researchDataLabel == null) ? 0 : researchDataLabel.hashCode());
-        result = prime * result + ((researchDataType == null) ? 0 : researchDataType.hashCode());
-        result = prime * result + ((researchDataURL == null) ? 0 : researchDataURL.hashCode());
-        return result;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-            return true;
-
-        if (obj == null)
-            return false;
-
-        if (!(obj instanceof ResearchData))
-            return false;
-
-        ResearchData other = (ResearchData) obj;
-
-        if (researchDataIdentifier == null) {
-            if (other.researchDataIdentifier != null)
-                return false;
-        } else if (!researchDataIdentifier.equals(other.researchDataIdentifier))
-            return false;
-
-        if (researchDataLabel == null) {
-            if (other.researchDataLabel != null)
-                return false;
-        } else if (!researchDataLabel.equals(other.researchDataLabel))
-            return false;
-
-        if (researchDataType == null) {
-            if (other.researchDataType != null)
-                return false;
-        } else if (!researchDataType.equals(other.researchDataType))
-            return false;
-
-        if (researchDataURL == null) {
-            if (other.researchDataURL != null)
-                return false;
-        } else if (!researchDataURL.equals(other.researchDataURL))
-            return false;
-
-        return true;
+        this.url = url;
+        this.label = label;
+        this.identifier = String.valueOf(url.hashCode());
     }
 }

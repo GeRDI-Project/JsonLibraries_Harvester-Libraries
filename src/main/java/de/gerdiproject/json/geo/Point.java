@@ -17,29 +17,33 @@ package de.gerdiproject.json.geo;
 
 import com.google.gson.JsonArray;
 
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 /**
  * A geographical point. It must contain longitude and latitude and may contain the elevation as well.
  *
  * @author Robin Weiss
  */
+@Data @RequiredArgsConstructor
 public class Point implements IGeoCoordinates
 {
     /**
      * A geographic coordinate that specifies the east-west position of a point on the Earth's surface.
      * It ranges from -180.0° to 180.0°. The Prime Meridian is at 0.0°.
      */
-    private double longitude;
+    private final double longitude;
 
     /**
      * A geographic coordinate that specifies the north–south position of a point on the Earth's surface.
      * It ranges from -90.0° to 90.0°. The Equator is at 0.0°.
      */
-    private double latitude;
+    private final double latitude;
 
     /**
      * The elevation of a geographic location is its height above or below the Earth's sea level.
      */
-    private double elevation;
+    private final double elevation;
 
 
     /**
@@ -57,21 +61,6 @@ public class Point implements IGeoCoordinates
 
 
     /**
-     * Constructor that also lets you set the elevation.
-     *
-     * @param longitude a geographic coordinate that specifies the east-west position of a point on the Earth's surface
-     * @param latitude a geographic coordinate that specifies the north–south position of a point on the Earth's surface
-     * @param elevation the elevation of a geographic location is its height above or below the Earth's sea level
-     */
-    public Point(double longitude, double latitude, double elevation)
-    {
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.elevation = elevation;
-    }
-
-
-    /**
      * Constructor that constructs the point from a json array.
      *
      * @param array a JsonArray containing two or three numbers
@@ -80,95 +69,8 @@ public class Point implements IGeoCoordinates
     {
         this.longitude = array.get(0).getAsDouble();
         this.latitude = array.get(1).getAsDouble();
-
-        if (array.size() >= 3)
-            this.elevation = array.get(2).getAsDouble();
-        else
-            this.elevation = Double.NaN;
-    }
-
-
-    public double getLongitude()
-    {
-        return longitude;
-    }
-
-
-    public void setLongitude(double longitude)
-    {
-        this.longitude = longitude;
-    }
-
-
-    public double getLatitude()
-    {
-        return latitude;
-    }
-
-
-    public void setLatitude(double latitude)
-    {
-        this.latitude = latitude;
-    }
-
-
-    public double getElevation()
-    {
-        return elevation;
-    }
-
-
-    public void setElevation(double elevation)
-    {
-        this.elevation = elevation;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        long temp;
-        temp = Double.doubleToLongBits(elevation);
-        result = prime * result + (int)(temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(latitude);
-        result = prime * result + (int)(temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(longitude);
-        result = prime * result + (int)(temp ^ (temp >>> 32));
-        return result;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-            return true;
-
-        if (obj == null)
-            return false;
-
-        if (!(obj instanceof Point))
-            return false;
-
-        Point other = (Point) obj;
-
-        if (Double.doubleToLongBits(elevation) != Double.doubleToLongBits(other.elevation))
-            return false;
-
-        if (Double.doubleToLongBits(latitude) != Double.doubleToLongBits(other.latitude))
-            return false;
-
-        if (Double.doubleToLongBits(longitude) != Double.doubleToLongBits(other.longitude))
-            return false;
-
-        return true;
+        this.elevation = array.size() >= 3
+                         ? array.get(2).getAsDouble()
+                         : Double.NaN;
     }
 }

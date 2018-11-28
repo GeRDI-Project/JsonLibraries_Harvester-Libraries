@@ -15,7 +15,10 @@
  */
 package de.gerdiproject.json.datacite.extension;
 
+import com.google.gson.annotations.SerializedName;
+
 import de.gerdiproject.json.datacite.extension.enums.WebLinkType;
+import lombok.Data;
 
 /**
  * A link to the data provider's website.
@@ -23,142 +26,23 @@ import de.gerdiproject.json.datacite.extension.enums.WebLinkType;
  * This object is NOT part of the original DataCite schema.
  * @author Mathis Neumann, Robin Weiss
  */
+@Data
 public class WebLink
 {
     /**
-     * A descriptive name of the web link destination.
-     */
-    private String webLinkName;
-
-    /**
      * The URL of the web link.
      */
-    private String webLinkURI;
+    private final String webLinkURI;
+
+    /**
+     * A descriptive name of the web link destination.
+     */
+    @SerializedName("webLinkName")
+    private String name;
 
     /**
      * The link category.
      */
-    private WebLinkType webLinkType;
-
-
-    /**
-     * Simple constructor that requires all mandatory fields.
-     *
-     * @param url the URL of the link
-     */
-    public WebLink(String url)
-    {
-        this.webLinkURI = url;
-    }
-
-
-    /**
-     * Returns a descriptive name of the web link destination.
-     * @return a descriptive name of the web link destination
-     */
-    public String getName()
-    {
-        return webLinkName;
-    }
-
-
-    /**
-     * Changes the descriptive name of the web link destination.
-     * @param name a descriptive name of the web link destination
-     */
-    public void setName(String name)
-    {
-        this.webLinkName = name;
-    }
-
-
-    /**
-     * Returns the URL of the web link.
-     * @return the URL of the web link
-     */
-    public String getUrl()
-    {
-        return webLinkURI;
-    }
-
-
-    /**
-     * Changes the URL of the web link.
-     * @param url the URL of the web link
-     */
-    public void setUrl(String url)
-    {
-        this.webLinkURI = url;
-    }
-
-
-    /**
-     * Returns the type of the web link.
-     * @return the type of the web link
-     */
-    public WebLinkType getType()
-    {
-        return webLinkType;
-    }
-
-
-    /**
-     * Changes the type of the web link.
-     * @param type the type of the web link
-     */
-    public void setType(WebLinkType type)
-    {
-        this.webLinkType = type;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((webLinkName == null) ? 0 : webLinkName.hashCode());
-        result = prime * result + ((webLinkType == null) ? 0 : webLinkType.hashCode());
-        result = prime * result + ((webLinkURI == null) ? 0 : webLinkURI.hashCode());
-        return result;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-            return true;
-
-        if (obj == null)
-            return false;
-
-        if (!(obj instanceof WebLink))
-            return false;
-
-        WebLink other = (WebLink) obj;
-
-        if (webLinkName == null) {
-            if (other.webLinkName != null)
-                return false;
-        } else if (!webLinkName.equals(other.webLinkName))
-            return false;
-
-        if (webLinkType != other.webLinkType)
-            return false;
-
-        if (webLinkURI == null) {
-            if (other.webLinkURI != null)
-                return false;
-        } else if (!webLinkURI.equals(other.webLinkURI))
-            return false;
-
-        return true;
-    }
+    @SerializedName("webLinkType")
+    private WebLinkType type;
 }

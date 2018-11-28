@@ -32,9 +32,7 @@ public class DataCiteResearchConstants
 
     // Formatting
     public static final String AREA_RNBR_FORMAT = "%03d";
-    public static final String AREA_NAME_FORMAT = AREA_RNBR_FORMAT + " %s (%s)";
     public static final String DISCIPLINE_RNBR_FORMAT = "%03d-%02d";
-    public static final String DISCIPLINE_NAME_FORMAT = DISCIPLINE_RNBR_FORMAT + " %s (%s) (%s)";
 
 
     /**

@@ -16,6 +16,7 @@
 package de.gerdiproject.json.datacite;
 
 import de.gerdiproject.json.datacite.enums.ResourceTypeGeneral;
+import lombok.Data;
 
 /**
  * This object represents a description of the resource.
@@ -23,6 +24,7 @@ import de.gerdiproject.json.datacite.enums.ResourceTypeGeneral;
  * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
+@Data
 public class ResourceType
 {
     /**
@@ -30,114 +32,10 @@ public class ResourceType
      * In XML, this is the value between the resourceType-tags.
      * <br>e.g. "Census Data"
      */
-    private String value;
+    private final String value;
 
     /**
      * The general type of a resource.
      */
-    private ResourceTypeGeneral resourceTypeGeneral;
-
-
-    /**
-     * Simple constructor that requires all mandatory values.
-     *
-     * @param value the free text description of the resource
-     * @param resourceTypeGeneral the general type of the resource
-     */
-    public ResourceType(String value, ResourceTypeGeneral resourceTypeGeneral)
-    {
-        this.value = value;
-        this.resourceTypeGeneral = resourceTypeGeneral;
-    }
-
-
-    /**
-     * Returns the free text description of the resource.
-     * In XML, this is the value between the resourceType-tags.
-     *
-     * @return the free text description of the resource
-     */
-    public String getValue()
-    {
-        return value;
-    }
-
-
-    /**
-     * Changes the free text description of the resource.
-     * In XML, this is the value between the resourceType-tags.
-     * <br>e.g. "Census Data"
-     *
-     * @param value a free text description of the resource
-     */
-    public void setValue(String value)
-    {
-        this.value = value;
-    }
-
-
-    /**
-     * Returns the general type of the resource.
-     *
-     * @return the general type of the resource
-     */
-    public ResourceTypeGeneral getGeneralType()
-    {
-        return resourceTypeGeneral;
-    }
-
-
-    /**
-     * Changes the general type of the resource.
-     *
-     * @param generalType the general type of the resource
-     */
-    public void setGeneralType(ResourceTypeGeneral generalType)
-    {
-        this.resourceTypeGeneral = generalType;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((resourceTypeGeneral == null) ? 0 : resourceTypeGeneral.hashCode());
-        result = prime * result + ((value == null) ? 0 : value.hashCode());
-        return result;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-            return true;
-
-        if (obj == null)
-            return false;
-
-        if (!(obj instanceof ResourceType))
-            return false;
-
-        ResourceType other = (ResourceType) obj;
-
-        if (resourceTypeGeneral != other.resourceTypeGeneral)
-            return false;
-
-        if (value == null) {
-            if (other.value != null)
-                return false;
-        } else if (!value.equals(other.value))
-            return false;
-
-        return true;
-    }
+    private final ResourceTypeGeneral resourceTypeGeneral;
 }

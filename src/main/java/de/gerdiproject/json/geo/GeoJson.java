@@ -25,22 +25,27 @@ import com.google.gson.JsonSyntaxException;
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.json.GsonUtils;
 import de.gerdiproject.json.geo.constants.GeoJsonConstants;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * GeoJSON is a format for encoding a variety of geographic data structures.
  *
  * @author Robin Weiss
  */
+@EqualsAndHashCode
 public class GeoJson implements ICleanable
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(GeoJson.class);
     private static final Gson GSON = GsonUtils.createGeoJsonGsonBuilder().create();
 
+    private IGeoCoordinates coordinates;
+
     // exclude this field from serialization, it's only used for performance reasons
+    @EqualsAndHashCode.Exclude
     private transient boolean isClean;
 
-    private String type;
-    private IGeoCoordinates coordinates;
+    @Getter private String type;
 
 
     /**
@@ -82,18 +87,6 @@ public class GeoJson implements ICleanable
     }
 
 
-    public String getType()
-    {
-        return type;
-    }
-
-
-    public IGeoCoordinates getCoordinates()
-    {
-        return coordinates;
-    }
-
-
     /**
      * Attempts to detect and remove errors in a geoJson object, such as
      * self-intersecting (multi-)polygons. Additionally, MultiPolygons that
@@ -131,52 +124,5 @@ public class GeoJson implements ICleanable
         }
 
         return isValid();
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((coordinates == null) ? 0 : coordinates.hashCode());
-        result = prime * result + ((type == null) ? 0 : type.hashCode());
-        return result;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-            return true;
-
-        if (obj == null)
-            return false;
-
-        if (!(obj instanceof GeoJson))
-            return false;
-
-        GeoJson other = (GeoJson) obj;
-
-        if (coordinates == null) {
-            if (other.coordinates != null)
-                return false;
-        } else if (!coordinates.equals(other.coordinates))
-            return false;
-
-        if (type == null) {
-            if (other.type != null)
-                return false;
-        } else if (!type.equals(other.type))
-            return false;
-
-        return true;
     }
 }

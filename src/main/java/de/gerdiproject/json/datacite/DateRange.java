@@ -21,6 +21,7 @@ import java.time.ZonedDateTime;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.constants.DataCiteDateConstants;
 import de.gerdiproject.json.datacite.enums.DateType;
+import lombok.EqualsAndHashCode;
 
 /**
  * This JsonObject describes a date that has been relevant to the work.
@@ -28,6 +29,7 @@ import de.gerdiproject.json.datacite.enums.DateType;
  * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
+@EqualsAndHashCode(callSuper = true)
 public class DateRange extends AbstractDate
 {
     /**
@@ -203,49 +205,5 @@ public class DateRange extends AbstractDate
     public void setRangeUntil(String stringValue)
     {
         this.until = stringToInstant(stringValue);
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + ((since == null) ? 0 : since.hashCode());
-        result = prime * result + ((until == null) ? 0 : until.hashCode());
-        return result;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (!super.equals(obj))
-            return false;
-
-        if (!(obj instanceof DateRange))
-            return false;
-
-        DateRange other = (DateRange) obj;
-
-        if (since == null) {
-            if (other.since != null)
-                return false;
-        } else if (!since.equals(other.since))
-            return false;
-
-        if (until == null) {
-            if (other.until != null)
-                return false;
-        } else if (!until.equals(other.until))
-            return false;
-
-        return true;
     }
 }

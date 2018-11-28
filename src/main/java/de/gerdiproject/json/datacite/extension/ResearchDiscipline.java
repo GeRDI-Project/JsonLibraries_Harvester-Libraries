@@ -17,48 +17,33 @@ package de.gerdiproject.json.datacite.extension;
 
 import de.gerdiproject.json.datacite.constants.DataCiteResearchConstants;
 import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * This class defines JSON objects that represent precise research disciplines.
  *
  * @author Fidan Limani, Robin Weiss
  */
+@Data @EqualsAndHashCode(callSuper = true)
 public class ResearchDiscipline extends AbstractResearch
 {
     private final ResearchArea area;
-    private final String name;
+    private final String disciplineName;
 
 
     /**
      * Constructor that requires the RNBR, name, and are of the discipline.
      *
      * @param rbnr a number that serves as a unique key of a discipline within an area
-     * @param name a human readable name of the discipline
+     * @param disciplineName a human readable name of the discipline
      * @param area to which the discipline belongs
      */
-    public ResearchDiscipline(int rbnr, String name, ResearchArea area)
+    public ResearchDiscipline(int rbnr, String disciplineName, ResearchArea area)
     {
         super(rbnr);
-        this.name = name;
+        this.disciplineName = disciplineName;
         this.area = area;
-    }
-
-
-    /**
-     * Returns the research area to which the discipline belongs.
-     *
-     * @return the area to which the discipline belongs
-     */
-    public ResearchArea getArea()
-    {
-        return area;
-    }
-
-
-    @Override
-    public String getDisciplineName()
-    {
-        return name;
     }
 
 
@@ -83,56 +68,5 @@ public class ResearchDiscipline extends AbstractResearch
                    DataCiteResearchConstants.DISCIPLINE_RNBR_FORMAT,
                    area.getRbnr(),
                    getRbnr());
-    }
-
-
-    @Override
-    public String toString()
-    {
-        return String.format(DataCiteResearchConstants.DISCIPLINE_NAME_FORMAT, area.getRbnr(), rbnr, area, getAreaName(), getCategoryName());
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + ((area == null) ? 0 : area.hashCode());
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        return result;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (!super.equals(obj))
-            return false;
-
-        if (!(obj instanceof ResearchDiscipline))
-            return false;
-
-        ResearchDiscipline other = (ResearchDiscipline) obj;
-
-        if (area == null) {
-            if (other.area != null)
-                return false;
-        } else if (!area.equals(other.area))
-            return false;
-
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-
-        return true;
     }
 }

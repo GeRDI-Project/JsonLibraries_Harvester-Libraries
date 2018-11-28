@@ -64,6 +64,8 @@ public class LineString extends LinkedList<Point> implements IGeoCoordinates
     public LineString(JsonArray array)
     {
         super();
-        array.forEach((JsonElement ele) -> add(new Point(ele.getAsJsonArray())));
+
+        for (JsonElement ele : array)
+            add(new Point(ele.getAsJsonArray()));
     }
 }
