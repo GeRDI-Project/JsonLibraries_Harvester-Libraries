@@ -43,7 +43,7 @@ import de.gerdiproject.json.geo.adapter.PolygonAdapter;
 
 
 /**
- * This is a static utility class that provides methods that for creating commonly used GSON builders.
+ * This is a static utility class that provides methods for creating {@linkplain GsonBuilder}s.
  *
  * @author Robin Weiss
  */

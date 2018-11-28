@@ -56,8 +56,6 @@ public class Point implements IGeoCoordinates
     }
 
 
-
-
     /**
      * Constructor that also lets you set the elevation.
      *
