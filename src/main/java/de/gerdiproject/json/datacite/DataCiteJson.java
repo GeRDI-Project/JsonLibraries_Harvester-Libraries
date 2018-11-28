@@ -76,8 +76,10 @@ public class DataCiteJson implements IDocument
 
     /**
      * The year when the data was or will be made publicly available.
+     * {@linkplain Integer} is used instead of the primitive type in order to
+     * exclude the publicationYear from the JSON if it was not explicitly set.
      */
-    private short publicationYear;
+    private Integer publicationYear;
 
     /**
      * A description of the resource.
@@ -327,7 +329,7 @@ public class DataCiteJson implements IDocument
      *
      * @return the year when the data was or will be made publicly available
      */
-    public short getPublicationYear()
+    public int getPublicationYear()
     {
         return publicationYear;
     }
@@ -339,7 +341,7 @@ public class DataCiteJson implements IDocument
      * @param publicationYear the year when the data was or will be made publicly
      *            available
      */
-    public void setPublicationYear(short publicationYear)
+    public void setPublicationYear(int publicationYear)
     {
         this.publicationYear = publicationYear;
     }
