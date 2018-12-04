@@ -17,7 +17,9 @@ package de.gerdiproject.json.datacite;
 
 import de.gerdiproject.json.datacite.nested.AwardNumber;
 import de.gerdiproject.json.datacite.nested.FunderIdentifier;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Information about financial support (funding) for the resource being registered.
@@ -27,7 +29,7 @@ import lombok.Data;
  *
  * @author Mathis Neumann, Robin Weiss
  */
-@Data
+@Data @RequiredArgsConstructor @AllArgsConstructor
 public class FundingReference
 {
     /**

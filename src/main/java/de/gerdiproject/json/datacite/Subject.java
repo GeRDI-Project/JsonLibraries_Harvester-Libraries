@@ -17,8 +17,10 @@ package de.gerdiproject.json.datacite;
 
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.utils.StringCleaner;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Subject, keywords (tags), classification codes, or key phrases describing the resource.
@@ -26,7 +28,7 @@ import lombok.NonNull;
  * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
  * @author Mathis Neumann, Robin Weiss
  */
-@Data
+@Data @RequiredArgsConstructor @AllArgsConstructor
 public class Subject implements ICleanable
 {
     /**
@@ -58,6 +60,19 @@ public class Subject implements ICleanable
      * <br>e.g. http://id.loc.gov/authorities/subjects/sh85026196
      */
     private String valueURI;
+
+
+    /**
+     * Constructor that allows to set the language.
+     *
+     * @param value a term that describes the resource
+     * @param lang a IETF language tag of the subject text
+     */
+    public Subject(String value, String lang)
+    {
+        this(value);
+        this.lang = lang;
+    }
 
 
     @Override

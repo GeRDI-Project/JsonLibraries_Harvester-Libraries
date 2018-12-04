@@ -20,8 +20,10 @@ import com.google.gson.annotations.SerializedName;
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.utils.StringCleaner;
 import de.gerdiproject.json.datacite.enums.TitleType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 /**
  * A name or title by which a resource is known.
@@ -29,7 +31,7 @@ import lombok.NonNull;
  * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
-@Data
+@Data @RequiredArgsConstructor @AllArgsConstructor
 public class Title implements ICleanable
 {
     /**

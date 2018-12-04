@@ -39,7 +39,7 @@ public class GerdiDataCiteExtension implements IDataCiteExtension
      * e.g. Sea Around Us, FAOSTAT
      */
     private String repositoryIdentifier;
-    
+
     /**
      * Links to the data provider's website.
      */

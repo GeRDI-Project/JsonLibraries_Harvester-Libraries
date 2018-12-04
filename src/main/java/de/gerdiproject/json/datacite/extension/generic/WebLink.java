@@ -18,7 +18,9 @@ package de.gerdiproject.json.datacite.extension.generic;
 import com.google.gson.annotations.SerializedName;
 
 import de.gerdiproject.json.datacite.extension.generic.enums.WebLinkType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
  * A link to the data provider's website.
@@ -26,7 +28,7 @@ import lombok.Data;
  * This object is NOT part of the original DataCite schema.
  * @author Mathis Neumann, Robin Weiss
  */
-@Data
+@Data @RequiredArgsConstructor @AllArgsConstructor
 public class WebLink
 {
     /**

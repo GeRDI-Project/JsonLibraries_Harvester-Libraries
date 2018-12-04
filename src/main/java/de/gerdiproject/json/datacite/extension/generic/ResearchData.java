@@ -48,7 +48,7 @@ public class ResearchData
      * The identifier is generated from a hash value of the target URL.
      */
     @SerializedName("researchDataIdentifier")
-    private String identifier;
+    private final String identifier;
 
     /**
      * File format, extension or mimetype.
@@ -68,5 +68,19 @@ public class ResearchData
         this.url = url;
         this.label = label;
         this.identifier = String.valueOf(url.hashCode());
+    }
+
+
+    /**
+     * Constructor that requires all fields.
+     *
+     * @param url the file URL
+     * @param label the file display name
+     * @param type file format, extension or mimetype
+     */
+    public ResearchData(String url, String label, String type)
+    {
+        this(url, label);
+        this.type = type;
     }
 }

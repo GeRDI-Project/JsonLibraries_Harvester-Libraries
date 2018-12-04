@@ -15,7 +15,9 @@
  */
 package de.gerdiproject.json.datacite.nested;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
  * The code assigned by the funder to a sponsored award (grant).
@@ -23,7 +25,7 @@ import lombok.Data;
  * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Robin Weiss
  */
-@Data
+@Data @RequiredArgsConstructor @AllArgsConstructor
 public class AwardNumber
 {
     /**
@@ -36,28 +38,4 @@ public class AwardNumber
      * The URI leading to a page for more information about the award.
      */
     private String awardURI;
-
-
-    /**
-     * Constructor that requires all mandatory fields.
-     *
-     * @param value the value of the AwardNumber
-     */
-    public AwardNumber(String value)
-    {
-        this.value = value;
-    }
-
-
-    /**
-     * Constructor that requires all fields.
-     *
-     * @param value the value of the AwardNumber
-     * @param awardURI the URI leading to a page for more information about the award
-     */
-    public AwardNumber(String value, String awardURI)
-    {
-        this.value = value;
-        this.awardURI = awardURI;
-    }
 }

@@ -25,6 +25,7 @@ import de.gerdiproject.json.geo.GeoJson;
 import de.gerdiproject.json.geo.Point;
 import de.gerdiproject.json.geo.Polygon;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Spatial region or named place where the data was gathered or about which the data is focused.
@@ -35,7 +36,7 @@ import lombok.Data;
  *
  * @author Mathis Neumann, Robin Weiss
  */
-@Data
+@Data @NoArgsConstructor
 public class GeoLocation implements ICleanable
 {
     /**
@@ -64,6 +65,17 @@ public class GeoLocation implements ICleanable
      */
     @SerializedName("geoLocationPolygon")
     private List<GeoJson> polygons;
+
+
+    /**
+     * Constructor that sets the name of the location.
+     *
+     * @param place free text description of the geographic location
+     */
+    public GeoLocation(String place)
+    {
+        this.place = place;
+    }
 
 
     /**

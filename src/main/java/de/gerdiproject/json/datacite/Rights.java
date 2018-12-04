@@ -19,8 +19,10 @@ import com.google.gson.annotations.SerializedName;
 
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.utils.StringCleaner;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Any rights information for this resource.
@@ -33,7 +35,7 @@ import lombok.NonNull;
  * @author Mathis Neumann, Robin Weiss
  *
  */
-@Data
+@Data @RequiredArgsConstructor @AllArgsConstructor
 public class Rights implements ICleanable
 {
     /**
@@ -45,17 +47,30 @@ public class Rights implements ICleanable
     private String value;
 
     /**
+     * An optional IETF language tag of the text.
+     * <br>e.g. de, en-US
+     */
+    private String lang;
+
+    /**
      * The URI of the license.
      * <br>e.g. http://creativecommons.org/licenses/by/3.0/de/deed.en
      */
     @SerializedName("rightsURI")
     private String uri;
 
+
     /**
-     * An optional IETF language tag of the subject text.
-     * <br>e.g. de, en-US
+     * Constructor that allows to set the language.
+     *
+     * @param value free text that describes the rights
+     * @param lang a IETF language tag of the text
      */
-    private String lang;
+    public Rights(String value, String lang)
+    {
+        this(value);
+        this.lang = lang;
+    }
 
 
     @Override

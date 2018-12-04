@@ -20,7 +20,9 @@ import com.google.gson.annotations.SerializedName;
 import de.gerdiproject.json.datacite.enums.RelatedIdentifierType;
 import de.gerdiproject.json.datacite.enums.RelationType;
 import de.gerdiproject.json.datacite.enums.ResourceTypeGeneral;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Identifiers of related resources.
@@ -30,7 +32,7 @@ import lombok.Data;
  *
  * @author Mathis Neumann, Robin Weiss
  */
-@Data
+@Data @RequiredArgsConstructor @AllArgsConstructor
 public class RelatedIdentifier
 {
     /**

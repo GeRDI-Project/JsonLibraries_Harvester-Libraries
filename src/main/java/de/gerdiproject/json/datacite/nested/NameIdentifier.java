@@ -15,7 +15,9 @@
  */
 package de.gerdiproject.json.datacite.nested;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
  * A unique identifier for an individual or legal entity, according to various schemes.
@@ -23,7 +25,7 @@ import lombok.Data;
  * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Robin Weiss
  */
-@Data
+@Data @RequiredArgsConstructor @AllArgsConstructor
 public class NameIdentifier
 {
     /**
