@@ -19,12 +19,16 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 
 /**
  * This static class is a collection of constants for automatically creating research discipline constants classes.
  *
  * @author Fidan Limani, Robin Weiss
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ResearchGeneratorConstants
 {
     private static final List<Character> SEPARATOR_CHARS = Collections.unmodifiableList(Arrays.asList('-', '_', ';', '(', ')',  '[', ']',  '{', '}', '.', ':', '/'));
@@ -32,7 +36,7 @@ public class ResearchGeneratorConstants
     public static final String GENERATOR_STARTED = "Started generating ResearchDisciplineConstants.java, ResearchAreaConstants.java, and ResearchCategoryConstants.java";
     public static final String GENERATOR_DONE = "Finished Generating";
 
-    public static final String CONSTANTS_FILE_NAME = "src/main/java/de/gerdiproject/json/datacite/extension/constants/%sConstants.java";
+    public static final String CONSTANTS_FILE_NAME = "src/main/java/de/gerdiproject/json/datacite/extension/generic/constants/%sConstants.java";
     public static final String DEFAULT_SOURCE_PATH = "src/main/java/de/gerdiproject/generator/research/source/DfgTopics.json";
 
     public static final String CATEGORY_CLASSNAME = "ResearchCategory";
@@ -58,51 +62,42 @@ public class ResearchGeneratorConstants
     public static final char NEW_LINE = '\n';
 
     public static final String IMPORT_DEF = "%nimport %s;";
-    public static final String AREA_IMPORT = "de.gerdiproject.json.datacite.extension.ResearchArea";
-    public static final String DISCIPLINE_IMPORT = "de.gerdiproject.json.datacite.extension.ResearchDiscipline";
+    public static final String AREA_IMPORT = "de.gerdiproject.json.datacite.extension.generic.ResearchArea";
+    public static final String DISCIPLINE_IMPORT = "de.gerdiproject.json.datacite.extension.generic.ResearchDiscipline";
     public static final String MAP_IMPORT = "java.util.Map";
     public static final String HASH_MAP_IMPORT = "java.util.HashMap";
 
-    public static final String CONSTRUCTOR =
-        "%n%n%n    /**"
-        + "%n     * Private constructor, because this is a static class."
-        + "%n     */"
-        + "%n    private %sConstants()"
-        + "%n    {"
-        + "%n"
-        + "%n    }";
-
     public static final String CLASS_START =
-        "/*"
-        + "%n *  Licensed to the Apache Software Foundation (ASF) under one"
-        + "%n *  or more contributor license agreements.  See the NOTICE file"
-        + "%n *  distributed with this work for additional information"
-        + "%n *  regarding copyright ownership.  The ASF licenses this file"
-        + "%n *  to you under the Apache License, Version 2.0 (the"
-        + "%n *  \"License\"); you may not use this file except in compliance"
-        + "%n *  with the License.  You may obtain a copy of the License at"
+        "/**"
+        + "%n * Copyright © 2017 Fidan Limani, Robin Weiss (http://www.gerdi-project.de)"
         + "%n *"
-        + "%n *    http://www.apache.org/licenses/LICENSE-2.0"
+        + "%n * Licensed under the Apache License, Version 2.0 (the \"License\");"
+        + "%n * you may not use this file except in compliance with the License."
+        + "%n * You may obtain a copy of the License at"
         + "%n *"
-        + "%n *  Unless required by applicable law or agreed to in writing,"
-        + "%n *  software distributed under the License is distributed on an"
-        + "%n *  \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY"
-        + "%n *  KIND, either express or implied.  See the License for the"
-        + "%n *  specific language governing permissions and limitations"
-        + "%n *  under the License."
+        + "%n *     http://www.apache.org/licenses/LICENSE-2.0"
+        + "%n *"
+        + "%n * Unless required by applicable law or agreed to in writing, software"
+        + "%n * distributed under the License is distributed on an \"AS IS\" BASIS,"
+        + "%n * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied."
+        + "%n * See the License for the specific language governing permissions and"
+        + "%n * limitations under the License."
         + "%n */"
-        + "%npackage de.gerdiproject.json.datacite.extension.constants;"
+        + "%npackage de.gerdiproject.json.datacite.extension.generic.constants;"
         + "%n"
         + "%nimport de.gerdiproject.generator.research.utils.ResearchGenerator;"
         + "%2$s"
+        + "%nimport lombok.AccessLevel;"
+        + "%nimport lombok.NoArgsConstructor;"
         + "%n"
         + "%n/**"
-        + "%n  * This static class is a collection of constants that define a controlled list of %1$ss."
-        + "%n  * It was generated via the {@linkplain ResearchGenerator}."
-        + "%n  * If there are errors or inconsistencies, please contact the authors."
-        + "%n  *"
-        + "%n  * @author Fidan Limani, Robin Weiss"
-        + "%n  */"
+        + "%n * This class serves as a collection of constants that define a controlled list of %1$ss."
+        + "%n * It was generated via the {@linkplain ResearchGenerator}."
+        + "%n * If there are errors or inconsistencies, please contact the authors."
+        + "%n *"
+        + "%n * @author Fidan Limani, Robin Weiss"
+        + "%n */"
+        + "%n@NoArgsConstructor(access=AccessLevel.PRIVATE)"
         + "%npublic class %1$sConstants"
         + "%n{";
 
@@ -188,15 +183,6 @@ public class ResearchGeneratorConstants
         + "\n"
         + "\n        return map;"
         + "\n    }";
-
-
-    /**
-     * Private constructor, because this is a static class.
-     */
-    private ResearchGeneratorConstants()
-    {
-
-    }
 
 
     /**
