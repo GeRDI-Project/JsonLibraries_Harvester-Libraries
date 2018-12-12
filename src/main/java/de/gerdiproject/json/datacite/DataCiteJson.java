@@ -29,7 +29,6 @@ import de.gerdiproject.json.GsonUtils;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.extension.IDataCiteExtension;
 import de.gerdiproject.json.datacite.extension.generic.AbstractResearch;
-import de.gerdiproject.json.datacite.extension.generic.GerdiDataCiteExtension;
 import de.gerdiproject.json.datacite.extension.generic.ResearchData;
 import de.gerdiproject.json.datacite.extension.generic.WebLink;
 import lombok.AccessLevel;
@@ -187,13 +186,42 @@ public class DataCiteJson implements IDocument
     @Setter(AccessLevel.NONE)
     private Set<FundingReference> fundingReferences;
 
+    // GENERIC EXTENSION:
+
+    /**
+     * A unique but human readable name of the repository. <br>
+     * e.g. Sea Around Us, FAOSTAT
+     */
+    private String repositoryIdentifier;
+
+    /**
+     * Links to the data provider's website.
+     */
+    @Setter(AccessLevel.NONE)
+    private Set<WebLink> webLinks;
+
+    /**
+     * Downloadable source data files.
+     */
+    @Setter(AccessLevel.NONE)
+    private Set<ResearchData> researchDataList;
+
+    /**
+     * A set of human readable names of the research disciplines, meaning the
+     * topics or domains that this document covers. <br>
+     * e.g. Computer Science, Geography
+     */
+    @Setter(AccessLevel.NONE)
+    private Set<AbstractResearch> researchDisciplines;
+
+
+    // DISCIPLINE EXTENSIONS
 
     /**
      * Different dates relevant to the work.
      */
     @SerializedName("extension") @Setter(AccessLevel.NONE)
     private Map<String, IDataCiteExtension> extensions;
-    private final transient GerdiDataCiteExtension gerdiExtension;
 
 
     /**
@@ -210,10 +238,6 @@ public class DataCiteJson implements IDocument
             throw new NullPointerException();
 
         this.sourceId = sourceId;
-
-        // create empty GeRDI extension
-        this.gerdiExtension = new GerdiDataCiteExtension();
-        addExtension(gerdiExtension);
     }
 
 
@@ -381,7 +405,7 @@ public class DataCiteJson implements IDocument
      */
     public void addWebLinks(Collection<WebLink> webLinks)
     {
-        this.gerdiExtension.addWebLinks(webLinks);
+        this.webLinks = CollectionUtils.addToSet(this.webLinks, webLinks);
     }
 
 
@@ -392,7 +416,7 @@ public class DataCiteJson implements IDocument
      */
     public void addResearchData(Collection<ResearchData> researchDataList)
     {
-        this.gerdiExtension.addResearchData(researchDataList);
+        this.researchDataList = CollectionUtils.addToSet(this.researchDataList, researchDataList);
     }
 
 
@@ -405,7 +429,7 @@ public class DataCiteJson implements IDocument
      */
     public void addResearchDisciplines(Collection<AbstractResearch> researchDisciplines)
     {
-        this.gerdiExtension.addResearchDisciplines(researchDisciplines);
+        this.researchDisciplines = CollectionUtils.addToSet(this.researchDisciplines, researchDisciplines);
     }
 
 
@@ -417,7 +441,7 @@ public class DataCiteJson implements IDocument
      */
     public void setRepositoryIdentifier(String repositoryIdentifier)
     {
-        this.gerdiExtension.setRepositoryIdentifier(repositoryIdentifier);
+        this.repositoryIdentifier = repositoryIdentifier;
     }
 
 

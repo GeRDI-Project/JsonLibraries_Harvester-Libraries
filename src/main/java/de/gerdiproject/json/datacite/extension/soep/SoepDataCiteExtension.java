@@ -43,7 +43,6 @@ public class SoepDataCiteExtension implements IDataCiteExtension
     @Override
     public String getKey()
     {
-        // TODO Auto-generated method stub
         return "soep";
     }
 

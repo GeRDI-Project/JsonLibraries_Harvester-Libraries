@@ -16,27 +16,25 @@
 
 package de.gerdiproject.json.datacite.extension.soep;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
  * This class models the SOEP-specific metadata: Concepts
  *
  * @author Fidan Limani
- **/
-@AllArgsConstructor
+ */
 @Data
 public class SoepConcept
 {
-    private String name;
+    private final String name;
 
     /**
      * Concept name in German
      */
-    private String labelDE;
+    private final String label;
 
     /**
      * Concept name in English
      */
-    private String label;
+    private final String language;
 }
