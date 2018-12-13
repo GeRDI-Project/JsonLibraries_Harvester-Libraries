@@ -25,6 +25,8 @@ public interface ICleanable
 {
     /**
      * Cleans the object, making it compatible with the ElasticSearch index.
+     *
+     * @return true if the clean up was successful and the object is now valid
      */
-    void clean();
+    boolean clean();
 }

@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 /**
- * This package contains abstract classes that are used by the
+ * This package contains constant collections that are used by the
  * GeRDI extension of the DataCite schema.
  *
  * @author Fidan Limani, Robin Weiss
  */
-package de.gerdiproject.json.datacite.extension.abstr;
+package de.gerdiproject.json.datacite.extension.generic.constants;

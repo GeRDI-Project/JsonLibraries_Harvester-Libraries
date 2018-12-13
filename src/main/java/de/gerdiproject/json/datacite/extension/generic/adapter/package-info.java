@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 /**
- * This package contains constant collections that are used by the
- * GeRDI extension of the DataCite schema.
+ * This package contains GSON {@linkplain com.google.gson.JsonSerializer}s and {@linkplain com.google.gson.JsonDeserializer}s
+ * for parsing and writing JSON objects that are part of the GeRDI extension of the
+ * {@linkplain de.gerdiproject.json.datacite.DataCiteJson}.
  *
- * @author Fidan Limani, Robin Weiss
+ * @author Robin Weiss
  */
-package de.gerdiproject.json.datacite.extension.constants;
+package de.gerdiproject.json.datacite.extension.generic.adapter;

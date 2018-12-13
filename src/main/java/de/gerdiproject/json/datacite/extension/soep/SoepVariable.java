@@ -14,29 +14,35 @@
  * limitations under the License.
  */
 
-package de.gerdiproject.json.datacite.extension.metadatabowl.soep;
+package de.gerdiproject.json.datacite.extension.soep;
+
+import java.util.Set;
+
+import com.google.gson.annotations.SerializedName;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
- * This class models the SOEP-specific metadata: Concepts
+ * This class models the SOEP-specific metadata: Variables
+ * In it we depict the initial set of attributes identified so far; new use cases might dictate an extension/change.
  *
  * @author Fidan Limani
- **/
+ */
 @AllArgsConstructor
 @Data
-public class SoepConcept
+public class SoepVariable
 {
-    private String name;
+    @SerializedName("variableName")
+    private final String name;
 
     /**
-     * Concept name in German
+     * The study source for the variable
      */
-    private String labelDE;
+    private final String source;
 
     /**
-     * Concept name in English
+     * The concept that describes the variable
      */
-    private String label;
+    private final Set<SoepConcept> concepts;
 }

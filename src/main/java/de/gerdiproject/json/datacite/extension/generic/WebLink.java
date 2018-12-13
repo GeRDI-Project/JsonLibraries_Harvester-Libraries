@@ -13,29 +13,38 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.gerdiproject.json.datacite.nested;
+package de.gerdiproject.json.datacite.extension.generic;
 
+import com.google.gson.annotations.SerializedName;
+
+import de.gerdiproject.json.datacite.extension.generic.enums.WebLinkType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 /**
- * The code assigned by the funder to a sponsored award (grant).
- * <br><br>
- * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
- * @author Robin Weiss
+ * A link to the data provider's website.
+ *
+ * This object is NOT part of the original DataCite schema.
+ * @author Mathis Neumann, Robin Weiss
  */
 @Data @RequiredArgsConstructor @AllArgsConstructor
-public class AwardNumber
+public class WebLink
 {
     /**
-     * The value of the AwardNumber.
-     * In XML, this is the value between the awardNumber-tags.
+     * The URL of the web link.
      */
-    private final String value;
+    private final String webLinkURI;
 
     /**
-     * The URI leading to a page for more information about the award.
+     * A descriptive name of the web link destination.
      */
-    private String awardURI;
+    @SerializedName("webLinkName")
+    private String name;
+
+    /**
+     * The link category.
+     */
+    @SerializedName("webLinkType")
+    private WebLinkType type;
 }

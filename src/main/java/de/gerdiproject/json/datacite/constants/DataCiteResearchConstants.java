@@ -15,7 +15,7 @@
  */
 package de.gerdiproject.json.datacite.constants;
 
-import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
+import de.gerdiproject.json.datacite.extension.generic.AbstractResearch;
 
 /**
  * This static class is a collection of constants that are used by {@linkplain AbstractResearch} and its sub-classes.
@@ -32,9 +32,7 @@ public class DataCiteResearchConstants
 
     // Formatting
     public static final String AREA_RNBR_FORMAT = "%03d";
-    public static final String AREA_NAME_FORMAT = AREA_RNBR_FORMAT + " %s (%s)";
     public static final String DISCIPLINE_RNBR_FORMAT = "%03d-%02d";
-    public static final String DISCIPLINE_NAME_FORMAT = DISCIPLINE_RNBR_FORMAT + " %s (%s) (%s)";
 
 
     /**

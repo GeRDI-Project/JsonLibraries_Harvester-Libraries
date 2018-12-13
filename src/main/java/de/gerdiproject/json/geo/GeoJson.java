@@ -15,7 +15,6 @@
  */
 package de.gerdiproject.json.geo;
 
-import org.json.JSONException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,24 +24,29 @@ import com.google.gson.JsonSyntaxException;
 
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.json.GsonUtils;
+import de.gerdiproject.json.geo.constants.GeoJsonConstants;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 /**
  * GeoJSON is a format for encoding a variety of geographic data structures.
  *
  * @author Robin Weiss
  */
+@EqualsAndHashCode
 public class GeoJson implements ICleanable
 {
-    private static final String PARSE_FAILED = "Could not simplify GeoJson:\n";
-    private static final String INVALID_GEO  = "Invalid GeoJson:\n";
-    private static final String INVALID_TYPE = "Invalid";
-    private static final Logger LOGGER       = LoggerFactory.getLogger(GeoJson.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(GeoJson.class);
+    private static final Gson GSON = GsonUtils.createGeoJsonGsonBuilder().create();
+
+    @Getter
+    private IGeoCoordinates coordinates;
 
     // exclude this field from serialization, it's only used for performance reasons
+    @EqualsAndHashCode.Exclude
     private transient boolean isClean;
 
-    private String          type;
-    private IGeoCoordinates coordinates;
+    @Getter private String type;
 
 
     /**
@@ -64,7 +68,7 @@ public class GeoJson implements ICleanable
     public void setCoordinates(IGeoCoordinates coordinates)
     {
         if (coordinates == null)
-            this.type = INVALID_TYPE;
+            this.type = GeoJsonConstants.INVALID_TYPE;
         else
             this.type = coordinates.getClass().getSimpleName();
 
@@ -84,18 +88,6 @@ public class GeoJson implements ICleanable
     }
 
 
-    public String getType()
-    {
-        return type;
-    }
-
-
-    public IGeoCoordinates getCoordinates()
-    {
-        return coordinates;
-    }
-
-
     /**
      * Attempts to detect and remove errors in a geoJson object, such as
      * self-intersecting (multi-)polygons. Additionally, MultiPolygons that
@@ -105,82 +97,33 @@ public class GeoJson implements ICleanable
      * rendering the GeoJson invalid.
      */
     @Override
-    public void clean()
+    public boolean clean()
     {
-        if (!isClean && coordinates != null && (coordinates instanceof Polygon || coordinates instanceof MultiPolygon)) {
-            Gson gson = GsonUtils.getGson();
+        if (!isClean && coordinates != null && (coordinates instanceof Polygon  || coordinates instanceof MultiPolygon)) {
 
-            String geoJsonString = gson.toJson(this);
+            final String geoJsonString = GSON.toJson(this);
 
             try {
                 // map our polygon implementation to the ESRI implementation
-                OGCGeometry polygon = OGCGeometry.fromGeoJson(geoJsonString);
+                final OGCGeometry polygon = OGCGeometry.fromGeoJson(geoJsonString);
 
                 // simplify ESRI polygon and convert it to JSON string
-                String simpleGeoString = polygon.makeSimple().asGeoJson();
+                final String simpleGeoString = polygon.makeSimple().asGeoJson();
 
                 // parse JSON string to a new GeoJson object
-                GeoJson cleanedGeo = gson.fromJson(simpleGeoString, GeoJson.class);
+                final GeoJson  cleanedGeo = GSON.fromJson(simpleGeoString, GeoJson.class);
 
                 // copy the simplified coordinates
-                this.coordinates = cleanedGeo.coordinates;
-                this.type = cleanedGeo.type;
-                isClean = true;
-
-            } catch (JSONException e) {
-                LOGGER.warn(PARSE_FAILED + geoJsonString);
-                setCoordinates(null);
+                setCoordinates(cleanedGeo.coordinates);
+                this.isClean = true;
             } catch (JsonSyntaxException e) {
-                LOGGER.warn(INVALID_GEO + geoJsonString);
+                if (LOGGER.isDebugEnabled())
+                    LOGGER.debug(String.format(GeoJsonConstants.INVALID_GEOJSON_ERROR, geoJsonString));
+
                 setCoordinates(null);
             }
         }
-    }
 
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((coordinates == null) ? 0 : coordinates.hashCode());
-        result = prime * result + ((type == null) ? 0 : type.hashCode());
-        return result;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-            return true;
-
-        if (obj == null)
-            return false;
-
-        if (!(obj instanceof GeoJson))
-            return false;
-
-        GeoJson other = (GeoJson) obj;
-
-        if (coordinates == null) {
-            if (other.coordinates != null)
-                return false;
-        } else if (!coordinates.equals(other.coordinates))
-            return false;
-
-        if (type == null) {
-            if (other.type != null)
-                return false;
-        } else if (!type.equals(other.type))
-            return false;
-
-        return true;
+        return isValid();
     }
 }

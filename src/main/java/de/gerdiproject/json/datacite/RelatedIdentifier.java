@@ -15,17 +15,24 @@
  */
 package de.gerdiproject.json.datacite;
 
+import com.google.gson.annotations.SerializedName;
+
 import de.gerdiproject.json.datacite.enums.RelatedIdentifierType;
 import de.gerdiproject.json.datacite.enums.RelationType;
 import de.gerdiproject.json.datacite.enums.ResourceTypeGeneral;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Identifiers of related resources.
  * These must be globally unique identifiers.
  *
  * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
+ *
  * @author Mathis Neumann, Robin Weiss
  */
+@Data @RequiredArgsConstructor @AllArgsConstructor
 public class RelatedIdentifier
 {
     /**
@@ -33,23 +40,24 @@ public class RelatedIdentifier
      * In XML, this is the value between the relatedIdentifier-tags.
      * Use this property to indicate subsets of properties, as appropriate.
      */
-    private String value;
+    private final String value;
 
     /**
      * The type of the related identifier.
      */
-    private RelatedIdentifierType relatedIdentifierType;
-
-    /**
-     * The general type of the related resource (B).
-     */
-    private ResourceTypeGeneral resourceTypeGeneral;
+    @SerializedName("relatedIdentifierType")
+    private final RelatedIdentifierType type;
 
     /**
      * Description of the relationship of the resource being registered (A)
      * and the related resource (B).
      */
-    private RelationType relationType;
+    private final RelationType relationType;
+
+    /**
+     * The general type of the related resource (B).
+     */
+    private ResourceTypeGeneral resourceTypeGeneral;
 
     /**
      * The name of the related scheme.
@@ -67,251 +75,4 @@ public class RelatedIdentifier
      * The type of the relatedMetadataScheme, linked with the schemeURI.
      */
     private String schemeType;
-
-
-    /**
-     * Simple constructor that requires all mandatory fields.
-     *
-     * @param value free text identifier of related resources
-     * @param type type of the RelatedIdentifier
-     * @param relationType description of the relationship of the resource being registered and the related resource
-     */
-    public RelatedIdentifier(String value, RelatedIdentifierType type, RelationType relationType)
-    {
-        this.value = value;
-        this.relatedIdentifierType = type;
-        this.relationType = relationType;
-    }
-
-
-    /**
-     * Returns an identifier of related resources.
-     * In XML, this is the value between the relatedIdentifier-tags.
-     *
-     * @return an identifier of related resources
-     */
-    public String getValue()
-    {
-        return value;
-    }
-
-
-    /**
-     * Changes the free text identifier of related resources.
-     * In XML, this is the value between the relatedIdentifier-tags.
-     * Use this property to indicate subsets of properties, as appropriate.
-     *
-     * @param value a free text identifier of related resources
-     */
-    public void setValue(String value)
-    {
-        this.value = value;
-    }
-
-
-    /**
-     * Returns the type of the related identifier.
-     *
-     * @return the type of the related identifier
-     */
-    public String getRelatedMetadataScheme()
-    {
-        return relatedMetadataScheme;
-    }
-
-
-    /**
-     * Changes the type of the related identifier.
-     *
-     * @param relatedMetadataScheme a type of a related identifier
-     */
-    public void setRelatedMetadataScheme(String relatedMetadataScheme)
-    {
-        this.relatedMetadataScheme = relatedMetadataScheme;
-    }
-
-
-    /**
-     * Returns the URI of the relatedMetadataScheme.
-     * @return the URI of the relatedMetadataScheme
-     */
-    public String getSchemeURI()
-    {
-        return schemeURI;
-    }
-
-
-    /**
-     * Changes the URI of the relatedMetadataScheme.
-     * <br>e.g. https://github.com/citation-style-language/schema/raw/master/csl-data.json
-     *
-     * @param schemeURI the URI of the relatedMetadataScheme
-     */
-    public void setSchemeURI(String schemeURI)
-    {
-        this.schemeURI = schemeURI;
-    }
-
-
-    /**
-     * Returns the type of the relatedMetadataScheme, linked with the schemeURI.
-     *
-     * @return the type of the relatedMetadataScheme
-     */
-    public String getSchemeType()
-    {
-        return schemeType;
-    }
-
-
-    /**
-     * Changes the type of the relatedMetadataScheme, linked with the schemeURI.
-     *
-     * @param schemeType the type of the relatedMetadataScheme
-     */
-    public void setSchemeType(String schemeType)
-    {
-        this.schemeType = schemeType;
-    }
-
-
-    /**
-     * Returns the type of the related identifier.
-     *
-     * @return the type of the related identifier
-     */
-    public RelatedIdentifierType getType()
-    {
-        return relatedIdentifierType;
-    }
-
-
-    /**
-     * Changes the type of the related identifier.
-     *
-     * @param type the type of the related identifier
-     */
-    public void setType(RelatedIdentifierType type)
-    {
-        this.relatedIdentifierType = type;
-    }
-
-
-    /**
-     * Retrieves the general type of the related resource (B).
-     *
-     * @return the general type of the related resource
-     */
-    public ResourceTypeGeneral getResourceTypeGeneral()
-    {
-        return resourceTypeGeneral;
-    }
-
-
-    /**
-     * Changes the general type of the related resource (B).
-     *
-     * @param resourceTypeGeneral the general type of the related resource
-     */
-    public void setResourceTypeGeneral(ResourceTypeGeneral resourceTypeGeneral)
-    {
-        this.resourceTypeGeneral = resourceTypeGeneral;
-    }
-
-
-    /**
-     * Returns the description of the relationship of the resource being registered (A)
-     * and the related resource (B).
-     *
-     * @return the description of the relationship of the resource and the related resource
-     */
-    public RelationType getRelationType()
-    {
-        return relationType;
-    }
-
-
-    /**
-     * Changes the description of the relationship of the resource being registered (A)
-     * and the related resource (B).
-     *
-     * @param relationType the description of the relationship of the resource and the related resource
-     */
-    public void setRelationType(RelationType relationType)
-    {
-        this.relationType = relationType;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((relatedIdentifierType == null) ? 0 : relatedIdentifierType.hashCode());
-        result = prime * result + ((relatedMetadataScheme == null) ? 0 : relatedMetadataScheme.hashCode());
-        result = prime * result + ((relationType == null) ? 0 : relationType.hashCode());
-        result = prime * result + ((resourceTypeGeneral == null) ? 0 : resourceTypeGeneral.hashCode());
-        result = prime * result + ((schemeType == null) ? 0 : schemeType.hashCode());
-        result = prime * result + ((schemeURI == null) ? 0 : schemeURI.hashCode());
-        result = prime * result + ((value == null) ? 0 : value.hashCode());
-        return result;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-            return true;
-
-        if (obj == null)
-            return false;
-
-        if (!(obj instanceof RelatedIdentifier))
-            return false;
-
-        RelatedIdentifier other = (RelatedIdentifier) obj;
-
-        if (relatedIdentifierType != other.relatedIdentifierType)
-            return false;
-
-        if (relatedMetadataScheme == null) {
-            if (other.relatedMetadataScheme != null)
-                return false;
-        } else if (!relatedMetadataScheme.equals(other.relatedMetadataScheme))
-            return false;
-
-        if (relationType != other.relationType)
-            return false;
-
-        if (resourceTypeGeneral != other.resourceTypeGeneral)
-            return false;
-
-        if (schemeType == null) {
-            if (other.schemeType != null)
-                return false;
-        } else if (!schemeType.equals(other.schemeType))
-            return false;
-
-        if (schemeURI == null) {
-            if (other.schemeURI != null)
-                return false;
-        } else if (!schemeURI.equals(other.schemeURI))
-            return false;
-
-        if (value == null) {
-            if (other.value != null)
-                return false;
-        } else if (!value.equals(other.value))
-            return false;
-
-        return true;
-    }
 }

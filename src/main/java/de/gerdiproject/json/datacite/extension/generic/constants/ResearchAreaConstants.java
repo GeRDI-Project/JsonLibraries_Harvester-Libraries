@@ -1,5 +1,5 @@
 /**
- * Copyright © 2017 Robin Weiss, Fidan Limani (http://www.gerdi-project.de)
+ * Copyright © 2017 Fidan Limani, Robin Weiss (http://www.gerdi-project.de)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,20 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.gerdiproject.json.datacite.extension.constants;
+package de.gerdiproject.json.datacite.extension.generic.constants;
 
 import de.gerdiproject.generator.research.utils.ResearchGenerator;
-import de.gerdiproject.json.datacite.extension.ResearchArea;
+import de.gerdiproject.json.datacite.extension.generic.ResearchArea;
 import java.util.Map;
 import java.util.HashMap;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
-  * This static class is a collection of constants that define a controlled list of ResearchAreas.
-  * It was generated via the {@linkplain ResearchGenerator}.
-  * If there are errors or inconsistencies, please contact the authors.
-  *
-  * @author Fidan Limani, Robin Weiss
-  */
+ * This class serves as a collection of constants that define a controlled list of ResearchAreas.
+ * It was generated via the {@linkplain ResearchGenerator}.
+ * If there are errors or inconsistencies, please contact the authors.
+ *
+ * @author Fidan Limani, Robin Weiss
+ */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ResearchAreaConstants
 {
     // HUMANITIES_AND_SOCIAL_SCIENCES
@@ -137,15 +140,6 @@ public class ResearchAreaConstants
             COMPUTER_SCIENCE,
             CONSTRUCTION_ENGINEERING_AND_ARCHITECTURE
         );
-
-
-    /**
-     * Private constructor, because this is a static class.
-     */
-    private ResearchAreaConstants()
-    {
-
-    }
 
 
     /**

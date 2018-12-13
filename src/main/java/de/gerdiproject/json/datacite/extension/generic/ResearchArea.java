@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.gerdiproject.json.datacite.extension;
+package de.gerdiproject.json.datacite.extension.generic;
 
 import de.gerdiproject.json.datacite.constants.DataCiteResearchConstants;
-import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * This class defines a JSON object that represents the general area to which a
@@ -24,10 +25,11 @@ import de.gerdiproject.json.datacite.extension.abstr.AbstractResearch;
  *
  * @author Fidan Limani, Robin Weiss
  */
+@Data @EqualsAndHashCode(callSuper = true)
 public class ResearchArea extends AbstractResearch
 {
-    private final String category;
-    private final String name;
+    private final String categoryName;
+    private final String areaName;
 
 
     /**
@@ -41,8 +43,8 @@ public class ResearchArea extends AbstractResearch
     public ResearchArea(int rbnr, String name, String category)
     {
         super(rbnr);
-        this.category = category;
-        this.name = name;
+        this.categoryName = category;
+        this.areaName = name;
     }
 
 
@@ -54,74 +56,8 @@ public class ResearchArea extends AbstractResearch
 
 
     @Override
-    public String getAreaName()
-    {
-        return name;
-    }
-
-
-    @Override
-    public String getCategoryName()
-    {
-        return category;
-    }
-
-
-    @Override
     public String getRnbrAsString()
     {
         return String.format(DataCiteResearchConstants.AREA_RNBR_FORMAT, getRbnr());
-    }
-
-
-    @Override
-    public String toString()
-    {
-        return String.format(DataCiteResearchConstants.AREA_NAME_FORMAT, rbnr, name, category);
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + ((category == null) ? 0 : category.hashCode());
-        result = prime * result + ((name == null) ? 0 : name.hashCode());
-        return result;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-
-        if (!super.equals(obj))
-            return false;
-
-        if (!(obj instanceof ResearchArea))
-            return false;
-
-        ResearchArea other = (ResearchArea) obj;
-
-        if (category == null) {
-            if (other.category != null)
-                return false;
-        } else if (!category.equals(other.category))
-            return false;
-
-        if (name == null) {
-            if (other.name != null)
-                return false;
-        } else if (!name.equals(other.name))
-            return false;
-
-        return true;
     }
 }

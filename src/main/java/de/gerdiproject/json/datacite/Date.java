@@ -16,9 +16,13 @@
 package de.gerdiproject.json.datacite;
 
 import java.time.Instant;
+import java.time.ZonedDateTime;
 
+import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
+import de.gerdiproject.json.datacite.constants.DataCiteDateConstants;
 import de.gerdiproject.json.datacite.enums.DateType;
+import lombok.EqualsAndHashCode;
 
 /**
  * This JsonObject describes a date that has been relevant to the work.
@@ -26,7 +30,8 @@ import de.gerdiproject.json.datacite.enums.DateType;
  * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
-public class Date extends AbstractDate
+@EqualsAndHashCode(callSuper = true)
+public class Date extends AbstractDate implements ICleanable
 {
     /**
      *  The date value.
@@ -76,6 +81,20 @@ public class Date extends AbstractDate
 
 
     /**
+     * Retrieves the value as {@linkplain ZonedDateTime}, allowing
+     * for subsequent operations such as retrieving the year.
+     *
+     * @return the value as {@linkplain ZonedDateTime}
+     */
+    public ZonedDateTime getValueAsDateTime()
+    {
+        return value == null
+               ? null
+               : ZonedDateTime.ofInstant(value, DataCiteDateConstants.Z_ZONE_ID);
+    }
+
+
+    /**
      * Tries to set the date by parsing an ISO 8601 compliant String.
      * <br>e.g. 1994-11-05T13:15:30Z
      * <br><br>(see https://www.w3.org/TR/NOTE-datetime)
@@ -112,39 +131,10 @@ public class Date extends AbstractDate
     }
 
 
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
     @Override
-    public int hashCode()
+    public boolean clean()
     {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + ((value == null) ? 0 : value.hashCode());
-        return result;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (!super.equals(obj))
-            return false;
-
-        if (!(obj instanceof Date))
-            return false;
-
-        Date other = (Date) obj;
-
-        if (value == null) {
-            if (other.value != null)
-                return false;
-        } else if (!value.equals(other.value))
-            return false;
-
-        return true;
+        // nothing to clean, but it invalidates if it is null
+        return getValue() != null;
     }
 }

@@ -17,21 +17,26 @@ package de.gerdiproject.json.datacite;
 
 import de.gerdiproject.json.datacite.nested.AwardNumber;
 import de.gerdiproject.json.datacite.nested.FunderIdentifier;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Information about financial support (funding) for the resource being registered.
  * <br>This is not indexed!
  * <br><br>
  * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
+ *
  * @author Mathis Neumann, Robin Weiss
  */
+@Data @RequiredArgsConstructor @AllArgsConstructor
 public class FundingReference
 {
     /**
      * Name of the funding provider.
      * <br>e.g. Gordon and Betty Moore Foundation
      */
-    private String funderName;
+    private final String funderName;
 
     /**
      * Uniquely identifies a funding entity, according to various types.
@@ -50,168 +55,4 @@ public class FundingReference
      * <br>e.g. Socioenvironmental Monitoring of the Amazon Basin and Xingu
      */
     private String awardTitle;
-
-
-    /**
-     * Simple constructor that requires all mandatory fields.
-     *
-     * @param funderName name of the funding provider
-     */
-    public FundingReference(String funderName)
-    {
-        this.funderName = funderName;
-    }
-
-
-    /**
-     * Returns the name of the funding provider.
-     *
-     * @return the name of the funding provider
-     */
-    public String getFunderName()
-    {
-        return funderName;
-    }
-
-
-    /**
-     * Changes the name of the funding provider.
-     * <br>e.g. Gordon and Betty Moore Foundation
-     *
-     * @param funderName the name of the funding provider
-     */
-    public void setFunderName(String funderName)
-    {
-        this.funderName = funderName;
-    }
-
-
-    /**
-     * Returns a unique identifier of the funding entity.
-     *
-     * @return a unique identifier of the funding entity
-     */
-    public FunderIdentifier getFunderIdentifier()
-    {
-        return funderIdentifier;
-    }
-
-
-    /**
-     * Changes the unique identifier of the funding entity.
-     * <br>e.g. http://dx.doi.org/10.13039/100000936
-     *
-     * @param funderIdentifier a unique identifier of the funding entity
-     */
-    public void setFunderIdentifier(FunderIdentifier funderIdentifier)
-    {
-        this.funderIdentifier = funderIdentifier;
-    }
-
-
-    /**
-     * Returns the code assigned by the funder to a sponsored award (grant).
-     *
-     * @return the code assigned by the funder to a sponsored award (grant)
-     */
-    public AwardNumber getAwardNumber()
-    {
-        return awardNumber;
-    }
-
-
-    /**
-     * Changes the code assigned by the funder to a sponsored award (grant).
-     * <br>e.g. GBMF3859.01
-     *
-     * @param awardNumber the code assigned by the funder to a sponsored award (grant)
-     */
-    public void setAwardNumber(AwardNumber awardNumber)
-    {
-        this.awardNumber = awardNumber;
-    }
-
-
-    /**
-     * Returns the human readable title of the award (grant).
-     *
-     * @return the human readable title of the award (grant)
-     */
-    public String getAwardTitle()
-    {
-        return awardTitle;
-    }
-
-
-    /**
-     * Changes the human readable title of the award (grant).
-     * <br>e.g. Socioenvironmental Monitoring of the Amazon Basin and Xingu
-     *
-     * @param awardTitle the human readable title of the award (grant)
-     */
-    public void setAwardTitle(String awardTitle)
-    {
-        this.awardTitle = awardTitle;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((awardNumber == null) ? 0 : awardNumber.hashCode());
-        result = prime * result + ((awardTitle == null) ? 0 : awardTitle.hashCode());
-        result = prime * result + ((funderIdentifier == null) ? 0 : funderIdentifier.hashCode());
-        result = prime * result + ((funderName == null) ? 0 : funderName.hashCode());
-        return result;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-            return true;
-
-        if (obj == null)
-            return false;
-
-        if (!(obj instanceof FundingReference))
-            return false;
-
-        FundingReference other = (FundingReference) obj;
-
-        if (awardNumber == null) {
-            if (other.awardNumber != null)
-                return false;
-        } else if (!awardNumber.equals(other.awardNumber))
-            return false;
-
-        if (awardTitle == null) {
-            if (other.awardTitle != null)
-                return false;
-        } else if (!awardTitle.equals(other.awardTitle))
-            return false;
-
-        if (funderIdentifier == null) {
-            if (other.funderIdentifier != null)
-                return false;
-        } else if (!funderIdentifier.equals(other.funderIdentifier))
-            return false;
-
-        if (funderName == null) {
-            if (other.funderName != null)
-                return false;
-        } else if (!funderName.equals(other.funderName))
-            return false;
-
-        return true;
-    }
 }

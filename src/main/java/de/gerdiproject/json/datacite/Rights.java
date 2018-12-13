@@ -15,8 +15,14 @@
  */
 package de.gerdiproject.json.datacite;
 
+import com.google.gson.annotations.SerializedName;
+
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.utils.StringCleaner;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Any rights information for this resource.
@@ -29,6 +35,7 @@ import de.gerdiproject.harvest.utils.StringCleaner;
  * @author Mathis Neumann, Robin Weiss
  *
  */
+@Data @RequiredArgsConstructor @AllArgsConstructor
 public class Rights implements ICleanable
 {
     /**
@@ -36,160 +43,40 @@ public class Rights implements ICleanable
      * In XML, this is the value between the rights-tags.
      * <br>e.g. Creative Commons, Attribution 3.0 Germany
      */
+    @NonNull
     private String value;
+
+    /**
+     * An optional IETF language tag of the text.
+     * <br>e.g. de, en-US
+     */
+    private String lang;
 
     /**
      * The URI of the license.
      * <br>e.g. http://creativecommons.org/licenses/by/3.0/de/deed.en
      */
-    private String rightsURI;
-
-    /**
-     * An optional IETF language tag of the subject text.
-     * <br>e.g. de, en-US
-     */
-    private String lang;
+    @SerializedName("rightsURI")
+    private String uri;
 
 
     /**
-     * Constructor that requires all mandatory fields.
+     * Constructor that allows to set the language.
      *
      * @param value free text that describes the rights
+     * @param lang a IETF language tag of the text
      */
-    public Rights(String value)
+    public Rights(String value, String lang)
     {
-        this.value = value;
-    }
-
-
-    /**
-     * Returns the free text that describes the rights.
-     * In XML, this is the value between the rights-tags.
-     *
-     * @return free text that describes the rights
-     */
-    public String getValue()
-    {
-        return value;
-    }
-
-
-    /**
-     * Changes the free text that describes the rights.
-     * In XML, this is the value between the rights-tags.
-     * <br>e.g. Creative Commons, Attribution 3.0 Germany
-     *
-     * @param value free text that describes the rights
-     */
-    public void setValue(String value)
-    {
-        this.value = value;
-    }
-
-
-    /**
-     * Returns the URI of the license.
-     *
-     * @return the URI of the license
-     */
-    public String getURI()
-    {
-        return rightsURI;
-    }
-
-
-    /**
-     * Changes the URI of the license.
-     * <br>e.g. http://creativecommons.org/licenses/by/3.0/de/deed.en
-     *
-     * @param uri the URI of the license
-     */
-    public void setURI(String uri)
-    {
-        rightsURI = uri;
-    }
-
-
-    /**
-     * Returns the IETF language tag of the rights text.
-     *
-     * @return the IETF language tag of the rights text
-     */
-    public String getLang()
-    {
-        return lang;
-    }
-
-
-    /**
-     * Changes the IETF language tag of the rights text.
-     * <br>e.g. de, en-US
-     *
-     * @param lang an IETF language tag of the rights text
-     */
-    public void setLang(String lang)
-    {
+        this(value);
         this.lang = lang;
     }
 
 
     @Override
-    public void clean()
+    public boolean clean()
     {
-        value = StringCleaner.clean(value);
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((lang == null) ? 0 : lang.hashCode());
-        result = prime * result + ((rightsURI == null) ? 0 : rightsURI.hashCode());
-        result = prime * result + ((value == null) ? 0 : value.hashCode());
-        return result;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-            return true;
-
-        if (obj == null)
-            return false;
-
-        if (!(obj instanceof Rights))
-            return false;
-
-        Rights other = (Rights) obj;
-
-        if (lang == null) {
-            if (other.lang != null)
-                return false;
-        } else if (!lang.equals(other.lang))
-            return false;
-
-        if (rightsURI == null) {
-            if (other.rightsURI != null)
-                return false;
-        } else if (!rightsURI.equals(other.rightsURI))
-            return false;
-
-        if (value == null) {
-            if (other.value != null)
-                return false;
-        } else if (!value.equals(other.value))
-            return false;
-
+        setValue(StringCleaner.clean(value));
         return true;
     }
 }

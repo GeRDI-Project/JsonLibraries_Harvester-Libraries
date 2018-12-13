@@ -1,4 +1,4 @@
-/*
+/**
  * Copyright © 2018 Fidan Limani (http://www.gerdi-project.de)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,10 +14,27 @@
  * limitations under the License.
  */
 
+package de.gerdiproject.json.datacite.extension.soep;
+
+import lombok.Data;
+
 /**
- * This package contains the class(es) that typify the SOPE-specific metadata. In order to enable SOEP harvesting to its
- * fullest, the class(es) needs to extend GeRDI Schema JsonLibrary.
+ * This class models the SOEP-specific metadata: Concepts
  *
  * @author Fidan Limani
  */
-package de.gerdiproject.json.datacite.extension.metadatabowl.soep;
+@Data
+public class SoepConcept
+{
+    private final String name;
+
+    /**
+     * Concept name in German
+     */
+    private final String label;
+
+    /**
+     * Concept name in English
+     */
+    private final String language;
+}

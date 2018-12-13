@@ -15,8 +15,13 @@
  */
 package de.gerdiproject.json.datacite;
 
+import com.google.gson.annotations.SerializedName;
+
 import de.gerdiproject.json.datacite.abstr.AbstractPerson;
 import de.gerdiproject.json.datacite.nested.PersonName;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.RequiredArgsConstructor;
 
 /**
  * The main researcher involved in producing the data, or an author of the publication.
@@ -24,13 +29,15 @@ import de.gerdiproject.json.datacite.nested.PersonName;
  * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
+@Data @RequiredArgsConstructor @EqualsAndHashCode(callSuper = true)
 public class Creator extends AbstractPerson
 {
     /**
      * The full name of the creator.
      * <br>e.g. Sanchez, Rick
      */
-    private PersonName creatorName;
+    @SerializedName("creatorName")
+    private final PersonName name;
 
 
     /**
@@ -40,68 +47,6 @@ public class Creator extends AbstractPerson
      */
     public Creator(String name)
     {
-        super(name);
-    }
-
-
-    /**
-     * Simple constructor that requires all mandatory fields.
-     *
-     * @param nameObject the name and name type of the person
-     */
-    public Creator(PersonName nameObject)
-    {
-        super(nameObject);
-    }
-
-
-    @Override
-    public PersonName getName()
-    {
-        return creatorName;
-    }
-
-
-    @Override
-    public void setName(PersonName name)
-    {
-        this.creatorName = name;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = super.hashCode();
-        result = prime * result + ((creatorName == null) ? 0 : creatorName.hashCode());
-        return result;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (!super.equals(obj))
-            return false;
-
-        if (!(obj instanceof Creator))
-            return false;
-
-        Creator other = (Creator) obj;
-
-        if (creatorName == null) {
-            if (other.creatorName != null)
-                return false;
-        } else if (!creatorName.equals(other.creatorName))
-            return false;
-
-        return true;
+        this(new PersonName(name));
     }
 }

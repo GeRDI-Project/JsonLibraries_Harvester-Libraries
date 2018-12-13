@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright © 2018 Fidan Limani (http://www.gerdi-project.de)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,29 +14,10 @@
  * limitations under the License.
  */
 
-package de.gerdiproject.json.datacite.extension.metadatabowl.soep;
-
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
 /**
- * This class models the SOEP-specific metadata: Variables
- * In it we depict the initial set of attributes identified so far; new use cases might dictate an extension/change.
+ * This package contains the class(es) that typify the SOPE-specific metadata. In order to enable SOEP harvesting to its
+ * fullest, the class(es) needs to extend GeRDI Schema JsonLibrary.
+ *
  * @author Fidan Limani
- **/
-@AllArgsConstructor
-@Data
-public class SoepVariable
-{
-    private String variableName;
-
-    /**
-     * The study source for the variable
-     */
-    private String source;
-
-    /**
-     * The concept that describes the variable
-     */
-    private SoepConcept concept;
-}
+ */
+package de.gerdiproject.json.datacite.extension.soep;

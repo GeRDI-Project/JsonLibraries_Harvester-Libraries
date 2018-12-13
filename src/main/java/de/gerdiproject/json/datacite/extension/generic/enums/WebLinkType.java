@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.gerdiproject.json.datacite.extension.enums;
+package de.gerdiproject.json.datacite.extension.generic.enums;
 
 /**
  * The kind of data or webpage which is linked.

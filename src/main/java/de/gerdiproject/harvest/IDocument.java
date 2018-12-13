@@ -30,4 +30,12 @@ public interface IDocument
      *         retrieved
      */
     String getSourceId();
+
+
+    /**
+     * Returns a JSON representation of the document.
+     *
+     * @return a JSON representation of the document
+     */
+    String toJson();
 }

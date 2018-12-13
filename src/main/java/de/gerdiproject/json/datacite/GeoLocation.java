@@ -24,6 +24,8 @@ import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.json.geo.GeoJson;
 import de.gerdiproject.json.geo.Point;
 import de.gerdiproject.json.geo.Polygon;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Spatial region or named place where the data was gathered or about which the data is focused.
@@ -31,111 +33,48 @@ import de.gerdiproject.json.geo.Polygon;
  * that can be read by ElasticSearch.
  *
  * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
+ *
  * @author Mathis Neumann, Robin Weiss
  */
+@Data @NoArgsConstructor
 public class GeoLocation implements ICleanable
 {
     /**
      * Free text description of the geographic location.
      */
-    private String geoLocationPlace;
+    @SerializedName("geoLocationPlace")
+    private String place;
 
     /**
      * A point location in space.
      */
-    private GeoJson geoLocationPoint;
+    @SerializedName("geoLocationPoint")
+    private GeoJson point;
 
     /**
      *  The spatial limits of a box.
      *  It is somewhat redundant with the polygon, however,
      *  it is compliant to the DataCite schema.
      */
-    private GeoJson geoLocationBox;
+    @SerializedName("geoLocationBox")
+    private GeoJson box;
 
     /**
      *  A list of drawn polygon areas, defined by sets of points and
      *  lines connecting the points in closed chains.
      */
     @SerializedName("geoLocationPolygon")
-    private List<GeoJson> geoLocationPolygons;
+    private List<GeoJson> polygons;
 
 
     /**
-     * Returns the description of the geographic location.
+     * Constructor that sets the name of the location.
      *
-     * @return a free text description of the location
+     * @param place free text description of the geographic location
      */
-    public String getPlace()
+    public GeoLocation(String place)
     {
-        return geoLocationPlace;
-    }
-
-
-    /**
-     * Changes the description of the geographic location.
-     *
-     * @param place a free text description of the location
-     */
-    public void setPlace(String place)
-    {
-        this.geoLocationPlace = place;
-    }
-
-
-    /**
-     * Returns a point location in space.
-     *
-     * @return a point location
-     */
-    public GeoJson getPoint()
-    {
-        return geoLocationPoint;
-    }
-
-
-    /**
-     * Changes the point location.
-     *
-     * @param point a point location
-     */
-    public void setPoint(GeoJson point)
-    {
-        this.geoLocationPoint = point;
-    }
-
-
-    /**
-     * Returns a list of drawn polygon areas, defined by sets of
-     * points and lines connecting the points in closed chains.
-     *
-     * @return a list of drawn polygon areas
-     */
-    public List<GeoJson> getPolygons()
-    {
-        return geoLocationPolygons;
-    }
-
-
-    /**
-     * Changes the list of drawn polygon areas, defined by sets of
-     * points and lines connecting the points in closed chains.
-     *
-     * @param polygons a list of drawn polygon areas
-     */
-    public void setPolygons(List<GeoJson> polygons)
-    {
-        this.geoLocationPolygons = polygons;
-    }
-
-
-    /**
-     * Returns the spatial limits of a box.
-     *
-     * @return the spatial limits of a box
-     */
-    public GeoJson getBox()
-    {
-        return geoLocationBox;
+        this.place = place;
     }
 
 
@@ -159,7 +98,7 @@ public class GeoLocation implements ICleanable
                                              new Point(eastBoundLongitude, southBoundLatitude),
                                              new Point(westBoundLongitude, southBoundLatitude),
                                              new Point(westBoundLongitude, northBoundLatitude));
-        this.geoLocationBox = new GeoJson(new Polygon(boxShape));
+        this.box = new GeoJson(new Polygon(boxShape));
     }
 
 
@@ -168,46 +107,48 @@ public class GeoLocation implements ICleanable
      * Each invalid GeoJsons will become null.
      */
     @Override
-    public void clean()
+    public boolean clean()
     {
-        if (geoLocationPoint != null) {
-            geoLocationPoint.clean();
+        if (point != null) {
+            point.clean();
 
             // remove geoJson if it became invalid
-            if (!geoLocationPoint.isValid())
-                geoLocationPoint = null;
+            if (!point.isValid())
+                point = null;
         }
 
         // remove each polygon, if it is invalid
-        if (geoLocationPolygons != null) {
-            int i = geoLocationPolygons.size();
+        if (polygons != null) {
+            int i = polygons.size();
 
             while (i != 0) {
                 i--;
-                GeoJson geo = geoLocationPolygons.get(i);
+                GeoJson geo = polygons.get(i);
 
                 if (geo == null)
-                    geoLocationPolygons.remove(i);
+                    polygons.remove(i);
                 else {
                     geo.clean();
 
                     if (!geo.isValid())
-                        geoLocationPolygons.remove(i);
+                        polygons.remove(i);
                 }
             }
 
             // nullify the whole polygon list, if it is now empty
-            if (geoLocationPolygons.isEmpty())
-                geoLocationPolygons = null;
+            if (polygons.isEmpty())
+                polygons = null;
         }
 
-        if (geoLocationBox != null) {
-            geoLocationBox.clean();
+        if (box != null) {
+            box.clean();
 
             // remove geoJson if it became invalid
-            if (!geoLocationBox.isValid())
-                geoLocationBox = null;
+            if (!box.isValid())
+                box = null;
         }
+
+        return isValid();
     }
 
 
@@ -218,68 +159,7 @@ public class GeoLocation implements ICleanable
      */
     public boolean isValid()
     {
-        return geoLocationBox != null || geoLocationPolygons != null && !geoLocationPolygons
-               .isEmpty() || geoLocationPoint != null;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((geoLocationBox == null) ? 0 : geoLocationBox.hashCode());
-        result = prime * result + ((geoLocationPlace == null) ? 0 : geoLocationPlace.hashCode());
-        result = prime * result + ((geoLocationPoint == null) ? 0 : geoLocationPoint.hashCode());
-        result = prime * result + ((geoLocationPolygons == null) ? 0 : geoLocationPolygons.hashCode());
-        return result;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-            return true;
-
-        if (obj == null)
-            return false;
-
-        if (!(obj instanceof GeoLocation))
-            return false;
-
-        GeoLocation other = (GeoLocation) obj;
-
-        if (geoLocationBox == null) {
-            if (other.geoLocationBox != null)
-                return false;
-        } else if (!geoLocationBox.equals(other.geoLocationBox))
-            return false;
-
-        if (geoLocationPlace == null) {
-            if (other.geoLocationPlace != null)
-                return false;
-        } else if (!geoLocationPlace.equals(other.geoLocationPlace))
-            return false;
-
-        if (geoLocationPoint == null) {
-            if (other.geoLocationPoint != null)
-                return false;
-        } else if (!geoLocationPoint.equals(other.geoLocationPoint))
-            return false;
-
-        if (geoLocationPolygons == null) {
-            if (other.geoLocationPolygons != null)
-                return false;
-        } else if (!geoLocationPolygons.equals(other.geoLocationPolygons))
-            return false;
-
-        return true;
+        return box != null || polygons != null && !polygons
+               .isEmpty() || point != null;
     }
 }

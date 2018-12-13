@@ -15,9 +15,15 @@ wwwwwww * Copyright © 2017 Robin Weiss, Fidan Limani (http://www.gerdi-project.
  */
 package de.gerdiproject.json.datacite;
 
+import com.google.gson.annotations.SerializedName;
+
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.utils.StringCleaner;
 import de.gerdiproject.json.datacite.enums.DescriptionType;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Additional information that does not fit in any of the other categories.
@@ -26,19 +32,23 @@ import de.gerdiproject.json.datacite.enums.DescriptionType;
  *          by Elastic Search and should be replaced with \n!
  *
  * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
+ *
  * @author Mathis Neumann, Robin Weiss
  */
+@Data @RequiredArgsConstructor @AllArgsConstructor
 public class Description implements ICleanable
 {
     /**
      * Free descriptive text. In XML, this is the value between the description-tags.
      */
+    @NonNull
     private String value;
 
     /**
      *  What the description entails.
      */
-    private DescriptionType descriptionType;
+    @SerializedName("descriptionType")
+    private final DescriptionType type;
 
     /**
      * IETF language tag.
@@ -48,157 +58,12 @@ public class Description implements ICleanable
 
 
     /**
-     * Constructor that requires all mandatory fields.
-     *
-     * @param value free text description
-     * @param type the type of the free text
-     */
-    public Description(String value, DescriptionType type)
-    {
-        this.value = value;
-        this.descriptionType = type;
-    }
-
-
-    /**
-     * Constructor that requires all fields.
-     *
-     * @param value free text description
-     * @param type the type of the free text
-     * @param language  IETF language tag
-     */
-    public Description(String value, DescriptionType type, String language)
-    {
-        this.value = value;
-        this.descriptionType = type;
-        this.lang = language;
-    }
-
-
-    /**
-     * Returns a free text description.
-     *
-     * @return a free text description
-     */
-    public String getValue()
-    {
-        return value;
-    }
-
-
-    /**
-     * Changes a free text description. In XML, this is the value between the description-tags.
-     *
-     * @param value a free text description
-     */
-    public void setValue(String value)
-    {
-        this.value = value;
-    }
-
-
-    /**
-     * Returns the type of the description. In XML, this is the value between the description-tags.
-     *
-     * @return what the description entails
-     */
-    public DescriptionType getType()
-    {
-        return descriptionType;
-    }
-
-
-    /**
-     * Changes the type of the description.
-     *
-     * @param type what the description entails
-     */
-    public void setType(DescriptionType type)
-    {
-        this.descriptionType = type;
-    }
-
-
-    /**
-     * Returns the language in which the description is written.
-     *
-     * @return the language in which the description is written
-     */
-    public String getLang()
-    {
-        return lang;
-    }
-
-
-    /**
-     * Changes the language in which the description is written.
-     * <br>e.g. de, en-us
-     *
-     * @param lang  the language in which the description is written
-     */
-    public void setLang(String lang)
-    {
-        this.lang = lang;
-    }
-
-
-    /**
      * Cleans the description text, removing HTML and unescaping special characters.
      */
     @Override
-    public void clean()
+    public boolean clean()
     {
-        value = StringCleaner.clean(value);
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((descriptionType == null) ? 0 : descriptionType.hashCode());
-        result = prime * result + ((lang == null) ? 0 : lang.hashCode());
-        result = prime * result + ((value == null) ? 0 : value.hashCode());
-        return result;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-            return true;
-
-        if (obj == null)
-            return false;
-
-        if (!(obj instanceof Description))
-            return false;
-
-        Description other = (Description) obj;
-
-        if (descriptionType != other.descriptionType)
-            return false;
-
-        if (lang == null) {
-            if (other.lang != null)
-                return false;
-        } else if (!lang.equals(other.lang))
-            return false;
-
-        if (value == null) {
-            if (other.value != null)
-                return false;
-        } else if (!value.equals(other.value))
-            return false;
-
+        setValue(StringCleaner.clean(value));
         return true;
     }
 }

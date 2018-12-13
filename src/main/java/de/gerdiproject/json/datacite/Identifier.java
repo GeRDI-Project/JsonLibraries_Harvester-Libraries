@@ -15,7 +15,11 @@
  */
 package de.gerdiproject.json.datacite;
 
+import com.google.gson.annotations.SerializedName;
+
 import de.gerdiproject.json.datacite.enums.IdentifierType;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
  * The primary Identifier of the resource being registered.
@@ -23,6 +27,7 @@ import de.gerdiproject.json.datacite.enums.IdentifierType;
  * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
+@Data @RequiredArgsConstructor
 public class Identifier
 {
     /**
@@ -30,25 +35,13 @@ public class Identifier
      * In XML, this is the value between the identifier-tags.
      * <br>e.g. 10.1234/foo
      */
-    private String value;
+    private final String value;
 
     /**
      * The type of the identifier.
      */
-    private IdentifierType identifierType;
-
-
-    /**
-     * Simple constructor that requires all mandatory fields.
-     *
-     * @param value the identifier value
-     * @param type the type of the identifier
-     */
-    public Identifier(String value, IdentifierType type)
-    {
-        this.value = value;
-        this.identifierType = type;
-    }
+    @SerializedName("identifierType")
+    private final IdentifierType type;
 
 
     /**
@@ -59,97 +52,6 @@ public class Identifier
     public Identifier(String value)
     {
         this.value = value;
-        this.identifierType = IdentifierType.DOI;
-    }
-
-
-    /**
-     * Returns a unique identifier.
-     * In XML, this is the value between the identifier-tags.
-     *
-     * @return a unique identifier
-     */
-    public String getValue()
-    {
-        return value;
-    }
-
-
-    /**
-     * Changes the unique identifier.
-     * In XML, this is the value between the identifier-tags.
-     * <br>e.g. 10.1234/foo
-     *
-     * @param value a unique identifier
-     */
-    public void setValue(String value)
-    {
-        this.value = value;
-    }
-
-
-    /**
-     * Returns the type of the identifier.
-     *
-     * @return the type of the identifier
-     */
-    public IdentifierType getType()
-    {
-        return identifierType;
-    }
-
-
-    /**
-     * Changes the type of the identifier.
-     *
-     * @param type a type of the identifier
-     */
-    public void setType(IdentifierType type)
-    {
-        this.identifierType = type;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#hashCode()
-     */
-    @Override
-    public int hashCode()
-    {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + ((identifierType == null) ? 0 : identifierType.hashCode());
-        result = prime * result + ((value == null) ? 0 : value.hashCode());
-        return result;
-    }
-
-
-    /* (non-Javadoc)
-     * @see java.lang.Object#equals(java.lang.Object)
-     */
-    @Override
-    public boolean equals(Object obj)
-    {
-        if (this == obj)
-            return true;
-
-        if (obj == null)
-            return false;
-
-        if (!(obj instanceof Identifier))
-            return false;
-
-        Identifier other = (Identifier) obj;
-
-        if (identifierType != other.identifierType)
-            return false;
-
-        if (value == null) {
-            if (other.value != null)
-                return false;
-        } else if (!value.equals(other.value))
-            return false;
-
-        return true;
+        this.type = IdentifierType.DOI;
     }
 }

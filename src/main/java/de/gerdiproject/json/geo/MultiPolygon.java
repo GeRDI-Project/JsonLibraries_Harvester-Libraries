@@ -61,6 +61,8 @@ public class MultiPolygon extends LinkedList<Polygon> implements IGeoCoordinates
     public MultiPolygon(JsonArray array)
     {
         super();
-        array.forEach((JsonElement ele) -> add(new Polygon(ele.getAsJsonArray())));
+
+        for (JsonElement ele : array)
+            add(new Polygon(ele.getAsJsonArray()));
     }
 }
