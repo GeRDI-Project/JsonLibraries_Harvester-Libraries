@@ -39,6 +39,7 @@ public class GeoJson implements ICleanable
     private static final Logger LOGGER = LoggerFactory.getLogger(GeoJson.class);
     private static final Gson GSON = GsonUtils.createGeoJsonGsonBuilder().create();
 
+    @Getter
     private IGeoCoordinates coordinates;
 
     // exclude this field from serialization, it's only used for performance reasons
