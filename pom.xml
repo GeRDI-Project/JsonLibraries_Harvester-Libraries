@@ -27,7 +27,7 @@
 		<gson.dependency.version>2.8.5</gson.dependency.version>
 		<esri.dependency.version>2.2.0</esri.dependency.version>
 		<jsoup.dependency.version>1.11.3</jsoup.dependency.version>
-		<harvesterutils.dependency.version>1.5.0</harvesterutils.dependency.version>
+		<harvesterutils.dependency.version>1.5.0-SNAPSHOT</harvesterutils.dependency.version>
 	</properties>
 	
 	<build>
