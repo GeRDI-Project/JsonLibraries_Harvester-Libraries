@@ -67,10 +67,25 @@ public class Point implements IGeoCoordinates
      */
     public Point(JsonArray array)
     {
-        this.longitude = array.get(0).getAsDouble();
-        this.latitude = array.get(1).getAsDouble();
-        this.elevation = array.size() >= 3
-                         ? array.get(2).getAsDouble()
-                         : Double.NaN;
+        double lon;
+        double lat;
+        double ele;
+
+        try {
+            lon = array.get(0).getAsDouble();
+            lat = array.get(1).getAsDouble();
+            ele = array.size() >= 3
+                  ? array.get(2).getAsDouble()
+                  : Double.NaN;
+        } catch (UnsupportedOperationException e) {
+            // rare edge case: one of the coordinates is null
+            lon = Double.NaN;
+            lat = Double.NaN;
+            ele = Double.NaN;
+        }
+
+        this.longitude = lon;
+        this.latitude = lat;
+        this.elevation = ele;
     }
 }

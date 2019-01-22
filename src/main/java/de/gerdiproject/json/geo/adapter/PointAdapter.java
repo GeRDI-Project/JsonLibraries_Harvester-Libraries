@@ -44,10 +44,12 @@ public class PointAdapter implements JsonSerializer<Point>, JsonDeserializer<Poi
     {
         JsonArray dest = new JsonArray();
 
-        dest.add(src.getLongitude());
-        dest.add(src.getLatitude());
+        if (Double.isFinite(src.getLongitude()))
+            dest.add(src.getLongitude());
 
-        // check if optional thrird component exists
+        if (Double.isFinite(src.getLatitude()))
+            dest.add(src.getLatitude());
+
         if (Double.isFinite(src.getElevation()))
             dest.add(src.getElevation());
 
