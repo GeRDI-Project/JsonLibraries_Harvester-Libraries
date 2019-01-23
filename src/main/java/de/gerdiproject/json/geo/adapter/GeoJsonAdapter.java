@@ -17,6 +17,9 @@ package de.gerdiproject.json.geo.adapter;
 
 import java.lang.reflect.Type;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -40,6 +43,7 @@ import de.gerdiproject.json.geo.Polygon;
  */
 public class GeoJsonAdapter implements JsonDeserializer<GeoJson>
 {
+    private static final Logger LOGGER = LoggerFactory.getLogger(GeoJson.class);
 
     @Override
     public GeoJson deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
@@ -51,33 +55,38 @@ public class GeoJsonAdapter implements JsonDeserializer<GeoJson>
 
         IGeoCoordinates coordinates;
 
-        switch (type) {
-            case "point":
-                coordinates = new Point(coordinatesRaw);
-                break;
+        try {
+            switch (type) {
+                case "point":
+                    coordinates = context.deserialize(coordinatesRaw, Point.class);
+                    break;
 
-            case "multipoint":
-                coordinates = new MultiPoint(coordinatesRaw);
-                break;
+                case "multipoint":
+                    coordinates = context.deserialize(coordinatesRaw, MultiPoint.class);
+                    break;
 
-            case "linestring":
-                coordinates = new LineString(coordinatesRaw);
-                break;
+                case "linestring":
+                    coordinates = context.deserialize(coordinatesRaw, LineString.class);
+                    break;
 
-            case "multilinestring":
-                coordinates = new MultiLineString(coordinatesRaw);
-                break;
+                case "multilinestring":
+                    coordinates = context.deserialize(coordinatesRaw, MultiLineString.class);
+                    break;
 
-            case "polygon":
-                coordinates =  new Polygon(coordinatesRaw);
-                break;
+                case "polygon":
+                    coordinates = context.deserialize(coordinatesRaw, Polygon.class);
+                    break;
 
-            case "multipolygon":
-                coordinates = new MultiPolygon(coordinatesRaw);
-                break;
+                case "multipolygon":
+                    coordinates = context.deserialize(coordinatesRaw, MultiPolygon.class);
+                    break;
 
-            default:
-                throw new JsonParseException(String.format("Unknown GeoJson type '%s'!", type));
+                default:
+                    throw new JsonParseException(String.format("Unknown GeoJson type '%s'!", type));
+            }
+        } catch (RuntimeException e) {
+            LOGGER.error("Could not parse GeoJson!", e);
+            return null;
         }
 
         return new GeoJson(coordinates);
