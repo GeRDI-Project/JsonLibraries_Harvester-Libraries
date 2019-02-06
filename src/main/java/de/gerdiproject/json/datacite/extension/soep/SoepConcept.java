@@ -18,7 +18,7 @@ package de.gerdiproject.json.datacite.extension.soep;
 import lombok.Data;
 
 /**
- * This class models the concepts in SOEP. The concept can be represented in different languages.
+ * This class models concepts in SOEP. A concept can be represented in a specified language.
  *
  * @author Fidan Limani
  */
