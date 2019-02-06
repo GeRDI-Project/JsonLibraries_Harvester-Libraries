@@ -13,25 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package de.gerdiproject.json.datacite.extension.soep;
 
 import lombok.Data;
 
 /**
- * This class models the concepts in SOEP. The concept is represented in two (language) versions, German and English.
+ * This class models the concepts in SOEP. The concept can be represented in different languages.
  *
  * @author Fidan Limani
  */
 @Data
 public class SoepConcept
 {
-    /** Concept name: how social scientists refer them */
+    /**
+     * Concept name: how social scientists refer to the concept
+     */
     private final String name;
 
-    /** (Human understandable) Concept label */
+    /**
+     * (Human readable) concept label
+     */
     private final String label;
 
-    /** Concept label language (can be "DE" or "EN") */
+    /**
+     *  Concept label language
+     *  <br>e.g. de, en
+     */
     private final String language;
 }

@@ -13,23 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package de.gerdiproject.json.datacite.extension.soep;
 
+import java.util.Collection;
 import java.util.Set;
 
 import com.google.gson.annotations.SerializedName;
 
+import de.gerdiproject.harvest.utils.CollectionUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 /**
  * This class models the SOEP-specific metadata: Variables
- * In it we depict the initial set of attributes identified so far; new use cases might dictate an extension/change.
+ * It includes the initial set of attributes identified so far; new use cases might dictate an extension/change.
  *
  * @author Fidan Limani
  */
-@AllArgsConstructor
+@AllArgsConstructor @RequiredArgsConstructor
 @Data
 public class SoepVariable
 {
@@ -42,7 +44,19 @@ public class SoepVariable
     private final String source;
 
     /**
-     * The concept that describes the variable
+     * The concepts that describe the variable
      */
-    private final Set<SoepConcept> concepts;
+    private Set<SoepConcept> concepts;
+
+
+    /**
+     * Adds {@linkplain SoepConcept}s of the variable.
+     *
+     * @param soepConcepts the {@linkplain SoepConcept}s that are to be added
+     *
+     */
+    public void addSoepConcepts(Collection<SoepConcept> soepConcepts)
+    {
+        this.concepts = CollectionUtils.addToSet(this.concepts, soepConcepts);
+    }
 }
