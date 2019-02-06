@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright © 2018 Fidan Limani (http://www.gerdi-project.de)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,28 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package de.gerdiproject.json.datacite.extension.soep;
 
 import lombok.Data;
 
 /**
- * This class models the SOEP-specific metadata: Concepts
+ * This class models concepts in SOEP. A concept can be represented in a specified language.
  *
  * @author Fidan Limani
  */
 @Data
 public class SoepConcept
 {
+    /**
+     * Concept name: how social scientists refer to the concept
+     */
     private final String name;
 
     /**
-     * Concept name in German
+     * (Human readable) concept label
      */
     private final String label;
 
     /**
-     * Concept name in English
+     *  Concept label language
+     *  <br>e.g. de, en
      */
     private final String language;
 }

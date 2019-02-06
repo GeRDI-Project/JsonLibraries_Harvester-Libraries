@@ -25,6 +25,9 @@ import lombok.AccessLevel;
 import lombok.Setter;
 
 /**
+ * This class represents a JSON object that contains SOEP
+ * specific metadata. It serves as a community specific extension
+ * of the GeRDI metadata schema.
  *
  * @author Fidan Limani, Robin Weiss
  */
