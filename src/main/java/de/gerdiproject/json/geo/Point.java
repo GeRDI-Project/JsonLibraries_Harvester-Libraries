@@ -64,13 +64,19 @@ public class Point implements IGeoCoordinates
      * Constructor that constructs the point from a json array.
      *
      * @param array a JsonArray containing two or three numbers
+     *
+     * @throws ClassCastException if the array contains non-numbers
+     * @throws IllegalStateException if the array contains other arrays
+     * @throws IndexOutOfBoundsException if the array has less than two elements
      */
-    public Point(JsonArray array)
+    public Point(JsonArray array) throws ClassCastException, IllegalStateException, IndexOutOfBoundsException
     {
+        double elevation = array.size() >= 3
+                           ? array.get(2).getAsDouble()
+                           : Double.NaN;
+
         this.longitude = array.get(0).getAsDouble();
         this.latitude = array.get(1).getAsDouble();
-        this.elevation = array.size() >= 3
-                         ? array.get(2).getAsDouble()
-                         : Double.NaN;
+        this.elevation = elevation;
     }
 }
