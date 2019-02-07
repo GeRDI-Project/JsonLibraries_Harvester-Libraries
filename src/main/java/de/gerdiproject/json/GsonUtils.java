@@ -21,11 +21,15 @@ import com.google.gson.GsonBuilder;
 import de.gerdiproject.json.datacite.Date;
 import de.gerdiproject.json.datacite.DateRange;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
+import de.gerdiproject.json.datacite.adapters.DataCiteExtensionsAdapter;
 import de.gerdiproject.json.datacite.adapters.DateAdapter;
+import de.gerdiproject.json.datacite.extension.DataCiteExtensions;
+import de.gerdiproject.json.datacite.extension.adapters.SoepDataCiteExtensionAdapter;
 import de.gerdiproject.json.datacite.extension.generic.AbstractResearch;
 import de.gerdiproject.json.datacite.extension.generic.ResearchArea;
 import de.gerdiproject.json.datacite.extension.generic.ResearchDiscipline;
 import de.gerdiproject.json.datacite.extension.generic.adapter.ResearchAdapter;
+import de.gerdiproject.json.datacite.extension.soep.SoepDataCiteExtension;
 import de.gerdiproject.json.geo.GeoJson;
 import de.gerdiproject.json.geo.LineString;
 import de.gerdiproject.json.geo.MultiLineString;
@@ -67,7 +71,9 @@ public final class GsonUtils
                .registerTypeAdapter(Date.class, new DateAdapter())
                .registerTypeAdapter(AbstractResearch.class, new ResearchAdapter())
                .registerTypeAdapter(ResearchArea.class, new ResearchAdapter())
-               .registerTypeAdapter(ResearchDiscipline.class, new ResearchAdapter());
+               .registerTypeAdapter(ResearchDiscipline.class, new ResearchAdapter())
+               .registerTypeAdapter(DataCiteExtensions.class, new DataCiteExtensionsAdapter())
+               .registerTypeAdapter(SoepDataCiteExtension.class, new SoepDataCiteExtensionAdapter());
     }
 
 
@@ -85,13 +91,5 @@ public final class GsonUtils
                .registerTypeAdapter(Polygon.class, new PolygonAdapter())
                .registerTypeAdapter(MultiPolygon.class, new MultiPolygonAdapter())
                .registerTypeAdapter(GeoJson.class, new GeoJsonAdapter());
-    }
-
-
-    /**
-     * Private constructor, because this class has only static functions.
-     */
-    private GsonUtils()
-    {
     }
 }

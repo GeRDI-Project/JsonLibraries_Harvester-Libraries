@@ -36,6 +36,8 @@ import lombok.Setter;
 @Data @NoArgsConstructor
 public class SoepDataCiteExtension implements IDataCiteExtension
 {
+    public static final String KEY = "soep";
+
     /**
      * This is where the discipline-specific metadata is specified in the document.
      *
@@ -43,13 +45,13 @@ public class SoepDataCiteExtension implements IDataCiteExtension
      * A set of variables associated with a resource in SOEP study.
      */
     @Setter(AccessLevel.NONE)
-    private Set<SoepVariable> datasetVariables;
+    private Set<SoepVariable> datasetVariables = null;
 
 
     @Override
     public String getKey()
     {
-        return "soep";
+        return KEY;
     }
 
 
