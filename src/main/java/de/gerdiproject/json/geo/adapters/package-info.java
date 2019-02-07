@@ -20,4 +20,4 @@
  *
  * @author Robin Weiss
  */
-package de.gerdiproject.json.geo.adapter;
+package de.gerdiproject.json.geo.adapters;

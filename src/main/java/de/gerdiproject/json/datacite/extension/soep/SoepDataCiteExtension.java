@@ -22,6 +22,8 @@ import java.util.Set;
 import de.gerdiproject.harvest.utils.CollectionUtils;
 import de.gerdiproject.json.datacite.extension.IDataCiteExtension;
 import lombok.AccessLevel;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -31,6 +33,7 @@ import lombok.Setter;
  *
  * @author Fidan Limani, Robin Weiss
  */
+@Data @NoArgsConstructor
 public class SoepDataCiteExtension implements IDataCiteExtension
 {
     /**

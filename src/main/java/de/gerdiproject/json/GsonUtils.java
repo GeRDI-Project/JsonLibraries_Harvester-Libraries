@@ -21,7 +21,7 @@ import com.google.gson.GsonBuilder;
 import de.gerdiproject.json.datacite.Date;
 import de.gerdiproject.json.datacite.DateRange;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
-import de.gerdiproject.json.datacite.adapter.DateAdapter;
+import de.gerdiproject.json.datacite.adapters.DateAdapter;
 import de.gerdiproject.json.datacite.extension.generic.AbstractResearch;
 import de.gerdiproject.json.datacite.extension.generic.ResearchArea;
 import de.gerdiproject.json.datacite.extension.generic.ResearchDiscipline;
@@ -33,13 +33,13 @@ import de.gerdiproject.json.geo.MultiPoint;
 import de.gerdiproject.json.geo.MultiPolygon;
 import de.gerdiproject.json.geo.Point;
 import de.gerdiproject.json.geo.Polygon;
-import de.gerdiproject.json.geo.adapter.GeoJsonAdapter;
-import de.gerdiproject.json.geo.adapter.LineStringAdapter;
-import de.gerdiproject.json.geo.adapter.MultiLineStringAdapter;
-import de.gerdiproject.json.geo.adapter.MultiPointAdapter;
-import de.gerdiproject.json.geo.adapter.MultiPolygonAdapter;
-import de.gerdiproject.json.geo.adapter.PointAdapter;
-import de.gerdiproject.json.geo.adapter.PolygonAdapter;
+import de.gerdiproject.json.geo.adapters.GeoJsonAdapter;
+import de.gerdiproject.json.geo.adapters.LineStringAdapter;
+import de.gerdiproject.json.geo.adapters.MultiLineStringAdapter;
+import de.gerdiproject.json.geo.adapters.MultiPointAdapter;
+import de.gerdiproject.json.geo.adapters.MultiPolygonAdapter;
+import de.gerdiproject.json.geo.adapters.PointAdapter;
+import de.gerdiproject.json.geo.adapters.PolygonAdapter;
 
 
 /**
