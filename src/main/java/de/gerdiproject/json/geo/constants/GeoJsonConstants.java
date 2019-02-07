@@ -16,22 +16,18 @@
  */
 package de.gerdiproject.json.geo.constants;
 
+import de.gerdiproject.json.geo.GeoJson;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
- * @author Robin Weiss
+ * This class contains constants used by {@linkplain GeoJson} objects.
  *
+ * @author Robin Weiss
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class GeoJsonConstants
 {
     public static final String INVALID_GEOJSON_ERROR = "Invalid GeoJson:%n%s";
     public static final String INVALID_TYPE = "Invalid";
-
-
-
-    /**
-     * Private constructor, because this is a collection of constants.
-     */
-    private GeoJsonConstants()
-    {
-
-    }
 }

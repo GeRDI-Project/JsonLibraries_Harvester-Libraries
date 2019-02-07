@@ -40,6 +40,8 @@ import de.gerdiproject.json.geo.adapters.MultiPointAdapter;
 import de.gerdiproject.json.geo.adapters.MultiPolygonAdapter;
 import de.gerdiproject.json.geo.adapters.PointAdapter;
 import de.gerdiproject.json.geo.adapters.PolygonAdapter;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 
 /**
@@ -47,6 +49,7 @@ import de.gerdiproject.json.geo.adapters.PolygonAdapter;
  *
  * @author Robin Weiss
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class GsonUtils
 {
     /**
