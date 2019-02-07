@@ -42,7 +42,7 @@ public class SoepDataCiteExtension implements IDataCiteExtension
      * This is where the discipline-specific metadata is specified in the document.
      *
      * Research community: SOEP
-     * A set of variables associated with a resource in SOEP study.
+     * A set of variables associated with a resource from a social science study.
      */
     @Setter(AccessLevel.NONE)
     private Set<SoepVariable> datasetVariables = null;
@@ -65,5 +65,4 @@ public class SoepDataCiteExtension implements IDataCiteExtension
     {
         this.datasetVariables = CollectionUtils.addToSet(this.datasetVariables, soepDatasetVariables);
     }
-
 }
