@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.gerdiproject.json.geo.adapter;
+package de.gerdiproject.json.geo.adapters;
 
 import java.lang.reflect.Type;
 

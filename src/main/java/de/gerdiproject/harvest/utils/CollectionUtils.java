@@ -25,23 +25,17 @@ import java.util.Map;
 import java.util.Set;
 
 import de.gerdiproject.harvest.ICleanable;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * This class contains static methods for manipulating {@linkplain Collection}s and related classes.
  *
  * @author Robin Weiss
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CollectionUtils
 {
-    /**
-     * Private constructor, because only static methods are provided here.
-     */
-    private CollectionUtils()
-    {
-
-    }
-
-
     /**
      * Static helper that adds elements to an existing {@linkplain Set}, or
      * creates a new {@linkplain HashSet} if nothing was added before. Also removes null elements

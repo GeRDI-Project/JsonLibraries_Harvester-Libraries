@@ -22,6 +22,8 @@ import java.util.Set;
 import de.gerdiproject.harvest.utils.CollectionUtils;
 import de.gerdiproject.json.datacite.extension.IDataCiteExtension;
 import lombok.AccessLevel;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 /**
@@ -31,22 +33,25 @@ import lombok.Setter;
  *
  * @author Fidan Limani, Robin Weiss
  */
+@Data @NoArgsConstructor
 public class SoepDataCiteExtension implements IDataCiteExtension
 {
+    public static final String KEY = "soep";
+
     /**
      * This is where the discipline-specific metadata is specified in the document.
      *
      * Research community: SOEP
-     * A set of variables associated with a resource in SOEP study.
+     * A set of variables associated with a resource from a social science study.
      */
     @Setter(AccessLevel.NONE)
-    private Set<SoepVariable> datasetVariables;
+    private Set<SoepVariable> datasetVariables = null;
 
 
     @Override
     public String getKey()
     {
-        return "soep";
+        return KEY;
     }
 
 
@@ -60,5 +65,4 @@ public class SoepDataCiteExtension implements IDataCiteExtension
     {
         this.datasetVariables = CollectionUtils.addToSet(this.datasetVariables, soepDatasetVariables);
     }
-
 }

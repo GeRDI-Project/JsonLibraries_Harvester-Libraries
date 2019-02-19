@@ -16,12 +16,15 @@
 package de.gerdiproject.json.datacite.constants;
 
 import de.gerdiproject.json.datacite.extension.generic.AbstractResearch;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * This static class is a collection of constants that are used by {@linkplain AbstractResearch} and its sub-classes.
  *
  * @author Robin Weiss
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DataCiteResearchConstants
 {
     // Json Fields
@@ -33,13 +36,4 @@ public class DataCiteResearchConstants
     // Formatting
     public static final String AREA_RNBR_FORMAT = "%03d";
     public static final String DISCIPLINE_RNBR_FORMAT = "%03d-%02d";
-
-
-    /**
-     * Private constructor, because this is a static class.
-     */
-    private DataCiteResearchConstants()
-    {
-
-    }
 }

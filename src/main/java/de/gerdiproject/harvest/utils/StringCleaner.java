@@ -21,6 +21,9 @@ import java.util.Map;
 
 import org.jsoup.Jsoup;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
 /**
  * This class is used for cleaning up Strings, removing unneccessary tags and spaces.
  * The ESCAPES table and unescapeHtml() function are adapted versions of code that was
@@ -29,6 +32,7 @@ import org.jsoup.Jsoup;
  * @author Robin Weiss, Nick Frolov
  *
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StringCleaner
 {
     private static final int MIN_ESCAPE = 2;

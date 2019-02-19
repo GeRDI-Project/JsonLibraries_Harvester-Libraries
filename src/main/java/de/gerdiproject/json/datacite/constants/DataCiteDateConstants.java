@@ -24,12 +24,15 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
  * This static class is a collection of constants that are used by {@linkplain AbstractDate} and its sub-classes.
  *
  * @author Robin Weiss
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DataCiteDateConstants
 {
     public static final String ISO_8601_TIME_WITHOUT_SECONDS = "(T\\d\\d:\\d\\d)([Z+])";
@@ -127,13 +130,5 @@ public class DataCiteDateConstants
         dateFormats.forEach((SimpleDateFormat sdf) -> sdf.setTimeZone(TimeZone.getTimeZone(timeZoneName)));
 
         return dateFormats;
-    }
-
-    /**
-     * Private constructor, because this is a static class.
-     */
-    private DataCiteDateConstants()
-    {
-
     }
 }

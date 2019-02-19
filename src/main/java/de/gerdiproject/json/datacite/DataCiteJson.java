@@ -17,16 +17,15 @@ package de.gerdiproject.json.datacite;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import com.google.gson.Gson;
-import com.google.gson.annotations.SerializedName;
 
 import de.gerdiproject.harvest.IDocument;
 import de.gerdiproject.harvest.utils.CollectionUtils;
 import de.gerdiproject.json.GsonUtils;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
+import de.gerdiproject.json.datacite.extension.DataCiteExtensions;
 import de.gerdiproject.json.datacite.extension.IDataCiteExtension;
 import de.gerdiproject.json.datacite.extension.generic.AbstractResearch;
 import de.gerdiproject.json.datacite.extension.generic.ResearchData;
@@ -220,8 +219,8 @@ public class DataCiteJson implements IDocument
     /**
      * Different dates relevant to the work.
      */
-    @SerializedName("extension") @Setter(AccessLevel.NONE)
-    private Map<String, IDataCiteExtension> extensions;
+    @Setter(AccessLevel.NONE)
+    private DataCiteExtensions extensions;
 
 
     /**
@@ -238,6 +237,7 @@ public class DataCiteJson implements IDocument
             throw new NullPointerException();
 
         this.sourceId = sourceId;
+        this.extensions = new DataCiteExtensions();
     }
 
 
@@ -452,7 +452,7 @@ public class DataCiteJson implements IDocument
      */
     public void addExtension(IDataCiteExtension extension)
     {
-        this.extensions = CollectionUtils.addToMap(this.extensions, extension.getKey(), extension);
+        this.extensions.add(extension);
     }
 
 

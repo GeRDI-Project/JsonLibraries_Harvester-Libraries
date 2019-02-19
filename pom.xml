@@ -10,7 +10,7 @@
 	</parent>
 	
 	<artifactId>GSON</artifactId>
-	<version>5.2.1-SNAPSHOT</version>
+	<version>5.2.2-SNAPSHOT</version>
     <packaging>jar</packaging>
 	<name>GSON</name>
 	<description>This library provides helper functions and common JSON structures using GSON.</description>
@@ -27,7 +27,7 @@
 		<gson.dependency.version>2.8.5</gson.dependency.version>
 		<esri.dependency.version>2.2.0</esri.dependency.version>
 		<jsoup.dependency.version>1.11.3</jsoup.dependency.version>
-		<harvesterutils.dependency.version>1.5.0-SNAPSHOT</harvesterutils.dependency.version>
+		<harvesterutils.dependency.version>1.5.1-SNAPSHOT</harvesterutils.dependency.version>
 	</properties>
 	
 	<build>

@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.gerdiproject.json.geo.adapter;
+package de.gerdiproject.json.geo.adapters;
 
 import java.lang.reflect.Type;
 
@@ -22,19 +22,19 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 
-import de.gerdiproject.json.geo.LineString;
+import de.gerdiproject.json.geo.MultiLineString;
 
 /**
- * This adapter defines the (de-)serialization behavior of LineString coordinate objects.
+ * This adapter defines the (de-)serialization behavior of MultiLineString coordinate objects.
  *
  * @author Robin Weiss
  */
-public class LineStringAdapter implements JsonDeserializer<LineString>
+public class MultiLineStringAdapter implements JsonDeserializer<MultiLineString>
 {
     @Override
-    public LineString deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public MultiLineString deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
     throws JsonParseException
     {
-        return new LineString(json.getAsJsonArray());
+        return new MultiLineString(json.getAsJsonArray());
     }
 }
