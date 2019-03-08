@@ -18,6 +18,7 @@ package de.gerdiproject.json.datacite;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 
+import de.gerdiproject.json.DateUtils;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.constants.DataCiteDateConstants;
 import de.gerdiproject.json.datacite.enums.DateType;
@@ -156,7 +157,7 @@ public class DateRange extends AbstractDate
      */
     public void setRangeFrom(long epochMilli)
     {
-        this.since = unixTimestampToInstant(epochMilli);
+        this.since = DateUtils.unixTimestampToInstant(epochMilli);
     }
 
 
@@ -167,7 +168,7 @@ public class DateRange extends AbstractDate
      */
     public void setRangeFrom(String stringValue)
     {
-        this.since = stringToInstant(stringValue);
+        this.since = DateUtils.parseDate(stringValue);
     }
 
 
@@ -193,7 +194,7 @@ public class DateRange extends AbstractDate
      */
     public void setRangeUntil(long epochMilli)
     {
-        this.until = unixTimestampToInstant(epochMilli);
+        this.until = DateUtils.unixTimestampToInstant(epochMilli);
     }
 
 
@@ -204,6 +205,6 @@ public class DateRange extends AbstractDate
      */
     public void setRangeUntil(String stringValue)
     {
-        this.until = stringToInstant(stringValue);
+        this.until = DateUtils.parseDate(stringValue);
     }
 }

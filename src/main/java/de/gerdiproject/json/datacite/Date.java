@@ -19,6 +19,7 @@ import java.time.Instant;
 import java.time.ZonedDateTime;
 
 import de.gerdiproject.harvest.ICleanable;
+import de.gerdiproject.json.DateUtils;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.constants.DataCiteDateConstants;
 import de.gerdiproject.json.datacite.enums.DateType;
@@ -104,7 +105,7 @@ public class Date extends AbstractDate implements ICleanable
     @Override
     public void setValue(String stringValue)
     {
-        this.value = stringToInstant(stringValue);
+        this.value = DateUtils.parseDate(stringValue);
     }
 
 
@@ -116,7 +117,7 @@ public class Date extends AbstractDate implements ICleanable
      */
     public void setDate(long epochMilli)
     {
-        this.value = unixTimestampToInstant(epochMilli);
+        this.value = DateUtils.unixTimestampToInstant(epochMilli);
     }
 
 
