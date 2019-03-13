@@ -16,11 +16,11 @@
  */
 package de.gerdiproject.json;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.util.Calendar;
-import java.util.TimeZone;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoField;
 import java.util.regex.Matcher;
 
 import org.slf4j.Logger;
@@ -40,7 +40,6 @@ import lombok.NoArgsConstructor;
 public class DateUtils
 {
     private static final Logger LOGGER = LoggerFactory.getLogger(DateUtils.class);
-    private static final Calendar CALENDAR = initCalendar();
 
 
     /**
@@ -73,23 +72,47 @@ public class DateUtils
      */
     public static Instant parseDate(String dateString)
     {
-        // clean string and split it up into its components
-        final String[] dateSegments = StringCleaner
-                                      .clean(dateString)
-                                      .split(DataCiteDateConstants.DATE_SPLIT_REGEX);
+        // return early
+        if (dateString == null)
+            return null;
 
-        int day = Integer.MIN_VALUE;
-        int month = Integer.MIN_VALUE;
-        int year = Integer.MIN_VALUE;
+        final String cleanString =  StringCleaner.clean(dateString);
+        final int stringLength = cleanString.length();
+
+        // assume the date is an ISO-8601 if it starts and ends with a digit or a Z
+        if (stringLength > 10 && Character.isDigit(cleanString.charAt(0))
+            && (Character.isDigit(cleanString.charAt(stringLength - 1))
+                || cleanString.charAt(stringLength - 1) == 'Z')) {
+
+            // use the standard ISO-8601 formatter
+            try {
+                return Instant.from(DateTimeFormatter.ISO_DATE_TIME.parse(cleanString));
+
+            } catch (DateTimeParseException ignore) { } // NOPMD exception is to be expected
+
+            // fallback: use a custom ISO-8601 formatter for handling zones without colons
+            try {
+                return Instant.from(DataCiteDateConstants.ISO8601_FORMATTER.parse(cleanString));
+
+            } catch (DateTimeParseException ignore) { } // NOPMD exception is to be expected
+
+            // if all ISO-formatting failed, proceed as usual
+        }
+
+        // split string up into its components
+        final String[] dateSegments = cleanString.split(DataCiteDateConstants.DATE_SPLIT_REGEX);
+
+        int day = 1;
+        int month = 1;
+        int year = 0;
         boolean hasDay = false;
         boolean hasMonth = false;
         boolean hasYear = false;
 
         // convert each segment of the split string to a day, month, or year
-        for (int i = 0; i < dateSegments.length; i++) {
-            final String s = dateSegments[i];
+        for (final String s : dateSegments) {
 
-            // check if the
+            // check if the segment is a number
             if (Character.isDigit(s.charAt(0))) {
                 final int num;
 
@@ -112,9 +135,11 @@ public class DateUtils
                 if (num > 31) {
                     year = num;
                     hasYear = true;
+
                 } else if (!hasDay) {
                     day = num;
                     hasDay = true;
+
                 } else {
                     if (num > 12) {
                         month = day;
@@ -126,14 +151,11 @@ public class DateUtils
                 }
             } else {
                 // if the segment is alphabetical text, check if it describes a month
-                for (final SimpleDateFormat format : DataCiteDateConstants.MONTH_FORMATS) {
-                    try {
-                        CALENDAR.setTime(format.parse(s));
-                        month = CALENDAR.get(Calendar.MONTH) + 1;
-                        hasMonth = true;
-                    } catch (ParseException e) {
-                        // nothing to do, carry on
-                    }
+                try {
+                    month = DataCiteDateConstants.MONTH_FORMATTER.parse(s).get(ChronoField.MONTH_OF_YEAR);
+                    hasMonth = true;
+                } catch (DateTimeParseException e) { // NOPMD
+                    // thrown if the string was no month after all, continue parsing
                 }
             }
 
@@ -151,31 +173,18 @@ public class DateUtils
         // if we extracted a day, but no month, it was probably a month after all
         if (hasDay && !hasMonth) {
             month = day;
-            hasDay = false;
-            hasMonth = true;
+            day = 1;
         }
 
-        // fill calendar with the parsed data
-        CALENDAR.set(Calendar.YEAR, year);
-        CALENDAR.set(Calendar.MONTH, hasMonth ? month - 1 : 0);
-        CALENDAR.set(Calendar.DAY_OF_MONTH, hasDay ? day : 1);
+        // assemble time
+        final ZonedDateTime zdt =
+            ZonedDateTime.of(
+                year,
+                month,
+                day,
+                0, 0, 0, 0,
+                DataCiteDateConstants.Z_ZONE_ID);
 
-        // convert and return calendar as Instant
-        return CALENDAR.toInstant();
-    }
-
-
-    /**
-     * Creates a {@linkplain Calendar} instance that is used as a tool to assemble parsed
-     * date information.
-     *
-     * @return a {@linkplain Calendar} with every value set to zero
-     */
-    private static Calendar initCalendar()
-    {
-        final Calendar cal = Calendar.getInstance(TimeZone.getTimeZone(DataCiteDateConstants.STANDARD_TIMEZONE));
-        cal.set(0, 0, 0, 0, 0, 0);
-        cal.set(Calendar.MILLISECOND, 0);
-        return cal;
+        return zdt.toInstant();
     }
 }

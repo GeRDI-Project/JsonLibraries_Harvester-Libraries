@@ -15,13 +15,10 @@
  */
 package de.gerdiproject.json.datacite.constants;
 
-import java.text.SimpleDateFormat;
 import java.time.ZoneId;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.Locale;
-import java.util.TimeZone;
 import java.util.regex.Pattern;
 
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
@@ -46,25 +43,41 @@ public class DataCiteDateConstants
     public static final String DATE_TYPE_JSON = "dateType";
     public static final String DATE_INFO_JSON = "dateInformation";
 
-
     // DATE PARSING
-    public static final String DATE_SPLIT_REGEX = "[\\-/,. \\\\]+";
-    public static final List<SimpleDateFormat> MONTH_FORMATS = createMonthFormats();
+    public static final String DATE_SPLIT_REGEX = "[\\-/,;. \\\\]+";
+    public static final DateTimeFormatter MONTH_FORMATTER = initMonthFormatter();
+    public static final DateTimeFormatter ISO8601_FORMATTER = initIso8601Formatter();
     public static final Pattern NUMBERS_PATTERN = Pattern.compile("(\\d{1,})");
     public static final String STANDARD_TIMEZONE = "UTC";
     public static final ZoneId Z_ZONE_ID = ZoneId.of("Z");
 
 
-    private static final List<SimpleDateFormat> createMonthFormats()
+    private static DateTimeFormatter initIso8601Formatter()
     {
-        final List<SimpleDateFormat> formats =
-            Arrays.asList(
-                new SimpleDateFormat("MMMM", Locale.ENGLISH),
-                new SimpleDateFormat("MMM", Locale.ENGLISH));
+        final DateTimeFormatterBuilder builder = new DateTimeFormatterBuilder();
 
-        for (final SimpleDateFormat sdf : formats)
-            sdf.setTimeZone(TimeZone.getTimeZone(STANDARD_TIMEZONE));
+        // ignore case when parsing
+        builder.parseCaseInsensitive();
+        builder.parseLenient();
+        builder.appendPattern("yyyy-MM-dd'T'HH:mm[:ss[.SSS]]X");
 
-        return Collections.unmodifiableList(formats);
+        return builder
+               .toFormatter()
+               .withZone(ZoneId.of(DataCiteDateConstants.STANDARD_TIMEZONE));
+
+    }
+
+
+    private static DateTimeFormatter initMonthFormatter()
+    {
+        final DateTimeFormatterBuilder builder = new DateTimeFormatterBuilder();
+
+        builder.appendPattern("[MMMM][MMM]");
+        builder.parseCaseInsensitive();
+        builder.parseLenient();
+
+        return builder.toFormatter()
+               .withZone(ZoneId.of(DataCiteDateConstants.STANDARD_TIMEZONE))
+               .withLocale(Locale.ENGLISH);
     }
 }
