@@ -60,10 +60,14 @@ public class DateUtils
      * Attempts to parse a date from a {@linkplain String}.
      * The string is stripped of HTML tags and trimmed prior to
      * being divided into parts. Each part is then parsed
-     * in order to obtain a year, a month and a day.
+     * in order to obtain a year, a month and a day.<br>
      *
-     * Days are prioritized, meaning if a date such as 01/02/2000
-     * is parsed, it is assumed that the first number represents the day.
+     * If a date such as 01/02/2000 is parsed, it is assumed that
+     * the first number represents the day.<br>
+     *
+     * If a date such as 2000/02/01 is parsed, it is assumed that
+     * the last number is the day.<br>
+     *
      * Month names and abbreviations thereof are parsed in English.
      *
      * @param dateString a text containing a date
@@ -132,23 +136,35 @@ public class DateUtils
                     continue;
                 }
 
+                // if it is higher than 31, it is a year
                 if (num > 31) {
                     year = num;
                     hasYear = true;
+                }
 
-                } else if (!hasDay) {
+                // if it is higher than 12, it is a day
+                else if (num > 12) {
+                    // if we already have a day, it must be a month, so swap day and month
+                    if (hasDay) {
+                        month = day;
+                        hasMonth = true;
+                    }
+
                     day = num;
                     hasDay = true;
+                }
+                // if we already have a month or if we have nothing yet, it is a day
+                else if (hasMonth || !hasYear && !hasDay) {
+                    day = num;
+                    hasDay = true;
+                }
 
-                } else {
-                    if (num > 12) {
-                        month = day;
-                        day = num;
-                    } else
-                        month = num;
-
+                // otherwise it is a month
+                else {
+                    month = num;
                     hasMonth = true;
                 }
+
             } else {
                 // if the segment is alphabetical text, check if it describes a month
                 try {
