@@ -106,7 +106,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing01()
+    public void testDateParsingDayMonthYear1()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%d.%d.%d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
@@ -115,7 +115,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing02()
+    public void testDateParsingDayMonthYear2()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%d %d %d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
@@ -124,7 +124,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing03()
+    public void testDateParsingDayMonthYear3()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%d/%d/%d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
@@ -133,7 +133,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing04()
+    public void testDateParsingDayMonthYear4()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%d-%d-%d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
@@ -142,7 +142,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing05()
+    public void testDateParsingDayMonthYear5()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%1$td %1$tb %1$tY", unixTimestamp);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
@@ -151,7 +151,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing06()
+    public void testDateParsingDayMonthYear6()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%02d %02d %04d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
@@ -160,7 +160,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing07()
+    public void testDateParsingDayMonthYear7()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%02d/%02d/%04d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
@@ -169,7 +169,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing08()
+    public void testDateParsingDayMonthYear8()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%02d-%02d-%04d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
@@ -178,106 +178,79 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing09()
+    public void testDateParsingYearMonthDay1()
     {
-        final String dateToParse = String.format(Locale.ENGLISH, "%3$d.%1$d.%2$d", day, month, year);
+        final String dateToParse = String.format(Locale.ENGLISH, "%3$d.%2$d.%1$d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
         assertDateEquals(expectedDate, dateToParse);
     }
 
 
     @Test
-    public void testDateParsing10()
+    public void testDateParsingYearMonthDay2()
     {
-        final String dateToParse = String.format(Locale.ENGLISH, "%3$d %1$d %2$d", day, month, year);
+        final String dateToParse = String.format(Locale.ENGLISH, "%3$d %2$d %1$d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
         assertDateEquals(expectedDate, dateToParse);
     }
 
 
     @Test
-    public void testDateParsing11()
+    public void testDateParsingYearMonthDay3()
     {
-        final String dateToParse = String.format(Locale.ENGLISH, "%3$d/%1$d/%2$d", day, month, year);
+        final String dateToParse = String.format(Locale.ENGLISH, "%3$d/%2$d/%1$d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
         assertDateEquals(expectedDate, dateToParse);
     }
 
 
     @Test
-    public void testDateParsing12()
+    public void testDateParsingYearMonthDay4()
     {
-        final String dateToParse = String.format(Locale.ENGLISH, "%3$d-%1$d-%2$d", day, month, year);
+        final String dateToParse = String.format(Locale.ENGLISH, "%3$d-%2$d-%1$d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
         assertDateEquals(expectedDate, dateToParse);
     }
 
 
     @Test
-    public void testDateParsing13()
+    public void testDateParsingYearMonthDay5()
     {
-        final String dateToParse = String.format(Locale.ENGLISH, "%3$04d.%1$02d.%2$02d", day, month, year);
+        final String dateToParse = String.format(Locale.ENGLISH, "%3$04d.%2$02d.%1$02d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
         assertDateEquals(expectedDate, dateToParse);
     }
 
 
     @Test
-    public void testDateParsing14()
+    public void testDateParsingYearMonthDay6()
     {
-        final String dateToParse = String.format(Locale.ENGLISH, "%3$04d %1$02d %2$02d", day, month, year);
+        final String dateToParse = String.format(Locale.ENGLISH, "%3$04d %2$02d %1$02d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
         assertDateEquals(expectedDate, dateToParse);
     }
 
 
     @Test
-    public void testDateParsing15()
+    public void testDateParsingYearMonthDay7()
     {
-        final String dateToParse = String.format(Locale.ENGLISH, "%3$04d/%1$02d/%2$02d", day, month, year);
+        final String dateToParse = String.format(Locale.ENGLISH, "%3$04d/%2$02d/%1$02d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
         assertDateEquals(expectedDate, dateToParse);
     }
 
 
     @Test
-    public void testDateParsing16()
+    public void testDateParsingYearMonthDay8()
     {
-        final String dateToParse = String.format(Locale.ENGLISH, "%3$04d-%1$02d-%2$02d", day, month, year);
+        final String dateToParse = String.format(Locale.ENGLISH, "%3$04d-%2$02d-%1$02d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
         assertDateEquals(expectedDate, dateToParse);
     }
 
 
     @Test
-    public void testDateParsing17()
-    {
-        final String dateToParse = String.format(Locale.ENGLISH, "<p><i>%02d.%02d.%04d</i><p>", day, month, year);
-        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
-        assertDateEquals(expectedDate, dateToParse);
-    }
-
-
-    @Test
-    public void testDateParsing18()
-    {
-        final String dateToParse = String.format(Locale.ENGLISH, "bla bla bla, %d foo foo %d bar %d; finito.", day, month, year);
-        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
-        assertDateEquals(expectedDate, dateToParse);
-    }
-
-
-    @Test
-    public void testDateParsing19()
-    {
-        final String dateToParse = String.format(Locale.ENGLISH, "bla bla bla, %3$d foo foo %1$d bar %2$d; finito.", day, month, year);
-        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
-        assertDateEquals(expectedDate, dateToParse);
-    }
-
-
-    @Test
-    public void testDateParsing20()
+    public void testDateParsingMonthYear1()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%2$d.%3$d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -286,7 +259,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing21()
+    public void testDateParsingMonthYear2()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%2$d %3$d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -295,7 +268,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing22()
+    public void testDateParsingMonthYear3()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%2$d/%3$d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -304,7 +277,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing23()
+    public void testDateParsingMonthYear4()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%2$d-%3$d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -313,7 +286,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing24()
+    public void testDateParsingMonthYear5()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%2$02d.%3$04d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -322,7 +295,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing25()
+    public void testDateParsingMonthYear6()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%2$02d %3$04d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -331,7 +304,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing26()
+    public void testDateParsingMonthYear7()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%2$02d/%3$04d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -340,7 +313,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing27()
+    public void testDateParsingMonthYear8()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%2$02d-%3$04d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -349,7 +322,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing28()
+    public void testDateParsingYearMonth1()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%3$d.%2$d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -358,7 +331,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing29()
+    public void testDateParsingYearMonth2()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%3$d %2$d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -367,7 +340,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing30()
+    public void testDateParsingYearMonth3()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%3$d/%2$d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -376,7 +349,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing31()
+    public void testDateParsingYearMonth4()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%3$d-%2$d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -385,7 +358,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing32()
+    public void testDateParsingYearMonth5()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%3$04d.%2$02d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -394,7 +367,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing33()
+    public void testDateParsingYearMonth6()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%3$04d %2$02d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -403,7 +376,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing34()
+    public void testDateParsingYearMonth7()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%3$04d/%2$02d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -412,7 +385,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing35()
+    public void testDateParsingYearMonth8()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%3$04d-%2$02d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -421,34 +394,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing36()
-    {
-        final String dateToParse = String.format(Locale.ENGLISH, "<p><i>%2$02d.%3$04d</i><p>", day, month, year);
-        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
-        assertDateEquals(expectedDate, dateToParse);
-    }
-
-
-    @Test
-    public void testDateParsing37()
-    {
-        final String dateToParse = String.format(Locale.ENGLISH, "bla bla bla, %2$d bar %3$d; finito.", day, month, year);
-        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
-        assertDateEquals(expectedDate, dateToParse);
-    }
-
-
-    @Test
-    public void testDateParsing38()
-    {
-        final String dateToParse = String.format(Locale.ENGLISH, "bla bla bla, %3$d bar %2$d; finito.", day, month, year);
-        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
-        assertDateEquals(expectedDate, dateToParse);
-    }
-
-
-    @Test
-    public void testDateParsing39()
+    public void testDateParsingYear()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%3$04d", day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_MONTH, day, month, year);
@@ -457,7 +403,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing41()
+    public void testDateParsingMonthName1()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%1$td. %1$tB %1$tY", unixTimestamp);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
@@ -466,7 +412,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing42()
+    public void testDateParsingMonthName2()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%1$td. %1$tB, %1$tY", unixTimestamp);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
@@ -475,7 +421,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing43()
+    public void testDateParsingMonthName3()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%1$td %1$tB, %1$tY", unixTimestamp);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
@@ -484,7 +430,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing44()
+    public void testDateParsingMonthName4()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%1$td %1$tB %1$tY", unixTimestamp);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
@@ -493,7 +439,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing45()
+    public void testDateParsingMonthName5()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%1$td-%1$tB-%1$tY", unixTimestamp);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
@@ -502,52 +448,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing46()
-    {
-        final String dateToParse = String.format(Locale.ENGLISH, "%1$td. %1$tb %1$tY", unixTimestamp);
-        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
-        assertDateEquals(expectedDate, dateToParse);
-    }
-
-
-    @Test
-    public void testDateParsing47()
-    {
-        final String dateToParse = String.format(Locale.ENGLISH, "%1$td. %1$tb, %1$tY", unixTimestamp);
-        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
-        assertDateEquals(expectedDate, dateToParse);
-    }
-
-
-    @Test
-    public void testDateParsing48()
-    {
-        final String dateToParse = String.format(Locale.ENGLISH, "%1$td %1$tb, %1$tY", unixTimestamp);
-        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
-        assertDateEquals(expectedDate, dateToParse);
-    }
-
-
-    @Test
-    public void testDateParsing49()
-    {
-        final String dateToParse = String.format(Locale.ENGLISH, "%1$td-%1$tb-%1$tY", unixTimestamp);
-        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
-        assertDateEquals(expectedDate, dateToParse);
-    }
-
-
-    @Test
-    public void testDateParsing50()
-    {
-        final String dateToParse = String.format(Locale.ENGLISH, "%1$td. %1$tb. %1$tY", unixTimestamp);
-        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
-        assertDateEquals(expectedDate, dateToParse);
-    }
-
-
-    @Test
-    public void testDateParsing51()
+    public void testDateParsingMonthName6()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%1$tB, %1$tY", unixTimestamp);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -556,7 +457,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing52()
+    public void testDateParsingMonthName7()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%1$tB %1$tY", unixTimestamp);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -565,7 +466,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing53()
+    public void testDateParsingMonthName8()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%1$tB-%1$tY", unixTimestamp);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -574,7 +475,52 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing54()
+    public void testDateParsingShortMonthName1()
+    {
+        final String dateToParse = String.format(Locale.ENGLISH, "%1$td. %1$tb %1$tY", unixTimestamp);
+        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
+        assertDateEquals(expectedDate, dateToParse);
+    }
+
+
+    @Test
+    public void testDateParsingShortMonthName2()
+    {
+        final String dateToParse = String.format(Locale.ENGLISH, "%1$td. %1$tb, %1$tY", unixTimestamp);
+        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
+        assertDateEquals(expectedDate, dateToParse);
+    }
+
+
+    @Test
+    public void testDateParsingShortMonthName3()
+    {
+        final String dateToParse = String.format(Locale.ENGLISH, "%1$td %1$tb, %1$tY", unixTimestamp);
+        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
+        assertDateEquals(expectedDate, dateToParse);
+    }
+
+
+    @Test
+    public void testDateParsingShortMonthName4()
+    {
+        final String dateToParse = String.format(Locale.ENGLISH, "%1$td-%1$tb-%1$tY", unixTimestamp);
+        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
+        assertDateEquals(expectedDate, dateToParse);
+    }
+
+
+    @Test
+    public void testDateParsingShortMonthName5()
+    {
+        final String dateToParse = String.format(Locale.ENGLISH, "%1$td. %1$tb. %1$tY", unixTimestamp);
+        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
+        assertDateEquals(expectedDate, dateToParse);
+    }
+
+
+    @Test
+    public void testDateParsingShortMonthName6()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%1$tb, %1$tY", unixTimestamp);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -583,7 +529,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing55()
+    public void testDateParsingShortMonthName7()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%1$tb %1$tY", unixTimestamp);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -592,7 +538,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing56()
+    public void testDateParsingShortMonthName8()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%1$tb-%1$tY", unixTimestamp);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -601,7 +547,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing57()
+    public void testDateParsingShortMonthName9()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%1$tb. %1$tY", unixTimestamp);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -610,7 +556,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing58()
+    public void testDateParsingContinuousText01()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "Monthly time series starting %1$tB of %1$tY", unixTimestamp);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
@@ -619,7 +565,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing59()
+    public void testDateParsingContinuousText02()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "Annual data for the period %1$tY onwards", unixTimestamp);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_MONTH, day, month, year);
@@ -628,7 +574,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing60()
+    public void testDateParsingContinuousText03()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "Monthly time series starting on the %1$test %1$tB %1$tY, my man", unixTimestamp);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
@@ -637,7 +583,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing61()
+    public void testDateParsingContinuousText04()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "Monthly time series starting on the %1$tend %1$tB %1$tY, my man", unixTimestamp);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
@@ -646,7 +592,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing62()
+    public void testDateParsingContinuousText05()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "Monthly time series starting on the %1$terd %1$tB %1$tY, my man", unixTimestamp);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
@@ -655,7 +601,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsing63()
+    public void testDateParsingContinuousText06()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "Monthly time series starting on the %1$teth %1$tB %1$tY, my man", unixTimestamp);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
@@ -664,7 +610,43 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsingIso()
+    public void testDateParsingContinuousText07()
+    {
+        final String dateToParse = String.format(Locale.ENGLISH, "bla bla bla, %3$d foo foo %2$d bar %1$d; finito.", day, month, year);
+        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
+        assertDateEquals(expectedDate, dateToParse);
+    }
+
+
+    @Test
+    public void testDateParsingContinuousText08()
+    {
+        final String dateToParse = String.format(Locale.ENGLISH, "bla bla bla, %2$d bar %3$d; finito.", day, month, year);
+        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
+        assertDateEquals(expectedDate, dateToParse);
+    }
+
+
+    @Test
+    public void testDateParsingContinuousText09()
+    {
+        final String dateToParse = String.format(Locale.ENGLISH, "bla bla bla, %3$d bar %2$d; finito.", day, month, year);
+        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
+        assertDateEquals(expectedDate, dateToParse);
+    }
+
+
+    @Test
+    public void testDateParsingContinuousText10()
+    {
+        final String dateToParse = String.format(Locale.ENGLISH, "bla bla bla, %d foo foo %d bar %d; finito.", day, month, year);
+        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
+        assertDateEquals(expectedDate, dateToParse);
+    }
+
+
+    @Test
+    public void testDateParsingIsoDate1()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%3$04d-%2$02d-%1$02dT12:34:56Z", day, month, year);
 
@@ -677,7 +659,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsingIsoWithMillis()
+    public void testDateParsingIsoDate2()
     {
         final String dateToParse = String.format("%3$04d-%2$02d-%1$02dT12:34:56.789Z", day, month, year);
         final Instant expectedDate = ZonedDateTime.parse(dateToParse).toInstant();
@@ -686,7 +668,7 @@ public class DateUtilsTest
     }
 
     @Test
-    public void testDateParsingIsoWithoutSeconds()
+    public void testDateParsingIsoDate3()
     {
         final String dateToParse = String.format("%3$04d-%2$02d-%1$02dT12:34Z", day, month, year);
         final Instant expectedDate = ZonedDateTime.parse(dateToParse).toInstant();
@@ -696,7 +678,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsingIsoWithTimezone()
+    public void testDateParsingIsoDate4()
     {
         final String dateToParse = String.format("%3$04d-%2$02d-%1$02dT12:34:56.789+02", day, month, year);
         final Instant expectedDate = ZonedDateTime.parse(dateToParse, DataCiteDateConstants.ISO8601_FORMATTER).toInstant();
@@ -706,7 +688,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsingIsoWithTimezone3()
+    public void testDateParsingIsoDate5()
     {
         final String dateToParse = String.format("%3$04d-%2$02d-%1$02dT12:34:56.789-02", day, month, year);
         final Instant expectedDate = ZonedDateTime.parse(dateToParse, DataCiteDateConstants.ISO8601_FORMATTER).toInstant();
@@ -716,7 +698,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsingIsoWithTimezone2()
+    public void testDateParsingIsoDate6()
     {
         final String dateToParse = String.format("%3$04d-%2$02d-%1$02dT12:34:56+0230", day, month, year);
         final Instant expectedDate = ZonedDateTime.parse(dateToParse, DataCiteDateConstants.ISO8601_FORMATTER).toInstant();
@@ -726,7 +708,7 @@ public class DateUtilsTest
 
 
     @Test
-    public void testDateParsingIsoWithTimezone4()
+    public void testDateParsingIsoDate7()
     {
         final String dateToParse = String.format("%3$04d-%2$02d-%1$02dT12:34:56+02:30", day, month, year);
         final Instant expectedDate = Instant.from(DateTimeFormatter.ISO_DATE_TIME.parse(dateToParse));
@@ -735,11 +717,29 @@ public class DateUtilsTest
     }
 
     @Test
-    public void testDateParsingIsoWithTimezone5()
+    public void testDateParsingIsoDate8()
     {
         final String dateToParse = String.format("%3$04d-%2$02d-%1$02dT12:34:56.789-02:30", day, month, year);
         final Instant expectedDate = Instant.from(DateTimeFormatter.ISO_DATE_TIME.parse(dateToParse));
 
+        assertDateEquals(expectedDate, dateToParse);
+    }
+
+
+    @Test
+    public void testDateParsingWithHtmlTags1()
+    {
+        final String dateToParse = String.format(Locale.ENGLISH, "<p><i>%02d.%02d.%04d</i><p>", day, month, year);
+        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
+        assertDateEquals(expectedDate, dateToParse);
+    }
+
+
+    @Test
+    public void testDateParsingWithHtmlTags2()
+    {
+        final String dateToParse = String.format(Locale.ENGLISH, "<p><i>%2$02d.%3$04d</i><p>", day, month, year);
+        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
         assertDateEquals(expectedDate, dateToParse);
     }
 
