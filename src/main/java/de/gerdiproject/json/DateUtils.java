@@ -71,12 +71,16 @@ public class DateUtils
      */
     public static Instant parseDate(String dateString)
     {
-        // return early
+        // return if string is null
         if (dateString == null)
             return null;
 
         final String cleanString =  StringCleaner.clean(dateString);
         final int stringLength = cleanString.length();
+
+        // return if string is empty
+        if (stringLength == 0)
+            return null;
 
         // assume the date is an ISO-8601 if it starts and ends with a digit or a Z
         if (stringLength > 10 && Character.isDigit(cleanString.charAt(0))
@@ -131,6 +135,10 @@ public class DateUtils
                     continue;
                 }
 
+                // zero values are eligible only as year, which defaults to 0 anyway
+                if (num == 0 || num > 9999)
+                    continue;
+
                 // if it is higher than 31, it is a year
                 if (num > 31) {
                     year = num;
@@ -181,8 +189,13 @@ public class DateUtils
 
         // if we extracted a day, but no month, it was probably a month after all
         if (hasDay && !hasMonth) {
-            month = day;
-            day = 1;
+            // if it is definitely a day, but we have no month, it was probably not a day after all
+            if (day > 12)
+                day = 1;
+            else {
+                month = day;
+                day = 1;
+            }
         }
 
         // assemble time

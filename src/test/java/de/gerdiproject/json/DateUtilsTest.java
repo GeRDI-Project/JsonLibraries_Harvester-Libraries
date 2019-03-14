@@ -17,6 +17,7 @@
 package de.gerdiproject.json;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 import java.time.Instant;
 import java.time.ZonedDateTime;
@@ -102,6 +103,72 @@ public class DateUtilsTest
             String.format("The method unixTimestampToInstant(%d) should return a date with the correct timestamp; ", unixTimestamp),
             unixTimestamp,
             unixTimstampDate.toEpochMilli());
+    }
+
+
+    @Test
+    public void testDateParsingNull()
+    {
+        final String dateToParse = null;
+
+        assertNull("The method parseDate(null) returned the wrong value;",
+                   DateUtils.parseDate(dateToParse));
+    }
+
+
+    @Test
+    public void testDateParsingEmptyString()
+    {
+        final String dateToParse = "";
+
+        assertNull("The method parseDate(\"\") returned the wrong value;",
+                   DateUtils.parseDate(dateToParse));
+    }
+
+
+    @Test
+    public void testDateParsingStringWithoutDate()
+    {
+        final String dateToParse = "The quick brown fox jumps over the lazy unit tester!";
+
+        assertNull(String.format("The method parseDate(%s) returned the wrong value;", dateToParse),
+                   DateUtils.parseDate(dateToParse));
+    }
+
+
+    @Test
+    public void testDateParsingZeroDay()
+    {
+        final String dateToParse = String.format(Locale.ENGLISH, "%d %d %d", 0, month, year);
+        final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
+        assertDateEquals(expectedDate, dateToParse);
+    }
+
+
+    @Test
+    public void testDateParsingZeroMonth()
+    {
+        final String dateToParse = String.format(Locale.ENGLISH, "%d %d %d", day, 0, year);
+
+        final String expectedDate;
+
+        // zeroes are ignored, if we have a digit that could be a month, assume we have month and year
+        if (day <= 12)
+            expectedDate = String.format(DATE_FORMAT_MISSING_DAY, month, day, year);
+        else
+            expectedDate = String.format(DATE_FORMAT_MISSING_MONTH, day, month, year);
+
+        assertDateEquals(expectedDate, dateToParse);
+    }
+
+
+    @Test
+    public void testDateParsingOverNineThousaaaaaand()
+    {
+        final String dateToParse = String.format(Locale.ENGLISH, "%d %d %d", day, month, 10000);
+
+        assertNull("The method parseDate() should return null if the year is too big;",
+                   DateUtils.parseDate(dateToParse));
     }
 
 
@@ -764,12 +831,7 @@ public class DateUtilsTest
         final Calendar parsedCalendar = DatatypeConverter.parseDateTime(expectedDateString);
         parsedCalendar.setTimeZone(TimeZone.getTimeZone(DataCiteDateConstants.STANDARD_TIMEZONE));
         final Instant expectedDate = parsedCalendar.toInstant();
-
-        final Instant parsedInstant = DateUtils.parseDate(dateToParse);
-
-        assertEquals(String.format(Locale.ENGLISH, "The method parseDate(\"%s\") returned the wrong value;", dateToParse),
-                     expectedDate,
-                     parsedInstant);
+        assertDateEquals(expectedDate, dateToParse);
     }
 
 
