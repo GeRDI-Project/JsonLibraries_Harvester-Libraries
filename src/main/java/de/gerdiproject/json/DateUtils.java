@@ -24,9 +24,6 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoField;
 import java.util.regex.Matcher;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import de.gerdiproject.harvest.utils.StringCleaner;
 import de.gerdiproject.json.datacite.constants.DataCiteDateConstants;
 import lombok.AccessLevel;
@@ -40,9 +37,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DateUtils
 {
-    private static final Logger LOGGER = LoggerFactory.getLogger(DateUtils.class);
-
-
     /**
      * Creates an instant using the amount of milliseconds that passed
      * from 01/01/1970 00:00:00 until this date.
@@ -182,10 +176,8 @@ public class DateUtils
         }
 
         // abort if the year is missing
-        if (!hasYear) {
-            LOGGER.warn(String.format(DataCiteDateConstants.PARSE_ERROR, dateString));
+        if (!hasYear)
             return null;
-        }
 
         // if we extracted a day, but no month, it was probably a month after all
         if (hasDay && !hasMonth) {
