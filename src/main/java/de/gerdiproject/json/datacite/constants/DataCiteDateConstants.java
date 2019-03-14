@@ -59,7 +59,7 @@ public class DataCiteDateConstants
         // ignore case when parsing
         builder.parseCaseInsensitive();
         builder.parseLenient();
-        builder.appendPattern("yyyy-MM-dd'T'HH:mm[:ss[.SSS]]X");
+        builder.appendPattern("yyyy-MM-dd'T'HH:mm[:ss[.SSS]][X]");
 
         return builder
                .toFormatter()

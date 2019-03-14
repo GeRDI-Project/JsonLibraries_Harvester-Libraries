@@ -725,6 +725,14 @@ public class DateUtilsTest
         assertDateEquals(expectedDate, dateToParse);
     }
 
+    @Test
+    public void testDateParsingIsoDate9()
+    {
+        final String dateToParse = String.format("%3$04d-%2$02d-%1$02dT12:34", day, month, year);
+        final Instant expectedDate = Instant.from(DateTimeFormatter.ISO_DATE_TIME.parse(dateToParse + 'Z'));
+
+        assertDateEquals(expectedDate, dateToParse);
+    }
 
     @Test
     public void testDateParsingWithHtmlTags1()
