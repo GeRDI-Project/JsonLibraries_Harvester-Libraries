@@ -16,6 +16,7 @@
  */
 package de.gerdiproject.json;
 
+import java.time.DateTimeException;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -92,13 +93,13 @@ public class DateUtils
             try {
                 return Instant.from(DateTimeFormatter.ISO_DATE_TIME.parse(cleanString));
 
-            } catch (DateTimeParseException ignore) { } // NOPMD exception is to be expected
+            } catch (DateTimeException ignore) { } // NOPMD exception is to be expected
 
             // fallback: use a custom ISO-8601 formatter for handling zones without colons
             try {
                 return Instant.from(DataCiteDateConstants.ISO8601_FORMATTER.parse(cleanString));
 
-            } catch (DateTimeParseException ignore) { } // NOPMD exception is to be expected
+            } catch (DateTimeException ignore) { } // NOPMD exception is to be expected
 
             // if all ISO-formatting failed, proceed as usual
         }
