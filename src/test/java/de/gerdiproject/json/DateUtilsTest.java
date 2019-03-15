@@ -173,6 +173,16 @@ public class DateUtilsTest
 
 
     @Test
+    public void testDateParsingOutOfRangeMonth()
+    {
+        final String dateToParse = String.format("13 13 %d", year);
+        final String expectedDate = String.format(DATE_FORMAT_MISSING_MONTH, day, month, year);
+
+        assertDateEquals(expectedDate, dateToParse);
+    }
+
+
+    @Test
     public void testDateParsingDayMonthYear1()
     {
         final String dateToParse = String.format(Locale.ENGLISH, "%d.%d.%d", day, month, year);

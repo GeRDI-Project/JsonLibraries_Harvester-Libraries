@@ -198,6 +198,12 @@ public class DateUtils
             }
         }
 
+        // if the month is out of range, only the year is precise enough
+        if (month > 12) {
+            month = 1;
+            day = 1;
+        }
+
         // assemble time
         final ZonedDateTime zdt =
             ZonedDateTime.of(
