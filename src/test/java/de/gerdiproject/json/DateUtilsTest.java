@@ -165,7 +165,7 @@ public class DateUtilsTest
     @Test
     public void testDateParsingOverNineThousaaaaaand()
     {
-        final String dateToParse = String.format(Locale.ENGLISH, "%d %d %d", day, month, 10000);
+        final String dateToParse = String.format(Locale.ENGLISH, "%d.%d.%d", day, month, 10000);
 
         assertNull("The method parseDate() should return null if the year is too big;",
                    DateUtils.parseDate(dateToParse));
