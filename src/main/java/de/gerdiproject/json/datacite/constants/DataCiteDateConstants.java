@@ -18,6 +18,9 @@ package de.gerdiproject.json.datacite.constants;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
@@ -37,6 +40,7 @@ public class DataCiteDateConstants
 
     // DATE RANGE
     public static final String DATE_RANGE_SPLITTER = "/";
+    public static final String DATE_RANGE_FORMAT = "%s" + DATE_RANGE_SPLITTER + "%s";
 
     // JSON (DE-)SERIALIZATION
     public static final String VALUE_JSON = "value";
@@ -50,6 +54,9 @@ public class DataCiteDateConstants
     public static final Pattern NUMBERS_PATTERN = Pattern.compile("(\\d{1,})");
     public static final String STANDARD_TIMEZONE = "UTC";
     public static final ZoneId Z_ZONE_ID = ZoneId.of("Z");
+
+    public static final List<String> DATE_RANGE_SEPARATORS =
+        Collections.unmodifiableList(Arrays.asList("/", "-", "until", "to"));
 
 
     private static DateTimeFormatter initIso8601Formatter()

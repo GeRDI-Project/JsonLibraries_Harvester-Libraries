@@ -17,11 +17,9 @@ package de.gerdiproject.json.datacite.abstr;
 
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.gson.annotations.SerializedName;
 
+import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.json.datacite.enums.DateType;
 import lombok.Data;
 
@@ -32,10 +30,8 @@ import lombok.Data;
  * @author Mathis Neumann, Robin Weiss
  */
 @Data
-public abstract class AbstractDate
+public abstract class AbstractDate implements ICleanable
 {
-    protected static final Logger LOGGER = LoggerFactory.getLogger(AbstractDate.class);
-
     /**
      * The event that is marked by this date.
      */
@@ -62,4 +58,12 @@ public abstract class AbstractDate
      * @param value the new value
      */
     abstract public void setValue(String value);
+
+
+    @Override
+    public boolean clean()
+    {
+        // nothing to clean, but if the date value is null, the date is invalid
+        return getValue() != null;
+    }
 }

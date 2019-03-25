@@ -90,30 +90,28 @@ public class DateRange extends AbstractDate
 
 
     /**
-     * Returns the date as a Dublin-Core-compliant String.
+     * Returns the date range as a Dublin-Core-compliant String.
      * <br>e.g. 1997-07-16T19:30Z/1997-07-17T15:30Z
      * <br><br>(see http://www.ukoln.ac.uk/metadata/dcmi/collection-RKMS-ISO8601/)
      *
-     * @return the amount of milliseconds between 01/01/1970 00:00:00 and this date
+     * @return a Dublin-Core-compliant String or null, if the date range is invalid
      */
     @Override
     public String getValue()
     {
-        String sinceVal = "";
-        String untilVal = "";
+        // at least one date must be present for a valid date range
+        if (since == null && until == null)
+            return null;
 
-        if (since != null)
-            sinceVal = since.toString();
+        final String sinceVal = since != null ? since.toString() : "";
+        final String untilVal = until != null ? until.toString() : "";
 
-        if (until != null)
-            untilVal = until.toString();
-
-        return sinceVal + DataCiteDateConstants.DATE_RANGE_SPLITTER + untilVal;
+        return String.format(DataCiteDateConstants.DATE_RANGE_FORMAT, sinceVal, untilVal);
     }
 
 
     /**
-     * Tries to set the date by parsing a Dublin-Core-compliant String.
+     * Tries to set the date range by parsing a Dublin-Core-compliant String.
      * <br>e.g. 1997-07-16T19:30Z/1997-07-17T15:30Z
      * <br><br>(see http://www.ukoln.ac.uk/metadata/dcmi/collection-RKMS-ISO8601/)
      *
@@ -122,17 +120,15 @@ public class DateRange extends AbstractDate
     @Override
     public void setValue(String stringValue)
     {
-        // split up the dates
-        String[] range = stringValue.split(DataCiteDateConstants.DATE_RANGE_SPLITTER);
+        final Instant[] dates = DateUtils.parseDateRange(stringValue);
 
-        // check if we really had a separator
-        if (range.length == 2) {
-            setRangeFrom(range[0]);
-            setRangeUntil(range[1]);
-        } else if (range.length == 1)
-            setRangeFrom(range[0]);
-        else
-            LOGGER.error(String.format(DataCiteDateConstants.PARSE_ERROR, stringValue));
+        if (dates != null) {
+            this.since = dates[0];
+            this.until = dates[1];
+        } else {
+            this.since = null;
+            this.until = null;
+        }
     }
 
     /**

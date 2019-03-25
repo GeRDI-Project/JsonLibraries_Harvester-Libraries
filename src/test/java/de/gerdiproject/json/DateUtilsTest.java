@@ -16,6 +16,7 @@
  */
 package de.gerdiproject.json;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
@@ -33,7 +34,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
+import de.gerdiproject.json.datacite.Date;
+import de.gerdiproject.json.datacite.DateRange;
 import de.gerdiproject.json.datacite.constants.DataCiteDateConstants;
+import de.gerdiproject.json.datacite.enums.DateType;
 
 /**
  * This class provides test cases for the {@linkplain DateUtils} class.
@@ -49,6 +53,11 @@ public class DateUtilsTest
     private final static String DATE_FORMAT = "%3$04d-%2$02d-%1$02d";
     private final static String DATE_FORMAT_MISSING_DAY = "%3$04d-%2$02d-01";
     private final static String DATE_FORMAT_MISSING_MONTH = "%3$04d-01-01";
+
+    private final static String DATE_FORMAT_DASH = "%d-%d-%d";
+    private final static String DATE_FORMAT_SPACE = "%d %d %d";
+    private final static String DATE_FORMAT_POINT = "%d.%d.%d";
+    private final static String DATE_FORMAT_SLASH = "%d/%d/%d";
 
 
     private final int day;
@@ -139,7 +148,7 @@ public class DateUtilsTest
     @Test
     public void testDateParsingZeroDay()
     {
-        final String dateToParse = String.format(Locale.ENGLISH, "%d %d %d", 0, month, year);
+        final String dateToParse = String.format(Locale.ENGLISH, DATE_FORMAT_SPACE, 0, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT_MISSING_DAY, day, month, year);
         assertDateEquals(expectedDate, dateToParse);
     }
@@ -148,7 +157,7 @@ public class DateUtilsTest
     @Test
     public void testDateParsingZeroMonth()
     {
-        final String dateToParse = String.format(Locale.ENGLISH, "%d %d %d", day, 0, year);
+        final String dateToParse = String.format(Locale.ENGLISH, DATE_FORMAT_SPACE, day, 0, year);
 
         final String expectedDate;
 
@@ -165,7 +174,7 @@ public class DateUtilsTest
     @Test
     public void testDateParsingOverNineThousaaaaaand()
     {
-        final String dateToParse = String.format(Locale.ENGLISH, "%d.%d.%d", day, month, 10000);
+        final String dateToParse = String.format(Locale.ENGLISH, DATE_FORMAT_POINT, day, month, 10000);
 
         assertNull("The method parseDate() should return null if the year is too big;",
                    DateUtils.parseDate(dateToParse));
@@ -185,7 +194,7 @@ public class DateUtilsTest
     @Test
     public void testDateParsingDayMonthYear1()
     {
-        final String dateToParse = String.format(Locale.ENGLISH, "%d.%d.%d", day, month, year);
+        final String dateToParse = String.format(Locale.ENGLISH, DATE_FORMAT_POINT, day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
         assertDateEquals(expectedDate, dateToParse);
     }
@@ -194,7 +203,7 @@ public class DateUtilsTest
     @Test
     public void testDateParsingDayMonthYear2()
     {
-        final String dateToParse = String.format(Locale.ENGLISH, "%d %d %d", day, month, year);
+        final String dateToParse = String.format(Locale.ENGLISH, DATE_FORMAT_SPACE, day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
         assertDateEquals(expectedDate, dateToParse);
     }
@@ -203,7 +212,7 @@ public class DateUtilsTest
     @Test
     public void testDateParsingDayMonthYear3()
     {
-        final String dateToParse = String.format(Locale.ENGLISH, "%d/%d/%d", day, month, year);
+        final String dateToParse = String.format(Locale.ENGLISH, DATE_FORMAT_SLASH, day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
         assertDateEquals(expectedDate, dateToParse);
     }
@@ -212,7 +221,7 @@ public class DateUtilsTest
     @Test
     public void testDateParsingDayMonthYear4()
     {
-        final String dateToParse = String.format(Locale.ENGLISH, "%d-%d-%d", day, month, year);
+        final String dateToParse = String.format(Locale.ENGLISH, DATE_FORMAT_DASH, day, month, year);
         final String expectedDate = String.format(Locale.ENGLISH, DATE_FORMAT, day, month, year);
         assertDateEquals(expectedDate, dateToParse);
     }
@@ -829,6 +838,79 @@ public class DateUtilsTest
     }
 
 
+    @Test
+    public void testParsingDateRange1()
+    {
+        final String dateFrom = "1500/03/02";
+        final String dateUntil = String.format("%3$04d/%2$02d/%1$02d", day, month, year);
+        assertDateRangeEquals(dateFrom, dateUntil);
+    }
+
+
+    @Test
+    public void testParsingDateRange2()
+    {
+        final String dateFrom = "02.03.1500";
+        final String dateUntil = String.format(Locale.ENGLISH, DATE_FORMAT_POINT, day, month, year);
+        assertDateRangeEquals(dateFrom, dateUntil);
+    }
+
+
+    @Test
+    public void testParsingDateRange3()
+    {
+        final String dateFrom = "02 03 1500";
+        final String dateUntil = String.format(Locale.ENGLISH, DATE_FORMAT_SPACE, day, month, year);
+        assertDateRangeEquals(dateFrom, dateUntil);
+    }
+
+
+    @Test
+    public void testParsingDateRange4()
+    {
+        final String dateFrom = "02-03-1500";
+        final String dateUntil = String.format(Locale.ENGLISH, DATE_FORMAT_DASH, day, month, year);
+        assertDateRangeEquals(dateFrom, dateUntil);
+    }
+
+
+    @Test
+    public void testParsingAbstractDate()
+    {
+        final String dateString = String.format(Locale.ENGLISH, DATE_FORMAT_DASH, day, month, year);
+        final Date expectedDate = new Date(dateString, DateType.Other);
+
+        assertEquals(String.format("The method parseAbstractDate(\"%s\") returned the wrong value; ", dateString),
+                     expectedDate,
+                     DateUtils.parseAbstractDate(dateString, DateType.Other));
+    }
+
+
+    @Test
+    public void testParsingAbstractDateRange()
+    {
+        final String dateFrom = "02-03-1500";
+        final String dateUntil = String.format(Locale.ENGLISH, DATE_FORMAT_DASH, day, month, year);
+        final String dateString = dateFrom + "/" + dateUntil;
+
+        final DateRange expectedDate = new DateRange(dateString, DateType.Other);
+
+        assertEquals(String.format("The method parseAbstractDate(\"%s\") returned the wrong value; ", dateString),
+                     expectedDate,
+                     DateUtils.parseAbstractDate(dateString, DateType.Other));
+    }
+
+
+    @Test
+    public void testParsingInvalidAbstractDate()
+    {
+        final String dateString = "If tomatoes are fruit, ketchup is a smoothie!";
+
+        assertNull(String.format("The method parseAbstractDate(\"%s\") should return null!", dateString),
+                   DateUtils.parseAbstractDate(dateString, DateType.Other));
+    }
+
+
     /**
      * This method parses a date string via {@linkplain DateUtils} and compares it to an expected
      * date using an assertion.
@@ -856,8 +938,32 @@ public class DateUtilsTest
     {
         final Instant parsedInstant = DateUtils.parseDate(dateToParse);
 
-        assertEquals(String.format(Locale.ENGLISH, "The method parseDate(\"%s\") returned the wrong value;", dateToParse),
+        assertEquals(String.format(Locale.ENGLISH, "The method parseDate(\"%s\") returned the wrong value; ", dateToParse),
                      expectedDate,
                      parsedInstant);
+    }
+
+
+    /**
+     * This method parses a date range string via {@linkplain DateUtils} and compares it to an expected
+     * date range using an assertion.
+     *
+     * @param dateFrom the beginning date of the date range
+     * @param dateUntil the end date of the date range
+     */
+    private void assertDateRangeEquals(final String dateFrom, final String dateUntil)
+    {
+        for (final String separator : DataCiteDateConstants.DATE_RANGE_SEPARATORS) {
+            final String dateRangeToParse = dateFrom + separator + dateUntil;
+
+            final Instant[] expectedDates = {
+                DateUtils.parseDate(dateFrom),
+                DateUtils.parseDate(dateUntil),
+            };
+
+            assertArrayEquals(String.format("The method parseDateRange(%s) returned the wrong dates; ", dateRangeToParse),
+                              expectedDates,
+                              DateUtils.parseDateRange(dateRangeToParse));
+        }
     }
 }

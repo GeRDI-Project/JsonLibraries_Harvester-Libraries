@@ -25,7 +25,11 @@ import java.time.temporal.ChronoField;
 import java.util.regex.Matcher;
 
 import de.gerdiproject.harvest.utils.StringCleaner;
+import de.gerdiproject.json.datacite.Date;
+import de.gerdiproject.json.datacite.DateRange;
+import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.constants.DataCiteDateConstants;
+import de.gerdiproject.json.datacite.enums.DateType;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -214,5 +218,98 @@ public class DateUtils
                 DataCiteDateConstants.Z_ZONE_ID);
 
         return zdt.toInstant();
+    }
+
+
+    /**
+     * Parses an {@linkplain AbstractDate} from a specified date string.
+     *
+     * @param dateString a raw string that contains a {@linkplain Date} or {@linkplain DateRange}
+     * @param type the {@linkplain DateType} of the retrieved date
+     *
+     * @return a {@linkplain Date}, {@linkplain DateRange}, or null if no date could be parsed
+     */
+    public static AbstractDate parseAbstractDate(String dateString, DateType type)
+    {
+        // attempt to parse date range
+        AbstractDate date = new DateRange(dateString, type);
+        boolean isValidDate = date.clean();
+
+        // fallback: attempt to parse single date
+        if (!isValidDate) {
+            date =  new Date(dateString, type);
+            isValidDate = date.clean();
+        }
+
+        // return valid date or null
+        return isValidDate ? date : null;
+
+    }
+
+
+    /**
+     * Parses a date range using a set of common separators defined in {@linkplain DataCiteDateConstants}.
+     *
+     * @param dateString a raw {@linkplain String} that contains a date range
+     *
+     * @return an {@linkplain Instant} array that contains the start- and end date,
+     * or null if no date range could be parsed
+     */
+    public static Instant[] parseDateRange(String dateString)
+    {
+        Instant[] dates = null;
+
+        // check if string represents a range, using any of the common separators
+        for (final String separator : DataCiteDateConstants.DATE_RANGE_SEPARATORS) {
+            dates = parseDateRange(dateString, separator);
+
+            if (dates != null)
+                break;
+        }
+
+        return dates;
+    }
+
+
+    /**
+     * Parses a date range considering a specified separator.
+     *
+     * @param dateString a raw {@linkplain String} that contains a date range
+     * @param separator a sub-string that separates the beginning from the end date
+     *
+     * @return an {@linkplain Instant} array that contains the start- and end date,
+     * or null if no date range could be parsed
+     */
+    public static Instant[] parseDateRange(String dateString, String separator)
+    {
+        final Instant[] dates = new Instant[2];
+
+        // check if the string contains the separator
+        if (dateString.contains(separator)) {
+            final String[] dateRangeElements = dateString.split(separator);
+
+            // check if there is really just one separator
+            if (dateRangeElements.length == 2) {
+                dates[0] = parseDate(dateRangeElements[0]);
+                dates[1] = parseDate(dateRangeElements[1]);
+            }
+
+            // edge case: the range-separator is the same symbol as the day/month/year-separator
+            else if (dateRangeElements.length > 2 && dateRangeElements.length % 2 == 0) {
+                // determine the middle of the string for a proper separation
+                final int separatorLength = separator.length();
+                int halfLength = 0;
+
+                for (int i = 0, len = dateRangeElements.length / 2; i < len; i++)
+                    halfLength += dateRangeElements[i].length() + separatorLength;
+
+                dates[0] = parseDate(dateString.substring(0, halfLength));
+                dates[1] = parseDate(dateString.substring(halfLength));
+
+            }
+        }
+
+        // return null if array is empty
+        return dates[0] != null || dates[1] != null ? dates : null;
     }
 }

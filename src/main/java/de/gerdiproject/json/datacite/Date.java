@@ -18,7 +18,6 @@ package de.gerdiproject.json.datacite;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 
-import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.json.DateUtils;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.constants.DataCiteDateConstants;
@@ -32,7 +31,7 @@ import lombok.EqualsAndHashCode;
  * @author Mathis Neumann, Robin Weiss
  */
 @EqualsAndHashCode(callSuper = true)
-public class Date extends AbstractDate implements ICleanable
+public class Date extends AbstractDate
 {
     /**
      *  The date value.
@@ -129,13 +128,5 @@ public class Date extends AbstractDate implements ICleanable
     public void setDate(Instant date)
     {
         this.value = date;
-    }
-
-
-    @Override
-    public boolean clean()
-    {
-        // nothing to clean, but it invalidates if it is null
-        return getValue() != null;
     }
 }
