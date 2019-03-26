@@ -23,6 +23,7 @@ import de.gerdiproject.json.datacite.nested.PersonName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 /**
  * The institution or person responsible for collecting, managing, distributing,
@@ -32,7 +33,7 @@ import lombok.RequiredArgsConstructor;
  *
  * @author Mathis Neumann, Robin Weiss
  */
-@Data @RequiredArgsConstructor @EqualsAndHashCode(callSuper = true)
+@Data @RequiredArgsConstructor @EqualsAndHashCode(callSuper = true) @ToString(callSuper = true)
 public class Contributor extends AbstractPerson
 {
     /**
