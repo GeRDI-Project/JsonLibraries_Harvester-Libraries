@@ -196,13 +196,8 @@ public class DateUtils
 
         // if we extracted a day, but no month, it was probably a month after all
         if (hasDay && !hasMonth) {
-            // if it is definitely a day, but we have no month, it was probably not a day after all
-            if (day > 12)
-                day = 1;
-            else {
-                month = day;
-                day = 1;
-            }
+            month = day;
+            day = 1;
         }
 
         // if the month is out of range, only the year is precise enough
