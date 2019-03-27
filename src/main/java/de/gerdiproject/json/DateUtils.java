@@ -118,6 +118,9 @@ public class DateUtils
 
         // convert each segment of the split string to a day, month, or year
         for (final String s : dateSegments) {
+            // skip empty strings
+            if (s.isEmpty())
+                continue;
 
             // check if the segment is a number
             if (Character.isDigit(s.charAt(0))) {
