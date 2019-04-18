@@ -18,11 +18,12 @@ package de.gerdiproject.json.datacite;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 
-import de.gerdiproject.harvest.ICleanable;
+import de.gerdiproject.json.DateUtils;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.constants.DataCiteDateConstants;
 import de.gerdiproject.json.datacite.enums.DateType;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * This JsonObject describes a date that has been relevant to the work.
@@ -30,8 +31,8 @@ import lombok.EqualsAndHashCode;
  * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
-@EqualsAndHashCode(callSuper = true)
-public class Date extends AbstractDate implements ICleanable
+@EqualsAndHashCode(callSuper = true) @ToString(callSuper = true)
+public class Date extends AbstractDate
 {
     /**
      *  The date value.
@@ -104,7 +105,7 @@ public class Date extends AbstractDate implements ICleanable
     @Override
     public void setValue(String stringValue)
     {
-        this.value = stringToInstant(stringValue);
+        this.value = DateUtils.parseDate(stringValue);
     }
 
 
@@ -116,7 +117,7 @@ public class Date extends AbstractDate implements ICleanable
      */
     public void setDate(long epochMilli)
     {
-        this.value = unixTimestampToInstant(epochMilli);
+        this.value = DateUtils.unixTimestampToInstant(epochMilli);
     }
 
 
@@ -128,13 +129,5 @@ public class Date extends AbstractDate implements ICleanable
     public void setDate(Instant date)
     {
         this.value = date;
-    }
-
-
-    @Override
-    public boolean clean()
-    {
-        // nothing to clean, but it invalidates if it is null
-        return getValue() != null;
     }
 }

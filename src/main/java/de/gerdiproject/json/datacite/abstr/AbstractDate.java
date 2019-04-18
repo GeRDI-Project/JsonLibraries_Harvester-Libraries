@@ -17,21 +17,9 @@ package de.gerdiproject.json.datacite.abstr;
 
 
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.util.Calendar;
-import java.util.TimeZone;
-
-import javax.xml.bind.DatatypeConverter;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.google.gson.annotations.SerializedName;
 
-import de.gerdiproject.harvest.utils.StringCleaner;
-import de.gerdiproject.json.datacite.constants.DataCiteDateConstants;
+import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.json.datacite.enums.DateType;
 import lombok.Data;
 
@@ -42,10 +30,8 @@ import lombok.Data;
  * @author Mathis Neumann, Robin Weiss
  */
 @Data
-public abstract class AbstractDate
+public abstract class AbstractDate implements ICleanable
 {
-    protected static final Logger LOGGER = LoggerFactory.getLogger(AbstractDate.class);
-
     /**
      * The event that is marked by this date.
      */
@@ -74,84 +60,10 @@ public abstract class AbstractDate
     abstract public void setValue(String value);
 
 
-    /**
-     * Tries to parse a String to a date. Ideally, the string is ISO 8601 compliant.
-     * <br>e.g. 1994-11-05T13:15:30Z
-     * <br><br>(see https://www.w3.org/TR/NOTE-datetime)
-     *
-     * @param stringValue the String that is to be parsed
-     *
-     * @return an {@linkplain Instant} that represents the string value
-     */
-    protected static Instant stringToInstant(String stringValue)
+    @Override
+    public boolean clean()
     {
-        // empty strings should not be parsed
-        if (stringValue == null || stringValue.isEmpty())
-            return null;
-
-        // make string DatatypeConverter compliant by adding seconds to it and removing HTML tags
-        String cleanString = StringCleaner.clean(
-                                 stringValue.replaceAll(
-                                     DataCiteDateConstants.ISO_8601_TIME_WITHOUT_SECONDS,
-                                     DataCiteDateConstants.ISO_8601_REPLACE_TIME_WITH_SECONDS
-                                 )
-                             );
-
-        // try to parse formats that start with a character (e.g. "Nov-2015")
-        if (!Character.isDigit(cleanString.charAt(0))) {
-            // remove all text before the first word before the first number (if it exists)
-            // this converts "Monthly time series starting February 2010" to "February 2010"
-            cleanString = cleanString.replaceAll(
-                              DataCiteDateConstants.WORD_BEFORE_NUMBER_REGEX,
-                              DataCiteDateConstants.FIRST_MATCH);
-
-            for (SimpleDateFormat format : DataCiteDateConstants.DATE_FORMATS_STARTING_WITH_CHAR)
-                try {
-                    return format.parse(cleanString).toInstant();
-
-                } catch (ParseException e) {}  // NOPMD - nothing to do here, just keep parsing
-
-            // remove all text before the first number (if it exists)
-            // this converts "Annual data for the period 1997 onwards" to "1997 onwards"
-            cleanString = cleanString.replaceAll(
-                              DataCiteDateConstants.FIRST_NUMBER_REGEX,
-                              DataCiteDateConstants.FIRST_MATCH);
-        }
-
-        // only continue parsing if the string starts with a number
-        if (Character.isDigit(cleanString.charAt(0))) {
-
-            // try to parse ISO 8601 string
-            try {
-                Calendar parsedCalendar = DatatypeConverter.parseDateTime(cleanString);
-                parsedCalendar.setTimeZone(TimeZone.getTimeZone(DataCiteDateConstants.STANDARD_TIMEZONE));
-                return parsedCalendar.toInstant();
-
-            } catch (IllegalArgumentException e) {} // NOPMD - nothing to do here, just keep parsing
-
-            // try to parse less common formats
-            for (SimpleDateFormat format : DataCiteDateConstants.DATE_FORMATS_STARTING_WITH_NUM)
-                try {
-                    return format.parse(cleanString).toInstant();
-
-                } catch (ParseException e) {} // NOPMD - nothing to do here, just keep parsing
-        }
-
-        LOGGER.warn(String.format(DataCiteDateConstants.PARSE_ERROR, stringValue));
-        return null;
-    }
-
-
-    /**
-     * Creates an instant using the amount of milliseconds that passed
-     * from 01/01/1970 00:00:00 until this date.
-     *
-     * @param epochMilli the amount of milliseconds between 01/01/1970 00:00:00 and this date
-     *
-     * @return an {@linkplain Instant} that represents the timestamp
-     */
-    protected static Instant unixTimestampToInstant(long epochMilli)
-    {
-        return Instant.ofEpochMilli(epochMilli);
+        // nothing to clean, but if the date value is null, the date is invalid
+        return getValue() != null;
     }
 }

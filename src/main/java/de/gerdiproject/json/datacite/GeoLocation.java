@@ -159,7 +159,7 @@ public class GeoLocation implements ICleanable
      */
     public boolean isValid()
     {
-        return box != null || polygons != null && !polygons
+        return place != null || box != null || polygons != null && !polygons
                .isEmpty() || point != null;
     }
 }

@@ -18,10 +18,12 @@ package de.gerdiproject.json.datacite;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 
+import de.gerdiproject.json.DateUtils;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.constants.DataCiteDateConstants;
 import de.gerdiproject.json.datacite.enums.DateType;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 /**
  * This JsonObject describes a date that has been relevant to the work.
@@ -29,7 +31,7 @@ import lombok.EqualsAndHashCode;
  * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true) @ToString(callSuper = true)
 public class DateRange extends AbstractDate
 {
     /**
@@ -89,30 +91,28 @@ public class DateRange extends AbstractDate
 
 
     /**
-     * Returns the date as a Dublin-Core-compliant String.
+     * Returns the date range as a Dublin-Core-compliant String.
      * <br>e.g. 1997-07-16T19:30Z/1997-07-17T15:30Z
      * <br><br>(see http://www.ukoln.ac.uk/metadata/dcmi/collection-RKMS-ISO8601/)
      *
-     * @return the amount of milliseconds between 01/01/1970 00:00:00 and this date
+     * @return a Dublin-Core-compliant String or null, if the date range is invalid
      */
     @Override
     public String getValue()
     {
-        String sinceVal = "";
-        String untilVal = "";
+        // at least one date must be present for a valid date range
+        if (since == null && until == null)
+            return null;
 
-        if (since != null)
-            sinceVal = since.toString();
+        final String sinceVal = since != null ? since.toString() : "";
+        final String untilVal = until != null ? until.toString() : "";
 
-        if (until != null)
-            untilVal = until.toString();
-
-        return sinceVal + DataCiteDateConstants.DATE_RANGE_SPLITTER + untilVal;
+        return String.format(DataCiteDateConstants.DATE_RANGE_FORMAT, sinceVal, untilVal);
     }
 
 
     /**
-     * Tries to set the date by parsing a Dublin-Core-compliant String.
+     * Tries to set the date range by parsing a Dublin-Core-compliant String.
      * <br>e.g. 1997-07-16T19:30Z/1997-07-17T15:30Z
      * <br><br>(see http://www.ukoln.ac.uk/metadata/dcmi/collection-RKMS-ISO8601/)
      *
@@ -121,17 +121,15 @@ public class DateRange extends AbstractDate
     @Override
     public void setValue(String stringValue)
     {
-        // split up the dates
-        String[] range = stringValue.split(DataCiteDateConstants.DATE_RANGE_SPLITTER);
+        final Instant[] dates = DateUtils.parseDateRange(stringValue);
 
-        // check if we really had a separator
-        if (range.length == 2) {
-            setRangeFrom(range[0]);
-            setRangeUntil(range[1]);
-        } else if (range.length == 1)
-            setRangeFrom(range[0]);
-        else
-            LOGGER.error(String.format(DataCiteDateConstants.PARSE_ERROR, stringValue));
+        if (dates != null) {
+            this.since = dates[0];
+            this.until = dates[1];
+        } else {
+            this.since = null;
+            this.until = null;
+        }
     }
 
     /**
@@ -156,7 +154,7 @@ public class DateRange extends AbstractDate
      */
     public void setRangeFrom(long epochMilli)
     {
-        this.since = unixTimestampToInstant(epochMilli);
+        this.since = DateUtils.unixTimestampToInstant(epochMilli);
     }
 
 
@@ -167,7 +165,7 @@ public class DateRange extends AbstractDate
      */
     public void setRangeFrom(String stringValue)
     {
-        this.since = stringToInstant(stringValue);
+        this.since = DateUtils.parseDate(stringValue);
     }
 
 
@@ -193,7 +191,7 @@ public class DateRange extends AbstractDate
      */
     public void setRangeUntil(long epochMilli)
     {
-        this.until = unixTimestampToInstant(epochMilli);
+        this.until = DateUtils.unixTimestampToInstant(epochMilli);
     }
 
 
@@ -204,6 +202,6 @@ public class DateRange extends AbstractDate
      */
     public void setRangeUntil(String stringValue)
     {
-        this.until = stringToInstant(stringValue);
+        this.until = DateUtils.parseDate(stringValue);
     }
 }

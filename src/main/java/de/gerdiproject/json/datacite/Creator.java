@@ -22,6 +22,7 @@ import de.gerdiproject.json.datacite.nested.PersonName;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 /**
  * The main researcher involved in producing the data, or an author of the publication.
@@ -29,7 +30,7 @@ import lombok.RequiredArgsConstructor;
  * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
-@Data @RequiredArgsConstructor @EqualsAndHashCode(callSuper = true)
+@Data @RequiredArgsConstructor @EqualsAndHashCode(callSuper = true) @ToString(callSuper = true)
 public class Creator extends AbstractPerson
 {
     /**

@@ -16,6 +16,7 @@
 package de.gerdiproject.json.datacite.adapters;
 
 import java.lang.reflect.Type;
+
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -76,10 +77,13 @@ public class DateAdapter implements JsonDeserializer<AbstractDate>, JsonSerializ
         dateJson.addProperty(DataCiteDateConstants.VALUE_JSON, src.getValue());
 
         // add dateType
-        dateJson.addProperty(DataCiteDateConstants.DATE_TYPE_JSON, src.getType().toString());
+        final DateType dateType = src.getType();
+
+        if (dateType != null)
+            dateJson.addProperty(DataCiteDateConstants.DATE_TYPE_JSON, dateType.toString());
 
         // optionally add dateInformation
-        String dateInfo = src.getDateInformation();
+        final String dateInfo = src.getDateInformation();
 
         if (dateInfo != null)
             dateJson.addProperty(DataCiteDateConstants.DATE_INFO_JSON, dateInfo);

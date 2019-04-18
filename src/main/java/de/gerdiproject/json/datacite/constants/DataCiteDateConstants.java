@@ -15,13 +15,14 @@
  */
 package de.gerdiproject.json.datacite.constants;
 
-import java.text.SimpleDateFormat;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
+import java.util.regex.Pattern;
 
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import lombok.AccessLevel;
@@ -35,100 +36,55 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class DataCiteDateConstants
 {
-    public static final String ISO_8601_TIME_WITHOUT_SECONDS = "(T\\d\\d:\\d\\d)([Z+])";
-    public static final String ISO_8601_REPLACE_TIME_WITH_SECONDS = "$1:00$2";
     public static final String PARSE_ERROR = "Could not parse date string '%s'!";
 
     // DATE RANGE
     public static final String DATE_RANGE_SPLITTER = "/";
+    public static final String DATE_RANGE_FORMAT = "%s" + DATE_RANGE_SPLITTER + "%s";
 
     // JSON (DE-)SERIALIZATION
     public static final String VALUE_JSON = "value";
     public static final String DATE_TYPE_JSON = "dateType";
     public static final String DATE_INFO_JSON = "dateInformation";
 
-
     // DATE PARSING
-    public static final String WORD_BEFORE_NUMBER_REGEX = "^\\D+\\s([^0-9]+[,.-]?\\s?\\d[\\d\\D]+)$";
-    public static final String FIRST_NUMBER_REGEX = "^\\D+(\\d[\\d\\D]+)$";
-    public static final String FIRST_MATCH = "$1";
+    public static final String DATE_SPLIT_REGEX = "[\\-/,;. \\\\]+";
+    public static final DateTimeFormatter MONTH_FORMATTER = initMonthFormatter();
+    public static final DateTimeFormatter ISO8601_FORMATTER = initIso8601Formatter();
+    public static final Pattern NUMBERS_PATTERN = Pattern.compile("(\\d{1,})");
     public static final String STANDARD_TIMEZONE = "UTC";
     public static final ZoneId Z_ZONE_ID = ZoneId.of("Z");
-    public static final List<SimpleDateFormat> DATE_FORMATS_STARTING_WITH_CHAR = createDateFormatsStartingWithChar(STANDARD_TIMEZONE);
-    public static final List<SimpleDateFormat> DATE_FORMATS_STARTING_WITH_NUM = createDateFormatsStartingWithDigit(STANDARD_TIMEZONE);
+
+    public static final List<String> DATE_RANGE_SEPARATORS =
+        Collections.unmodifiableList(Arrays.asList("/", "-", "until", "to"));
 
 
-    /**
-     * Creates an unmodifiable list of date formats, each of which is starting with a digit.
-     *
-     * @param timeZoneName the String representation of the time zone
-     *
-     * @return a list of date formats
-     */
-    private static List<SimpleDateFormat> createDateFormatsStartingWithDigit(String timeZoneName)
+    private static DateTimeFormatter initIso8601Formatter()
     {
-        List<SimpleDateFormat> dateFormats =
-            Collections.unmodifiableList(
-                Arrays.asList(
-                    new SimpleDateFormat("dd.MM.yyyy", Locale.ENGLISH),     // 20.11.2016
-                    new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH),     // 20/11/2016
-                    new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH),     // 20-11-2016
-                    new SimpleDateFormat("dd MM yyyy", Locale.ENGLISH),     // 20 11 2016
+        final DateTimeFormatterBuilder builder = new DateTimeFormatterBuilder();
 
-                    new SimpleDateFormat("MM.yyyy", Locale.ENGLISH),        // 11.2016
-                    new SimpleDateFormat("MM/yyyy", Locale.ENGLISH),        // 11/2016
-                    new SimpleDateFormat("MM-yyyy", Locale.ENGLISH),        // 11-2016
-                    new SimpleDateFormat("MM yyyy", Locale.ENGLISH),        // 11 2016
+        // ignore case when parsing
+        builder.parseCaseInsensitive();
+        builder.parseLenient();
+        builder.appendPattern("yyyy-MM-dd'T'HH:mm[:ss[.SSS]][X]");
 
-                    new SimpleDateFormat("d. MMMM, yyyy", Locale.ENGLISH),  // 7. November, 2016
-                    new SimpleDateFormat("d. MMMM yyyy", Locale.ENGLISH),   // 7. November 2016
-                    new SimpleDateFormat("d MMMM, yyyy", Locale.ENGLISH),   // 7 November, 2016
-                    new SimpleDateFormat("d MMMM yyyy", Locale.ENGLISH),    // 7 November 2016
-                    new SimpleDateFormat("dd-MMMM-yyyy", Locale.ENGLISH),   // 07-November-2016
-                    new SimpleDateFormat("d-MMMM-yyyy", Locale.ENGLISH),    // 7-November-2016
-                    new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH),    // 07-Nov-2016
-                    new SimpleDateFormat("d-MMM-yyyy", Locale.ENGLISH),     // 7-Nov-2016
+        return builder
+               .toFormatter()
+               .withZone(ZoneId.of(DataCiteDateConstants.STANDARD_TIMEZONE));
 
-                    new SimpleDateFormat("dd. MMM. yyyy", Locale.ENGLISH),  // 20. Nov. 2016
-                    new SimpleDateFormat("dd. MMM, yyyy", Locale.ENGLISH),  // 20. Nov, 2016
-                    new SimpleDateFormat("dd. MMM yyyy", Locale.ENGLISH),   // 20. Nov 2016
-                    new SimpleDateFormat("dd MMM. yyyy", Locale.ENGLISH),   // 20 Nov. 2016
-                    new SimpleDateFormat("dd MMM, yyyy", Locale.ENGLISH),   // 20 Nov, 2016
-                    new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH),    // 20 Nov 2016
-
-                    new SimpleDateFormat("yyyy", Locale.ENGLISH)            // 2016
-                ));
-
-        // set TimeZone to UTC
-        dateFormats.forEach((SimpleDateFormat sdf) -> sdf.setTimeZone(TimeZone.getTimeZone(timeZoneName)));
-
-        return dateFormats;
     }
 
-    /**
-     * Creates an unmodifiable list of date formats, each of which is starting with a char.
-     * @param timeZoneName the String representation of the time zone
-     *
-     * @return a list of date formats
-     */
-    private static List<SimpleDateFormat> createDateFormatsStartingWithChar(String timeZoneName)
+
+    private static DateTimeFormatter initMonthFormatter()
     {
-        List<SimpleDateFormat> dateFormats =
-            Collections.unmodifiableList(
-                Arrays.asList(
-                    new SimpleDateFormat("MMMM, yyyy", Locale.ENGLISH), // November, 2016
-                    new SimpleDateFormat("MMMM yyyy", Locale.ENGLISH),  // November 2016
-                    new SimpleDateFormat("MMMM-yyyy", Locale.ENGLISH),  // November-2016
+        final DateTimeFormatterBuilder builder = new DateTimeFormatterBuilder();
 
-                    new SimpleDateFormat("MMM yyyy", Locale.ENGLISH),   // Nov 2016
-                    new SimpleDateFormat("MMM, yyyy", Locale.ENGLISH),  // Nov, 2016
-                    new SimpleDateFormat("MMM. yyyy", Locale.ENGLISH),  // Nov. 2016
-                    new SimpleDateFormat("MMM-yyyy", Locale.ENGLISH)    // Nov-2016
-                ));
+        builder.appendPattern("[MMMM][MMM]");
+        builder.parseCaseInsensitive();
+        builder.parseLenient();
 
-        // set TimeZone to UTC
-        dateFormats.forEach((SimpleDateFormat sdf) -> sdf.setTimeZone(TimeZone.getTimeZone(timeZoneName)));
-
-        return dateFormats;
+        return builder.toFormatter()
+               .withZone(ZoneId.of(DataCiteDateConstants.STANDARD_TIMEZONE))
+               .withLocale(Locale.ENGLISH);
     }
 }

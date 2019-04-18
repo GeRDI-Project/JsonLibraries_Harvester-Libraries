@@ -24,7 +24,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import de.gerdiproject.harvest.ICleanable;
+import de.gerdiproject.harvest.constants.CollectionConstants;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -36,6 +40,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class CollectionUtils
 {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CollectionUtils.class);
+
     /**
      * Static helper that adds elements to an existing {@linkplain Set}, or
      * creates a new {@linkplain HashSet} if nothing was added before. Also removes null elements
@@ -55,18 +61,11 @@ public class CollectionUtils
 
         // create a new set or use an existing one
         final Set<T> tempSet = (set == null) ? new HashSet<>() : set;
+        final boolean isLogging = LOGGER.isDebugEnabled();
 
+        // attempt to clean and validate each element
         for (T element : addedElements) {
-            if (element == null)
-                continue;
-
-            if (element instanceof ICleanable) {
-                // if element can be cleaned, do it and add it only if it is valid
-                final ICleanable cleanableElement = (ICleanable) element;
-
-                if (cleanableElement.clean())
-                    tempSet.add(element);
-            } else
+            if (validateAndLogElement(element, isLogging))
                 tempSet.add(element);
         }
 
@@ -93,13 +92,21 @@ public class CollectionUtils
             return list;
 
         final List<T> tempList = list == null ? new LinkedList<>() : list;
+        final boolean isLogging = LOGGER.isDebugEnabled();
 
         for (T element : addedElements) {
-            if (element == null || tempList.contains(element))
-                continue;
 
-            if (!(element instanceof ICleanable) || ((ICleanable) element).clean())
-                tempList.add(element);
+            if (validateAndLogElement(element, isLogging)) {
+                if (tempList.contains(element)) {
+                    if (isLogging) {
+                        LOGGER.debug(String.format(
+                                         CollectionConstants.REMOVED_DUPLICATE_OBJECT,
+                                         element.getClass().getSimpleName(),
+                                         element.toString()));
+                    }
+                } else
+                    tempList.add(element);
+            }
         }
 
         return tempList.isEmpty() ? null : tempList;
@@ -126,9 +133,54 @@ public class CollectionUtils
 
         final Map<String, T> tempMap = map == null ? new HashMap<>() : map;
 
-        if (!(value instanceof ICleanable) || ((ICleanable) value).clean())
+        if (validateAndLogElement(value, LOGGER.isDebugEnabled()))
             tempMap.put(key, value);
 
         return tempMap.isEmpty() ? null : tempMap;
+    }
+
+
+    /**
+     * Attempts to clean and validate a specified element, and logs invalid elements
+     * if logging is enabled.
+     *
+     * @param element the element that is to be cleaned and validated
+     * @param isLogging if true, failing to clean the object will log it
+     *
+     * @return true, if the element is a valid, non-null object
+     */
+    private static <T> boolean validateAndLogElement(T element, boolean isLogging)
+    {
+        final boolean isValidElement;
+
+        // discard null elements
+        if (element == null)
+            isValidElement = false;
+
+        // clean elements that have a dedicated method for that
+        else if (element instanceof ICleanable) {
+            // if element can be cleaned, do it and add it only if it is valid
+            final ICleanable cleanableElement = (ICleanable) element;
+
+            // if debug logging is enabled, log discarded, unclean elements
+            if (isLogging) {
+                final String preCleanedString = cleanableElement.toString();
+                isValidElement = cleanableElement.clean();
+
+                if (!isValidElement) {
+                    LOGGER.debug(String.format(
+                                     CollectionConstants.REMOVED_INVALID_OBJECT,
+                                     cleanableElement.getClass().getSimpleName(),
+                                     preCleanedString));
+                }
+            } else
+                isValidElement = cleanableElement.clean();
+        }
+
+        // approve non-null elements that lack a cleaning function
+        else
+            isValidElement = true;
+
+        return isValidElement;
     }
 }
