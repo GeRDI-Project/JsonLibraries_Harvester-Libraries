@@ -15,7 +15,7 @@
  *  under the License.
  */
 /**
- * This package contains harvesting related constants.
+ * This package contains constants related to harvesters.
  *
  * @author Robin Weiss
  */
