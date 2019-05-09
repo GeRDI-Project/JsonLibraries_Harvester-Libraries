@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>de.gerdi-project</groupId>
 		<artifactId>GeRDI-parent</artifactId>
-		<version>3.2.0-SNAPSHOT</version>
+		<version>4.0.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>GSON</artifactId>
@@ -17,95 +17,10 @@
 	<inceptionYear>2017</inceptionYear>
 
 	<properties>
-		<jar.plugin.version>3.0.2</jar.plugin.version>
-		<javadoc.plugin.version>3.0.1</javadoc.plugin.version>
-		<source.plugin.version>3.0.1</source.plugin.version>
-		<bundle.plugin.version>3.0.1</bundle.plugin.version>
-		<dependency.plugin.version>3.1.1</dependency.plugin.version>
-		<exec.plugin.version>1.6.0</exec.plugin.version>
 		<gson.dependency.version>2.8.5</gson.dependency.version>
 		<esri.dependency.version>2.2.0</esri.dependency.version>
 		<jsoup.dependency.version>1.11.3</jsoup.dependency.version>
-		<harvesterutils.dependency.version>1.5.2-SNAPSHOT</harvesterutils.dependency.version>
 	</properties>
-
-	<build>
-		<plugins>
-			<!-- Generate jar and move it to /target/ folder -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>${jar.plugin.version}</version>
-				<configuration>
-					<outputDirectory>${project.build.directory}</outputDirectory>
-					<excludes>
-						<exclude>**/de/gerdiproject/generator/**</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-
-			<!-- Add javadoc -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>${javadoc.plugin.version}</version>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<outputDirectory>${project.build.directory}</outputDirectory>
-				</configuration>
-			</plugin>
-
-			<!-- Add sources -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>${source.plugin.version}</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<outputDirectory>${project.build.directory}</outputDirectory>
-				</configuration>
-			</plugin>
-
-			<!-- Unpack Utility Scripts -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>${dependency.plugin.version}</version>
-				<executions>
-					<execution>
-						<id>unpack-shared-resources</id>
-						<goals>
-							<goal>unpack-dependencies</goal>
-						</goals>
-						<phase>generate-resources</phase>
-						<configuration>
-							<!--<includes>setup/**</includes>-->
-							<outputDirectory>${basedir}</outputDirectory>
-							<excludeTransitive>true</excludeTransitive>
-							<overWrite>false</overWrite>
-							<includeGroupIds>de.gerdi-project</includeGroupIds>
-							<includeTypes>zip</includeTypes>
-							<excludes>${invalid.script.extensions}</excludes>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
 
 	<profiles>
 		<profile>
@@ -159,17 +74,6 @@
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>${jsoup.dependency.version}</version>
-		</dependency>
-
-		<!-- Utility Scripts : Mainly used for formatting after generating files -->
-		<dependency>
-			<groupId>de.gerdi-project</groupId>
-			<artifactId>GeRDI-harvester-utilities-archive</artifactId>
-			<version>${harvesterutils.dependency.version}</version>
-			<classifier>resources</classifier>
-			<type>zip</type>
-			<!-- Make sure this isn't included on any classpath-->
-			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 
