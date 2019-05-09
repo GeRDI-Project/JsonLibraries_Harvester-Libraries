@@ -56,7 +56,7 @@ public class Contributor extends AbstractPerson
      * @param name the name of the contributor
      * @param type the role of the contributor
      */
-    public Contributor(String name, ContributorType type)
+    public Contributor(final String name, final ContributorType type)
     {
         this(new PersonName(name), type);
     }

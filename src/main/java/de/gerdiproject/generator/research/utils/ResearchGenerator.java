@@ -59,7 +59,7 @@ public class ResearchGenerator
      *
      * @param args an arbitrary number of filepaths to JSON files that are to be parsed
      */
-    public static void main(String[] args)
+    public static void main(final String[] args)
     {
         final ResearchGenerator generator = new ResearchGenerator();
 
@@ -78,7 +78,7 @@ public class ResearchGenerator
      *
      * @param filePaths a list of filePaths that point to JSON files
      */
-    public void generateConstants(String... filePaths)
+    public void generateConstants(final String... filePaths)
     {
         LOGGER.info(ResearchGeneratorConstants.GENERATOR_STARTED);
 
@@ -101,7 +101,7 @@ public class ResearchGenerator
         final StringBuilder disciplineMapBuilder = new StringBuilder();
 
         // Loop through the list of files
-        for (String filePath : filePaths) {
+        for (final String filePath : filePaths) {
             try {
                 addConstantsFromFile(
                     filePath,
@@ -111,7 +111,7 @@ public class ResearchGenerator
                     areaMapBuilder,
                     disciplineMapBuilder
                 );
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 LOGGER.error(String.format(ResearchGeneratorConstants.FILE_READ_ERROR, filePath), e);
             }
         }
@@ -125,7 +125,7 @@ public class ResearchGenerator
 
             areaWriter.append(ResearchGeneratorConstants.RESEARCH_AREA_GETTER);
             areaWriter.append(ResearchGeneratorConstants.RESEARCH_AREA_CREATE_MAP_METHOD);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             LOGGER.error(ResearchGeneratorConstants.FILE_WRITE_ERROR, e);
         }
 
@@ -138,7 +138,7 @@ public class ResearchGenerator
 
             disciplineWriter.append(ResearchGeneratorConstants.RESEARCH_DISCIPLINE_GETTER);
             disciplineWriter.append(ResearchGeneratorConstants.RESEARCH_DISCIPLINE_CREATE_MAP_METHOD);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             LOGGER.error(ResearchGeneratorConstants.FILE_WRITE_ERROR, e);
         }
 
@@ -163,21 +163,26 @@ public class ResearchGenerator
      *
      * @throws IOException this exception is thrown when a read or write operation of any file failed
      */
-    private void addConstantsFromFile(String filePath, OutputStreamWriter categoryWriter, OutputStreamWriter areaWriter, OutputStreamWriter disciplineWriter, StringBuilder areaMapBuilder, StringBuilder disciplineMapBuilder) throws IOException
+    private void addConstantsFromFile(final String filePath,
+                                      final OutputStreamWriter categoryWriter,
+                                      final OutputStreamWriter areaWriter,
+                                      final OutputStreamWriter disciplineWriter,
+                                      final StringBuilder areaMapBuilder,
+                                      final StringBuilder disciplineMapBuilder) throws IOException
     {
-        List<ResearchCategorySource> categories = readResearchListFromFile(filePath);
+        final List<ResearchCategorySource> categories = readResearchListFromFile(filePath);
 
         if (categories == null || categories.isEmpty())
             return;
 
-        for (ResearchCategorySource sCat : categories) {
-            String categoryConstName = getConstantName(sCat.getName());
+        for (final ResearchCategorySource sCat : categories) {
+            final String categoryConstName = getConstantName(sCat.getName());
             categoryWriter.append(String.format(ResearchGeneratorConstants.CATEGORY_DEF, categoryConstName, sCat.getName()));
             areaWriter.append(String.format(ResearchGeneratorConstants.COMMENT, categoryConstName));
 
-            for (ResearchAreaSource area : sCat.getSubclasses()) {
-                String areaConstName = getConstantName(area.getName());
-                areaWriter.append(String.format(ResearchGeneratorConstants.AREA_DEF, areaConstName, area.getRBNR(), area.getName(), categoryConstName));
+            for (final ResearchAreaSource area : sCat.getSubclasses()) {
+                final String areaConstName = getConstantName(area.getName());
+                areaWriter.append(String.format(ResearchGeneratorConstants.AREA_DEF, areaConstName, area.getRbnrAsInt(), area.getName(), categoryConstName));
                 disciplineWriter.append(String.format(ResearchGeneratorConstants.COMMENT, areaConstName));
 
                 // add area to initialization of research map
@@ -186,9 +191,9 @@ public class ResearchGenerator
 
                 areaMapBuilder.append(String.format(ResearchGeneratorConstants.RESEARCH_MAP_INSTRUCTION, areaConstName));
 
-                for (ResearchDisciplineSource discipline : area.getSubclasses()) {
-                    String disciConstName = getConstantName(discipline.getName());
-                    disciplineWriter.append(String.format(ResearchGeneratorConstants.DISCIPLINE_DEF, disciConstName, discipline.getRBNR(), discipline.getName(), areaConstName));
+                for (final ResearchDisciplineSource discipline : area.getSubclasses()) {
+                    final String disciConstName = getConstantName(discipline.getName());
+                    disciplineWriter.append(String.format(ResearchGeneratorConstants.DISCIPLINE_DEF, disciConstName, discipline.getRbnrAsInt(), discipline.getName(), areaConstName));
 
 
                     // add discipline to initialization of research map
@@ -215,13 +220,13 @@ public class ResearchGenerator
      *
      * @return the output stream writer of the generated class
      */
-    private OutputStreamWriter initConstantsFile(String constantType, String... imports)
+    private OutputStreamWriter initConstantsFile(final String constantType, final String... imports)
     {
-        String filePath = String.format(ResearchGeneratorConstants.CONSTANTS_FILE_NAME, constantType);
-        File output = new File(filePath);
+        final String filePath = String.format(ResearchGeneratorConstants.CONSTANTS_FILE_NAME, constantType);
+        final File output = new File(filePath);
 
         // create directories
-        boolean isDirectoryCreated = output.getParentFile().exists() || output.getParentFile().mkdirs();
+        final boolean isDirectoryCreated = output.getParentFile().exists() || output.getParentFile().mkdirs();
 
         // open stream
         OutputStreamWriter writer = null;
@@ -233,14 +238,14 @@ public class ResearchGenerator
                     StandardCharsets.UTF_8);
 
                 // assemble imports String
-                StringBuilder importBuilder = new StringBuilder();
+                final StringBuilder importBuilder = new StringBuilder();
 
-                for (String importClassName : imports)
+                for (final String importClassName : imports)
                     importBuilder.append(String.format(ResearchGeneratorConstants.IMPORT_DEF, importClassName));
 
                 // write class definition
                 writer.append(String.format(ResearchGeneratorConstants.CLASS_START, constantType, importBuilder.toString()));
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 LOGGER.error(String.format(ResearchGeneratorConstants.FILE_CREATE_ERROR, filePath), e);
             }
         } else
@@ -255,13 +260,13 @@ public class ResearchGenerator
      *
      * @param writer the output stream writer of a constants file
      */
-    private void finishConstantsFile(OutputStreamWriter writer)
+    private void finishConstantsFile(final OutputStreamWriter writer)
     {
         try {
             writer.append(ResearchGeneratorConstants.CLASS_END);
 
             writer.close();
-        } catch (IOException e) {
+        } catch (final IOException e) {
             LOGGER.error(ResearchGeneratorConstants.FILE_WRITE_ERROR, e);
         }
     }
@@ -276,12 +281,12 @@ public class ResearchGenerator
      *
      * @throws IOException this exception is thrown when the JSON file could not be parsed
      */
-    private List<ResearchCategorySource> readResearchListFromFile(String filepath) throws IOException
+    private List<ResearchCategorySource> readResearchListFromFile(final String filepath) throws IOException
     {
         List<ResearchCategorySource> researchList = null;
 
         // load JSON file
-        JsonReader reader = new JsonReader(
+        final JsonReader reader = new JsonReader(
             new InputStreamReader(
                 new FileInputStream(filepath),
                 StandardCharsets.UTF_8));
@@ -300,13 +305,13 @@ public class ResearchGenerator
      *
      * @return a Java constant name
      */
-    private static String getConstantName(String sourceName)
+    private static String getConstantName(final String sourceName)
     {
         String constName = sourceName;
 
         // 1. cull the string by getting everything before the first occurrence of certain strings
-        for (String nameBreakingString : ResearchGeneratorConstants.NAME_BREAKING_STRINGS) {
-            int breakIndex = constName.indexOf(nameBreakingString);
+        for (final String nameBreakingString : ResearchGeneratorConstants.NAME_BREAKING_STRINGS) {
+            final int breakIndex = constName.indexOf(nameBreakingString);
 
             if (breakIndex != -1)
                 constName = constName.substring(0, breakIndex);

@@ -72,7 +72,7 @@ public class GeoLocation implements ICleanable
      *
      * @param place free text description of the geographic location
      */
-    public GeoLocation(String place)
+    public GeoLocation(final String place)
     {
         this.place = place;
     }
@@ -87,17 +87,17 @@ public class GeoLocation implements ICleanable
      * @param northBoundLatitude northern latitudinal dimension of the box
      */
     public void setBox(
-        double westBoundLongitude,
-        double eastBoundLongitude,
-        double southBoundLatitude,
-        double northBoundLatitude
+        final double westBoundLongitude,
+        final double eastBoundLongitude,
+        final double southBoundLatitude,
+        final double northBoundLatitude
     )
     {
-        List<Point> boxShape = Arrays.asList(new Point(westBoundLongitude, northBoundLatitude),
-                                             new Point(eastBoundLongitude, northBoundLatitude),
-                                             new Point(eastBoundLongitude, southBoundLatitude),
-                                             new Point(westBoundLongitude, southBoundLatitude),
-                                             new Point(westBoundLongitude, northBoundLatitude));
+        final List<Point> boxShape = Arrays.asList(new Point(westBoundLongitude, northBoundLatitude),
+                                                   new Point(eastBoundLongitude, northBoundLatitude),
+                                                   new Point(eastBoundLongitude, southBoundLatitude),
+                                                   new Point(westBoundLongitude, southBoundLatitude),
+                                                   new Point(westBoundLongitude, northBoundLatitude));
         this.box = new GeoJson(new Polygon(boxShape));
     }
 
@@ -123,7 +123,7 @@ public class GeoLocation implements ICleanable
 
             while (i != 0) {
                 i--;
-                GeoJson geo = polygons.get(i);
+                final GeoJson geo = polygons.get(i);
 
                 if (geo == null)
                     polygons.remove(i);

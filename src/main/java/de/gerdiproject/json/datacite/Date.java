@@ -47,7 +47,7 @@ public class Date extends AbstractDate
      * @param dateString a ISO-8601-compliant date string
      * @param type the event that is marked by this date
      */
-    public Date(String dateString, DateType type)
+    public Date(final String dateString, final DateType type)
     {
         super(type);
         setValue(dateString);
@@ -60,7 +60,7 @@ public class Date extends AbstractDate
      * @param epochMilli milliseconds that passed since 01/01/1970 00:00:00
      * @param type the event that is marked by this date
      */
-    public Date(long epochMilli, DateType type)
+    public Date(final long epochMilli, final DateType type)
     {
         super(type);
         setDate(epochMilli);
@@ -103,7 +103,7 @@ public class Date extends AbstractDate
      * @param stringValue the String that is to be parsed
      */
     @Override
-    public void setValue(String stringValue)
+    public void setValue(final String stringValue)
     {
         this.value = DateUtils.parseDate(stringValue);
     }
@@ -115,7 +115,7 @@ public class Date extends AbstractDate
      *
      * @param epochMilli the amount of milliseconds between 01/01/1970 00:00:00 and this date
      */
-    public void setDate(long epochMilli)
+    public void setDate(final long epochMilli)
     {
         this.value = DateUtils.unixTimestampToInstant(epochMilli);
     }
@@ -126,7 +126,7 @@ public class Date extends AbstractDate
      *
      * @param date an {@linkplain Instant} that represents the new date
      */
-    public void setDate(Instant date)
+    public void setDate(final Instant date)
     {
         this.value = date;
     }

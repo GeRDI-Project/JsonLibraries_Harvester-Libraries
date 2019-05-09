@@ -40,7 +40,7 @@ public class ResearchArea extends AbstractResearch
      * @param name an english human readable name of the research area
      * @param category a human readable name of the general category
      */
-    public ResearchArea(int rbnr, String name, String category)
+    public ResearchArea(final int rbnr, final String name, final String category)
     {
         super(rbnr);
         this.categoryName = category;

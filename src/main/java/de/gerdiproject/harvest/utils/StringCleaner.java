@@ -53,7 +53,7 @@ public class StringCleaner
      */
     private static Map<String, String> createEscapeMap()
     {
-        Map<String, String> m = new HashMap<>();
+        final Map<String, String> m = new HashMap<>();
         m.put("quot", "\"");        // " - double-quote
         m.put("amp", "&");          // & - ampersand
         m.put("lt", "<");           // < - less-than
@@ -206,10 +206,10 @@ public class StringCleaner
             if (startIndex == 0)
                 break;
 
-            int endIndex = input.indexOf(';', startIndex);
+            final int endIndex = input.indexOf(';', startIndex);
 
             // found '&', look for ';'
-            int len = endIndex - startIndex;
+            final int len = endIndex - startIndex;
 
             if (endIndex == -1 || len < MIN_ESCAPE || len > MAX_ESCAPE) {
                 startIndex++;
@@ -231,7 +231,7 @@ public class StringCleaner
                 }
 
                 try {
-                    int entityValue = Integer.parseUnsignedInt(input.substring(numberStartIndex, endIndex), radix);
+                    final int entityValue = Integer.parseUnsignedInt(input.substring(numberStartIndex, endIndex), radix);
 
                     if (writer == null)
                         writer = new StringWriter(input.length());
@@ -245,13 +245,13 @@ public class StringCleaner
                     } else
                         writer.write(entityValue);
 
-                } catch (NumberFormatException ex) {
+                } catch (final NumberFormatException ex) {
                     startIndex++;
                     continue;
                 }
             } else {
                 // named escape
-                CharSequence value = ESCAPE_LOOKUP_TABLE.get(input.substring(startIndex, endIndex));
+                final CharSequence value = ESCAPE_LOOKUP_TABLE.get(input.substring(startIndex, endIndex));
 
                 if (value == null) {
                     startIndex++;

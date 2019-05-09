@@ -52,7 +52,7 @@ public class Point implements IGeoCoordinates
      * @param longitude a geographic coordinate that specifies the east-west position of a point on the Earth's surface
      * @param latitude a geographic coordinate that specifies the north–south position of a point on the Earth's surface
      */
-    public Point(double longitude, double latitude)
+    public Point(final double longitude, final double latitude)
     {
         this.longitude = longitude;
         this.latitude = latitude;
@@ -69,11 +69,11 @@ public class Point implements IGeoCoordinates
      * @throws IllegalStateException if the array contains other arrays
      * @throws IndexOutOfBoundsException if the array has less than two elements
      */
-    public Point(JsonArray array) throws ClassCastException, IllegalStateException, IndexOutOfBoundsException
+    public Point(final JsonArray array) throws ClassCastException, IllegalStateException, IndexOutOfBoundsException
     {
-        double elevation = array.size() >= 3
-                           ? array.get(2).getAsDouble()
-                           : Double.NaN;
+        final double elevation = array.size() >= 3
+                                 ? array.get(2).getAsDouble()
+                                 : Double.NaN;
 
         this.longitude = array.get(0).getAsDouble();
         this.latitude = array.get(1).getAsDouble();

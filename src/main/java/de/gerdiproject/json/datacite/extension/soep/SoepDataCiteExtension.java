@@ -61,7 +61,7 @@ public class SoepDataCiteExtension implements IDataCiteExtension
      * @param soepDatasetVariables the soep variables that are to be set
      *
      */
-    public void addSoepDatasetVariables(Collection<SoepVariable> soepDatasetVariables)
+    public void addSoepDatasetVariables(final Collection<SoepVariable> soepDatasetVariables)
     {
         this.datasetVariables = CollectionUtils.addToSet(this.datasetVariables, soepDatasetVariables);
     }

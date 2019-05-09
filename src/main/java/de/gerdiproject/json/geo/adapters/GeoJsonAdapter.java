@@ -46,12 +46,12 @@ public class GeoJsonAdapter implements JsonDeserializer<GeoJson>
     private static final Logger LOGGER = LoggerFactory.getLogger(GeoJson.class);
 
     @Override
-    public GeoJson deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public GeoJson deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context)
     throws JsonParseException
     {
-        JsonObject geoJsonRaw = json.getAsJsonObject();
-        String type = geoJsonRaw.get("type").getAsString().toLowerCase();
-        JsonArray coordinatesRaw = geoJsonRaw.get("coordinates").getAsJsonArray();
+        final JsonObject geoJsonRaw = json.getAsJsonObject();
+        final String type = geoJsonRaw.get("type").getAsString().toLowerCase();
+        final JsonArray coordinatesRaw = geoJsonRaw.get("coordinates").getAsJsonArray();
 
         IGeoCoordinates coordinates;
 
@@ -84,7 +84,7 @@ public class GeoJsonAdapter implements JsonDeserializer<GeoJson>
                 default:
                     throw new JsonParseException(String.format("Unknown GeoJson type '%s'!", type));
             }
-        } catch (RuntimeException e) {
+        } catch (final RuntimeException e) {
             LOGGER.error("Could not parse GeoJson!", e);
             return null;
         }

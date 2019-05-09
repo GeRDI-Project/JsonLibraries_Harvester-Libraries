@@ -45,7 +45,7 @@ public class DataCiteExtensionsAdapter implements JsonDeserializer<DataCiteExten
     private static final Logger LOGGER = LoggerFactory.getLogger(DataCiteExtensionsAdapter.class);
 
     @Override
-    public DataCiteExtensions deserialize(JsonElement src, Type typeOfT, JsonDeserializationContext context)
+    public DataCiteExtensions deserialize(final JsonElement src, final Type typeOfT, final JsonDeserializationContext context)
     throws JsonParseException
     {
         final JsonObject sourceObject = src.getAsJsonObject();
@@ -64,14 +64,14 @@ public class DataCiteExtensionsAdapter implements JsonDeserializer<DataCiteExten
 
 
     @Override
-    public JsonElement serialize(DataCiteExtensions src, Type typeOfSrc, JsonSerializationContext context)
+    public JsonElement serialize(final DataCiteExtensions src, final Type typeOfSrc, final JsonSerializationContext context)
     {
         if (src == null || src.getExtensions() == null || src.getExtensions().isEmpty())
             return JsonNull.INSTANCE;
 
         final JsonObject serializedObject = new JsonObject();
 
-        for (Entry<String, IDataCiteExtension> extension : src.getExtensions().entrySet()) {
+        for (final Entry<String, IDataCiteExtension> extension : src.getExtensions().entrySet()) {
             final JsonElement exJson = context.serialize(extension.getValue());
 
             // do not add empty extensions
@@ -92,7 +92,7 @@ public class DataCiteExtensionsAdapter implements JsonDeserializer<DataCiteExten
      *
      * @return a deserialized {@link IDataCiteExtension}
      */
-    private IDataCiteExtension jsonToExtension(String key, JsonElement json, JsonDeserializationContext context)
+    private IDataCiteExtension jsonToExtension(final String key, final JsonElement json, final JsonDeserializationContext context)
     {
         final IDataCiteExtension extension;
 

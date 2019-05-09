@@ -54,7 +54,7 @@ public class GeoJson implements ICleanable
      *
      * @param coordinates a IGeoCoordinate implementing object that represents valid GeoJson coordinates
      */
-    public GeoJson(IGeoCoordinates coordinates)
+    public GeoJson(final IGeoCoordinates coordinates)
     {
         setCoordinates(coordinates);
     }
@@ -65,7 +65,7 @@ public class GeoJson implements ICleanable
      *
      * @param coordinates a IGeoCoordinate implementing object that represents valid GeoJson coordinates
      */
-    public void setCoordinates(IGeoCoordinates coordinates)
+    public void setCoordinates(final IGeoCoordinates coordinates)
     {
         if (coordinates == null)
             this.type = GeoJsonConstants.INVALID_TYPE;
@@ -116,7 +116,7 @@ public class GeoJson implements ICleanable
                 // copy the simplified coordinates
                 setCoordinates(cleanedGeo.coordinates);
                 this.isClean = true;
-            } catch (JsonSyntaxException e) {
+            } catch (final JsonSyntaxException e) {
                 if (LOGGER.isDebugEnabled())
                     LOGGER.debug(String.format(GeoJsonConstants.INVALID_GEOJSON_ERROR, geoJsonString));
 

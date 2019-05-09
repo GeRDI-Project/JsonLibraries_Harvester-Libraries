@@ -35,11 +35,11 @@ public class MultiPoint extends LinkedList<Point> implements IGeoCoordinates
      * Constructor that requires an arbitrary number of coordinates.
      * @param points an arbitrary number of points
      */
-    public MultiPoint(Point... points)
+    public MultiPoint(final Point... points)
     {
         super();
 
-        for (Point gp : points)
+        for (final Point gp : points)
             add(gp);
     }
 
@@ -48,7 +48,7 @@ public class MultiPoint extends LinkedList<Point> implements IGeoCoordinates
      * Constructor that requires any kind of collection of coordinates.
      * @param points a Collection of points
      */
-    public MultiPoint(Collection<Point> points)
+    public MultiPoint(final Collection<Point> points)
     {
         super(points);
     }
@@ -58,11 +58,11 @@ public class MultiPoint extends LinkedList<Point> implements IGeoCoordinates
      * Constructor that requires a JsonArray of coordinates.
      * @param array a JsonArray of points
      */
-    public MultiPoint(JsonArray array)
+    public MultiPoint(final JsonArray array)
     {
         super();
 
-        for (JsonElement ele : array)
+        for (final JsonElement ele : array)
             add(new Point(ele.getAsJsonArray()));
     }
 }

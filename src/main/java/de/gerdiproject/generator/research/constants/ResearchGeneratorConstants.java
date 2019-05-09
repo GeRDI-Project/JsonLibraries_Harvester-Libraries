@@ -190,12 +190,12 @@ public class ResearchGeneratorConstants
      *
      * @return a pattern for matching characters that are illegal in class names
      */
-    private static String createSeparatorPattern(List<Character> illegalChars)
+    private static String createSeparatorPattern(final List<Character> illegalChars)
     {
 
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         sb.append('['); // NOPMD - yes, append is called twice, but this is fine here
-        illegalChars.forEach((Character c) -> sb.append('\\').append(c));
+        illegalChars.forEach((final Character c) -> sb.append('\\').append(c));
         sb.append(']');
 
         return sb.toString();

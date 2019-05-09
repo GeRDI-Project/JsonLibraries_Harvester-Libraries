@@ -37,7 +37,7 @@ public class Polygon extends LinkedList<List<Point>> implements IGeoCoordinates
      *
      * @param filledShape a list of points that must form a ring
      */
-    public Polygon(List<Point> filledShape)
+    public Polygon(final List<Point> filledShape)
     {
         super();
         add(filledShape);
@@ -50,7 +50,7 @@ public class Polygon extends LinkedList<List<Point>> implements IGeoCoordinates
      * @param filledShape a list of points that must form a ring, defining the filled shape
      * @param holes a list of rings of coordinates, where each ring defines a hole in the filledShape
      */
-    public Polygon(List<Point> filledShape, Collection<List<Point>> holes)
+    public Polygon(final List<Point> filledShape, final Collection<List<Point>> holes)
     {
 
         super();
@@ -64,7 +64,7 @@ public class Polygon extends LinkedList<List<Point>> implements IGeoCoordinates
      *
      * @param shapes a collection of coordinate rings
      */
-    public Polygon(Collection<List<Point>> shapes)
+    public Polygon(final Collection<List<Point>> shapes)
     {
         super(shapes);
     }
@@ -76,15 +76,15 @@ public class Polygon extends LinkedList<List<Point>> implements IGeoCoordinates
      *
      * @param array a JsonArray of coordinate rings
      */
-    public Polygon(JsonArray array)
+    public Polygon(final JsonArray array)
     {
         super();
-        array.forEach((JsonElement ele) -> {
+        array.forEach((final JsonElement ele) -> {
             final JsonArray ring = ele.getAsJsonArray();
             final List<Point> shape = new LinkedList<>();
 
             // create list of points for each shape
-            for (JsonElement point : ring)
+            for (final JsonElement point : ring)
                 shape.add(new Point(point.getAsJsonArray()));
 
             add(shape);
@@ -119,7 +119,7 @@ public class Polygon extends LinkedList<List<Point>> implements IGeoCoordinates
      *
      * @param shape a ring of coordinates, defining a shape
      */
-    public void setFilledShape(List<Point> shape)
+    public void setFilledShape(final List<Point> shape)
     {
         set(0, shape);
     }

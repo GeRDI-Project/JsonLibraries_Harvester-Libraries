@@ -15,10 +15,11 @@
  */
 package de.gerdiproject.json.datacite.extension.generic.constants;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import de.gerdiproject.generator.research.utils.ResearchGenerator;
 import de.gerdiproject.json.datacite.extension.generic.ResearchArea;
-import java.util.Map;
-import java.util.HashMap;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -150,9 +151,9 @@ public class ResearchAreaConstants
      *
      * @return an area that matches the RNBR
      */
-    public static ResearchArea getByRnbrString(String rnbrString)
+    public static ResearchArea getByRnbrString(final String rnbrString)
     {
-        int rnbr = Integer.parseInt(rnbrString);
+        final int rnbr = Integer.parseInt(rnbrString);
         return RESEARCH_MAP.get(rnbr);
     }
 
@@ -164,11 +165,11 @@ public class ResearchAreaConstants
      *
      * @return a hashmap that maps area RNBRs to research areas
      */
-    private static Map<Integer, ResearchArea> createResearchMap(ResearchArea ...areas)
+    private static Map<Integer, ResearchArea> createResearchMap(final ResearchArea ...areas)
     {
         final Map<Integer, ResearchArea> map = new HashMap<>();
 
-        for (ResearchArea ra : areas)
+        for (final ResearchArea ra : areas)
             map.put(ra.getRbnr(), ra);
 
         return map;

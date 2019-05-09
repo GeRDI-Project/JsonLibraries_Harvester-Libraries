@@ -64,7 +64,7 @@ public class CollectionUtils
         final boolean isLogging = LOGGER.isDebugEnabled();
 
         // attempt to clean and validate each element
-        for (T element : addedElements) {
+        for (final T element : addedElements) {
             if (validateAndLogElement(element, isLogging))
                 tempSet.add(element);
         }
@@ -94,7 +94,7 @@ public class CollectionUtils
         final List<T> tempList = list == null ? new LinkedList<>() : list;
         final boolean isLogging = LOGGER.isDebugEnabled();
 
-        for (T element : addedElements) {
+        for (final T element : addedElements) {
 
             if (validateAndLogElement(element, isLogging)) {
                 if (tempList.contains(element)) {
@@ -126,7 +126,7 @@ public class CollectionUtils
      *
      * @return a map with the added value, or null if the map is empty after the operation
      */
-    public static <T> Map<String, T> addToMap(Map<String, T> map, String key, T value)
+    public static <T> Map<String, T> addToMap(final Map<String, T> map, final String key, final T value)
     {
         if (value == null)
             return map;
@@ -149,7 +149,7 @@ public class CollectionUtils
      *
      * @return true, if the element is a valid, non-null object
      */
-    private static <T> boolean validateAndLogElement(T element, boolean isLogging)
+    private static <T> boolean validateAndLogElement(final T element, final boolean isLogging)
     {
         final boolean isValidElement;
 

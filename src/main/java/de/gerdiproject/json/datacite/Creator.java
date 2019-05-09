@@ -46,7 +46,7 @@ public class Creator extends AbstractPerson
      *
      * @param name the name of the creator
      */
-    public Creator(String name)
+    public Creator(final String name)
     {
         this(new PersonName(name));
     }

@@ -32,7 +32,7 @@ import de.gerdiproject.json.geo.Polygon;
 public class PolygonAdapter implements JsonDeserializer<Polygon>
 {
     @Override
-    public Polygon deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public Polygon deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context)
     throws JsonParseException
     {
         return new Polygon(json.getAsJsonArray());

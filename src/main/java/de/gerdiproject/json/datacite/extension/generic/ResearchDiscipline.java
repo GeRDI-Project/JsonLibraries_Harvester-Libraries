@@ -38,7 +38,7 @@ public class ResearchDiscipline extends AbstractResearch
      * @param disciplineName a human readable name of the discipline
      * @param area to which the discipline belongs
      */
-    public ResearchDiscipline(int rbnr, String disciplineName, ResearchArea area)
+    public ResearchDiscipline(final int rbnr, final String disciplineName, final ResearchArea area)
     {
         super(rbnr);
         this.disciplineName = disciplineName;

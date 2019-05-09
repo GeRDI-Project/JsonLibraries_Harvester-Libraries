@@ -68,7 +68,7 @@ public class Subject implements ICleanable
      * @param value a term that describes the resource
      * @param lang a IETF language tag of the subject text
      */
-    public Subject(String value, String lang)
+    public Subject(final String value, final String lang)
     {
         this(value);
         this.lang = lang;

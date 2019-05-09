@@ -17,39 +17,18 @@ package de.gerdiproject.generator.research.source.json;
 
 import java.util.List;
 
+import lombok.Data;
+
 /**
  * This class models the 4 general DFG vocabulary categories.
  *
  * @author Fidan Limani
  */
+@Data
 public class ResearchCategorySource
 {
     private String name;
     private List<ResearchAreaSource> subclasses;
-
-
-    public String getName()
-    {
-        return name;
-    }
-
-
-    public List<ResearchAreaSource> getSubclasses()
-    {
-        return subclasses;
-    }
-
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-
-    public void setSubclasses(List<ResearchAreaSource> subclasses)
-    {
-        this.subclasses = subclasses;
-    }
 
 
     @Override

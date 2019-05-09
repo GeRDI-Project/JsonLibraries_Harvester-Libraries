@@ -49,7 +49,7 @@ public class DateUtils
      *
      * @return an {@linkplain Instant} that represents the timestamp
      */
-    public static Instant unixTimestampToInstant(long epochMilli)
+    public static Instant unixTimestampToInstant(final long epochMilli)
     {
         return Instant.ofEpochMilli(epochMilli);
     }
@@ -73,7 +73,7 @@ public class DateUtils
      *
      * @return an {@linkplain Instant} or null, if nothing was parsed
      */
-    public static Instant parseDate(String dateString)
+    public static Instant parseDate(final String dateString)
     {
         // return if string is null
         if (dateString == null)
@@ -95,13 +95,13 @@ public class DateUtils
             try {
                 return Instant.from(DateTimeFormatter.ISO_DATE_TIME.parse(cleanString));
 
-            } catch (DateTimeException ignore) { } // NOPMD exception is to be expected
+            } catch (final DateTimeException ignore) { } // NOPMD exception is to be expected
 
             // fallback: use a custom ISO-8601 formatter for handling zones without colons
             try {
                 return Instant.from(DataCiteDateConstants.ISO8601_FORMATTER.parse(cleanString));
 
-            } catch (DateTimeException ignore) { } // NOPMD exception is to be expected
+            } catch (final DateTimeException ignore) { } // NOPMD exception is to be expected
 
             // if all ISO-formatting failed, proceed as usual
         }
@@ -137,7 +137,7 @@ public class DateUtils
                             continue;
                     } else
                         num = Integer.parseInt(s);
-                } catch (NumberFormatException e) {
+                } catch (final NumberFormatException e) {
                     // skip this number
                     continue;
                 }
@@ -180,7 +180,7 @@ public class DateUtils
                 try {
                     month = DataCiteDateConstants.MONTH_FORMATTER.parse(s).get(ChronoField.MONTH_OF_YEAR);
                     hasMonth = true;
-                } catch (DateTimeParseException e) { // NOPMD
+                } catch (final DateTimeParseException e) { // NOPMD
                     // thrown if the string was no month after all, continue parsing
                 }
             }
@@ -227,7 +227,7 @@ public class DateUtils
      *
      * @return a {@linkplain Date}, {@linkplain DateRange}, or null if no date could be parsed
      */
-    public static AbstractDate parseAbstractDate(String dateString, DateType type)
+    public static AbstractDate parseAbstractDate(final String dateString, final DateType type)
     {
         // attempt to parse date range
         AbstractDate date = new DateRange(dateString, type);
@@ -253,7 +253,7 @@ public class DateUtils
      * @return an {@linkplain Instant} array that contains the start- and end date,
      * or null if no date range could be parsed
      */
-    public static Instant[] parseDateRange(String dateString)
+    public static Instant[] parseDateRange(final String dateString)
     {
         Instant[] dates = null;
 
@@ -278,7 +278,7 @@ public class DateUtils
      * @return an {@linkplain Instant} array that contains the start- and end date,
      * or null if no date range could be parsed
      */
-    public static Instant[] parseDateRange(String dateString, String separator)
+    public static Instant[] parseDateRange(final String dateString, final String separator)
     {
         final Instant[] dates = new Instant[2];
 

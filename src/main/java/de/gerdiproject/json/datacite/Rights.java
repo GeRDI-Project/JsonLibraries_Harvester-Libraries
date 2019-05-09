@@ -66,7 +66,7 @@ public class Rights implements ICleanable
      * @param value free text that describes the rights
      * @param lang a IETF language tag of the text
      */
-    public Rights(String value, String lang)
+    public Rights(final String value, final String lang)
     {
         this(value);
         this.lang = lang;
