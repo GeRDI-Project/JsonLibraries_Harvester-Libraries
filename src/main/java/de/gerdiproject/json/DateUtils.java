@@ -297,8 +297,9 @@ public class DateUtils
                 // determine the middle of the string for a proper separation
                 final int separatorLength = separator.length();
                 int halfLength = 0;
+                final int len = dateRangeElements.length / 2;
 
-                for (int i = 0, len = dateRangeElements.length / 2; i < len; i++)
+                for (int i = 0; i < len; i++)
                     halfLength += dateRangeElements[i].length() + separatorLength;
 
                 dates[0] = parseDate(dateString.substring(0, halfLength));

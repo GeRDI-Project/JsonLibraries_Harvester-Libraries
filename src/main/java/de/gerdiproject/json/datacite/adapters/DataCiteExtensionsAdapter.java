@@ -96,7 +96,7 @@ public class DataCiteExtensionsAdapter implements JsonDeserializer<DataCiteExten
     {
         final IDataCiteExtension extension;
 
-        switch (key) {
+        switch (key) { // NOPMD better maintainability as more cases will be added in the future
             case SoepDataCiteExtension.KEY:
                 extension = context.deserialize(json, SoepDataCiteExtension.class);
                 break;
@@ -104,6 +104,7 @@ public class DataCiteExtensionsAdapter implements JsonDeserializer<DataCiteExten
             default:
                 LOGGER.error("Unknown GeRDI extension: " + key); // NOPMD this case is erroneous and must be logged
                 extension = null;
+                break;
         }
 
         return extension;

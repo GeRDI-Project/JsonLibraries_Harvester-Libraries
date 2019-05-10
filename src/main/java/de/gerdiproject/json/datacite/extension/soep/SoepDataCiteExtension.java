@@ -45,7 +45,7 @@ public class SoepDataCiteExtension implements IDataCiteExtension
      * A set of variables associated with a resource from a social science study.
      */
     @Setter(AccessLevel.NONE)
-    private Set<SoepVariable> datasetVariables = null;
+    private Set<SoepVariable> datasetVariables;
 
 
     @Override

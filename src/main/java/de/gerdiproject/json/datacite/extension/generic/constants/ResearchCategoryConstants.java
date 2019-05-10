@@ -15,13 +15,12 @@
  */
 package de.gerdiproject.json.datacite.extension.generic.constants;
 
-import de.gerdiproject.generator.research.utils.ResearchGenerator;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 /**
  * This class serves as a collection of constants that define a controlled list of ResearchCategorys.
- * It was generated via the {@linkplain ResearchGenerator}.
+ * It was generated via the {@linkplain de.gerdiproject.generator.research.utils.ResearchGenerator}.
  * If there are errors or inconsistencies, please contact the authors.
  *
  * @author Fidan Limani, Robin Weiss

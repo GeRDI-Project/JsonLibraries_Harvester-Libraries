@@ -131,7 +131,7 @@ public class CollectionUtils
         if (value == null)
             return map;
 
-        final Map<String, T> tempMap = map == null ? new HashMap<>() : map;
+        final Map<String, T> tempMap = map == null ? new HashMap<>() : map; // NOPMD only one thread modifies JSON objects
 
         if (validateAndLogElement(value, LOGGER.isDebugEnabled()))
             tempMap.put(key, value);

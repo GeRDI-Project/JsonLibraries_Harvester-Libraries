@@ -15,6 +15,8 @@
  */
 package de.gerdiproject.generator.research.source.json;
 
+import com.google.gson.annotations.SerializedName;
+
 import lombok.Data;
 
 /**
@@ -26,6 +28,8 @@ import lombok.Data;
 public class ResearchDisciplineSource
 {
     private String name;
+
+    @SerializedName("RBNR")
     private String rbnr;
 
 

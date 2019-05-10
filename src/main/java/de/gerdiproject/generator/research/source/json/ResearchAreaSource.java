@@ -17,6 +17,8 @@ package de.gerdiproject.generator.research.source.json;
 
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+
 import lombok.Data;
 
 /**
@@ -28,8 +30,10 @@ import lombok.Data;
 public class ResearchAreaSource
 {
     private String name;
-    private String rbnr;
     private List<ResearchDisciplineSource> subclasses;
+
+    @SerializedName("RBNR")
+    private String rbnr;
 
 
     /**

@@ -16,13 +16,15 @@
 package de.gerdiproject.generator.research.utils;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -87,15 +89,19 @@ public class ResearchGenerator
 
         final OutputStreamWriter areaWriter = initConstantsFile(
                                                   ResearchGeneratorConstants.AREA_CLASSNAME,
-                                                  ResearchGeneratorConstants.AREA_IMPORT,
+                                                  ResearchGeneratorConstants.COLLECTIONS_IMPORT,
+                                                  ResearchGeneratorConstants.HASH_MAP_IMPORT,
                                                   ResearchGeneratorConstants.MAP_IMPORT,
-                                                  ResearchGeneratorConstants.HASH_MAP_IMPORT);
+                                                  null,
+                                                  ResearchGeneratorConstants.AREA_IMPORT);
 
         final OutputStreamWriter disciplineWriter = initConstantsFile(
                                                         ResearchGeneratorConstants.DISCIPLINE_CLASSNAME,
-                                                        ResearchGeneratorConstants.DISCIPLINE_IMPORT,
+                                                        ResearchGeneratorConstants.COLLECTIONS_IMPORT,
+                                                        ResearchGeneratorConstants.HASH_MAP_IMPORT,
                                                         ResearchGeneratorConstants.MAP_IMPORT,
-                                                        ResearchGeneratorConstants.HASH_MAP_IMPORT);
+                                                        null,
+                                                        ResearchGeneratorConstants.DISCIPLINE_IMPORT);
 
         final StringBuilder areaMapBuilder = new StringBuilder();
         final StringBuilder disciplineMapBuilder = new StringBuilder();
@@ -229,29 +235,33 @@ public class ResearchGenerator
         final boolean isDirectoryCreated = output.getParentFile().exists() || output.getParentFile().mkdirs();
 
         // open stream
-        OutputStreamWriter writer = null;
+        OutputStreamWriter fileWriter = null;
 
         if (isDirectoryCreated) {
             try {
-                writer = new OutputStreamWriter(
-                    new FileOutputStream(output),
-                    StandardCharsets.UTF_8);
+                final OutputStream fileStream = Files.newOutputStream(output.toPath());
+                fileWriter = new OutputStreamWriter(fileStream, StandardCharsets.UTF_8);
 
                 // assemble imports String
                 final StringBuilder importBuilder = new StringBuilder();
 
-                for (final String importClassName : imports)
-                    importBuilder.append(String.format(ResearchGeneratorConstants.IMPORT_DEF, importClassName));
+                for (final String importClassName : imports) {
+                    if (importClassName != null)
+                        importBuilder.append(String.format(ResearchGeneratorConstants.IMPORT_DEF, importClassName));
+                    else
+                        importBuilder.append('\n');
+                }
 
                 // write class definition
-                writer.append(String.format(ResearchGeneratorConstants.CLASS_START, constantType, importBuilder.toString()));
+                fileWriter.append(String.format(ResearchGeneratorConstants.CLASS_START, constantType, importBuilder.toString()));
+
             } catch (final IOException e) {
                 LOGGER.error(String.format(ResearchGeneratorConstants.FILE_CREATE_ERROR, filePath), e);
             }
         } else
             LOGGER.error(String.format(ResearchGeneratorConstants.FILE_FOLDER_ERROR, filePath));
 
-        return writer;
+        return fileWriter;
     }
 
 
@@ -286,13 +296,14 @@ public class ResearchGenerator
         List<ResearchCategorySource> researchList = null;
 
         // load JSON file
-        final JsonReader reader = new JsonReader(
-            new InputStreamReader(
-                new FileInputStream(filepath),
-                StandardCharsets.UTF_8));
+        try
+            (final InputStream fileStream = Files.newInputStream(Paths.get(filepath));
+             final InputStreamReader fileReader = new InputStreamReader(fileStream, StandardCharsets.UTF_8);
+             final JsonReader jsonReader = new JsonReader(fileReader)) {
 
-        // parse list from JSON content
-        researchList = new Gson().fromJson(reader, RESEARCH_CATEGORY_LIST_TYPE);
+            // parse list from JSON content
+            researchList = new Gson().fromJson(jsonReader, RESEARCH_CATEGORY_LIST_TYPE);
+        }
 
         return researchList;
     }

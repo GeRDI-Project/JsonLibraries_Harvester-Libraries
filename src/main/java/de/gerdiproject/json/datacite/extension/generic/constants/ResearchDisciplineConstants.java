@@ -15,17 +15,17 @@
  */
 package de.gerdiproject.json.datacite.extension.generic.constants;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.gerdiproject.generator.research.utils.ResearchGenerator;
 import de.gerdiproject.json.datacite.extension.generic.ResearchDiscipline;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 /**
  * This class serves as a collection of constants that define a controlled list of ResearchDisciplines.
- * It was generated via the {@linkplain ResearchGenerator}.
+ * It was generated via the {@linkplain de.gerdiproject.generator.research.utils.ResearchGenerator}.
  * If there are errors or inconsistencies, please contact the authors.
  *
  * @author Fidan Limani, Robin Weiss
@@ -590,7 +590,7 @@ public class ResearchDisciplineConstants
      */
     private static Map<Integer, Map<Integer, ResearchDiscipline>> createResearchMap(final ResearchDiscipline ...disciplines)
     {
-        final Map<Integer, Map<Integer, ResearchDiscipline>> map = new HashMap<>();
+        final Map<Integer, Map<Integer, ResearchDiscipline>> map = new HashMap<>(); // NOPMD read-only map is thread safe
 
         for (final ResearchDiscipline rd : disciplines) {
             final int categoryRnbr = rd.getArea().getRbnr();
@@ -598,6 +598,6 @@ public class ResearchDisciplineConstants
             map.get(categoryRnbr).put(rd.getRbnr(), rd);
         }
 
-        return map;
+        return Collections.unmodifiableMap(map);
     }
 }

@@ -16,6 +16,7 @@
 package de.gerdiproject.harvest.utils;
 
 import java.io.StringWriter;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,7 +54,7 @@ public class StringCleaner
      */
     private static Map<String, String> createEscapeMap()
     {
-        final Map<String, String> m = new HashMap<>();
+        final Map<String, String> m = new HashMap<>(); // NOPMD read-only map is thread safe
         m.put("quot", "\"");        // " - double-quote
         m.put("amp", "&");          // & - ampersand
         m.put("lt", "<");           // < - less-than
@@ -154,7 +155,7 @@ public class StringCleaner
         m.put("yacute", "\u00FD");  // э - lowercase y, acute accent
         m.put("thorn", "\u00FE");   // ю - lowercase thorn, Icelandic
         m.put("yuml", "\u00FF");    // я - lowercase y, umlaut
-        return m;
+        return Collections.unmodifiableMap(m);
     }
 
 
@@ -165,24 +166,28 @@ public class StringCleaner
      *
      * @return a cleaned String
      */
-    public static String clean(String input)
+    public static String clean(final String input)
     {
+        String output;
+
         // remove HTML tags from text if they exist
         if (input.indexOf('<') != -1)
-            input = Jsoup.parse(input).text();
+            output = Jsoup.parse(input).text();
+        else
+            output = input;
 
         // unescape characters
-        input = unescapeHtml(input);
+        output = unescapeHtml(output);
 
         // replace nbsp with spaces
-        input = input.replaceAll("&nbsp;", " ");
-        input = input.replaceAll("\u00A0", " ");
+        output = output.replaceAll("&nbsp;", " ");
+        output = output.replaceAll("\u00A0", " ");
 
         // merge whitespaces
-        input = input.replaceAll("[\\u00A0\\s]{2,}", " ");
+        output = output.replaceAll("[\\u00A0\\s]{2,}", " ");
 
         // remove whitespaces at the beginning and end
-        return input.trim();
+        return output.trim();
     }
 
 
@@ -195,7 +200,8 @@ public class StringCleaner
      */
     public static final String unescapeHtml(final String input)
     {
-        StringWriter writer = null;
+        final StringWriter writer = new StringWriter(input.length());
+        boolean hasChanges = false;
         int st = 0;
         int startIndex = 0;
 
@@ -232,10 +238,6 @@ public class StringCleaner
 
                 try {
                     final int entityValue = Integer.parseUnsignedInt(input.substring(numberStartIndex, endIndex), radix);
-
-                    if (writer == null)
-                        writer = new StringWriter(input.length());
-
                     writer.append(input.substring(st, startIndex - 1));
 
                     if (entityValue > MAX_SINGLE_CHAR_VALUE) {
@@ -245,6 +247,7 @@ public class StringCleaner
                     } else
                         writer.write(entityValue);
 
+                    hasChanges = true;
                 } catch (final NumberFormatException ex) {
                     startIndex++;
                     continue;
@@ -258,12 +261,8 @@ public class StringCleaner
                     continue;
                 }
 
-                if (writer == null)
-                    writer = new StringWriter(input.length());
-
-                writer.append(input.substring(st, startIndex - 1));
-
-                writer.append(value);
+                writer.append(input.substring(st, startIndex - 1)).append(value);
+                hasChanges = true;
             }
 
             // skip escape sequence
@@ -271,8 +270,6 @@ public class StringCleaner
             startIndex = st;
         }
 
-        return (writer == null)
-               ? input
-               : writer.append(input.substring(st)).toString();
+        return hasChanges ? input : writer.append(input.substring(st)).toString();
     }
 }
