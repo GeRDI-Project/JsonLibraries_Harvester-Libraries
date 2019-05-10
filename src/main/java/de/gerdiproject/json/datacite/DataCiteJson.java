@@ -47,6 +47,7 @@ import lombok.Setter;
  * @author Mathis Neumann, Robin Weiss, Ingo Thomsen
  */
 @Data
+@SuppressWarnings({"PMD.TooManyMethods","PMD.TooManyFields"}) // yes, this class is big, but also necessary the way it is
 public class DataCiteJson implements IDocument
 {
     private static final Gson GSON = GsonUtils.createGerdiDocumentGsonBuilder().create();
@@ -228,14 +229,9 @@ public class DataCiteJson implements IDocument
      *
      * @param sourceId a unique identifier of the source from which the document was
      *         retrieved
-     *
-     * @throws NullPointerException if the sourceId is null
      */
-    public DataCiteJson(final String sourceId) throws NullPointerException
+    public DataCiteJson(final String sourceId) throws IllegalArgumentException
     {
-        if (sourceId == null)
-            throw new NullPointerException();
-
         this.sourceId = sourceId;
         this.extensions = new DataCiteExtensions();
     }

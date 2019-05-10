@@ -108,11 +108,6 @@ public abstract class AbstractResearch
         if (!(obj instanceof AbstractResearch))
             return false;
 
-        final AbstractResearch other = (AbstractResearch) obj;
-
-        if (rbnr != other.rbnr)
-            return false;
-
-        return true;
+        return rbnr == ((AbstractResearch)obj).rbnr;
     }
 }

@@ -52,7 +52,7 @@ public class StringUtils
      *
      * @return a HTML 3 escape hash map
      */
-    private static Map<String, String> createEscapeMap()
+    private static Map<String, String> createEscapeMap() // NOPMD the method is long, but needs to be
     {
         final Map<String, String> m = new HashMap<>(); // NOPMD read-only map is thread safe
         m.put("quot", "\"");        // " - double-quote
@@ -179,7 +179,7 @@ public class StringUtils
         // unescape characters
         output = unescapeHtml(output);
 
-        // replace nbsp with spaces
+        // replace &nbsp with spaces
         output = output.replaceAll("&nbsp;", " ");
         output = output.replaceAll("\u00A0", " ");
 
@@ -201,7 +201,6 @@ public class StringUtils
     public static final String unescapeHtml(final String input)
     {
         final StringWriter writer = new StringWriter(input.length());
-        boolean hasChanges = false;
         int st = 0;
         int startIndex = 0;
 
@@ -247,7 +246,6 @@ public class StringUtils
                     } else
                         writer.write(entityValue);
 
-                    hasChanges = true;
                 } catch (final NumberFormatException ex) {
                     startIndex++;
                     continue;
@@ -262,7 +260,6 @@ public class StringUtils
                 }
 
                 writer.append(input.substring(st, startIndex - 1)).append(value);
-                hasChanges = true;
             }
 
             // skip escape sequence
@@ -270,6 +267,8 @@ public class StringUtils
             startIndex = st;
         }
 
-        return hasChanges ? input : writer.append(input.substring(st)).toString();
+        return st == 0
+               ? input
+               : writer.append(input.substring(st)).toString();
     }
 }

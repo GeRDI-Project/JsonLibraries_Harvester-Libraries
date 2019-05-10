@@ -84,7 +84,7 @@ public class GeoJsonAdapter implements JsonDeserializer<GeoJson>
                 default:
                     throw new JsonParseException(String.format("Unknown GeoJson type '%s'!", type));
             }
-        } catch (final RuntimeException e) {
+        } catch (final RuntimeException e) { // NOPMD for edge case scenarios, all kinds of exceptions should be caught to be able to continue the harvest
             LOGGER.error("Could not parse GeoJson!", e);
             return null;
         }
