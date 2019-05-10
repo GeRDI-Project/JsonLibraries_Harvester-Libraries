@@ -34,7 +34,7 @@ import lombok.NoArgsConstructor;
  *
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class StringCleaner
+public class StringUtils
 {
     private static final int MIN_ESCAPE = 2;
     private static final int MAX_ESCAPE = 6;
@@ -171,10 +171,10 @@ public class StringCleaner
         String output;
 
         // remove HTML tags from text if they exist
-        if (input.indexOf('<') != -1)
-            output = Jsoup.parse(input).text();
-        else
+        if (input.indexOf('<') == -1)
             output = input;
+        else
+            output = Jsoup.parse(input).text();
 
         // unescape characters
         output = unescapeHtml(output);

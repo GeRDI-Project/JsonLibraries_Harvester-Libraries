@@ -18,7 +18,7 @@ package de.gerdiproject.json.datacite;
 import com.google.gson.annotations.SerializedName;
 
 import de.gerdiproject.harvest.ICleanable;
-import de.gerdiproject.harvest.utils.StringCleaner;
+import de.gerdiproject.harvest.utils.StringUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
@@ -76,7 +76,7 @@ public class Rights implements ICleanable
     @Override
     public boolean clean()
     {
-        setValue(StringCleaner.clean(value));
+        setValue(StringUtils.clean(value));
         return true;
     }
 }

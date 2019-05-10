@@ -246,10 +246,10 @@ public class ResearchGenerator
                 final StringBuilder importBuilder = new StringBuilder();
 
                 for (final String importClassName : imports) {
-                    if (importClassName != null)
-                        importBuilder.append(String.format(ResearchGeneratorConstants.IMPORT_DEF, importClassName));
-                    else
+                    if (importClassName == null)
                         importBuilder.append('\n');
+                    else
+                        importBuilder.append(String.format(ResearchGeneratorConstants.IMPORT_DEF, importClassName));
                 }
 
                 // write class definition
@@ -297,9 +297,9 @@ public class ResearchGenerator
 
         // load JSON file
         try
-            (final InputStream fileStream = Files.newInputStream(Paths.get(filepath));
-             final InputStreamReader fileReader = new InputStreamReader(fileStream, StandardCharsets.UTF_8);
-             final JsonReader jsonReader = new JsonReader(fileReader)) {
+            (InputStream fileStream = Files.newInputStream(Paths.get(filepath));
+             InputStreamReader fileReader = new InputStreamReader(fileStream, StandardCharsets.UTF_8);
+             JsonReader jsonReader = new JsonReader(fileReader)) {
 
             // parse list from JSON content
             researchList = new Gson().fromJson(jsonReader, RESEARCH_CATEGORY_LIST_TYPE);

@@ -104,8 +104,8 @@ public class DateRange extends AbstractDate
         if (since == null && until == null)
             return null;
 
-        final String sinceVal = since != null ? since.toString() : "";
-        final String untilVal = until != null ? until.toString() : "";
+        final String sinceVal = since == null ? "" : since.toString();
+        final String untilVal = until == null ? "" : until.toString();
 
         return String.format(DataCiteDateConstants.DATE_RANGE_FORMAT, sinceVal, untilVal);
     }
@@ -123,12 +123,12 @@ public class DateRange extends AbstractDate
     {
         final Instant[] dates = DateUtils.parseDateRange(stringValue);
 
-        if (dates != null) {
-            this.since = dates[0];
-            this.until = dates[1];
-        } else {
+        if (dates == null) {
             this.since = null;
             this.until = null;
+        } else {
+            this.since = dates[0];
+            this.until = dates[1];
         }
     }
 

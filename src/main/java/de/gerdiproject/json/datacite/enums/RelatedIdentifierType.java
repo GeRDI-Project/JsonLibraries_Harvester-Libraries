@@ -22,6 +22,7 @@ import de.gerdiproject.json.datacite.RelatedIdentifier;
  *
  * @author Robin Weiss
  */
+@SuppressWarnings("PMD.FieldNamingConventions") // enums should be upper-case, but DataCite fields are excluded
 public enum RelatedIdentifierType {
     /**
      * Archival Resource Key;

@@ -160,7 +160,7 @@ public class ResearchGeneratorConstants
         + "\n"
         + "\n        final Map<Integer, ResearchDiscipline> subClasses = RESEARCH_MAP.get(areaRnbr);"
         + "\n"
-        + "\n        return (subClasses != null) ? subClasses.get(disciplineRnbr) : null;"
+        + "\n        return subClasses == null ? null : subClasses.get(disciplineRnbr);"
         + "\n    }";
 
     public static final String RESEARCH_DISCIPLINE_CREATE_MAP_METHOD =

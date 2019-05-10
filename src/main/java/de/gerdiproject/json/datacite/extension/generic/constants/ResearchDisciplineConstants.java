@@ -577,7 +577,7 @@ public class ResearchDisciplineConstants
 
         final Map<Integer, ResearchDiscipline> subClasses = RESEARCH_MAP.get(areaRnbr);
 
-        return (subClasses != null) ? subClasses.get(disciplineRnbr) : null;
+        return subClasses == null ? null : subClasses.get(disciplineRnbr);
     }
 
 

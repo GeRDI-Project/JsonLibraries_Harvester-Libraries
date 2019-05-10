@@ -53,10 +53,10 @@ public class DateAdapter implements JsonDeserializer<AbstractDate>, JsonSerializ
         final String value = dateJsonObj.get(DataCiteDateConstants.VALUE_JSON).getAsString();
 
         // is date-range?
-        if (value.indexOf(DataCiteDateConstants.DATE_RANGE_SPLITTER) != -1)
-            returnDate = new DateRange(value, dateType);
-        else
+        if (value.indexOf(DataCiteDateConstants.DATE_RANGE_SPLITTER) == -1)
             returnDate = new Date(value, dateType);
+        else
+            returnDate = new DateRange(value, dateType);
 
         // get date information
         final JsonElement rawDateInfo = dateJsonObj.get(DataCiteDateConstants.DATE_INFO_JSON);

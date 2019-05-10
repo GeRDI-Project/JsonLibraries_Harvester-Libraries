@@ -21,6 +21,7 @@ package de.gerdiproject.json.datacite.extension.generic.enums;
  *
  * @author Robin Weiss
  */
+@SuppressWarnings("PMD.FieldNamingConventions") // enums should be upper-case, but DataCite fields are excluded
 public enum WebLinkType {
     /**
      * A URL that points to the website at which the resource data can be viewed.<br>

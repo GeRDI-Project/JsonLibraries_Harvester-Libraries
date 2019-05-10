@@ -77,7 +77,7 @@ public class Date extends AbstractDate
     @Override
     public String getValue()
     {
-        return value != null ? value.toString() : null;
+        return value == null ? null : value.toString();
     }
 
 

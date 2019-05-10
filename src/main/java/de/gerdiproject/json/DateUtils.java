@@ -24,7 +24,7 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoField;
 import java.util.regex.Matcher;
 
-import de.gerdiproject.harvest.utils.StringCleaner;
+import de.gerdiproject.harvest.utils.StringUtils;
 import de.gerdiproject.json.datacite.Date;
 import de.gerdiproject.json.datacite.DateRange;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
@@ -79,7 +79,7 @@ public class DateUtils
         if (dateString == null)
             return null;
 
-        final String cleanString =  StringCleaner.clean(dateString);
+        final String cleanString =  StringUtils.clean(dateString);
         final int stringLength = cleanString.length();
 
         // return if string is empty
@@ -309,6 +309,6 @@ public class DateUtils
         }
 
         // return null if array is empty
-        return dates[0] != null || dates[1] != null ? dates : null;
+        return dates[0] == null && dates[1] == null ? null : dates;
     }
 }
