@@ -37,16 +37,32 @@
 						<artifactId>exec-maven-plugin</artifactId>
 						<version>${exec.plugin.version}</version>
 						<executions>
+							<!-- generate classes -->
 							<execution>
 								<id>Generate Classes</id>
 								<goals>
-									<goal>exec</goal>
+									<goal>java</goal>
 								</goals>
 								<phase>compile</phase>
+								<configuration>
+									<mainClass>de.gerdiproject.generator.research.utils.ResearchGenerator</mainClass>
+								</configuration>
+							</execution>
+							
+							<!-- format generated classes -->
+							<execution>
+								<id>Format Code</id>
+								<phase>compile</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>${project.build.directory}/harvester-utils/scripts/formatting/astyle-format.${script.extension}</executable>
+								</configuration>
 							</execution>
 						</executions>
 						<configuration>
-							<executable>generatorScripts/generateResearchConstants.${script.extension}</executable>
+						    <skip>false</skip>
 						</configuration>
 					</plugin>
 				</plugins>
