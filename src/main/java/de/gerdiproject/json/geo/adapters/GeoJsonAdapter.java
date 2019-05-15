@@ -16,6 +16,7 @@
 package de.gerdiproject.json.geo.adapters;
 
 import java.lang.reflect.Type;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,7 +51,7 @@ public class GeoJsonAdapter implements JsonDeserializer<GeoJson>
     throws JsonParseException
     {
         final JsonObject geoJsonRaw = json.getAsJsonObject();
-        final String type = geoJsonRaw.get("type").getAsString().toLowerCase();
+        final String type = geoJsonRaw.get("type").getAsString().toLowerCase(Locale.ENGLISH);
         final JsonArray coordinatesRaw = geoJsonRaw.get("coordinates").getAsJsonArray();
 
         IGeoCoordinates coordinates;

@@ -26,6 +26,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -334,6 +335,6 @@ public class ResearchGenerator
         // 4. Replace all spaces with underscores, remove duplicate spaces
         constName = constName.replaceAll(ResearchGeneratorConstants.DUPLICATE_SPACES_PATTERN, "_");
 
-        return constName.toUpperCase();
+        return constName.toUpperCase(Locale.ENGLISH);
     }
 }

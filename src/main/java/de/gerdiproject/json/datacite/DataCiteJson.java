@@ -47,7 +47,7 @@ import lombok.Setter;
  * @author Mathis Neumann, Robin Weiss, Ingo Thomsen
  */
 @Data
-@SuppressWarnings({"PMD.TooManyMethods","PMD.TooManyFields"}) // yes, this class is big, but also necessary the way it is
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.TooManyFields"}) // yes, this class is big, but also necessary the way it is
 public class DataCiteJson implements IDocument
 {
     private static final Gson GSON = GsonUtils.createGerdiDocumentGsonBuilder().create();

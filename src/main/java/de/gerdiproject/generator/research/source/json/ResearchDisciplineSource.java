@@ -33,10 +33,16 @@ public class ResearchDisciplineSource
     private String rbnr;
 
 
+    /**
+     * Retrieves the RBNR as an integer value.
+     *
+     * @return the RBNR as an integer
+     */
     public int getRbnrAsInt()
     {
         return Integer.parseInt(rbnr.split("-")[1]);
     }
+
 
     @Override
     public String toString()

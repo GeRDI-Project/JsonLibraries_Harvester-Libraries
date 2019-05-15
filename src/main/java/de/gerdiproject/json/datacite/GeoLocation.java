@@ -112,11 +112,11 @@ public class GeoLocation implements ICleanable
         cleanPoint();
         cleanPolygons();
         cleanBox();
-        
+
         return isValid();
     }
-    
-    
+
+
     /**
      * Cleans the geo location point and
      * sets it to null if it becomes invalid.
@@ -125,12 +125,13 @@ public class GeoLocation implements ICleanable
     {
         if (point == null)
             return;
-        
+
         point.clean();
+
         if (!point.isValid())
             point = null;
     }
-    
+
 
     /**
      * Cleans and removes invalid polygons and
@@ -140,7 +141,7 @@ public class GeoLocation implements ICleanable
     {
         if (polygons == null)
             return;
-        
+
         int i = polygons.size();
 
         while (i != 0) {
@@ -160,7 +161,7 @@ public class GeoLocation implements ICleanable
         if (polygons.isEmpty())
             polygons = null;
     }
-    
+
 
     /**
      * Cleans the geo location box and
@@ -170,7 +171,7 @@ public class GeoLocation implements ICleanable
     {
         if (box == null)
             return;
-        
+
         box.clean();
 
         if (!box.isValid())
