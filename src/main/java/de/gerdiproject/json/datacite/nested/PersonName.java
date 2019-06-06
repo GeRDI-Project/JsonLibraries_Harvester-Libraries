@@ -46,7 +46,7 @@ public class PersonName
      *
      * @param value the free text full name of the person or entity
      */
-    public PersonName(String value)
+    public PersonName(final String value)
     {
         this.value = value;
         this.nameType = null;

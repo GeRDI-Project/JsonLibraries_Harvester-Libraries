@@ -35,11 +35,11 @@ public class MultiPolygon extends LinkedList<Polygon> implements IGeoCoordinates
      * Constructor that requires an arbitrary number of polygons.
      * @param polygons an arbitrary number of polygons
      */
-    public MultiPolygon(Polygon... polygons)
+    public MultiPolygon(final Polygon... polygons)
     {
         super();
 
-        for (Polygon p : polygons)
+        for (final Polygon p : polygons)
             add(p);
     }
 
@@ -48,7 +48,7 @@ public class MultiPolygon extends LinkedList<Polygon> implements IGeoCoordinates
      * Constructor that requires any kind of collection of polygons.
      * @param polygons a Collection of polygons
      */
-    public MultiPolygon(Collection<Polygon> polygons)
+    public MultiPolygon(final Collection<Polygon> polygons)
     {
         super(polygons);
     }
@@ -58,11 +58,11 @@ public class MultiPolygon extends LinkedList<Polygon> implements IGeoCoordinates
      * Constructor that requires a JsonArray of polygons.
      * @param array a JsonArray of polygons
      */
-    public MultiPolygon(JsonArray array)
+    public MultiPolygon(final JsonArray array)
     {
         super();
 
-        for (JsonElement ele : array)
+        for (final JsonElement ele : array)
             add(new Polygon(ele.getAsJsonArray()));
     }
 }

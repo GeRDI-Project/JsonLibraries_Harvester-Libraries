@@ -32,7 +32,7 @@ import de.gerdiproject.json.geo.LineString;
 public class LineStringAdapter implements JsonDeserializer<LineString>
 {
     @Override
-    public LineString deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public LineString deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context)
     throws JsonParseException
     {
         return new LineString(json.getAsJsonArray());

@@ -15,16 +15,17 @@
  */
 package de.gerdiproject.json.datacite.extension.generic.constants;
 
-import de.gerdiproject.generator.research.utils.ResearchGenerator;
-import de.gerdiproject.json.datacite.extension.generic.ResearchArea;
-import java.util.Map;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
+
+import de.gerdiproject.json.datacite.extension.generic.ResearchArea;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 /**
  * This class serves as a collection of constants that define a controlled list of ResearchAreas.
- * It was generated via the {@linkplain ResearchGenerator}.
+ * It was generated via the {@linkplain de.gerdiproject.generator.research.utils.ResearchGenerator}.
  * If there are errors or inconsistencies, please contact the authors.
  *
  * @author Fidan Limani, Robin Weiss
@@ -150,9 +151,9 @@ public class ResearchAreaConstants
      *
      * @return an area that matches the RNBR
      */
-    public static ResearchArea getByRnbrString(String rnbrString)
+    public static ResearchArea getByRnbrString(final String rnbrString)
     {
-        int rnbr = Integer.parseInt(rnbrString);
+        final int rnbr = Integer.parseInt(rnbrString);
         return RESEARCH_MAP.get(rnbr);
     }
 
@@ -164,13 +165,13 @@ public class ResearchAreaConstants
      *
      * @return a hashmap that maps area RNBRs to research areas
      */
-    private static Map<Integer, ResearchArea> createResearchMap(ResearchArea ...areas)
+    private static Map<Integer, ResearchArea> createResearchMap(final ResearchArea ...areas)
     {
-        final Map<Integer, ResearchArea> map = new HashMap<>();
+        final Map<Integer, ResearchArea> map = new HashMap<>(); // NOPMD read-only map is thread safe
 
-        for (ResearchArea ra : areas)
+        for (final ResearchArea ra : areas)
             map.put(ra.getRbnr(), ra);
 
-        return map;
+        return Collections.unmodifiableMap(map);
     }
 }

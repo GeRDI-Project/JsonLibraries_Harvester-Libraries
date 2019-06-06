@@ -72,7 +72,7 @@ public class GeoLocation implements ICleanable
      *
      * @param place free text description of the geographic location
      */
-    public GeoLocation(String place)
+    public GeoLocation(final String place)
     {
         this.place = place;
     }
@@ -87,17 +87,17 @@ public class GeoLocation implements ICleanable
      * @param northBoundLatitude northern latitudinal dimension of the box
      */
     public void setBox(
-        double westBoundLongitude,
-        double eastBoundLongitude,
-        double southBoundLatitude,
-        double northBoundLatitude
+        final double westBoundLongitude,
+        final double eastBoundLongitude,
+        final double southBoundLatitude,
+        final double northBoundLatitude
     )
     {
-        List<Point> boxShape = Arrays.asList(new Point(westBoundLongitude, northBoundLatitude),
-                                             new Point(eastBoundLongitude, northBoundLatitude),
-                                             new Point(eastBoundLongitude, southBoundLatitude),
-                                             new Point(westBoundLongitude, southBoundLatitude),
-                                             new Point(westBoundLongitude, northBoundLatitude));
+        final List<Point> boxShape = Arrays.asList(new Point(westBoundLongitude, northBoundLatitude),
+                                                   new Point(eastBoundLongitude, northBoundLatitude),
+                                                   new Point(eastBoundLongitude, southBoundLatitude),
+                                                   new Point(westBoundLongitude, southBoundLatitude),
+                                                   new Point(westBoundLongitude, northBoundLatitude));
         this.box = new GeoJson(new Polygon(boxShape));
     }
 
@@ -109,46 +109,73 @@ public class GeoLocation implements ICleanable
     @Override
     public boolean clean()
     {
-        if (point != null) {
-            point.clean();
-
-            // remove geoJson if it became invalid
-            if (!point.isValid())
-                point = null;
-        }
-
-        // remove each polygon, if it is invalid
-        if (polygons != null) {
-            int i = polygons.size();
-
-            while (i != 0) {
-                i--;
-                GeoJson geo = polygons.get(i);
-
-                if (geo == null)
-                    polygons.remove(i);
-                else {
-                    geo.clean();
-
-                    if (!geo.isValid())
-                        polygons.remove(i);
-                }
-            }
-
-            // nullify the whole polygon list, if it is now empty
-            if (polygons.isEmpty())
-                polygons = null;
-        }
-
-        if (box != null) {
-            box.clean();
-
-            // remove geoJson if it became invalid
-            if (!box.isValid())
-                box = null;
-        }
+        cleanPoint();
+        cleanPolygons();
+        cleanBox();
 
         return isValid();
+    }
+
+
+    /**
+     * Cleans the geo location point and
+     * sets it to null if it becomes invalid.
+     */
+    private void cleanPoint()
+    {
+        if (point == null)
+            return;
+
+        point.clean();
+
+        if (!point.isValid())
+            point = null;
+    }
+
+
+    /**
+     * Cleans and removes invalid polygons and
+     * sets the polygon list to null if it becomes empty.
+     */
+    private void cleanPolygons()
+    {
+        if (polygons == null)
+            return;
+
+        int i = polygons.size();
+
+        while (i != 0) {
+            i--;
+            final GeoJson geo = polygons.get(i);
+
+            if (geo == null)
+                polygons.remove(i);
+            else {
+                geo.clean();
+
+                if (!geo.isValid())
+                    polygons.remove(i);
+            }
+        }
+
+        if (polygons.isEmpty())
+            polygons = null;
+    }
+
+
+    /**
+     * Cleans the geo location box and
+     * sets it to null if it becomes invalid.
+     */
+    private void cleanBox()
+    {
+        if (box == null)
+            return;
+
+        box.clean();
+
+        if (!box.isValid())
+            box = null;
     }
 
 

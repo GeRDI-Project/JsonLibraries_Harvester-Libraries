@@ -47,6 +47,7 @@ import lombok.Setter;
  * @author Mathis Neumann, Robin Weiss, Ingo Thomsen
  */
 @Data
+@SuppressWarnings({"PMD.TooManyMethods", "PMD.TooManyFields"}) // yes, this class is big, but also necessary the way it is
 public class DataCiteJson implements IDocument
 {
     private static final Gson GSON = GsonUtils.createGerdiDocumentGsonBuilder().create();
@@ -220,7 +221,7 @@ public class DataCiteJson implements IDocument
      * Different dates relevant to the work.
      */
     @Setter(AccessLevel.NONE)
-    private DataCiteExtensions extensions;
+    private final DataCiteExtensions extensions;
 
 
     /**
@@ -228,14 +229,9 @@ public class DataCiteJson implements IDocument
      *
      * @param sourceId a unique identifier of the source from which the document was
      *         retrieved
-     *
-     * @throws NullPointerException if the sourceId is null
      */
-    public DataCiteJson(String sourceId) throws NullPointerException
+    public DataCiteJson(final String sourceId) throws IllegalArgumentException
     {
-        if (sourceId == null)
-            throw new NullPointerException();
-
         this.sourceId = sourceId;
         this.extensions = new DataCiteExtensions();
     }
@@ -247,7 +243,7 @@ public class DataCiteJson implements IDocument
      *
      * @param sizes unstructured size information about the resource
      */
-    public void addSizes(Collection<String> sizes)
+    public void addSizes(final Collection<String> sizes)
     {
         this.sizes = CollectionUtils.addToSet(this.sizes, sizes);
     }
@@ -260,7 +256,7 @@ public class DataCiteJson implements IDocument
      *
      * @param formats technical format of the resource
      */
-    public void addFormats(Collection<String> formats)
+    public void addFormats(final Collection<String> formats)
     {
         this.formats = CollectionUtils.addToSet(this.formats, formats);
     }
@@ -273,7 +269,7 @@ public class DataCiteJson implements IDocument
      *
      * @param creators the main researchers and/or the authors of the publication
      */
-    public void addCreators(Collection<Creator> creators)
+    public void addCreators(final Collection<Creator> creators)
     {
         this.creators = CollectionUtils.addToList(this.creators, creators);
     }
@@ -284,7 +280,7 @@ public class DataCiteJson implements IDocument
      *
      * @param titles names or titles by which the resource is known
      */
-    public void addTitles(Collection<Title> titles)
+    public void addTitles(final Collection<Title> titles)
     {
         this.titles = CollectionUtils.addToSet(this.titles, titles);
     }
@@ -296,7 +292,7 @@ public class DataCiteJson implements IDocument
      *
      * @param descriptions all additional information
      */
-    public void addDescriptions(Collection<Description> descriptions)
+    public void addDescriptions(final Collection<Description> descriptions)
     {
         this.descriptions = CollectionUtils.addToSet(this.descriptions, descriptions);
     }
@@ -309,7 +305,7 @@ public class DataCiteJson implements IDocument
      * @param subjects subjects, keywords, classification codes, or key phrases
      *            describing the resource
      */
-    public void addSubjects(Collection<Subject> subjects)
+    public void addSubjects(final Collection<Subject> subjects)
     {
         this.subjects = CollectionUtils.addToSet(this.subjects, subjects);
     }
@@ -322,7 +318,7 @@ public class DataCiteJson implements IDocument
      * @param contributors institutions or persons responsible for contributing to
      *            the development of the resource
      */
-    public void addContributors(Collection<Contributor> contributors)
+    public void addContributors(final Collection<Contributor> contributors)
     {
         this.contributors = CollectionUtils.addToSet(this.contributors, contributors);
     }
@@ -333,7 +329,7 @@ public class DataCiteJson implements IDocument
      *
      * @param dates dates relevant to the work
      */
-    public void addDates(Collection<AbstractDate> dates)
+    public void addDates(final Collection<AbstractDate> dates)
     {
         this.dates = CollectionUtils.addToSet(this.dates, dates);
     }
@@ -345,7 +341,7 @@ public class DataCiteJson implements IDocument
      *
      * @param geoLocations spatial regions and/or named places
      */
-    public void addGeoLocations(Collection<GeoLocation> geoLocations)
+    public void addGeoLocations(final Collection<GeoLocation> geoLocations)
     {
         this.geoLocations = CollectionUtils.addToSet(this.geoLocations, geoLocations);
     }
@@ -357,7 +353,7 @@ public class DataCiteJson implements IDocument
      *
      * @param relatedIdentifiers identifiers of related resources
      */
-    public void addRelatedIdentifiers(Collection<RelatedIdentifier> relatedIdentifiers)
+    public void addRelatedIdentifiers(final Collection<RelatedIdentifier> relatedIdentifiers)
     {
         this.relatedIdentifiers = CollectionUtils.addToSet(this.relatedIdentifiers, relatedIdentifiers);
     }
@@ -369,7 +365,7 @@ public class DataCiteJson implements IDocument
      *
      * @param alternateIdentifiers identifiers other than the primary Identifier
      */
-    public void addAlternateIdentifiers(Collection<AlternateIdentifier> alternateIdentifiers)
+    public void addAlternateIdentifiers(final Collection<AlternateIdentifier> alternateIdentifiers)
     {
         this.alternateIdentifiers = CollectionUtils.addToSet(this.alternateIdentifiers, alternateIdentifiers);
     }
@@ -380,7 +376,7 @@ public class DataCiteJson implements IDocument
      *
      * @param rightsList rights information for this resource
      */
-    public void addRights(Collection<Rights> rightsList)
+    public void addRights(final Collection<Rights> rightsList)
     {
         this.rightsList = CollectionUtils.addToSet(this.rightsList, rightsList);
     }
@@ -392,7 +388,7 @@ public class DataCiteJson implements IDocument
      *
      * @param fundingReferences information about financial support
      */
-    public void addFundingReferences(Collection<FundingReference> fundingReferences)
+    public void addFundingReferences(final Collection<FundingReference> fundingReferences)
     {
         this.fundingReferences = CollectionUtils.addToSet(this.fundingReferences, fundingReferences);
     }
@@ -403,7 +399,7 @@ public class DataCiteJson implements IDocument
      *
      * @param webLinks links to the data provider's website
      */
-    public void addWebLinks(Collection<WebLink> webLinks)
+    public void addWebLinks(final Collection<WebLink> webLinks)
     {
         this.webLinks = CollectionUtils.addToSet(this.webLinks, webLinks);
     }
@@ -414,7 +410,7 @@ public class DataCiteJson implements IDocument
      *
      * @param researchDataList downloadable files
      */
-    public void addResearchData(Collection<ResearchData> researchDataList)
+    public void addResearchData(final Collection<ResearchData> researchDataList)
     {
         this.researchDataList = CollectionUtils.addToSet(this.researchDataList, researchDataList);
     }
@@ -427,7 +423,7 @@ public class DataCiteJson implements IDocument
      * @param researchDisciplines a collection of human readable names of the research
      *            disciplines
      */
-    public void addResearchDisciplines(Collection<AbstractResearch> researchDisciplines)
+    public void addResearchDisciplines(final Collection<AbstractResearch> researchDisciplines)
     {
         this.researchDisciplines = CollectionUtils.addToSet(this.researchDisciplines, researchDisciplines);
     }
@@ -439,7 +435,7 @@ public class DataCiteJson implements IDocument
      * @param repositoryIdentifier a unique but human readable name of the
      *            repository
      */
-    public void setRepositoryIdentifier(String repositoryIdentifier)
+    public void setRepositoryIdentifier(final String repositoryIdentifier)
     {
         this.repositoryIdentifier = repositoryIdentifier;
     }
@@ -450,7 +446,7 @@ public class DataCiteJson implements IDocument
      *
      * @param extension the extension to be added
      */
-    public void addExtension(IDataCiteExtension extension)
+    public void addExtension(final IDataCiteExtension extension)
     {
         this.extensions.add(extension);
     }

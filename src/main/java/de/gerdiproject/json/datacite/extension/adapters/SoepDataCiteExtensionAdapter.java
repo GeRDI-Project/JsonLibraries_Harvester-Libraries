@@ -41,7 +41,7 @@ public class SoepDataCiteExtensionAdapter implements JsonDeserializer<SoepDataCi
     private static final Type LIST_TYPE = new TypeToken<List<SoepVariable>>() {} .getType();
 
     @Override
-    public SoepDataCiteExtension deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public SoepDataCiteExtension deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context)
     throws JsonParseException
     {
         final SoepDataCiteExtension deserializedObject = new SoepDataCiteExtension();
@@ -56,7 +56,7 @@ public class SoepDataCiteExtensionAdapter implements JsonDeserializer<SoepDataCi
 
 
     @Override
-    public JsonElement serialize(SoepDataCiteExtension src, Type typeOfSrc, JsonSerializationContext context)
+    public JsonElement serialize(final SoepDataCiteExtension src, final Type typeOfSrc, final JsonSerializationContext context)
     {
         if (src.getDatasetVariables() == null || src.getDatasetVariables().isEmpty())
             return JsonNull.INSTANCE;

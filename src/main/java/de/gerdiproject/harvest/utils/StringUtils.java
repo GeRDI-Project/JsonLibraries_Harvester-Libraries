@@ -16,6 +16,7 @@
 package de.gerdiproject.harvest.utils;
 
 import java.io.StringWriter;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,7 +34,7 @@ import lombok.NoArgsConstructor;
  *
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class StringCleaner
+public class StringUtils
 {
     private static final int MIN_ESCAPE = 2;
     private static final int MAX_ESCAPE = 6;
@@ -51,9 +52,9 @@ public class StringCleaner
      *
      * @return a HTML 3 escape hash map
      */
-    private static Map<String, String> createEscapeMap()
+    private static Map<String, String> createEscapeMap() // NOPMD the method is long, but needs to be
     {
-        Map<String, String> m = new HashMap<>();
+        final Map<String, String> m = new HashMap<>(); // NOPMD read-only map is thread safe
         m.put("quot", "\"");        // " - double-quote
         m.put("amp", "&");          // & - ampersand
         m.put("lt", "<");           // < - less-than
@@ -154,7 +155,7 @@ public class StringCleaner
         m.put("yacute", "\u00FD");  // э - lowercase y, acute accent
         m.put("thorn", "\u00FE");   // ю - lowercase thorn, Icelandic
         m.put("yuml", "\u00FF");    // я - lowercase y, umlaut
-        return m;
+        return Collections.unmodifiableMap(m);
     }
 
 
@@ -165,24 +166,28 @@ public class StringCleaner
      *
      * @return a cleaned String
      */
-    public static String clean(String input)
+    public static String clean(final String input)
     {
+        String output;
+
         // remove HTML tags from text if they exist
-        if (input.indexOf('<') != -1)
-            input = Jsoup.parse(input).text();
+        if (input.indexOf('<') == -1)
+            output = input;
+        else
+            output = Jsoup.parse(input).text();
 
         // unescape characters
-        input = unescapeHtml(input);
+        output = unescapeHtml(output);
 
-        // replace nbsp with spaces
-        input = input.replaceAll("&nbsp;", " ");
-        input = input.replaceAll("\u00A0", " ");
+        // replace &nbsp with spaces
+        output = output.replaceAll("&nbsp;", " ");
+        output = output.replaceAll("\u00A0", " ");
 
         // merge whitespaces
-        input = input.replaceAll("[\\u00A0\\s]{2,}", " ");
+        output = output.replaceAll("[\\u00A0\\s]{2,}", " ");
 
         // remove whitespaces at the beginning and end
-        return input.trim();
+        return output.trim();
     }
 
 
@@ -195,7 +200,7 @@ public class StringCleaner
      */
     public static final String unescapeHtml(final String input)
     {
-        StringWriter writer = null;
+        final StringWriter writer = new StringWriter(input.length());
         int st = 0;
         int startIndex = 0;
 
@@ -206,10 +211,10 @@ public class StringCleaner
             if (startIndex == 0)
                 break;
 
-            int endIndex = input.indexOf(';', startIndex);
+            final int endIndex = input.indexOf(';', startIndex);
 
             // found '&', look for ';'
-            int len = endIndex - startIndex;
+            final int len = endIndex - startIndex;
 
             if (endIndex == -1 || len < MIN_ESCAPE || len > MAX_ESCAPE) {
                 startIndex++;
@@ -231,11 +236,7 @@ public class StringCleaner
                 }
 
                 try {
-                    int entityValue = Integer.parseUnsignedInt(input.substring(numberStartIndex, endIndex), radix);
-
-                    if (writer == null)
-                        writer = new StringWriter(input.length());
-
+                    final int entityValue = Integer.parseUnsignedInt(input.substring(numberStartIndex, endIndex), radix);
                     writer.append(input.substring(st, startIndex - 1));
 
                     if (entityValue > MAX_SINGLE_CHAR_VALUE) {
@@ -245,25 +246,20 @@ public class StringCleaner
                     } else
                         writer.write(entityValue);
 
-                } catch (NumberFormatException ex) {
+                } catch (final NumberFormatException ex) {
                     startIndex++;
                     continue;
                 }
             } else {
                 // named escape
-                CharSequence value = ESCAPE_LOOKUP_TABLE.get(input.substring(startIndex, endIndex));
+                final CharSequence value = ESCAPE_LOOKUP_TABLE.get(input.substring(startIndex, endIndex));
 
                 if (value == null) {
                     startIndex++;
                     continue;
                 }
 
-                if (writer == null)
-                    writer = new StringWriter(input.length());
-
-                writer.append(input.substring(st, startIndex - 1));
-
-                writer.append(value);
+                writer.append(input.substring(st, startIndex - 1)).append(value);
             }
 
             // skip escape sequence
@@ -271,7 +267,7 @@ public class StringCleaner
             startIndex = st;
         }
 
-        return (writer == null)
+        return st == 0
                ? input
                : writer.append(input.substring(st)).toString();
     }

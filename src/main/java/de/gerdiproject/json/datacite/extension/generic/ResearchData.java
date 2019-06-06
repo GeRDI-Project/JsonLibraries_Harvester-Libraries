@@ -63,7 +63,7 @@ public class ResearchData
      * @param url the file URL
      * @param label the file display name
      */
-    public ResearchData(String url, String label)
+    public ResearchData(final String url, final String label)
     {
         this.url = url;
         this.label = label;
@@ -78,7 +78,7 @@ public class ResearchData
      * @param label the file display name
      * @param type file format, extension or mimetype
      */
-    public ResearchData(String url, String label, String type)
+    public ResearchData(final String url, final String label, final String type)
     {
         this(url, label);
         this.type = type;

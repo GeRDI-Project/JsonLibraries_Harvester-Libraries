@@ -24,6 +24,7 @@ import de.gerdiproject.json.datacite.Creator;
  * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Robin Weiss
  */
+@SuppressWarnings("PMD.FieldNamingConventions") // enums should be upper-case, but DataCite fields are excluded
 public enum NameType {
     Organisational,
     Personal

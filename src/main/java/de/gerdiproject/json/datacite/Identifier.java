@@ -49,7 +49,7 @@ public class Identifier
      *
      * @param value a DOI identifier string of the format "10.1234/foo"
      */
-    public Identifier(String value)
+    public Identifier(final String value)
     {
         this.value = value;
         this.type = IdentifierType.DOI;

@@ -24,7 +24,7 @@ import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoField;
 import java.util.regex.Matcher;
 
-import de.gerdiproject.harvest.utils.StringCleaner;
+import de.gerdiproject.harvest.utils.StringUtils;
 import de.gerdiproject.json.datacite.Date;
 import de.gerdiproject.json.datacite.DateRange;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
@@ -49,9 +49,77 @@ public class DateUtils
      *
      * @return an {@linkplain Instant} that represents the timestamp
      */
-    public static Instant unixTimestampToInstant(long epochMilli)
+    public static Instant unixTimestampToInstant(final long epochMilli)
     {
         return Instant.ofEpochMilli(epochMilli);
+    }
+
+
+    /**
+     * Parses a date range using a set of common separators defined in {@linkplain DataCiteDateConstants}.
+     *
+     * @param dateString a raw {@linkplain String} that contains a date range
+     *
+     * @return an {@linkplain Instant} array that contains the start- and end date,
+     * or null if no date range could be parsed
+     */
+    public static Instant[] parseDateRange(final String dateString)
+    {
+        Instant[] dates = null;
+
+        // check if string represents a range, using any of the common separators
+        for (final String separator : DataCiteDateConstants.DATE_RANGE_SEPARATORS) {
+            dates = parseDateRange(dateString, separator);
+
+            if (dates != null)
+                break;
+        }
+
+        return dates;
+    }
+
+
+    /**
+     * Parses a date range considering a specified separator.
+     *
+     * @param dateString a raw {@linkplain String} that contains a date range
+     * @param separator a sub-string that separates the beginning from the end date
+     *
+     * @return an {@linkplain Instant} array that contains the start- and end date,
+     * or null if no date range could be parsed
+     */
+    public static Instant[] parseDateRange(final String dateString, final String separator)
+    {
+        final Instant[] dates = new Instant[2];
+
+        // check if the string contains the separator
+        if (dateString.contains(separator)) {
+            final String[] dateRangeElements = dateString.split(separator);
+
+            // check if there is really just one separator
+            if (dateRangeElements.length == 2) {
+                dates[0] = parseDate(dateRangeElements[0]);
+                dates[1] = parseDate(dateRangeElements[1]);
+            }
+
+            // edge case: the range-separator is the same symbol as the day/month/year-separator
+            else if (dateRangeElements.length > 2 && dateRangeElements.length % 2 == 0) {
+                // determine the middle of the string for a proper separation
+                final int separatorLength = separator.length();
+                int halfLength = 0;
+                final int len = dateRangeElements.length / 2;
+
+                for (int i = 0; i < len; i++)
+                    halfLength += dateRangeElements[i].length() + separatorLength;
+
+                dates[0] = parseDate(dateString.substring(0, halfLength));
+                dates[1] = parseDate(dateString.substring(halfLength));
+
+            }
+        }
+
+        // return null if array is empty
+        return dates[0] == null && dates[1] == null ? null : dates;
     }
 
 
@@ -73,41 +141,114 @@ public class DateUtils
      *
      * @return an {@linkplain Instant} or null, if nothing was parsed
      */
-    public static Instant parseDate(String dateString)
+    public static Instant parseDate(final String dateString)
     {
         // return if string is null
         if (dateString == null)
             return null;
 
-        final String cleanString =  StringCleaner.clean(dateString);
-        final int stringLength = cleanString.length();
+        final String cleanString =  StringUtils.clean(dateString);
 
-        // return if string is empty
-        if (stringLength == 0)
+        if (cleanString.isEmpty())
             return null;
 
-        // assume the date is an ISO-8601 if it starts and ends with a digit or a Z
-        if (stringLength > 10 && Character.isDigit(cleanString.charAt(0))
-            && (Character.isDigit(cleanString.charAt(stringLength - 1))
-                || cleanString.charAt(stringLength - 1) == 'Z')) {
+        Instant parsedDate = null;
 
-            // use the standard ISO-8601 formatter
-            try {
-                return Instant.from(DateTimeFormatter.ISO_DATE_TIME.parse(cleanString));
+        // check if the date is possibly of ISO-8601 standard
+        if (isPotentialIso8601String(cleanString))
+            parsedDate = parseIso8601String(cleanString);
 
-            } catch (DateTimeException ignore) { } // NOPMD exception is to be expected
+        // parse non-ISO-8601 date string
+        if (parsedDate == null)
+            parsedDate = parseNonStandardDateString(cleanString);
+
+        return parsedDate;
+    }
+
+
+    /**
+     * Parses an {@linkplain AbstractDate} from a specified date string.
+     *
+     * @param dateString a raw string that contains a {@linkplain Date} or {@linkplain DateRange}
+     * @param type the {@linkplain DateType} of the retrieved date
+     *
+     * @return a {@linkplain Date}, {@linkplain DateRange}, or null if no date could be parsed
+     */
+    public static AbstractDate parseAbstractDate(final String dateString, final DateType type)
+    {
+        // attempt to parse date range
+        AbstractDate date = new DateRange(dateString, type);
+        boolean isValidDate = date.clean();
+
+        // fallback: attempt to parse single date
+        if (!isValidDate) {
+            date =  new Date(dateString, type);
+            isValidDate = date.clean();
+        }
+
+        // return valid date or null
+        return isValidDate ? date : null;
+    }
+
+
+    /**
+     * Checks if a date string roughly complies to ISO-8601.
+     *
+     * @param dateString the date string that is to be checked
+     *
+     * @return true if the date string starts with a digit, and ends with a digit or a Z
+     */
+    private static boolean isPotentialIso8601String(final String dateString)
+    {
+        final int stringLength = dateString.length();
+        final char firstChar = dateString.charAt(0);
+        final char lastChar = dateString.charAt(stringLength - 1);
+
+        return stringLength > 10
+               && Character.isDigit(firstChar)
+               && (lastChar == 'Z' || Character.isDigit(lastChar));
+    }
+
+
+    /**
+     * Attempts to parse an ISO-8601 compliant date string.
+     *
+     * @param dateString the date string that is to be parsed
+     *
+     * @return a parsed {@linkplain Instant} or null, if the string could not be parsed
+     */
+    private static Instant parseIso8601String(final String dateString)
+    {
+        Instant parsedValue;
+
+        // try the standard ISO-8601 formatter
+        try {
+            parsedValue = Instant.from(DateTimeFormatter.ISO_DATE_TIME.parse(dateString));
+
+        } catch (final DateTimeException e1) {
 
             // fallback: use a custom ISO-8601 formatter for handling zones without colons
             try {
-                return Instant.from(DataCiteDateConstants.ISO8601_FORMATTER.parse(cleanString));
+                parsedValue = Instant.from(DataCiteDateConstants.ISO8601_FORMATTER.parse(dateString));
 
-            } catch (DateTimeException ignore) { } // NOPMD exception is to be expected
-
-            // if all ISO-formatting failed, proceed as usual
+            } catch (final DateTimeException e2) {
+                parsedValue = null;
+            }
         }
 
-        // split string up into its components
-        final String[] dateSegments = cleanString.split(DataCiteDateConstants.DATE_SPLIT_REGEX);
+        return parsedValue;
+    }
+
+    /**
+     * Parses a non-ISO8601 date string.
+     *
+     * @param dateString the date string that is to be parsed
+     *
+     * @return a parsed {@linkplain Instant} or null, if the string could not be parsed
+     */
+    private static Instant parseNonStandardDateString(final String dateString) // NOPMD this is as simple as it gets
+    {
+        final String[] dateSegments = dateString.split(DataCiteDateConstants.DATE_SPLIT_REGEX);
 
         int day = 1;
         int month = 1;
@@ -124,23 +265,7 @@ public class DateUtils
 
             // check if the segment is a number
             if (Character.isDigit(s.charAt(0))) {
-                final int num;
-
-                try {
-                    // handle 1st, 2nd, 3rd, 4th, ...
-                    if (s.length() > 4 || !Character.isDigit(s.charAt(s.length() - 1))) {
-                        final Matcher matcher = DataCiteDateConstants.NUMBERS_PATTERN.matcher(s);
-
-                        if (matcher.find())
-                            num = Integer.parseInt(matcher.group(1));
-                        else
-                            continue;
-                    } else
-                        num = Integer.parseInt(s);
-                } catch (NumberFormatException e) {
-                    // skip this number
-                    continue;
-                }
+                final int num = parseNumberSegment(s);
 
                 // zero values are eligible only as year, which defaults to 0 anyway
                 if (num == 0 || num > 9999)
@@ -153,18 +278,13 @@ public class DateUtils
                 }
 
                 // if it is higher than 12, it is a day
-                else if (num > 12) {
+                else if (num > 12 || hasMonth || !hasYear && !hasDay) {
                     // if we already have a day, it must be a month, so swap day and month
                     if (hasDay) {
                         month = day;
                         hasMonth = true;
                     }
 
-                    day = num;
-                    hasDay = true;
-                }
-                // if we already have a month or if we have nothing yet, it is a day
-                else if (hasMonth || !hasYear && !hasDay) {
                     day = num;
                     hasDay = true;
                 }
@@ -180,14 +300,10 @@ public class DateUtils
                 try {
                     month = DataCiteDateConstants.MONTH_FORMATTER.parse(s).get(ChronoField.MONTH_OF_YEAR);
                     hasMonth = true;
-                } catch (DateTimeParseException e) { // NOPMD
+                } catch (final DateTimeParseException e) { // NOPMD
                     // thrown if the string was no month after all, continue parsing
                 }
             }
-
-            // abort early if all components were retrieved
-            if (hasMonth && hasDay && hasYear)
-                break;
         }
 
         // abort if the year is missing
@@ -220,94 +336,33 @@ public class DateUtils
 
 
     /**
-     * Parses an {@linkplain AbstractDate} from a specified date string.
+     * Parses a number segment from a date string. Numbers such as
+     * 1st, 2nd, 3rd, and 4th are considered.
      *
-     * @param dateString a raw string that contains a {@linkplain Date} or {@linkplain DateRange}
-     * @param type the {@linkplain DateType} of the retrieved date
+     * @param dateSegment a part of a date string that starts with a number
      *
-     * @return a {@linkplain Date}, {@linkplain DateRange}, or null if no date could be parsed
+     * @return a parsed number or 0, if nothing could be parsed
      */
-    public static AbstractDate parseAbstractDate(String dateString, DateType type)
+    private static int parseNumberSegment(final String dateSegment)
     {
-        // attempt to parse date range
-        AbstractDate date = new DateRange(dateString, type);
-        boolean isValidDate = date.clean();
+        int parsedNumber = 0;
 
-        // fallback: attempt to parse single date
-        if (!isValidDate) {
-            date =  new Date(dateString, type);
-            isValidDate = date.clean();
-        }
+        final int segmentLength = dateSegment.length();
 
-        // return valid date or null
-        return isValidDate ? date : null;
+        try {
+            // handle day numbers such as: 1st, 2nd, 3rd, 4th, ...
+            if (segmentLength > 4 || !Character.isDigit(dateSegment.charAt(segmentLength - 1))) {
+                final Matcher matcher = DataCiteDateConstants.NUMBERS_PATTERN.matcher(dateSegment);
 
-    }
-
-
-    /**
-     * Parses a date range using a set of common separators defined in {@linkplain DataCiteDateConstants}.
-     *
-     * @param dateString a raw {@linkplain String} that contains a date range
-     *
-     * @return an {@linkplain Instant} array that contains the start- and end date,
-     * or null if no date range could be parsed
-     */
-    public static Instant[] parseDateRange(String dateString)
-    {
-        Instant[] dates = null;
-
-        // check if string represents a range, using any of the common separators
-        for (final String separator : DataCiteDateConstants.DATE_RANGE_SEPARATORS) {
-            dates = parseDateRange(dateString, separator);
-
-            if (dates != null)
-                break;
-        }
-
-        return dates;
-    }
-
-
-    /**
-     * Parses a date range considering a specified separator.
-     *
-     * @param dateString a raw {@linkplain String} that contains a date range
-     * @param separator a sub-string that separates the beginning from the end date
-     *
-     * @return an {@linkplain Instant} array that contains the start- and end date,
-     * or null if no date range could be parsed
-     */
-    public static Instant[] parseDateRange(String dateString, String separator)
-    {
-        final Instant[] dates = new Instant[2];
-
-        // check if the string contains the separator
-        if (dateString.contains(separator)) {
-            final String[] dateRangeElements = dateString.split(separator);
-
-            // check if there is really just one separator
-            if (dateRangeElements.length == 2) {
-                dates[0] = parseDate(dateRangeElements[0]);
-                dates[1] = parseDate(dateRangeElements[1]);
+                if (matcher.find())
+                    parsedNumber = Integer.parseInt(matcher.group(1));
             }
-
-            // edge case: the range-separator is the same symbol as the day/month/year-separator
-            else if (dateRangeElements.length > 2 && dateRangeElements.length % 2 == 0) {
-                // determine the middle of the string for a proper separation
-                final int separatorLength = separator.length();
-                int halfLength = 0;
-
-                for (int i = 0, len = dateRangeElements.length / 2; i < len; i++)
-                    halfLength += dateRangeElements[i].length() + separatorLength;
-
-                dates[0] = parseDate(dateString.substring(0, halfLength));
-                dates[1] = parseDate(dateString.substring(halfLength));
-
-            }
+            // handle regular numbers
+            else
+                parsedNumber = Integer.parseInt(dateSegment);
+        } catch (final NumberFormatException e) { // NOPMD number is null by default
         }
 
-        // return null if array is empty
-        return dates[0] != null || dates[1] != null ? dates : null;
+        return parsedNumber;
     }
 }

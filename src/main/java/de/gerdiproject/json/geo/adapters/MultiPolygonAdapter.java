@@ -32,7 +32,7 @@ import de.gerdiproject.json.geo.MultiPolygon;
 public class MultiPolygonAdapter implements JsonDeserializer<MultiPolygon>
 {
     @Override
-    public MultiPolygon deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public MultiPolygon deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context)
     throws JsonParseException
     {
         return new MultiPolygon(json.getAsJsonArray());

@@ -30,7 +30,7 @@ public abstract class AbstractResearch
      *
      * @param rbnr a unique key that represents the topic
      */
-    public AbstractResearch(int rbnr)
+    public AbstractResearch(final int rbnr)
     {
         this.rbnr = rbnr;
     }
@@ -97,7 +97,7 @@ public abstract class AbstractResearch
      * @see java.lang.Object#equals(java.lang.Object)
      */
     @Override
-    public boolean equals(Object obj)
+    public boolean equals(final Object obj)
     {
         if (this == obj)
             return true;
@@ -108,11 +108,6 @@ public abstract class AbstractResearch
         if (!(obj instanceof AbstractResearch))
             return false;
 
-        AbstractResearch other = (AbstractResearch) obj;
-
-        if (rbnr != other.rbnr)
-            return false;
-
-        return true;
+        return rbnr == ((AbstractResearch)obj).rbnr;
     }
 }

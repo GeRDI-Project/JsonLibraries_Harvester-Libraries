@@ -1,124 +1,27 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" 
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 
-         http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+		 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>de.gerdi-project</groupId>
 		<artifactId>GeRDI-parent</artifactId>
-		<version>3.1.0</version>
+		<version>4.0.0-SNAPSHOT</version>
 	</parent>
-	
+
 	<artifactId>GSON</artifactId>
-	<version>5.2.4-SNAPSHOT</version>
-    <packaging>jar</packaging>
+	<version>5.2.5-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>GSON</name>
 	<description>This library provides helper functions and common JSON structures using GSON.</description>
 	<inceptionYear>2017</inceptionYear>
-  
+
 	<properties>
-		<compiler.plugin.version>3.8.0</compiler.plugin.version>
-		<jar.plugin.version>3.0.2</jar.plugin.version>
-		<javadoc.plugin.version>3.0.1</javadoc.plugin.version>
-		<source.plugin.version>3.0.1</source.plugin.version>
-		<bundle.plugin.version>3.0.1</bundle.plugin.version>
-		<dependency.plugin.version>3.1.1</dependency.plugin.version>
-		<exec.plugin.version>1.6.0</exec.plugin.version>
 		<gson.dependency.version>2.8.5</gson.dependency.version>
 		<esri.dependency.version>2.2.0</esri.dependency.version>
 		<jsoup.dependency.version>1.11.3</jsoup.dependency.version>
-		<harvesterutils.dependency.version>1.5.1</harvesterutils.dependency.version>
 	</properties>
-	
-	<build>
-        <plugins>
-			<!-- Compile Java -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>${compiler.plugin.version}</version>
-				<configuration>
-				  <source>${java.version}</source>
-				  <target>${java.version}</target>
-				</configuration>
-			</plugin>
-			  
-			<!-- Generate jar and move it to /target/ folder -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>${jar.plugin.version}</version>
-				<configuration>
-				  <outputDirectory>${project.build.directory}</outputDirectory>
-					<excludes>
-						<exclude>**/de/gerdiproject/generator/**</exclude>
-					</excludes>
-				</configuration>
-            </plugin>
-			
-			<!-- Add javadoc -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-                <version>${javadoc.plugin.version}</version>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<outputDirectory>${project.build.directory}</outputDirectory>
-				</configuration>
-			</plugin>
-			
-			<!-- Add sources -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-                <version>${source.plugin.version}</version>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<outputDirectory>${project.build.directory}</outputDirectory>
-				</configuration>
-			</plugin>
-			
-			<!-- Unpack Utility Scripts -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>${dependency.plugin.version}</version>
-				<executions>
-					<execution>
-						<id>unpack-shared-resources</id>
-						<goals>
-							<goal>unpack-dependencies</goal>
-						</goals>
-						<phase>generate-resources</phase>
-						<configuration>
-							<!--<includes>setup/**</includes>-->
-							<outputDirectory>${basedir}</outputDirectory>
-							<excludeTransitive>true</excludeTransitive>
-							<overWrite>false</overWrite>
-							<includeGroupIds>de.gerdi-project</includeGroupIds>
-							<includeTypes>zip</includeTypes>
-							<excludes>${invalid.script.extensions}</excludes>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-    </build>
-	
+
 	<profiles>
 		<profile>
 			<id>generateConstants</id>
@@ -134,61 +37,59 @@
 						<artifactId>exec-maven-plugin</artifactId>
 						<version>${exec.plugin.version}</version>
 						<executions>
+							<!-- generate classes -->
 							<execution>
 								<id>Generate Classes</id>
 								<goals>
-									<goal>exec</goal>
+									<goal>java</goal>
 								</goals>
 								<phase>compile</phase>
+								<configuration>
+									<mainClass>de.gerdiproject.generator.research.utils.ResearchGenerator</mainClass>
+								</configuration>
+							</execution>
+							
+							<!-- format generated classes -->
+							<execution>
+								<id>Format Code</id>
+								<phase>compile</phase>
+								<goals>
+									<goal>exec</goal>
+								</goals>
+								<configuration>
+									<executable>${project.build.directory}/harvester-utils/scripts/formatting/astyle-format.${script.extension}</executable>
+								</configuration>
 							</execution>
 						</executions>
-						<configuration>
-							<executable>generatorScripts/generateResearchConstants.${script.extension}</executable>
-						</configuration>
 					</plugin>
 				</plugins>
 			</build>
-				
-			<dependencies>	
-				
-			</dependencies>
 		</profile>
 	</profiles>
-	
-	<dependencies>		
+
+	<dependencies>
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>${gson.dependency.version}</version>
 		</dependency>
-		
+
 		<!-- required for validating geo json -->
 		<dependency>
-		  <groupId>com.esri.geometry</groupId>
-		  <artifactId>esri-geometry-api</artifactId>
-		  <version>${esri.dependency.version}</version>
+			<groupId>com.esri.geometry</groupId>
+			<artifactId>esri-geometry-api</artifactId>
+			<version>${esri.dependency.version}</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
 			<version>${jsoup.dependency.version}</version>
 		</dependency>
-		
-		<!-- Utility Scripts : Mainly used for formatting after generating files -->
-		<dependency>
-			<groupId>de.gerdi-project</groupId>
-			<artifactId>GeRDI-harvester-utilities-archive</artifactId>
-			<version>${harvesterutils.dependency.version}</version>
-			<classifier>resources</classifier>
-			<type>zip</type>
-			<!-- Make sure this isn't included on any classpath-->
-			<scope>provided</scope>
-		</dependency>
 	</dependencies>
-	
+
 	<developers>
 		<developer>
 			<name>Robin Weiss</name>
@@ -196,14 +97,14 @@
 			<organization>Kiel University</organization>
 			<organizationUrl>http://www.uni-kiel.de/index-e.shtml</organizationUrl>
 		</developer>
-        <developer>
-            <name>Fidan Limani</name>
-            <email>f.limani@zbw.eu</email>
-            <organization>ZBW</organization>
-            <organizationUrl>https://www.zbw.eu</organizationUrl>
-        </developer>
+		<developer>
+			<name>Fidan Limani</name>
+			<email>f.limani@zbw.eu</email>
+			<organization>ZBW</organization>
+			<organizationUrl>https://www.zbw.eu</organizationUrl>
+		</developer>
 	</developers>
-	
+
 	<!-- Define Sonatype repository for retrieving SNAPSHOT versions -->
 	<repositories>
 		<repository>

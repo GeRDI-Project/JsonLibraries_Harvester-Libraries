@@ -78,7 +78,7 @@ public abstract class AbstractPerson
      *
      * @param nameIdentifiers unique identifiers of an individual or legal entity
      */
-    public void addNameIdentifiers(Collection<NameIdentifier> nameIdentifiers)
+    public void addNameIdentifiers(final Collection<NameIdentifier> nameIdentifiers)
     {
         this.nameIdentifiers = CollectionUtils.addToSet(this.nameIdentifiers, nameIdentifiers);
     }
@@ -90,7 +90,7 @@ public abstract class AbstractPerson
      *
      * @param affiliations the organisational or institutional affiliations of the person
      */
-    public void addAffiliations(Collection<String> affiliations)
+    public void addAffiliations(final Collection<String> affiliations)
     {
         this.affiliations = CollectionUtils.addToSet(this.affiliations, affiliations);
     }

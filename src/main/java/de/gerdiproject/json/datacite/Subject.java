@@ -16,7 +16,7 @@
 package de.gerdiproject.json.datacite;
 
 import de.gerdiproject.harvest.ICleanable;
-import de.gerdiproject.harvest.utils.StringCleaner;
+import de.gerdiproject.harvest.utils.StringUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
@@ -68,7 +68,7 @@ public class Subject implements ICleanable
      * @param value a term that describes the resource
      * @param lang a IETF language tag of the subject text
      */
-    public Subject(String value, String lang)
+    public Subject(final String value, final String lang)
     {
         this(value);
         this.lang = lang;
@@ -78,7 +78,7 @@ public class Subject implements ICleanable
     @Override
     public boolean clean()
     {
-        setValue(StringCleaner.clean(value));
+        setValue(StringUtils.clean(value));
         return true;
     }
 }

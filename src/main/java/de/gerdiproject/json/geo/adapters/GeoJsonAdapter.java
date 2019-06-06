@@ -16,6 +16,7 @@
 package de.gerdiproject.json.geo.adapters;
 
 import java.lang.reflect.Type;
+import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,12 +47,12 @@ public class GeoJsonAdapter implements JsonDeserializer<GeoJson>
     private static final Logger LOGGER = LoggerFactory.getLogger(GeoJson.class);
 
     @Override
-    public GeoJson deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public GeoJson deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context)
     throws JsonParseException
     {
-        JsonObject geoJsonRaw = json.getAsJsonObject();
-        String type = geoJsonRaw.get("type").getAsString().toLowerCase();
-        JsonArray coordinatesRaw = geoJsonRaw.get("coordinates").getAsJsonArray();
+        final JsonObject geoJsonRaw = json.getAsJsonObject();
+        final String type = geoJsonRaw.get("type").getAsString().toLowerCase(Locale.ENGLISH);
+        final JsonArray coordinatesRaw = geoJsonRaw.get("coordinates").getAsJsonArray();
 
         IGeoCoordinates coordinates;
 
@@ -84,7 +85,7 @@ public class GeoJsonAdapter implements JsonDeserializer<GeoJson>
                 default:
                     throw new JsonParseException(String.format("Unknown GeoJson type '%s'!", type));
             }
-        } catch (RuntimeException e) {
+        } catch (final RuntimeException e) { // NOPMD for edge case scenarios, all kinds of exceptions should be caught to be able to continue the harvest
             LOGGER.error("Could not parse GeoJson!", e);
             return null;
         }

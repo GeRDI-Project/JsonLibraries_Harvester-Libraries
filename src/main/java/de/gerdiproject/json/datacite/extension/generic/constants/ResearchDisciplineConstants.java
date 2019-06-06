@@ -15,16 +15,17 @@
  */
 package de.gerdiproject.json.datacite.extension.generic.constants;
 
-import de.gerdiproject.generator.research.utils.ResearchGenerator;
-import de.gerdiproject.json.datacite.extension.generic.ResearchDiscipline;
-import java.util.Map;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
+
+import de.gerdiproject.json.datacite.extension.generic.ResearchDiscipline;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 /**
  * This class serves as a collection of constants that define a controlled list of ResearchDisciplines.
- * It was generated via the {@linkplain ResearchGenerator}.
+ * It was generated via the {@linkplain de.gerdiproject.generator.research.utils.ResearchGenerator}.
  * If there are errors or inconsistencies, please contact the authors.
  *
  * @author Fidan Limani, Robin Weiss
@@ -568,15 +569,15 @@ public class ResearchDisciplineConstants
      *
      * @return a discipline that has a matching RNBR
      */
-    public static ResearchDiscipline getByRnbrString(String rnbrString)
+    public static ResearchDiscipline getByRnbrString(final String rnbrString)
     {
-        String[] splitRnbr = rnbrString.split("-");
-        int areaRnbr = Integer.parseInt(splitRnbr[0]);
-        int disciplineRnbr = Integer.parseInt(splitRnbr[1]);
+        final String[] splitRnbr = rnbrString.split("-");
+        final int areaRnbr = Integer.parseInt(splitRnbr[0]);
+        final int disciplineRnbr = Integer.parseInt(splitRnbr[1]);
 
-        Map<Integer, ResearchDiscipline> subClasses = RESEARCH_MAP.get(areaRnbr);
+        final Map<Integer, ResearchDiscipline> subClasses = RESEARCH_MAP.get(areaRnbr);
 
-        return (subClasses != null) ? subClasses.get(disciplineRnbr) : null;
+        return subClasses == null ? null : subClasses.get(disciplineRnbr);
     }
 
 
@@ -587,16 +588,16 @@ public class ResearchDisciplineConstants
      *
      * @return a hashmap that maps area RNBRs to hashmaps of discipline RNBRs and disciplines
      */
-    private static Map<Integer, Map<Integer, ResearchDiscipline>> createResearchMap(ResearchDiscipline ...disciplines)
+    private static Map<Integer, Map<Integer, ResearchDiscipline>> createResearchMap(final ResearchDiscipline ...disciplines)
     {
-        final Map<Integer, Map<Integer, ResearchDiscipline>> map = new HashMap<>();
+        final Map<Integer, Map<Integer, ResearchDiscipline>> map = new HashMap<>(); // NOPMD read-only map is thread safe
 
-        for (ResearchDiscipline rd : disciplines) {
-            int categoryRnbr = rd.getArea().getRbnr();
+        for (final ResearchDiscipline rd : disciplines) {
+            final int categoryRnbr = rd.getArea().getRbnr();
             map.putIfAbsent(categoryRnbr, new HashMap<>());
             map.get(categoryRnbr).put(rd.getRbnr(), rd);
         }
 
-        return map;
+        return Collections.unmodifiableMap(map);
     }
 }

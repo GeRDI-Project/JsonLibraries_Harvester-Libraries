@@ -36,11 +36,11 @@ public class LineString extends LinkedList<Point> implements IGeoCoordinates
      *
      * @param points an arbitrary number of points
      */
-    public LineString(Point... points)
+    public LineString(final Point... points)
     {
         super();
 
-        for (Point gp : points)
+        for (final Point gp : points)
             add(gp);
     }
 
@@ -50,7 +50,7 @@ public class LineString extends LinkedList<Point> implements IGeoCoordinates
      *
      * @param points a Collection of points
      */
-    public LineString(Collection<Point> points)
+    public LineString(final Collection<Point> points)
     {
         super(points);
     }
@@ -61,11 +61,11 @@ public class LineString extends LinkedList<Point> implements IGeoCoordinates
      *
      * @param array a JsonArray of points
      */
-    public LineString(JsonArray array)
+    public LineString(final JsonArray array)
     {
         super();
 
-        for (JsonElement ele : array)
+        for (final JsonElement ele : array)
             add(new Point(ele.getAsJsonArray()));
     }
 }

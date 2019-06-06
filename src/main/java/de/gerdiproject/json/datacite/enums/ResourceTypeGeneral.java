@@ -21,6 +21,7 @@ package de.gerdiproject.json.datacite.enums;
  * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
  * @author Robin Weiss
  */
+@SuppressWarnings("PMD.FieldNamingConventions") // enums should be upper-case, but DataCite fields are excluded
 public enum ResourceTypeGeneral {
     /**
      * A series of visual representations imparting an impression of motion when shown in succession. May or may not include sound.

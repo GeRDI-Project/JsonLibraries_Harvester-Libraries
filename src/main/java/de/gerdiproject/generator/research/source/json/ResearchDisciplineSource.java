@@ -15,44 +15,38 @@
  */
 package de.gerdiproject.generator.research.source.json;
 
+import com.google.gson.annotations.SerializedName;
+
+import lombok.Data;
+
 /**
  * This class supports GeRDI researchDiscipline metadata element assignment.
  *
  * @author Fidan Limani
  */
+@Data
 public class ResearchDisciplineSource
 {
     private String name;
-    private String RBNR;
+
+    @SerializedName("RBNR")
+    private String rbnr;
 
 
-    public String getName()
+    /**
+     * Retrieves the RBNR as an integer value.
+     *
+     * @return the RBNR as an integer
+     */
+    public int getRbnrAsInt()
     {
-        return name;
-    }
-
-
-    public int getRBNR()
-    {
-        return Integer.parseInt(RBNR.split("-")[1]);
-    }
-
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-
-    public void setRBNR(String rBNR)
-    {
-        RBNR = rBNR;
+        return Integer.parseInt(rbnr.split("-")[1]);
     }
 
 
     @Override
     public String toString()
     {
-        return "Subject discipline: " + getName() + "; RBNR: " + getRBNR();
+        return "Subject discipline: " + getName() + "; RBNR: " + getRbnr();
     }
 }

@@ -32,7 +32,7 @@ import de.gerdiproject.json.geo.MultiLineString;
 public class MultiLineStringAdapter implements JsonDeserializer<MultiLineString>
 {
     @Override
-    public MultiLineString deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public MultiLineString deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context)
     throws JsonParseException
     {
         return new MultiLineString(json.getAsJsonArray());

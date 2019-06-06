@@ -36,11 +36,11 @@ public class MultiLineString extends LinkedList<LineString> implements IGeoCoord
      *
      * @param lineStrings an arbitrary number of line strings
      */
-    public MultiLineString(LineString... lineStrings)
+    public MultiLineString(final LineString... lineStrings)
     {
         super();
 
-        for (LineString l : lineStrings)
+        for (final LineString l : lineStrings)
             add(l);
     }
 
@@ -50,7 +50,7 @@ public class MultiLineString extends LinkedList<LineString> implements IGeoCoord
      *
      * @param lineStrings a Collection of line strings
      */
-    public MultiLineString(Collection<LineString> lineStrings)
+    public MultiLineString(final Collection<LineString> lineStrings)
     {
         super(lineStrings);
     }
@@ -61,11 +61,11 @@ public class MultiLineString extends LinkedList<LineString> implements IGeoCoord
      *
      * @param array a JsonArray of points
      */
-    public MultiLineString(JsonArray array)
+    public MultiLineString(final JsonArray array)
     {
         super();
 
-        for (JsonElement ele : array)
+        for (final JsonElement ele : array)
             add(new LineString(ele.getAsJsonArray()));
     }
 }

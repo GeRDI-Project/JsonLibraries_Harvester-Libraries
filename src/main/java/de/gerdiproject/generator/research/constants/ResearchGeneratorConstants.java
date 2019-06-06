@@ -66,6 +66,7 @@ public class ResearchGeneratorConstants
     public static final String DISCIPLINE_IMPORT = "de.gerdiproject.json.datacite.extension.generic.ResearchDiscipline";
     public static final String MAP_IMPORT = "java.util.Map";
     public static final String HASH_MAP_IMPORT = "java.util.HashMap";
+    public static final String COLLECTIONS_IMPORT = "java.util.Collections";
 
     public static final String CLASS_START =
         "/**"
@@ -85,14 +86,13 @@ public class ResearchGeneratorConstants
         + "%n */"
         + "%npackage de.gerdiproject.json.datacite.extension.generic.constants;"
         + "%n"
-        + "%nimport de.gerdiproject.generator.research.utils.ResearchGenerator;"
         + "%2$s"
         + "%nimport lombok.AccessLevel;"
         + "%nimport lombok.NoArgsConstructor;"
         + "%n"
         + "%n/**"
         + "%n * This class serves as a collection of constants that define a controlled list of %1$ss."
-        + "%n * It was generated via the {@linkplain ResearchGenerator}."
+        + "%n * It was generated via the {@linkplain de.gerdiproject.generator.research.utils.ResearchGenerator}."
         + "%n * If there are errors or inconsistencies, please contact the authors."
         + "%n *"
         + "%n * @author Fidan Limani, Robin Weiss"
@@ -119,9 +119,9 @@ public class ResearchGeneratorConstants
         + "\n     *"
         + "\n     * @return an area that matches the RNBR"
         + "\n     */"   // NOPMD - intended for readability
-        + "\n    public static ResearchArea getByRnbrString(String rnbrString)"
+        + "\n    public static ResearchArea getByRnbrString(final String rnbrString)"
         + "\n    {"     // NOPMD - intended forreadability
-        + "\n        int rnbr = Integer.parseInt(rnbrString);"
+        + "\n        final int rnbr = Integer.parseInt(rnbrString);"
         + "\n        return RESEARCH_MAP.get(rnbr);"
         + "\n    }";     // NOPMD - intended for readability
 
@@ -133,14 +133,14 @@ public class ResearchGeneratorConstants
         + "\n     *"
         + "\n     * @return a hashmap that maps area RNBRs to research areas"
         + "\n     */"
-        + "\n    private static Map<Integer, ResearchArea> createResearchMap(ResearchArea ...areas)"
+        + "\n    private static Map<Integer, ResearchArea> createResearchMap(final ResearchArea ...areas)"
         + "\n    {"
-        + "\n        final Map<Integer, ResearchArea> map = new HashMap<>();"
+        + "\n        final Map<Integer, ResearchArea> map = new HashMap<>(); // NOPMD read-only map is thread safe"
         + "\n"
-        + "\n        for (ResearchArea ra : areas)"
+        + "\n        for (final ResearchArea ra : areas)"
         + "\n            map.put(ra.getRbnr(), ra);"
         + "\n"
-        + "\n        return map;"
+        + "\n        return Collections.unmodifiableMap(map);"
         + "\n    }";
 
     public static final String RESEARCH_DISCIPLINE_GETTER =
@@ -152,15 +152,15 @@ public class ResearchGeneratorConstants
         + "\n     *"
         + "\n     * @return a discipline that has a matching RNBR"
         + "\n     */"
-        + "\n    public static ResearchDiscipline getByRnbrString(String rnbrString)"
+        + "\n    public static ResearchDiscipline getByRnbrString(final String rnbrString)"
         + "\n    {"
-        + "\n        String[] splitRnbr = rnbrString.split(\"-\");"
-        + "\n        int areaRnbr = Integer.parseInt(splitRnbr[0]);"
-        + "\n        int disciplineRnbr = Integer.parseInt(splitRnbr[1]);"
+        + "\n        final String[] splitRnbr = rnbrString.split(\"-\");"
+        + "\n        final int areaRnbr = Integer.parseInt(splitRnbr[0]);"
+        + "\n        final int disciplineRnbr = Integer.parseInt(splitRnbr[1]);"
         + "\n"
-        + "\n        Map<Integer, ResearchDiscipline> subClasses = RESEARCH_MAP.get(areaRnbr);"
+        + "\n        final Map<Integer, ResearchDiscipline> subClasses = RESEARCH_MAP.get(areaRnbr);"
         + "\n"
-        + "\n        return (subClasses != null) ? subClasses.get(disciplineRnbr) : null;"
+        + "\n        return subClasses == null ? null : subClasses.get(disciplineRnbr);"
         + "\n    }";
 
     public static final String RESEARCH_DISCIPLINE_CREATE_MAP_METHOD =
@@ -171,17 +171,17 @@ public class ResearchGeneratorConstants
         + "\n     *"
         + "\n     * @return a hashmap that maps area RNBRs to hashmaps of discipline RNBRs and disciplines"
         + "\n     */"
-        + "\n    private static Map<Integer, Map<Integer, ResearchDiscipline>> createResearchMap(ResearchDiscipline ...disciplines)"
+        + "\n    private static Map<Integer, Map<Integer, ResearchDiscipline>> createResearchMap(final ResearchDiscipline ...disciplines)"
         + "\n    {"
-        + "\n        final Map<Integer, Map<Integer, ResearchDiscipline>> map = new HashMap<>();"
+        + "\n        final Map<Integer, Map<Integer, ResearchDiscipline>> map = new HashMap<>(); // NOPMD read-only map is thread safe"
         + "\n"
-        + "\n        for (ResearchDiscipline rd : disciplines) {"
-        + "\n            int categoryRnbr = rd.getArea().getRbnr();"
+        + "\n        for (final ResearchDiscipline rd : disciplines) {"
+        + "\n            final int categoryRnbr = rd.getArea().getRbnr();"
         + "\n            map.putIfAbsent(categoryRnbr, new HashMap<>());"
         + "\n            map.get(categoryRnbr).put(rd.getRbnr(), rd);"
         + "\n        }"
         + "\n"
-        + "\n        return map;"
+        + "\n        return Collections.unmodifiableMap(map);"
         + "\n    }";
 
 
@@ -190,12 +190,12 @@ public class ResearchGeneratorConstants
      *
      * @return a pattern for matching characters that are illegal in class names
      */
-    private static String createSeparatorPattern(List<Character> illegalChars)
+    private static String createSeparatorPattern(final List<Character> illegalChars)
     {
 
-        StringBuilder sb = new StringBuilder();
+        final StringBuilder sb = new StringBuilder();
         sb.append('['); // NOPMD - yes, append is called twice, but this is fine here
-        illegalChars.forEach((Character c) -> sb.append('\\').append(c));
+        illegalChars.forEach((final Character c) -> sb.append('\\').append(c));
         sb.append(']');
 
         return sb.toString();

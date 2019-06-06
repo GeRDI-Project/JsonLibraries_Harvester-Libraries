@@ -16,6 +16,7 @@
 package de.gerdiproject.json.datacite.extension.generic.adapter;
 
 import java.lang.reflect.Type;
+
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -37,10 +38,10 @@ import de.gerdiproject.json.datacite.extension.generic.constants.ResearchDiscipl
 public class ResearchAdapter implements JsonDeserializer<AbstractResearch>, JsonSerializer<AbstractResearch>
 {
     @Override
-    public AbstractResearch deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public AbstractResearch deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context)
     throws JsonParseException
     {
-        String rnbrString = json.getAsJsonObject().get(DataCiteResearchConstants.RNBR_JSON).getAsString();
+        final String rnbrString = json.getAsJsonObject().get(DataCiteResearchConstants.RNBR_JSON).getAsString();
         AbstractResearch output;
 
         if (rnbrString.indexOf('-') == -1)
@@ -53,15 +54,15 @@ public class ResearchAdapter implements JsonDeserializer<AbstractResearch>, Json
 
 
     @Override
-    public JsonElement serialize(AbstractResearch src, Type typeOfSrc, JsonSerializationContext context)
+    public JsonElement serialize(final AbstractResearch src, final Type typeOfSrc, final JsonSerializationContext context)
     {
-        JsonObject rdObject = new JsonObject();
+        final JsonObject rdObject = new JsonObject();
         rdObject.addProperty(DataCiteResearchConstants.AREA_JSON, src.getAreaName());
         rdObject.addProperty(DataCiteResearchConstants.CATEGORY_JSON, src.getCategoryName());
         rdObject.addProperty(DataCiteResearchConstants.RNBR_JSON, src.getRnbrAsString());
 
         // discipline is optional
-        String disciString = src.getDisciplineName();
+        final String disciString = src.getDisciplineName();
 
         if (disciString != null)
             rdObject.addProperty(DataCiteResearchConstants.DISCIPLINE_JSON, disciString);

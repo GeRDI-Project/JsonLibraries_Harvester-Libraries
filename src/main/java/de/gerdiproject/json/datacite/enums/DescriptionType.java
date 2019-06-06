@@ -21,6 +21,7 @@ package de.gerdiproject.json.datacite.enums;
  * Source: https://schema.datacite.org/meta/kernel-4.0/doc/DataCite-MetadataKernel_v4.0.pdf
  * @author Robin Weiss
  */
+@SuppressWarnings("PMD.FieldNamingConventions") // enums should be upper-case, but DataCite fields are excluded
 public enum DescriptionType {
     /**
      * A brief description of the resource and the context in which the resource was created.

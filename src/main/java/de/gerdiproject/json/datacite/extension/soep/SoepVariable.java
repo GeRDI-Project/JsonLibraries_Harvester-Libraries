@@ -55,7 +55,7 @@ public class SoepVariable
      * @param soepConcepts the {@linkplain SoepConcept}s that are to be added
      *
      */
-    public void addSoepConcepts(Collection<SoepConcept> soepConcepts)
+    public void addSoepConcepts(final Collection<SoepConcept> soepConcepts)
     {
         this.concepts = CollectionUtils.addToSet(this.concepts, soepConcepts);
     }

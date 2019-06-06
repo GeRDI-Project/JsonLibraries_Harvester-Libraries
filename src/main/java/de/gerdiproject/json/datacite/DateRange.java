@@ -53,7 +53,7 @@ public class DateRange extends AbstractDate
      * @param dateString a Dublin-Core-compliant String
      * @param type the event that is marked by this date range
      */
-    public DateRange(String dateString, DateType type)
+    public DateRange(final String dateString, final DateType type)
     {
         super(type);
         setValue(dateString);
@@ -67,7 +67,7 @@ public class DateRange extends AbstractDate
      * @param epochMilliUntil milliseconds that passed since 01/01/1970 00:00:00 until the end of the range
      * @param type the event that is marked by this date range
      */
-    public DateRange(long epochMilliSince, long epochMilliUntil, DateType type)
+    public DateRange(final long epochMilliSince, final long epochMilliUntil, final DateType type)
     {
         super(type);
         setRangeFrom(epochMilliSince);
@@ -82,7 +82,7 @@ public class DateRange extends AbstractDate
      * @param rangeUntil a Dublin-Core-compliant String that marks the end of the range, or null if ther is no end
      * @param type the event that is marked by this date range
      */
-    public DateRange(String rangeFrom, String rangeUntil, DateType type)
+    public DateRange(final String rangeFrom, final String rangeUntil, final DateType type)
     {
         super(type);
         setRangeFrom(rangeFrom);
@@ -104,8 +104,8 @@ public class DateRange extends AbstractDate
         if (since == null && until == null)
             return null;
 
-        final String sinceVal = since != null ? since.toString() : "";
-        final String untilVal = until != null ? until.toString() : "";
+        final String sinceVal = since == null ? "" : since.toString();
+        final String untilVal = until == null ? "" : until.toString();
 
         return String.format(DataCiteDateConstants.DATE_RANGE_FORMAT, sinceVal, untilVal);
     }
@@ -119,16 +119,16 @@ public class DateRange extends AbstractDate
      * @param stringValue the String that is to be parsed
      */
     @Override
-    public void setValue(String stringValue)
+    public void setValue(final String stringValue)
     {
         final Instant[] dates = DateUtils.parseDateRange(stringValue);
 
-        if (dates != null) {
-            this.since = dates[0];
-            this.until = dates[1];
-        } else {
+        if (dates == null) {
             this.since = null;
             this.until = null;
+        } else {
+            this.since = dates[0];
+            this.until = dates[1];
         }
     }
 
@@ -152,7 +152,7 @@ public class DateRange extends AbstractDate
      *
      * @param epochMilli the amount of milliseconds between 01/01/1970 00:00:00 and this date
      */
-    public void setRangeFrom(long epochMilli)
+    public void setRangeFrom(final long epochMilli)
     {
         this.since = DateUtils.unixTimestampToInstant(epochMilli);
     }
@@ -163,7 +163,7 @@ public class DateRange extends AbstractDate
      *
      * @param stringValue a date string that represents the start-date
      */
-    public void setRangeFrom(String stringValue)
+    public void setRangeFrom(final String stringValue)
     {
         this.since = DateUtils.parseDate(stringValue);
     }
@@ -189,7 +189,7 @@ public class DateRange extends AbstractDate
      *
      * @param epochMilli the amount of milliseconds between 01/01/1970 00:00:00 and this date
      */
-    public void setRangeUntil(long epochMilli)
+    public void setRangeUntil(final long epochMilli)
     {
         this.until = DateUtils.unixTimestampToInstant(epochMilli);
     }
@@ -200,7 +200,7 @@ public class DateRange extends AbstractDate
      *
      * @param stringValue a date string that represents the end-date
      */
-    public void setRangeUntil(String stringValue)
+    public void setRangeUntil(final String stringValue)
     {
         this.until = DateUtils.parseDate(stringValue);
     }

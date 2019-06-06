@@ -18,7 +18,7 @@ package de.gerdiproject.json.datacite;
 import com.google.gson.annotations.SerializedName;
 
 import de.gerdiproject.harvest.ICleanable;
-import de.gerdiproject.harvest.utils.StringCleaner;
+import de.gerdiproject.harvest.utils.StringUtils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NonNull;
@@ -66,7 +66,7 @@ public class Rights implements ICleanable
      * @param value free text that describes the rights
      * @param lang a IETF language tag of the text
      */
-    public Rights(String value, String lang)
+    public Rights(final String value, final String lang)
     {
         this(value);
         this.lang = lang;
@@ -76,7 +76,7 @@ public class Rights implements ICleanable
     @Override
     public boolean clean()
     {
-        setValue(StringCleaner.clean(value));
+        setValue(StringUtils.clean(value));
         return true;
     }
 }

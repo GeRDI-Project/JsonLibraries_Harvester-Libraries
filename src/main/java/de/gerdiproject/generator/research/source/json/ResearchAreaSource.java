@@ -17,53 +17,33 @@ package de.gerdiproject.generator.research.source.json;
 
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
+
+import lombok.Data;
+
 /**
  * A class that models specific subject areas of the DFG vocabulary.
  *
  * @author Fidan Limani
  */
+@Data
 public class ResearchAreaSource
 {
     private String name;
-    private String RBNR;
     private List<ResearchDisciplineSource> subclasses;
 
+    @SerializedName("RBNR")
+    private String rbnr;
 
-    public String getName()
+
+    /**
+     * Returns the RBNR as an integer value.
+     *
+     * @return the RBNR as an integer value
+     */
+    public int getRbnrAsInt()
     {
-        return name;
-    }
-
-
-    public int getRBNR()
-    {
-        return Integer.parseInt(RBNR);
-    }
-
-
-    public List<ResearchDisciplineSource> getSubclasses()
-    {
-        return subclasses;
-    }
-
-
-
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-
-    public void setRBNR(String rBNR)
-    {
-        RBNR = rBNR;
-    }
-
-
-    public void setSubclasses(List<ResearchDisciplineSource> subclasses)
-    {
-        this.subclasses = subclasses;
+        return Integer.parseInt(rbnr);
     }
 
 

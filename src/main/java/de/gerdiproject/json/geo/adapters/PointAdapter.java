@@ -40,9 +40,9 @@ public class PointAdapter implements JsonSerializer<Point>, JsonDeserializer<Poi
      * [longitude, latitude, elevation] if elevation is defined.
      */
     @Override
-    public JsonElement serialize(Point src, Type srcType, JsonSerializationContext context)
+    public JsonElement serialize(final Point src, final Type srcType, final JsonSerializationContext context)
     {
-        JsonArray dest = new JsonArray();
+        final JsonArray dest = new JsonArray();
 
         dest.add(src.getLongitude());
         dest.add(src.getLatitude());
@@ -55,7 +55,7 @@ public class PointAdapter implements JsonSerializer<Point>, JsonDeserializer<Poi
 
 
     @Override
-    public Point deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public Point deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context)
     throws JsonParseException
     {
         return new Point(json.getAsJsonArray());

@@ -39,27 +39,27 @@ import de.gerdiproject.json.datacite.enums.DateType;
 public class DateAdapter implements JsonDeserializer<AbstractDate>, JsonSerializer<AbstractDate>
 {
     @Override
-    public AbstractDate deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public AbstractDate deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context)
     throws JsonParseException
     {
         AbstractDate returnDate;
 
-        JsonObject dateJsonObj = json.getAsJsonObject();
+        final JsonObject dateJsonObj = json.getAsJsonObject();
 
         // get date type
-        DateType dateType = DateType.valueOf(dateJsonObj.get(DataCiteDateConstants.DATE_TYPE_JSON).getAsString());
+        final DateType dateType = DateType.valueOf(dateJsonObj.get(DataCiteDateConstants.DATE_TYPE_JSON).getAsString());
 
         // get raw date value
-        String value = dateJsonObj.get(DataCiteDateConstants.VALUE_JSON).getAsString();
+        final String value = dateJsonObj.get(DataCiteDateConstants.VALUE_JSON).getAsString();
 
         // is date-range?
-        if (value.indexOf(DataCiteDateConstants.DATE_RANGE_SPLITTER) != -1)
-            returnDate = new DateRange(value, dateType);
-        else
+        if (value.indexOf(DataCiteDateConstants.DATE_RANGE_SPLITTER) == -1)
             returnDate = new Date(value, dateType);
+        else
+            returnDate = new DateRange(value, dateType);
 
         // get date information
-        JsonElement rawDateInfo = dateJsonObj.get(DataCiteDateConstants.DATE_INFO_JSON);
+        final JsonElement rawDateInfo = dateJsonObj.get(DataCiteDateConstants.DATE_INFO_JSON);
 
         if (rawDateInfo != null)
             returnDate.setDateInformation(rawDateInfo.getAsString());
@@ -69,9 +69,9 @@ public class DateAdapter implements JsonDeserializer<AbstractDate>, JsonSerializ
 
 
     @Override
-    public JsonElement serialize(AbstractDate src, Type typeOfSrc, JsonSerializationContext context)
+    public JsonElement serialize(final AbstractDate src, final Type typeOfSrc, final JsonSerializationContext context)
     {
-        JsonObject dateJson = new JsonObject();
+        final JsonObject dateJson = new JsonObject();
 
         // add date or date-range
         dateJson.addProperty(DataCiteDateConstants.VALUE_JSON, src.getValue());

@@ -37,7 +37,7 @@ public class DataCiteExtensions
      *
      * @param extension the extension to be added
      */
-    public void add(IDataCiteExtension extension)
+    public void add(final IDataCiteExtension extension)
     {
         this.extensions = CollectionUtils.addToMap(this.extensions, extension.getKey(), extension);
     }
