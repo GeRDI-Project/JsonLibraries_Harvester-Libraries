@@ -40,6 +40,12 @@ public class PersonName
      */
     private final NameType nameType;
 
+    /**
+     * IETF language tag.
+     * <br>e.g. de, en-us
+     */
+    private String lang;
+
 
     /**
      * Simple constructor that does not initialize the nameType.

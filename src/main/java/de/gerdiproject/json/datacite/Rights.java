@@ -59,6 +59,26 @@ public class Rights implements ICleanable
     @SerializedName("rightsURI")
     private String uri;
 
+    /**
+     * A short, standardized version of the license name.
+     * <br>e.g. CC-BY-3.0
+     * <br><br>
+     * It’s suggested to use the identifiers from the SPDX licence list (https://spdx.org/licenses/).
+     */
+    private String rightsIdentifier;
+
+    /**
+     * The name of the scheme.
+     * <br>e.g. SPDX
+     */
+    private String rightsIdentifierScheme;
+
+    /**
+     * The URI of the rightsIdentifierScheme.
+     * <br>e.g. https://spdx.org/licenses/
+     */
+    private String schemeURI;
+
 
     /**
      * Constructor that allows to set the language.
