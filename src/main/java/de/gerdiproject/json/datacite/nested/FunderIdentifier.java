@@ -38,4 +38,10 @@ public class FunderIdentifier
      * The type of the funder identifier.
      */
     private final FunderIdentifierType funderIdentifierType;
+
+
+    /**
+     * The URI of the funderIdentifierType.
+     */
+    private String schemeURI;
 }

@@ -47,5 +47,10 @@ public enum FunderIdentifierType {
     /**
      * An identifier type that does not fit into any other category.
      */
-    Other
+    Other,
+
+    /**
+     * TODO
+     */
+    ROR
 }

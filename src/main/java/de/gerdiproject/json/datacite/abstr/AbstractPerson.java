@@ -16,6 +16,7 @@
 package de.gerdiproject.json.datacite.abstr;
 
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.Set;
 
 import com.google.gson.annotations.SerializedName;
@@ -23,6 +24,7 @@ import com.google.gson.annotations.SerializedName;
 import de.gerdiproject.harvest.utils.CollectionUtils;
 import de.gerdiproject.json.datacite.Contributor;
 import de.gerdiproject.json.datacite.Creator;
+import de.gerdiproject.json.datacite.nested.Affiliation;
 import de.gerdiproject.json.datacite.nested.NameIdentifier;
 import de.gerdiproject.json.datacite.nested.PersonName;
 import lombok.AccessLevel;
@@ -61,7 +63,7 @@ public abstract class AbstractPerson
      * <br>e.g. Council of Ricks
      */
     @SerializedName("affiliation") @Setter(AccessLevel.NONE)
-    private Set<String> affiliations;
+    private Set<Affiliation> affiliations;
 
 
     /**
@@ -88,9 +90,29 @@ public abstract class AbstractPerson
      * Changes the organisational or institutional affiliations of the person.
      * <br>e.g. Council of Ricks
      *
-     * @param affiliations the organisational or institutional affiliations of the person
+     * @param affiliationValues the organisational or institutional affiliations of the person
+     *
+     * @deprecated Use {@linkplain AbstractPerson#addAffiliations(Collection)} instead
      */
-    public void addAffiliations(final Collection<String> affiliations)
+    @Deprecated
+    public void addAffiliations(final Iterable<String> affiliationValues)
+    {
+        final Collection<Affiliation> affiliations = new LinkedList<>();
+
+        for (final String value : affiliationValues)
+            affiliations.add(new Affiliation(value));
+
+        addAffiliations(affiliations);
+    }
+
+
+    /**
+     * Adds organisational or institutional affiliations of the person.
+     * <br>e.g. Council of Ricks
+     *
+     * @param affiliations the organisational or institutional {@linkPlain Affiliations} of the person
+     */
+    public void addAffiliations(final Collection<Affiliation> affiliations)
     {
         this.affiliations = CollectionUtils.addToSet(this.affiliations, affiliations);
     }
