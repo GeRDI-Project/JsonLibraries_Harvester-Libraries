@@ -110,7 +110,7 @@ public abstract class AbstractPerson
      * Adds organisational or institutional affiliations of the person.
      * <br>e.g. Council of Ricks
      *
-     * @param affiliations the organisational or institutional {@linkPlain Affiliations} of the person
+     * @param affiliations the organisational or institutional {@linkplain Affiliation}s of the person
      */
     public void addAffiliations(final Collection<Affiliation> affiliations)
     {
