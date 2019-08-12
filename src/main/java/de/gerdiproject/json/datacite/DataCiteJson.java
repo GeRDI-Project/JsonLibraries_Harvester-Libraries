@@ -452,6 +452,20 @@ public class DataCiteJson implements IDocument
         this.extensions.add(extension);
     }
 
+    
+    /**
+     * Sets the entity that holds, archives, publishes prints, distributes,
+     * releases, issues, or produces the resource. This property will be used to
+     * formulate the citation, so consider the prominence of the role.
+     *
+     * @param publisher the publisher
+     *
+     */
+    public void setPublisher(final Publisher publisher)
+    {
+        this.publisher = publisher;
+    }
+    
 
     /**
      * Sets the name of the entity that holds, archives, publishes prints, distributes,
