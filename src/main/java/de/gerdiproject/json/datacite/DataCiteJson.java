@@ -30,6 +30,7 @@ import de.gerdiproject.json.datacite.extension.IDataCiteExtension;
 import de.gerdiproject.json.datacite.extension.generic.AbstractResearch;
 import de.gerdiproject.json.datacite.extension.generic.ResearchData;
 import de.gerdiproject.json.datacite.extension.generic.WebLink;
+import de.gerdiproject.json.datacite.nested.Publisher;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NonNull;
@@ -82,7 +83,7 @@ public class DataCiteJson implements IDocument
      * releases, issues, or produces the resource. This property will be used to
      * formulate the citation, so consider the prominence of the role.
      */
-    private String publisher;
+    private Publisher publisher;
 
     /**
      * The year when the data was or will be made publicly available.
@@ -449,6 +450,22 @@ public class DataCiteJson implements IDocument
     public void addExtension(final IDataCiteExtension extension)
     {
         this.extensions.add(extension);
+    }
+
+
+    /**
+     * Sets the name of the entity that holds, archives, publishes prints, distributes,
+     * releases, issues, or produces the resource. This property will be used to
+     * formulate the citation, so consider the prominence of the role.
+     *
+     * @param publisherName the name of the publisher
+     *
+     * @deprecated use the other setter that accepts {@linkplain Publisher} instead of {@linkplain String}
+     */
+    @Deprecated
+    public void setPublisher(final String publisherName)
+    {
+        this.publisher = new Publisher(publisherName);
     }
 
 
