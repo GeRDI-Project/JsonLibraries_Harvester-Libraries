@@ -50,7 +50,7 @@ public enum FunderIdentifierType {
     Other,
 
     /**
-     * TODO
+     * TODO wait for official documentation: https://schema.datacite.org/meta/kernel-4.3/doc/DataCite-MetadataKernel_v4.3.pdf
      */
     ROR
 }

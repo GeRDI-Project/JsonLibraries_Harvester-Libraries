@@ -30,22 +30,22 @@ import lombok.RequiredArgsConstructor;
 public class Affiliation
 {
     /**
-     * TODO
+     * TODO wait for official documentation: https://schema.datacite.org/meta/kernel-4.3/doc/DataCite-MetadataKernel_v4.3.pdf
      */
     private final String value;
 
     /**
-     * TODO
+     * TODO wait for official documentation: https://schema.datacite.org/meta/kernel-4.3/doc/DataCite-MetadataKernel_v4.3.pdf
      */
     private String affiliationIdentifier;
 
     /**
-     * TODO
+     * TODO wait for official documentation: https://schema.datacite.org/meta/kernel-4.3/doc/DataCite-MetadataKernel_v4.3.pdf
      */
     private String affiliationIdentifierScheme;
 
     /**
-     * TODO
+     * TODO wait for official documentation: https://schema.datacite.org/meta/kernel-4.3/doc/DataCite-MetadataKernel_v4.3.pdf
      */
     private String schemeURI;
 }

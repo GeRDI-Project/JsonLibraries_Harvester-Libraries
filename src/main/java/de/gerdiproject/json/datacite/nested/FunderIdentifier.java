@@ -41,7 +41,7 @@ public class FunderIdentifier
 
 
     /**
-     * The URI of the funderIdentifierType.
+     * The scheme URI of the funderIdentifierType.
      */
     private String schemeURI;
 }

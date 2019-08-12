@@ -452,7 +452,7 @@ public class DataCiteJson implements IDocument
         this.extensions.add(extension);
     }
 
-    
+
     /**
      * Sets the entity that holds, archives, publishes prints, distributes,
      * releases, issues, or produces the resource. This property will be used to
@@ -465,7 +465,7 @@ public class DataCiteJson implements IDocument
     {
         this.publisher = publisher;
     }
-    
+
 
     /**
      * Sets the name of the entity that holds, archives, publishes prints, distributes,
