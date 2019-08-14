@@ -30,29 +30,45 @@ import lombok.Data;
 public class ResearchData
 {
     /**
-     * The URL that is used to access the file.
+     * -- GETTER --
+     * Retrieves the URL that is used to access the file.
      * <br>e.g. http://fenixservices.fao.org/faostat/static/documents/QC/QC_methodology_e.pdf
+     * @return the URL that is used to access the file
      */
     @SerializedName("researchDataURL")
     private final String url;
 
+
     /**
-     * Human readable name for the file.
+     * -- GETTER --
+     * Retrieves the human readable name for the file.
      * <br>e.g. "Methodology - Crops Primary"
+     * @return the human readable name for the file
      */
     @SerializedName("researchDataLabel")
     private final String label;
 
+
     /**
-     * Locally (within this document) unique identifier for the file.
+     * -- GETTER --
+     * Retrieves the locally (within this document) unique identifier for the file.
      * The identifier is generated from a hash value of the target URL.
+     * @return the unique identifier for the file
      */
     @SerializedName("researchDataIdentifier")
     private final String identifier;
 
+
     /**
-     * File format, extension or mimetype.
+     * -- GETTER --
+     * Retrieves the file format, extension or mimetype.
      * <br>e.g. pdf, application/json
+     * @return the file format, extension or mimetype
+     *
+     * -- SETTER --
+     * Sets the file format, extension or mimetype.
+     * <br>e.g. pdf, application/json
+     * @param type the file format, extension or mimetype
      */
     @SerializedName("researchDataType")
     private String type;

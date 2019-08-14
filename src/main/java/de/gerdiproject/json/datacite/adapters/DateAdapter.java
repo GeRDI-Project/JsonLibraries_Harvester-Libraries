@@ -62,7 +62,7 @@ public class DateAdapter implements JsonDeserializer<AbstractDate>, JsonSerializ
         final JsonElement rawDateInfo = dateJsonObj.get(DataCiteDateConstants.DATE_INFO_JSON);
 
         if (rawDateInfo != null)
-            returnDate.setDateInformation(rawDateInfo.getAsString());
+            returnDate.setInformation(rawDateInfo.getAsString());
 
         return returnDate;
     }
@@ -83,7 +83,7 @@ public class DateAdapter implements JsonDeserializer<AbstractDate>, JsonSerializ
             dateJson.addProperty(DataCiteDateConstants.DATE_TYPE_JSON, dateType.toString());
 
         // optionally add dateInformation
-        final String dateInfo = src.getDateInformation();
+        final String dateInfo = src.getInformation();
 
         if (dateInfo != null)
             dateJson.addProperty(DataCiteDateConstants.DATE_INFO_JSON, dateInfo);

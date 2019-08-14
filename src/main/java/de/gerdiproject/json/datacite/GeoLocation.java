@@ -40,28 +40,55 @@ import lombok.NoArgsConstructor;
 public class GeoLocation implements ICleanable
 {
     /**
-     * Free text description of the geographic location.
+     * -- GETTER --
+     * Retrieves the free text description of the geographic location.
+     * @return the free text description of the geographic location
+     *
+     * -- SETTER --
+     * Sets the free text description of the geographic location.
+     * @param place the free text description of the geographic location
      */
     @SerializedName("geoLocationPlace")
     private String place;
 
+
     /**
-     * A point location in space.
+     * -- GETTER --
+     * Retrieves the point location in space.
+     * @return the point location in space
+     *
+     * -- SETTER --
+     * Sets the point location in space.
+     * @param point a point location in space
      */
     @SerializedName("geoLocationPoint")
     private GeoJson point;
 
+
     /**
-     *  The spatial limits of a box.
-     *  It is somewhat redundant with the polygon, however,
-     *  it is compliant to the DataCite schema.
+     * -- GETTER --
+     * Retrieves the spatial limits of a box.
+     *
+     * @return the spatial limits of a box
+     *
+     * -- SETTER --
+     * Sets the spatial limits of a box.
+     * @param box the spatial limits of a box
      */
     @SerializedName("geoLocationBox")
     private GeoJson box;
 
+
     /**
-     *  A list of drawn polygon areas, defined by sets of points and
-     *  lines connecting the points in closed chains.
+     * -- GETTER --
+     * Retrieves a list of drawn polygon areas, defined by sets of points and
+     * lines connecting the points in closed chains.
+     * @return the list of drawn polygon areas
+     *
+     * -- SETTER --
+     * Sets the list of drawn polygon areas, defined by sets of points and
+     * lines connecting the points in closed chains.
+     * @param polygons the list of drawn polygon areas
      */
     @SerializedName("geoLocationPolygon")
     private List<GeoJson> polygons;

@@ -28,7 +28,27 @@ import lombok.EqualsAndHashCode;
 @Data @EqualsAndHashCode(callSuper = true)
 public class ResearchArea extends AbstractResearch
 {
+    /**
+     * -- GETTER --
+     * Retrieves the name of the category to which the research are belongs.
+     * @return the name of the category to which the research are belongs
+     *
+     * -- SETTER --
+     * Sets the name of the category to which the research are belongs.
+     * @param value the name of the category to which the research are belongs
+     */
     private final String categoryName;
+
+
+    /**
+     * -- GETTER --
+     * Retrieves the name of the research area.
+     * @return the name of the research area
+     *
+     * -- SETTER --
+     * Sets the name of the research area.
+     * @param value the name of the research area
+     */
     private final String areaName;
 
 

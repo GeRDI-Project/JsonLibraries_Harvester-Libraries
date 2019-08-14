@@ -28,14 +28,27 @@ import lombok.Data;
 public class ResourceType
 {
     /**
-     * A free text description of the resource.
-     * In XML, this is the value between the resourceType-tags.
+     * -- GETTER --
+     * Retrieves the free text description of the resource.
      * <br>e.g. "Census Data"
+     * @return the free text description of the resource
+     *
+     * -- SETTER --
+     * Sets the free text description of the resource.
+     * <br>e.g. "Census Data"
+     * @param value a free text description of the resource
      */
     private final String value;
 
+
     /**
-     * The general type of a resource.
+     * -- GETTER --
+     * Retrieves the general type of a resource.
+     * @return the general type of a resource
+     *
+     * -- SETTER --
+     * Sets the general type of a resource.
+     * @param resourceTypeGeneral the general type of a resource
      */
     private final ResourceTypeGeneral resourceTypeGeneral;
 }

@@ -41,26 +41,57 @@ import lombok.Setter;
 public abstract class AbstractPerson
 {
     /**
-     * The personal or first name of the person.
+     * -- GETTER --
+     * Retrieves the personal or first name of the person.
      * <br>e.g. Rick
+     * @return the personal or first name of the person
+     *
+     * -- SETTER --
+     * Sets the personal or first name of the person.
+     * <br>e.g. Rick
+     * @param givenName the personal or first name of the person
      */
     private String givenName;
 
+
     /**
-     * The surname or last name of the person.
+     * -- GETTER --
+     * Retrieves the surname or last name of the person.
      * <br>e.g. Sanchez
+     * @return the urname or last name of the person
+     *
+     * -- SETTER --
+     * Sets the surname or last name of the person.
+     * <br>e.g. Sanchez
+     * @param familyName the urname or last name of the person
      */
     private String familyName;
 
+
     /**
-     * Unique identifiers for an individual or legal entity, according to various schemes.
+     * -- GETTER --
+     * Retrieves unique identifiers for an individual or legal entity, according to various schemes.
      * <br>e.g. Orcid ID
+     * @return unique identifiers for an individual or legal entity
+     *
+     * -- SETTER --
+     * Sets unique identifiers for an individual or legal entity, according to various schemes.
+     * <br>e.g. Orcid ID
+     * @param nameIdentifiers unique identifiers for an individual or legal entity
      */
     private Set<NameIdentifier> nameIdentifiers;
 
+
     /**
-     * The organisational or institutional affiliations of the person.
+     * -- GETTER --
+     * Retrieves the organisational or institutional affiliations of the person.
      * <br>e.g. Council of Ricks
+     * @return the organisational or institutional affiliations of the person
+     *
+     * -- SETTER --
+     * Sets the organisational or institutional affiliations of the person.
+     * <br>e.g. Council of Ricks
+     * @param affiliations the organisational or institutional affiliations of the person
      */
     @SerializedName("affiliation") @Setter(AccessLevel.NONE)
     private Set<Affiliation> affiliations;

@@ -1,5 +1,5 @@
 /**
-wwwwwww * Copyright © 2017 Robin Weiss, Fidan Limani (http://www.gerdi-project.de)
+* Copyright © 2017 Robin Weiss, Fidan Limani (http://www.gerdi-project.de)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,20 +39,41 @@ import lombok.RequiredArgsConstructor;
 public class Description implements ICleanable
 {
     /**
-     * Free descriptive text. In XML, this is the value between the description-tags.
+     * -- GETTER --
+     * Retrieves the free descriptive text.
+     * @return the free descriptive text
+     *
+     * -- SETTER --
+     * Sets the free descriptive text.
+     * @param value free descriptive text
      */
     @NonNull
     private String value;
 
+
     /**
-     *  What the description entails.
+     * -- GETTER --
+     * Retrieves the type that outlines what the description entails.
+     * @return the type that outlines what the description entails
+     *
+     * -- SETTER --
+     * Sets the type that outlines what the description entails.
+     * @param type the type that outlines what the description entails
      */
     @SerializedName("descriptionType")
     private final DescriptionType type;
 
+
     /**
-     * IETF language tag.
-     * <br>e.g. de, en-us
+     * -- GETTER --
+     * Retrieves the IETF language tag of the description text.
+     * <br>e.g. de, en-US
+     * @return the IETF language tag of the description text
+     *
+     * -- SETTER --
+     * Sets the IETF language tag of the description text.
+     * <br>e.g. de, en-US
+     * @param lang the IETF language tag of the description text
      */
     private String lang;
 

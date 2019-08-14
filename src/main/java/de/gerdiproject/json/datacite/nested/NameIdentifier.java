@@ -15,6 +15,8 @@
  */
 package de.gerdiproject.json.datacite.nested;
 
+import com.google.gson.annotations.SerializedName;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -29,21 +31,44 @@ import lombok.RequiredArgsConstructor;
 public class NameIdentifier
 {
     /**
-     * Uniquely identifies an individual or legal entity, according to various schemes.
-     * In XML, this is the value between the nameIdentifier-tags.
+     * -- GETTER --
+     * Retrieves an identifier of an individual or legal entity, according to various schemes.
      * <br>e.g. orcid id number
+     * @return the identifier of an individual or legal entity
+     *
+     * -- SETTER --
+     * Sets the identifier of an individual or legal entity.
+     * <br>e.g. orcid id number
+     * @param value the identifier of an individual or legal entity
      */
     private final String value;
 
-    /**
-     * The name of the name identifier scheme.
-     * <br>e.g. ORCID
-     */
-    private final String nameIdentifierScheme;
 
     /**
-     * The URI of the name identifier scheme.
+     * -- GETTER --
+     * Retrieves the name of the name identifier scheme.
+     * <br>e.g. ORCID
+     * @return the name of the name identifier scheme
+     *
+     * -- SETTER --
+     * Sets the name of the name identifier scheme.
+     * <br>e.g. ORCID
+     * @param scheme the name of the name identifier scheme
+     */
+    @SerializedName("nameIdentifierScheme")
+    private final String scheme;
+
+
+    /**
+     * -- GETTER --
+     * Retrieves the URI of the name identifier scheme.
      * <br>e.g. http://orcid.org/
+     * @return the URI of the name identifier scheme
+     *
+     * -- SETTER --
+     * Sets the URI of the name identifier scheme.
+     * <br>e.g. http://orcid.org/
+     * @param schemeURI the URI of the name identifier scheme
      */
     private String schemeURI;
 }

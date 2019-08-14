@@ -39,10 +39,13 @@ public class SoepDataCiteExtension implements IDataCiteExtension
     public static final String KEY = "soep";
 
     /**
-     * This is where the discipline-specific metadata is specified in the document.
+     * -- GETTER --
+     * Retrieves the set of variables associated with a resource from a social science study.
+     * @return a set of social science study variables
      *
-     * Research community: SOEP
-     * A set of variables associated with a resource from a social science study.
+     * -- SETTER --
+     * Sets the set of variables associated with a resource from a social science study.
+     * @param datasetVariables a set of social science study variables
      */
     @Setter(AccessLevel.NONE)
     private Set<SoepVariable> datasetVariables;

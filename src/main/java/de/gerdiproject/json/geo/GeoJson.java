@@ -31,6 +31,8 @@ import lombok.Getter;
 /**
  * GeoJSON is a format for encoding a variety of geographic data structures.
  *
+ * @see <a href="https://tools.ietf.org/html/rfc7946#section-3.2">https://tools.ietf.org/html/rfc7946#section-3.2</a>
+ *
  * @author Robin Weiss
  */
 @EqualsAndHashCode
@@ -39,14 +41,28 @@ public class GeoJson implements ICleanable
     private static final Logger LOGGER = LoggerFactory.getLogger(GeoJson.class);
     private static final Gson GSON = GsonUtils.createGeoJsonGsonBuilder().create();
 
+
+    /**
+     * -- GETTER --
+     * Retrieves the coordinates of the geographic location.
+     * @return the coordinates of the geographic location
+     */
     @Getter
     private IGeoCoordinates coordinates;
+
+
+    /**
+     * -- GETTER --
+     * Retrieves the geometry type.
+     * @return the geometry type
+     */
+    @Getter
+    private String type;
+
 
     // exclude this field from serialization, it's only used for performance reasons
     @EqualsAndHashCode.Exclude
     private transient boolean isClean;
-
-    @Getter private String type;
 
 
     /**
@@ -61,7 +77,7 @@ public class GeoJson implements ICleanable
 
 
     /**
-     * Changes the coordinates of the GeoJson. The type is adjusted accordingly.
+     * Changes the coordinates of the geographic location. The type is adjusted accordingly.
      *
      * @param coordinates a IGeoCoordinate implementing object that represents valid GeoJson coordinates
      */

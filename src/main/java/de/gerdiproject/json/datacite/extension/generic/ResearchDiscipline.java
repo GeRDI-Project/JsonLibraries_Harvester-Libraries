@@ -27,7 +27,19 @@ import lombok.EqualsAndHashCode;
 @Data @EqualsAndHashCode(callSuper = true)
 public class ResearchDiscipline extends AbstractResearch
 {
+    /**
+     * -- GETTER --
+     * Retrieves the area to which the research discipline belongs.
+     * @return the area to which the research discipline belongs
+     */
     private final ResearchArea area;
+
+
+    /**
+     * -- GETTER --
+     * Retrieves the name of the discipline.
+     * @return the name of the discipline
+     */
     private final String disciplineName;
 
 

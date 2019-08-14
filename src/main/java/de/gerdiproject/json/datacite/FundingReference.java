@@ -33,26 +33,57 @@ import lombok.RequiredArgsConstructor;
 public class FundingReference
 {
     /**
-     * Name of the funding provider.
+     * -- GETTER --
+     * Retrieves the name of the funding provider.
      * <br>e.g. Gordon and Betty Moore Foundation
+     * @return the name of the funding provider
+     *
+     * -- SETTER --
+     * Sets the name of the funding provider.
+     * <br>e.g. Gordon and Betty Moore Foundation
+     * @param funderName the name of the funding provider
      */
     private final String funderName;
 
+
     /**
-     * Uniquely identifies a funding entity, according to various types.
+     * -- GETTER --
+     * Retrieves the unique identifier of the funding entity.
      * <br>e.g. http://dx.doi.org/10.13039/100000936
+     * @return the unique identifier of the funding entity.
+     *
+     * -- SETTER --
+     * Sets the unique identifier of the funding entity.
+     * <br>e.g. http://dx.doi.org/10.13039/100000936
+     * @param funderIdentifier a unique identifier of the funding entity.
      */
     private FunderIdentifier funderIdentifier;
 
+
     /**
-     * The code assigned by the funder to a sponsored award (grant).
+     * -- GETTER --
+     * Retrieves the code assigned by the funder to a sponsored award (grant).
      * <br>e.g. GBMF3859.01
+     * @return the code assigned by the funder to a sponsored award
+     *
+     * -- SETTER --
+     * Sets the code assigned by the funder to a sponsored award (grant).
+     * <br>e.g. GBMF3859.01
+     * @param awardNumber the code assigned by the funder to a sponsored award
      */
     private AwardNumber awardNumber;
 
+
     /**
-     * The human readable title of the award (grant).
+     * -- GETTER --
+     * Retrieves the human readable title of the award (grant).
      * <br>e.g. Socioenvironmental Monitoring of the Amazon Basin and Xingu
+     * @return the human readable title of the award
+     *
+     * -- SETTER --
+     * Sets the human readable title of the award (grant).
+     * <br>e.g. Socioenvironmental Monitoring of the Amazon Basin and Xingu
+     * @param awardTitle a human readable title of the award
      */
     private String awardTitle;
 }

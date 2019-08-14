@@ -32,18 +32,39 @@ import lombok.RequiredArgsConstructor;
 public class WebLink
 {
     /**
-     * The URL of the web link.
+     * -- GETTER --
+     * Retrieves the URI of the web link.
+     * @return the URI of the web link
+     *
+     * -- SETTER --
+     * Sets the URI of the web link.
+     * @param uri the URI of the web link
      */
-    private final String webLinkURI;
+    @SerializedName("webLinkURI")
+    private final String uri;
+
 
     /**
-     * A descriptive name of the web link destination.
+     * -- GETTER --
+     * Retrieves the descriptive name of the web link destination.
+     * @return the descriptive name of the web link destination
+     *
+     * -- SETTER --
+     * Sets the descriptive name of the web link destination.
+     * @param name the descriptive name of the web link destination
      */
     @SerializedName("webLinkName")
     private String name;
 
+
     /**
-     * The link category.
+     * -- GETTER --
+     * Retrieves the link category.
+     * @return the link category
+     *
+     * -- SETTER --
+     * Sets the link category.
+     * @param type the link category
      */
     @SerializedName("webLinkType")
     private WebLinkType type;

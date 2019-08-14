@@ -53,136 +53,229 @@ public class DataCiteJson implements IDocument
 {
     private static final Gson GSON = GsonUtils.createGerdiDocumentGsonBuilder().create();
 
+
     /**
-     * An identifier of the source of the document. The identifier must be unique
+     * -- GETTER --
+     * Retrieves the identifier of the source of the document. The identifier must be unique
      * within the context of the harvester that generates it.
+     * @return the identifier of the source of the document
      */
     @NonNull
     private final transient String sourceId;
 
+
     /**
-     * The Identifier is a unique string that identifies the resource.
+     * -- GETTER --
+     * Retrieves the unique string that identifies the resource.
+     * @return the unique string that identifies the resource
+     *
+     * -- SETTER --
+     * Sets the unique string that identifies the resource.
+     * @param identifier the unique string that identifies the resource
      */
     private Identifier identifier;
 
+
     /**
-     * The main researchers involved in producing the data, or the authors of the
+     * -- GETTER --
+     * Retrieves the main researchers involved in producing the data, or the authors of the
      * publication, in priority order.
+     * @return the main researchers involved in producing the data, or the authors of the
+     * publication, in priority order
      */
     @Setter(AccessLevel.NONE)
     private List<Creator> creators;
 
+
     /**
-     * Names or title by which the resource is known.
+     * -- GETTER --
+     * Retrieves the names or title by which the resource is known.
+     * @return the names or title by which the resource is known
      */
     @Setter(AccessLevel.NONE)
     private Set<Title> titles;
 
     /**
-     * The name of the entity that holds, archives, publishes prints, distributes,
+     * -- GETTER --
+     * Retrieves the name of the entity that holds, archives, publishes prints, distributes,
      * releases, issues, or produces the resource. This property will be used to
      * formulate the citation, so consider the prominence of the role.
+     * @return the name of the entity that holds, archives, publishes prints, distributes,
+     * releases, issues, or produces the resource
+     *
+     * -- SETTER --
+     * Sets the name of the entity that holds, archives, publishes prints, distributes,
+     * releases, issues, or produces the resource. This property will be used to
+     * formulate the citation, so consider the prominence of the role.
+     * @param publisher the name of the entity that holds, archives, publishes prints, distributes,
+     * releases, issues, or produces the resource
      */
     private Publisher publisher;
 
+
     /**
-     * The year when the data was or will be made publicly available.
+     * -- GETTER --
+     * Retrieves the year when the data was or will be made publicly available.
      * {@linkplain Integer} is used instead of the primitive type in order to
      * exclude the publicationYear from the JSON if it was not explicitly set.
+     * @return the year when the data was or will be made publicly available
+     *
+     * -- SETTER --
+     * Sets the year when the data was or will be made publicly available.
+     * {@linkplain Integer} is used instead of the primitive type in order to
+     * exclude the publicationYear from the JSON if it was not explicitly set.
+     * @param publicationYear the year when the data was or will be made publicly available
      */
     private Integer publicationYear;
 
+
     /**
-     * A description of the resource.
+     * -- GETTER --
+     * Retrieves the description of the resource.
+     * @return the description of the resource
+     *
+     * -- SETTER --
+     * Sets the description of the resource.
+     * @param resourceType the description of the resource
      */
     private ResourceType resourceType;
 
+
     /**
-     * Subjects, keywords, classification codes, or key phrases describing the
+     * -- GETTER --
+     * Retrieves subjects, keywords, classification codes, or key phrases describing the
      * resource.
+     * @return the subjects, keywords, classification codes, or key phrases
      */
     @Setter(AccessLevel.NONE)
     private Set<Subject> subjects;
 
+
     /**
-     * The institutions or persons responsible for collecting, managing,
+     * -- GETTER --
+     * Retrieves institutions or persons responsible for collecting, managing,
      * distributing, or otherwise contributing to the development of the resource.
+     * @return institutions or persons
      */
     @Setter(AccessLevel.NONE)
     private Set<Contributor> contributors;
 
+
     /**
-     * Different dates relevant to the work.
+     * -- GETTER --
+     * Retrieves the different dates relevant to the work.
+     * @return the different dates relevant to the work
      */
     @Setter(AccessLevel.NONE)
     private Set<AbstractDate> dates;
 
+
     /**
-     * Primary language of the resource. Allowed values are taken from IETF BCP 47,
-     * ISO 639-1 language codes. <br>
-     * e.g. de, en-US
+     * -- GETTER --
+     * Retrieves the primary language of the resource.
+     * <br>e.g. de, en-US
+     * @return the primary language of the resource
+     *
+     * -- SETTER --
+     * Sets the primary language of the resource.
+     * <br>e.g. de, en-US
+     * <br>Allowed values are taken from IETF BCP 47, ISO 639-1 language codes.
+     * @param language the primary language of the resource
      */
     private String language;
 
+
     /**
-     * An identifier or identifiers other than the primary Identifier applied to the
-     * resource being registered. This may be any alphanumeric string which is
-     * unique within its domain of issue. May be used for local identifiers.
+     * -- GETTER --
+     * Retrieves the identifiers other than the primary Identifier applied to the
+     * resource being registered.
      * AlternateIdentifier should be used for another identifier of the same
      * instance (same location, same file).
+     * @return the identifiers other than the primary Identifier applied to the
+     * resource being registered
      */
     @Setter(AccessLevel.NONE)
     private Set<AlternateIdentifier> alternateIdentifiers;
 
+
     /**
-     * Identifiers of related resources. These must be globally unique identifiers.
+     * -- GETTER --
+     * Retrieves identifiers of related resources.
+     * These must be globally unique identifiers.
+     * @return the identifiers of related resources
      */
     @Setter(AccessLevel.NONE)
     private Set<RelatedIdentifier> relatedIdentifiers;
 
+
     /**
-     * Unstructured information about the resource size, duration, or extent. <br>
-     * e.g. "15 pages", "6 MB", "15 seconds"
+     * -- GETTER --
+     * Retrieves unstructured information about the resource size, duration, or extent.
+     * <br>e.g. "15 pages", "6 MB", "15 seconds"
+     * @return unstructured information about the resource size, duration, or extent
      */
     @Setter(AccessLevel.NONE)
     private Set<String> sizes;
 
+
     /**
-     * Technical format of the resource. Use file extension or MIME type where
-     * possible. <br>
-     * e.g. PDF, XML, application/pdf, text/xml
+     * -- GETTER --
+     * Retrieves the technical format of the resource.
+     * <br> e.g. PDF, XML, application/pdf, text/xml
+     *
+     * @return the technical format of the resource
      */
     @Setter(AccessLevel.NONE)
     private Set<String> formats;
 
+
     /**
-     * Version number of the resource. If the primary resource has changed the
+     * -- GETTER --
+     * Retrieves the version number of the resource.
+     * @return the version number of the resource
+     *
+     * -- SETTER --
+     * Sets the version number of the resource. If the primary resource has changed the
      * version number increases.
+     * @param version the version number of the resource
      */
     private String version;
 
+
     /**
-     * Any rights information for this resource.
+     * -- GETTER --
+     * Retrieves rights information for this resource.
+     * @return any rights information for this resource
      */
     @Setter(AccessLevel.NONE)
     private Set<Rights> rightsList;
 
+
     /**
-     * All additional information that does not fit in any of the other categories.
+     * -- GETTER --
+     * Retrieves all additional information that does not fit in any of the other categories.
+     * @return additional information that does not fit in any of the other categories
      */
     @Setter(AccessLevel.NONE)
     private Set<Description> descriptions;
 
+
     /**
-     * Spatial regions or named places where the data was gathered or about which
+     * -- GETTER --
+     * Retrieves spatial regions or named places where the data was gathered or about which
      * the data is focused.
+     * @return the spatial regions or named places where the data was gathered or about which
+     * the data is focused
      */
     @Setter(AccessLevel.NONE)
     private Set<GeoLocation> geoLocations;
 
+
     /**
-     * Information about financial support (funding) for the resource being
+     * -- GETTER --
+     * Retrieves information about financial support (funding) for the resource being
      * registered.
+     * @return information about funding for the resource being registered
      */
     @Setter(AccessLevel.NONE)
     private Set<FundingReference> fundingReferences;
@@ -190,27 +283,43 @@ public class DataCiteJson implements IDocument
     // GENERIC EXTENSION:
 
     /**
-     * A unique but human readable name of the repository. <br>
-     * e.g. Sea Around Us, FAOSTAT
+     * -- GETTER --
+     * Retrieves a unique, human readable name of the repository.
+     * <br> e.g. Sea Around Us, FAOSTAT
+     * @return a unique, human readable name of the repository
+     *
+     * -- SETTER --
+     * Sets the unique, human readable name of the repository.
+     * <br> e.g. Sea Around Us, FAOSTAT
+     * @param repositoryIdentifier a unique, human readable name of the repository.
      */
     private String repositoryIdentifier;
 
+
     /**
-     * Links to the data provider's website.
+     * -- GETTER --
+     * Retrieves weblinks related to the resource.
+     * @return weblinks related to the resource
      */
     @Setter(AccessLevel.NONE)
     private Set<WebLink> webLinks;
 
+
     /**
-     * Downloadable source data files.
+     * -- GETTER --
+     * Retrieves references to downloadable research data.
+     * @return references to downloadable research data
      */
     @Setter(AccessLevel.NONE)
     private Set<ResearchData> researchDataList;
 
+
     /**
-     * A set of human readable names of the research disciplines, meaning the
-     * topics or domains that this document covers. <br>
-     * e.g. Computer Science, Geography
+     * -- GETTER --
+     * Retrieves a set of human readable names of the research disciplines,
+     * i.e. the topics or domains that this document covers.
+     * <br>e.g. Computer Science, Geography
+     * @return the research disciplines to which the document belongs
      */
     @Setter(AccessLevel.NONE)
     private Set<AbstractResearch> researchDisciplines;
@@ -219,7 +328,9 @@ public class DataCiteJson implements IDocument
     // DISCIPLINE EXTENSIONS
 
     /**
-     * Different dates relevant to the work.
+     * -- GETTER --
+     * Retrieves discipline specific metadata extensions.
+     * @return discipline specific metadata extensions
      */
     @Setter(AccessLevel.NONE)
     private final DataCiteExtensions extensions;

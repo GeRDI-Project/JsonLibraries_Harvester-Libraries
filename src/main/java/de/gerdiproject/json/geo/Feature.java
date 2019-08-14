@@ -19,6 +19,12 @@ import lombok.Data;
 
 /**
  * This class represents a feature as part of a {@linkplain FeatureCollection} JSON object.
+ * A Feature object represents a spatially bounded thing.  Every Feature
+ * object is a GeoJSON object no matter where it occurs in a GeoJSON
+ * text.
+ *
+ * @see <a href="https://tools.ietf.org/html/rfc7946#section-3.2">https://tools.ietf.org/html/rfc7946#section-3.2</a>
+ *
  * @author Robin Weiss
  *
  * @param <T> the type of properties
@@ -26,7 +32,38 @@ import lombok.Data;
 @Data
 public class Feature<T>
 {
+    /**
+     * -- GETTER --
+     * The geometry object of the feature.
+     * @return the {@linkplain GeoJson} geometry or null if the feature is unlocated
+     *
+     * -- SETTER --
+     * Sets the geometry object of the feature.
+     * @param geometry a {@linkplain GeoJson} geometry or null if the feature is unlocated
+     */
     private GeoJson geometry;
+
+
+    /**
+     * -- GETTER --
+     * Retrieves the type of the feature, which should always be "Feature".
+     * @return the type of the feature
+     *
+     * -- SETTER --
+     * Sets the type of the feature, which should always be "Feature".
+     * @param type the type of the feature
+     */
     private String type;
+
+
+    /**
+     * -- GETTER --
+     * Retrieves additional properties that describe the feature.
+     * @return additional properties that describe the feature
+     *
+     * -- SETTER --
+     * Sets additional properties that describe the feature.
+     * @param properties additional properties that describe the feature
+     */
     private T properties;
 }
