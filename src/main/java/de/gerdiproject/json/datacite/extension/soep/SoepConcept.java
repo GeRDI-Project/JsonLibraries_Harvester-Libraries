@@ -39,5 +39,5 @@ public class SoepConcept
      *  Concept label language
      *  <br>e.g. de, en, etc.
      */
-    private final String language;
+    private final String lang;
 }
