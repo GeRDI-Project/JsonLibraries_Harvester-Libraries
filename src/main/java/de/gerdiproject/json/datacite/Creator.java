@@ -34,8 +34,15 @@ import lombok.ToString;
 public class Creator extends AbstractPerson
 {
     /**
-     * The full name of the creator.
+     * -- GETTER --
+     * Retrieves the full name of the creator.
      * <br>e.g. Sanchez, Rick
+     * @return the full name of the creator
+     *
+     * -- SETTER --
+     * Sets the full name of the creator.
+     * <br>e.g. Sanchez, Rick
+     * @param name the full name of the creator
      */
     @SerializedName("creatorName")
     private final PersonName name;

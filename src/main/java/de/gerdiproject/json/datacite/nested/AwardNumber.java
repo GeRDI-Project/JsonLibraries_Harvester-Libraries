@@ -15,6 +15,8 @@
  */
 package de.gerdiproject.json.datacite.nested;
 
+import com.google.gson.annotations.SerializedName;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -29,13 +31,26 @@ import lombok.RequiredArgsConstructor;
 public class AwardNumber
 {
     /**
-     * The value of the AwardNumber.
-     * In XML, this is the value between the awardNumber-tags.
+     * -- GETTER --
+     * Retrieves the value of the AwardNumber.
+     * @return the value of the AwardNumber
+     *
+     * -- SETTER --
+     * Sets the value of the AwardNumber.
+     * @param value the value of the AwardNumber
      */
     private final String value;
 
+
     /**
-     * The URI leading to a page for more information about the award.
+     * -- GETTER --
+     * Retrieves the URI leading to a page for more information about the award.
+     * @return the URI leading to a page for more information about the award
+     *
+     * -- SETTER --
+     * Sets the URI leading to a page for more information about the award.
+     * @param uri the URI leading to a page for more information about the award
      */
-    private String awardURI;
+    @SerializedName("awardURI")
+    private String uri;
 }

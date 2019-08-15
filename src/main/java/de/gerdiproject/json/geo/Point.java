@@ -23,25 +23,33 @@ import lombok.RequiredArgsConstructor;
 /**
  * A geographical point. It must contain longitude and latitude and may contain the elevation as well.
  *
+ * @see <a href="https://tools.ietf.org/html/rfc7946#section-3.2">https://tools.ietf.org/html/rfc7946#section-3.2</a>
+ *
  * @author Robin Weiss
  */
 @Data @RequiredArgsConstructor
 public class Point implements IGeoCoordinates
 {
     /**
-     * A geographic coordinate that specifies the east-west position of a point on the Earth's surface.
+     * -- GETTER --
+     * Retrieves the geographic coordinate that specifies the east-west position of a point on the Earth's surface.
      * It ranges from -180.0° to 180.0°. The Prime Meridian is at 0.0°.
+     * @return the geographic coordinate that specifies the east-west position of a point on the Earth's surface
      */
     private final double longitude;
 
     /**
-     * A geographic coordinate that specifies the north–south position of a point on the Earth's surface.
+     * -- GETTER --
+     * Retrieves the geographic coordinate that specifies the north–south position of a point on the Earth's surface.
      * It ranges from -90.0° to 90.0°. The Equator is at 0.0°.
+     * @return the geographic coordinate that specifies the north–south position of a point on the Earth's surface
      */
     private final double latitude;
 
     /**
-     * The elevation of a geographic location is its height above or below the Earth's sea level.
+     * -- GETTER --
+     * Retrieves the elevation of the geaographic location which is its height above or below the Earth's sea level.
+     * @return the elevation of the geographic location
      */
     private final double elevation;
 

@@ -35,21 +35,43 @@ import lombok.RequiredArgsConstructor;
 public class Title implements ICleanable
 {
     /**
-     * A free text title or name. In XML, this is the value between the title-tags.
+     * -- GETTER --
+     * Retrieves the free text title or name.
      * <br>e.g. Crops, Catch Value in the Atlantic Ocean
+     * @return the free text title or name
+     *
+     * -- SETTER --
+     * Sets the free text title or name.
+     * <br>e.g. Crops, Catch Value in the Atlantic Ocean
+     * @param value a free text title or name
      */
     @NonNull
     private String value;
 
+
     /**
-     * The type of Title.
+     * -- GETTER --
+     * Retrieves the type of Title.
+     * @return the type of Title
+     *
+     * -- SETTER --
+     * Sets the type of Title.
+     * @param type the type of Title
      */
     @SerializedName("titleType")
     private TitleType type;
 
+
     /**
-     * IETF language tag describing the language of the title text.
+     * -- GETTER --
+     * Retrieves the IETF language tag describing the language of the title text.
      * <br>e.g. de, en-US
+     * @return the IETF language tag describing the language of the title text
+     *
+     * -- SETTER --
+     * Sets the IETF language tag describing the language of the title text.
+     * <br>e.g. de, en-US
+     * @param lang the IETF language tag describing the language of the title text
      */
     private String lang;
 

@@ -16,6 +16,8 @@
  */
 package de.gerdiproject.json.datacite.nested;
 
+import com.google.gson.annotations.SerializedName;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -30,22 +32,35 @@ import lombok.RequiredArgsConstructor;
 public class Affiliation
 {
     /**
-     * TODO wait for official documentation: https://schema.datacite.org/meta/kernel-4.3/doc/DataCite-MetadataKernel_v4.3.pdf
+     * -- GETTER --
+     * Retrieves the name of the organisational or institutional affiliation.
+     * @return the name of the affiliation
+     *
+     * -- SETTER --
+     * Sets the name of the organisational or institutional affiliation.
+     * @param value the name of the affiliation
      */
     private final String value;
 
-    /**
-     * TODO wait for official documentation: https://schema.datacite.org/meta/kernel-4.3/doc/DataCite-MetadataKernel_v4.3.pdf
-     */
-    private String affiliationIdentifier;
+
+    // TODO wait for official documentation: https://schema.datacite.org/meta/kernel-4.3/doc/DataCite-MetadataKernel_v4.3.pdf
+    @SerializedName("affiliationIdentifier")
+    private String identifier;
+
+
+    // TODO wait for official documentation: https://schema.datacite.org/meta/kernel-4.3/doc/DataCite-MetadataKernel_v4.3.pdf
+    @SerializedName("affiliationIdentifierScheme")
+    private String identifierScheme;
+
 
     /**
-     * TODO wait for official documentation: https://schema.datacite.org/meta/kernel-4.3/doc/DataCite-MetadataKernel_v4.3.pdf
-     */
-    private String affiliationIdentifierScheme;
-
-    /**
-     * TODO wait for official documentation: https://schema.datacite.org/meta/kernel-4.3/doc/DataCite-MetadataKernel_v4.3.pdf
+     * -- GETTER --
+     * Retrieves the scheme URI of the affiliationIdentifierScheme.
+     * @return the scheme URI of the affiliationIdentifierScheme
+     *
+     * -- SETTER --
+     * Sets the scheme URI of the affiliationIdentifierScheme.
+     * @param schemeURI the scheme URI of the affiliationIdentifierScheme
      */
     private String schemeURI;
 }

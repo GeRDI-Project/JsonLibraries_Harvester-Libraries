@@ -15,6 +15,8 @@
  */
 package de.gerdiproject.json.datacite.nested;
 
+import com.google.gson.annotations.SerializedName;
+
 import de.gerdiproject.json.datacite.enums.NameType;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -29,20 +31,42 @@ import lombok.RequiredArgsConstructor;
 public class PersonName
 {
     /**
-     * The free text full name of the person or entity.
+     * -- GETTER --
+     * Retrieves the free text full name of the person or entity.
      * In XML, this is the text between the name-tags.
+     * @return the free text full name of the person or entity
+     *
+     * -- SETTER --
+     * Sets the free text full name of the person or entity.
+     * In XML, this is the text between the name-tags.
+     * @param value the free text full name of the person or entity
      */
     private final String value;
 
-    /**
-     * The type of name.
-     * <br>default: Personal
-     */
-    private final NameType nameType;
 
     /**
-     * IETF language tag.
+     * -- GETTER --
+     * Retrieves the type of name.
+     * @return the type of name
+     *
+     * -- SETTER --
+     * Sets the type of name.
+     * @param type the type of name
+     */
+    @SerializedName("nameType")
+    private final NameType type;
+
+
+    /**
+     * -- GETTER --
+     * Retrieves the IETF language tag.
      * <br>e.g. de, en-us
+     * @return the IETF language tag
+     *
+     * -- SETTER --
+     * Sets the IETF language tag.
+     * <br>e.g. de, en-us
+     * @param lang the IETF language tag
      */
     private String lang;
 
@@ -55,6 +79,6 @@ public class PersonName
     public PersonName(final String value)
     {
         this.value = value;
-        this.nameType = null;
+        this.type = null;
     }
 }

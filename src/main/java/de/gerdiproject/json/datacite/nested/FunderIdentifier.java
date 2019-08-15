@@ -15,6 +15,8 @@
  */
 package de.gerdiproject.json.datacite.nested;
 
+import com.google.gson.annotations.SerializedName;
+
 import de.gerdiproject.json.datacite.enums.FunderIdentifierType;
 import lombok.Data;
 
@@ -29,19 +31,38 @@ import lombok.Data;
 public class FunderIdentifier
 {
     /**
-     * The value of the FunderIdentifier.
-     * In XML, this is the value between the funderIdentifier-tags.
+     * -- GETTER --
+     * Retrieves the value of the FunderIdentifier.
+     * @return the value of the FunderIdentifier
+     *
+     * -- SETTER --
+     * Sets the value of the FunderIdentifier.
+     * @param value the value of the FunderIdentifier
      */
     private final String value;
 
+
     /**
-     * The type of the funder identifier.
+     * -- GETTER --
+     * Retrieves the type of the funder identifier.
+     * @return the type of the funder identifier
+     *
+     * -- SETTER --
+     * Sets the type of the funder identifier.
+     * @param type the type of the funder identifier
      */
-    private final FunderIdentifierType funderIdentifierType;
+    @SerializedName("funderIdentifierType")
+    private final FunderIdentifierType type;
 
 
     /**
-     * The scheme URI of the funderIdentifierType.
+     * -- GETTER --
+     * Retrieves the scheme URI of the {@linkplain FunderIdentifierType}.
+     * @return the scheme URI of the {@linkplain FunderIdentifierType}
+     *
+     * -- SETTER --
+     * Sets the scheme URI of the {@linkplain FunderIdentifierType}.
+     * @param schemeURI the scheme URI of the {@linkplain FunderIdentifierType}
      */
     private String schemeURI;
 }

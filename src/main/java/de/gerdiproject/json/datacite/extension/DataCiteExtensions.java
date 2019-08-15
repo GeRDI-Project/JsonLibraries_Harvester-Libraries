@@ -29,6 +29,15 @@ import lombok.Data;
 @Data
 public class DataCiteExtensions
 {
+    /**
+     * -- GETTER --
+     * Retrieves the map of GeRDI defined DataCite extensions.
+     * @return the map of GeRDI defined DataCite extensions
+     *
+     * -- SETTER --
+     * Sets the map of GeRDI defined DataCite extensions.
+     * @param extensions the map of GeRDI defined DataCite extensions
+     */
     private Map<String, IDataCiteExtension> extensions;
 
 

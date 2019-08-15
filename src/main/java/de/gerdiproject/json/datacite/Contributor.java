@@ -37,14 +37,28 @@ import lombok.ToString;
 public class Contributor extends AbstractPerson
 {
     /**
-     * The full name of the contributor.
+     * -- GETTER --
+     * Retrieves the full name of the contributor.
      * <br>e.g. Patel, Emily; Nyugen, John, ABC Foundation
+     * @return the full name of the contributor
+     *
+     * -- SETTER --
+     * Sets the full name of the contributor.
+     * <br>e.g. Patel, Emily; Nyugen, John, ABC Foundation
+     * @param name the full name of the contributor
      */
     @SerializedName("contributorName")
     private final PersonName name;
 
+
     /**
-     * The role of the contributor.
+     * -- GETTER --
+     * Retrieves the role of the contributor.
+     * @return the role of the contributor
+     *
+     * -- SETTER --
+     * Sets the role of the contributor.
+     * @param type the role of the contributor
      */
     @SerializedName("contributorType")
     private final ContributorType type;

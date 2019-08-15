@@ -24,6 +24,8 @@ import com.google.gson.JsonElement;
 /**
  * A set of at least two points that represent coordinates of connected lines.
  *
+ * @see <a href="https://tools.ietf.org/html/rfc7946#section-3.2">https://tools.ietf.org/html/rfc7946#section-3.2</a>
+ *
  * @author Robin Weiss
  */
 public class LineString extends LinkedList<Point> implements IGeoCoordinates

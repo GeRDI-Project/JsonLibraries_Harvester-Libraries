@@ -24,6 +24,8 @@ import com.google.gson.JsonElement;
 /**
  * This class represents an array of coordinates (points).
  *
+ * @see <a href="https://tools.ietf.org/html/rfc7946#section-3.2">https://tools.ietf.org/html/rfc7946#section-3.2</a>
+ *
  * @author Robin Weiss
  */
 public class MultiPoint extends LinkedList<Point> implements IGeoCoordinates

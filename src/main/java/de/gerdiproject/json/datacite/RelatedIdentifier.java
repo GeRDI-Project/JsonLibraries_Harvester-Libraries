@@ -36,43 +36,95 @@ import lombok.RequiredArgsConstructor;
 public class RelatedIdentifier
 {
     /**
-     * Free text identifier of related resources.
-     * In XML, this is the value between the relatedIdentifier-tags.
+     * -- GETTER --
+     * Retrieves the free text identifier of related resources.
      * Use this property to indicate subsets of properties, as appropriate.
+     * @return the free text identifier of related resources
+     *
+     * -- SETTER --
+     * Sets the free text identifier of related resources.
+     * Use this property to indicate subsets of properties, as appropriate.
+     * @param value the free text identifier of related resources
      */
     private final String value;
 
+
     /**
-     * The type of the related identifier.
+     * -- GETTER --
+     * Retrieves the type of the related identifier.
+     * @return the type of the related identifier
+     *
+     * -- SETTER --
+     * Sets the type of the related identifier.
+     * @param type the type of the related identifier
      */
     @SerializedName("relatedIdentifierType")
     private final RelatedIdentifierType type;
 
+
     /**
-     * Description of the relationship of the resource being registered (A)
+     * -- GETTER --
+     * Retrieves the description of the relationship of the resource being registered (A)
      * and the related resource (B).
+     * @return the description of the relationship
+     *
+     * -- SETTER --
+     * Sets the description of the relationship of the resource being registered (A)
+     * and the related resource (B).
+     * @param relationType the description of the relationship
      */
     private final RelationType relationType;
 
+
     /**
-     * The general type of the related resource (B).
+     * -- GETTER --
+     * Retrieves the general type of the related resource (B).
+     * @return the general type of the related resource (B)
+     *
+     * -- SETTER --
+     * Sets the general type of the related resource (B).
+     * @param resourceTypeGeneral the general type of the related resource (B)
      */
     private ResourceTypeGeneral resourceTypeGeneral;
 
+
     /**
-     * The name of the related scheme.
+     * -- GETTER --
+     * Retrieves the name of the related scheme.
      * <br>e.g. citeproc+json
+     *
+     * @return the name of the related scheme
+     *
+     * -- SETTER --
+     * Sets the name of the related scheme.
+     *
+     * @param relatedMetadataScheme the new name of the related scheme
      */
     private String relatedMetadataScheme;
 
+
     /**
-     * The URI of the relatedMetadataScheme.
+     * -- GETTER --
+     * Retrieves the URI of the relatedMetadataScheme.
      * <br>e.g. https://github.com/citation-style-language/schema/raw/master/csl-data.json
+     * @return the URI of the relatedMetadataScheme
+     *
+     * -- SETTER --
+     * Sets the URI of the relatedMetadataScheme.
+     * <br>e.g. https://github.com/citation-style-language/schema/raw/master/csl-data.json
+     * @param schemeURI the URI of the relatedMetadataScheme
      */
     private String schemeURI;
 
+
     /**
-     * The type of the relatedMetadataScheme, linked with the schemeURI.
+     * -- GETTER --
+     * Retrieves the type of the relatedMetadataScheme, linked with the schemeURI.
+     * @return the type of the relatedMetadataScheme
+     *
+     * -- SETTER --
+     * Sets the type of the relatedMetadataScheme, linked with the schemeURI.
+     * @param schemeType the type of the relatedMetadataScheme
      */
     private String schemeType;
 }

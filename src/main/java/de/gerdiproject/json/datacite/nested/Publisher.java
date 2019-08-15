@@ -30,14 +30,27 @@ import lombok.RequiredArgsConstructor;
 public class Publisher
 {
     /**
-     * The name of the publisher.
+     * -- GETTER --
+     * Retrieves the name of the publisher.
+     * @return the name of the publisher
+     *
+     * -- SETTER --
+     * Sets the name of the publisher.
+     * @param value the name of the publisher
      */
     private final String value;
 
 
     /**
-     * An optional IETF language tag of the publisher.
+     * -- GETTER --
+     * Retrieves the optional IETF language tag of the publisher.
      * <br>e.g. de, en-US
+     * @return the optional IETF language tag of the publisher
+     *
+     * -- SETTER --
+     * Sets the optional IETF language tag of the publisher.
+     * <br>e.g. de, en-US
+     * @param lang the optional IETF language tag of the publisher
      */
     private String lang;
 }

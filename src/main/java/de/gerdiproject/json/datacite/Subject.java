@@ -15,6 +15,8 @@
  */
 package de.gerdiproject.json.datacite;
 
+import com.google.gson.annotations.SerializedName;
+
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.utils.StringUtils;
 import lombok.AllArgsConstructor;
@@ -32,32 +34,70 @@ import lombok.RequiredArgsConstructor;
 public class Subject implements ICleanable
 {
     /**
-     * A term that describes the resource.
+     * -- GETTER --
+     * Retrieves the term that describes the resource.
      * <br>e.g. Fishery, Dates
+     * @return a term that describes the resource
+     *
+     * -- SETTER --
+     * Sets the term that describes the resource.
+     * <br>e.g. Fishery, Dates
+     * @param value a term that describes the resource
      */
     @NonNull
     private String value;
 
+
     /**
-     * A IETF language tag of the subject text.
+     * -- GETTER --
+     * Retrieves the IETF language tag of the subject text.
      * <br>e.g. de, en-US
+     * @return the IETF language tag of the subject text
+     *
+     * -- SETTER --
+     * Sets the IETF language tag of the subject text.
+     * <br>e.g. de, en-US
+     * @param lang the IETF language tag of the subject text
      */
     private String lang;
 
-    /**
-     * The free text name of the subject scheme or classification code or authority if one is used.
-     */
-    private String subjectScheme;
 
     /**
-     * The URI of the subject identifier scheme.
+     * -- GETTER --
+     * Retrieves the free text name of the subject scheme or classification code or authority if one is used.
+     * @return the free text name of the subject scheme
+     *
+     * -- SETTER --
+     * Sets the free text name of the subject scheme or classification code or authority if one is used.
+     * @param scheme the free text name of the subject scheme
+     */
+    @SerializedName("subjectScheme")
+    private String scheme;
+
+
+    /**
+     * -- GETTER --
+     * Retrieves the URI of the subject identifier scheme.
      * <br>e.g. http://id.loc.gov/authorities/subjects
+     * @return the URI of the subject identifier scheme
+     *
+     * -- SETTER --
+     * Sets the URI of the subject identifier scheme.
+     * <br>e.g. http://id.loc.gov/authorities/subjects
+     * @param schemeURI the URI of the subject identifier scheme
      */
     private String schemeURI;
 
     /**
-     * The URI of the subject term.
+     * -- GETTER --
+     * Retrieves the URI of the subject term.
      * <br>e.g. http://id.loc.gov/authorities/subjects/sh85026196
+     * @return the URI of the subject term
+     *
+     * -- SETTER --
+     * Sets the URI of the subject term.
+     * <br>e.g. http://id.loc.gov/authorities/subjects/sh85026196
+     * @param valueURI the URI of the subject term
      */
     private String valueURI;
 
