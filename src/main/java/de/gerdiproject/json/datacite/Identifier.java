@@ -41,17 +41,19 @@ public class Identifier
      * The type of the identifier.
      */
     @SerializedName("identifierType")
-    private final IdentifierType type;
+    private final String type;
 
 
     /**
-     * Constructs a DOI identifier.
+     * Constructs an identifier using the controlled list values proposed
+     * by DataCite.
      *
-     * @param value a DOI identifier string of the format "10.1234/foo"
+     * @param value an identifier string
+     * @parm idType a DataCite controlled list identifier type
      */
-    public Identifier(final String value)
+    public Identifier(final String value, final IdentifierType idType)
     {
         this.value = value;
-        this.type = IdentifierType.DOI;
+        this.type = idType.toString();
     }
 }
