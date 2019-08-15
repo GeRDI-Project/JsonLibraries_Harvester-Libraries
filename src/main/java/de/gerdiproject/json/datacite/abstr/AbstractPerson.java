@@ -16,7 +16,6 @@
 package de.gerdiproject.json.datacite.abstr;
 
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.Set;
 
 import com.google.gson.annotations.SerializedName;
@@ -114,26 +113,6 @@ public abstract class AbstractPerson
     public void addNameIdentifiers(final Collection<NameIdentifier> nameIdentifiers)
     {
         this.nameIdentifiers = CollectionUtils.addToSet(this.nameIdentifiers, nameIdentifiers);
-    }
-
-
-    /**
-     * Changes the organisational or institutional affiliations of the person.
-     * <br>e.g. Council of Ricks
-     *
-     * @param affiliationValues the organisational or institutional affiliations of the person
-     *
-     * @deprecated Use {@linkplain AbstractPerson#addAffiliations(Collection)} instead
-     */
-    @Deprecated
-    public void addAffiliations(final Iterable<String> affiliationValues)
-    {
-        final Collection<Affiliation> affiliations = new LinkedList<>();
-
-        for (final String value : affiliationValues)
-            affiliations.add(new Affiliation(value));
-
-        addAffiliations(affiliations);
     }
 
 
