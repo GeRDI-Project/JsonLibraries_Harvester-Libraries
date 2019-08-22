@@ -15,15 +15,14 @@
  */
 package de.gerdiproject.json.datacite;
 
-import java.util.Arrays;
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
+import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.Polygon;
 
 import de.gerdiproject.harvest.ICleanable;
-import de.gerdiproject.json.geo.GeoJson;
-import de.gerdiproject.json.geo.Point;
-import de.gerdiproject.json.geo.Polygon;
+import de.gerdiproject.json.geo.utils.GeoJsonUtils;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -62,7 +61,7 @@ public class GeoLocation implements ICleanable
      * @param point a point location in space
      */
     @SerializedName("geoLocationPoint")
-    private GeoJson point;
+    private Point point;
 
 
     /**
@@ -76,7 +75,7 @@ public class GeoLocation implements ICleanable
      * @param box the spatial limits of a box
      */
     @SerializedName("geoLocationBox")
-    private GeoJson box;
+    private Polygon box;
 
 
     /**
@@ -91,7 +90,7 @@ public class GeoLocation implements ICleanable
      * @param polygons the list of drawn polygon areas
      */
     @SerializedName("geoLocationPolygon")
-    private List<GeoJson> polygons;
+    private List<Polygon> polygons;
 
 
     /**
@@ -120,12 +119,18 @@ public class GeoLocation implements ICleanable
         final double northBoundLatitude
     )
     {
-        final List<Point> boxShape = Arrays.asList(new Point(westBoundLongitude, northBoundLatitude),
-                                                   new Point(eastBoundLongitude, northBoundLatitude),
-                                                   new Point(eastBoundLongitude, southBoundLatitude),
-                                                   new Point(westBoundLongitude, southBoundLatitude),
-                                                   new Point(westBoundLongitude, northBoundLatitude));
-        this.box = new GeoJson(new Polygon(boxShape));
+        // TODO
+        this.box = new GeoJsonUtils().createBox(
+            westBoundLongitude,
+            eastBoundLongitude,
+            southBoundLatitude,
+            northBoundLatitude);
+    }
+
+    public void setPoint(final double longitude, final double latitude)
+    {
+        // TODO
+        this.point = new GeoJsonUtils().createPoint(longitude, latitude);
     }
 
 
@@ -153,7 +158,7 @@ public class GeoLocation implements ICleanable
         if (point == null)
             return;
 
-        point.clean();
+        // TODO point.clean();
 
         if (!point.isValid())
             point = null;
@@ -173,12 +178,12 @@ public class GeoLocation implements ICleanable
 
         while (i != 0) {
             i--;
-            final GeoJson geo = polygons.get(i);
+            final Polygon geo = polygons.get(i);
 
             if (geo == null)
                 polygons.remove(i);
             else {
-                geo.clean();
+                // TODO geo.clean();
 
                 if (!geo.isValid())
                     polygons.remove(i);
@@ -199,10 +204,10 @@ public class GeoLocation implements ICleanable
         if (box == null)
             return;
 
-        box.clean();
+        // TODO box.clean();
 
-        if (!box.isValid())
-            box = null;
+        //if (!box.isValid())
+        //    box = null;
     }
 
 

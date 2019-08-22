@@ -66,7 +66,7 @@ public class Identifier
      * by DataCite.
      *
      * @param value an identifier string
-     * @parm idType a DataCite controlled list identifier type
+     * @param idType a DataCite controlled list identifier type
      */
     public Identifier(final String value, final IdentifierType idType)
     {

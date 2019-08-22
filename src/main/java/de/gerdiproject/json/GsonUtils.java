@@ -16,7 +16,10 @@
 package de.gerdiproject.json;
 
 
+import com.github.filosganga.geogson.gson.GeometryAdapterFactory;
+import com.github.filosganga.geogson.jts.JtsAdapterFactory;
 import com.google.gson.GsonBuilder;
+import com.vividsolutions.jts.geom.Geometry;
 
 import de.gerdiproject.json.datacite.Date;
 import de.gerdiproject.json.datacite.DateRange;
@@ -30,20 +33,6 @@ import de.gerdiproject.json.datacite.extension.generic.ResearchArea;
 import de.gerdiproject.json.datacite.extension.generic.ResearchDiscipline;
 import de.gerdiproject.json.datacite.extension.generic.adapter.ResearchAdapter;
 import de.gerdiproject.json.datacite.extension.soep.SoepDataCiteExtension;
-import de.gerdiproject.json.geo.GeoJson;
-import de.gerdiproject.json.geo.LineString;
-import de.gerdiproject.json.geo.MultiLineString;
-import de.gerdiproject.json.geo.MultiPoint;
-import de.gerdiproject.json.geo.MultiPolygon;
-import de.gerdiproject.json.geo.Point;
-import de.gerdiproject.json.geo.Polygon;
-import de.gerdiproject.json.geo.adapters.GeoJsonAdapter;
-import de.gerdiproject.json.geo.adapters.LineStringAdapter;
-import de.gerdiproject.json.geo.adapters.MultiLineStringAdapter;
-import de.gerdiproject.json.geo.adapters.MultiPointAdapter;
-import de.gerdiproject.json.geo.adapters.MultiPolygonAdapter;
-import de.gerdiproject.json.geo.adapters.PointAdapter;
-import de.gerdiproject.json.geo.adapters.PolygonAdapter;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -78,18 +67,14 @@ public final class GsonUtils
 
 
     /**
-     * Creates a GsonBuilder that is able to (de-) serialize {@linkplain GeoJson} objects.
+     * Creates a GsonBuilder that is able to (de-) serialize {@linkplain Geometry} objects.
      *
-     * @return a GsonBuilder that is able to (de-) serialize {@linkplain GeoJson} objects
+     * @return a GsonBuilder that is able to (de-) serialize {@linkplain Geometry} objects
      */
     public static GsonBuilder createGeoJsonGsonBuilder()
     {
-        return new GsonBuilder().registerTypeAdapter(Point.class, new PointAdapter())
-               .registerTypeAdapter(MultiPoint.class, new MultiPointAdapter())
-               .registerTypeAdapter(LineString.class, new LineStringAdapter())
-               .registerTypeAdapter(MultiLineString.class, new MultiLineStringAdapter())
-               .registerTypeAdapter(Polygon.class, new PolygonAdapter())
-               .registerTypeAdapter(MultiPolygon.class, new MultiPolygonAdapter())
-               .registerTypeAdapter(GeoJson.class, new GeoJsonAdapter());
+        return new GsonBuilder()
+                .registerTypeAdapterFactory(new JtsAdapterFactory())
+                .registerTypeAdapterFactory(new GeometryAdapterFactory());
     }
 }
