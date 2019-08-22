@@ -1,5 +1,5 @@
 /**
- * Copyright © 2017 Robin Weiss, Fidan Limani (http://www.gerdi-project.de)
+ * Copyright © 2019 Robin Weiss, Fidan Limani (http://www.gerdi-project.de)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,42 +15,42 @@
  */
 package de.gerdiproject.json.datacite.nested;
 
-import com.google.gson.annotations.SerializedName;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 /**
- * The code assigned by the funder to a sponsored award (grant).
- * <br><br>
- * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
+ * The entity that holds, archives, publishes prints, distributes,
+ * releases, issues, or produces the resource. This property will be used to
+ * formulate the citation, so consider the prominence of the role.
+ *
  * @author Robin Weiss
  */
 @Data @RequiredArgsConstructor @AllArgsConstructor
-public class AwardNumber
+public class Publisher
 {
     /**
      * -- GETTER --
-     * Retrieves the value of the AwardNumber.
-     * @return the value of the AwardNumber
+     * Retrieves the name of the publisher.
+     * @return the name of the publisher
      *
      * -- SETTER --
-     * Sets the value of the AwardNumber.
-     * @param value the value of the AwardNumber
+     * Sets the name of the publisher.
+     * @param value the name of the publisher
      */
     private final String value;
 
 
     /**
      * -- GETTER --
-     * Retrieves the URI leading to a page for more information about the award.
-     * @return the URI leading to a page for more information about the award
+     * Retrieves the optional IETF language tag of the publisher.
+     * <br>e.g. de, en-US
+     * @return the optional IETF language tag of the publisher
      *
      * -- SETTER --
-     * Sets the URI leading to a page for more information about the award.
-     * @param uri the URI leading to a page for more information about the award
+     * Sets the optional IETF language tag of the publisher.
+     * <br>e.g. de, en-US
+     * @param lang the optional IETF language tag of the publisher
      */
-    @SerializedName("awardURI")
-    private String uri;
+    private String lang;
 }

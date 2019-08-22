@@ -23,6 +23,10 @@ import lombok.RequiredArgsConstructor;
 
 /**
  * The primary Identifier of the resource being registered.
+ * The Identifier is a unique string that identifies a resource.
+ * For software, determine whether the identifier is for a specific
+ * version of a piece of software, (per the Force11 Software Citation Principles11),
+ * or for all versions.
  *
  * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
@@ -31,27 +35,42 @@ import lombok.RequiredArgsConstructor;
 public class Identifier
 {
     /**
-     * A unique string that identifies the resource.
-     * In XML, this is the value between the identifier-tags.
+     * -- GETTER --
+     * Retrieves the unique string that identifies a resource.
      * <br>e.g. 10.1234/foo
+     * @return the unique string that identifies a resource
+     *
+     * -- SETTER --
+     * Sets the unique string that identifies a resource.
+     * <br>e.g. 10.1234/foo
+     * @param value the unique string that identifies a resource
      */
     private final String value;
 
+
     /**
-     * The type of the identifier.
+     * -- GETTER --
+     * Retrieves the type of the identifier.
+     * @return the type of the identifier
+     *
+     * -- SETTER --
+     * Sets the type of the identifier.
+     * @param type the type of the identifier
      */
     @SerializedName("identifierType")
-    private final IdentifierType type;
+    private final String type;
 
 
     /**
-     * Constructs a DOI identifier.
+     * Constructs an identifier using the controlled list values proposed
+     * by DataCite.
      *
-     * @param value a DOI identifier string of the format "10.1234/foo"
+     * @param value an identifier string
+     * @param idType a DataCite controlled list identifier type
      */
-    public Identifier(final String value)
+    public Identifier(final String value, final IdentifierType idType)
     {
         this.value = value;
-        this.type = IdentifierType.DOI;
+        this.type = idType.toString();
     }
 }

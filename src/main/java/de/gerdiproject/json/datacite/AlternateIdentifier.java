@@ -32,15 +32,31 @@ import lombok.Data;
 public class AlternateIdentifier
 {
     /**
-     * A unique free text identifier. This may be any alphanumeric string
+     * -- GETTER --
+     * Retrieves the unique free text identifier. This may be any alphanumeric string
      * which is unique within its domain of issue. In XML, this is the value between the alternateIdentifier-tags.
      * <br>e.g. E‐GEOD‐34814
+     * @return a unique free text identifier
+     *
+     * -- SETTER --
+     * Sets the unique free text identifier. This may be any alphanumeric string
+     * which is unique within its domain of issue. In XML, this is the value between the alternateIdentifier-tags.
+     * <br>e.g. E‐GEOD‐34814
+     * @param value a unique free text identifier
      */
     private final String value;
 
+
     /**
-     * The free text type of the AlternateIdentifier.
+     * -- GETTER --
+     * Retrieves the free text type of the AlternateIdentifier.
      * <br>e.g. "A local accession number"
+     * @return the free text type of the AlternateIdentifier
+     *
+     * -- SETTER --
+     * Sets the free text type of the AlternateIdentifier.
+     * <br>e.g. "A local accession number"
+     * @param type the free text type of the AlternateIdentifier
      */
     @SerializedName("alternateIdentifierType")
     private final String type;

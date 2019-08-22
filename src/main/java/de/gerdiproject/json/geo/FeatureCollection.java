@@ -21,6 +21,9 @@ import lombok.Data;
 
 /**
  * This class represents a feature collection JSON object.
+ *
+ * @see <a href="https://tools.ietf.org/html/rfc7946#section-3.2">https://tools.ietf.org/html/rfc7946#section-3.2</a>
+ *
  * @author Robin Weiss
  *
  * @param <T> the type of the {@linkplain Feature} properties
@@ -28,6 +31,31 @@ import lombok.Data;
 @Data
 public class FeatureCollection <T>
 {
+    /**
+     * -- GETTER --
+     * Retrieves a {@linkplain List} of {@linkplain Feature}s.
+     * It is possible for this list to be empty.
+     *
+     * @return a {@linkplain List} of {@linkplain Feature}s.
+     *
+     * -- SETTER --
+     * Sets a {@linkplain List} of {@linkplain Feature}s.
+     * It is possible for this list to be empty.
+     * @param features the {@linkplain List} of {@linkplain Feature}s.
+     */
     private List<Feature<T>> features;
+
+
+    /**
+     * -- GETTER --
+     * Retrieves the type of the feature collection, which should
+     * always be "FeatureCollection".
+     * @return the type of the feature collection
+     *
+     * -- SETTER --
+     * Sets the type of the feature collection, which should
+     * always be "FeatureCollection".
+     * @param type the type of the feature collection
+     */
     private String type;
 }

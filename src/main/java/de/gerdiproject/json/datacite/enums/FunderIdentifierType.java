@@ -47,5 +47,10 @@ public enum FunderIdentifierType {
     /**
      * An identifier type that does not fit into any other category.
      */
-    Other
+    Other,
+
+    /**
+     * TODO wait for official documentation: https://schema.datacite.org/meta/kernel-4.3/doc/DataCite-MetadataKernel_v4.3.pdf
+     */
+    ROR
 }

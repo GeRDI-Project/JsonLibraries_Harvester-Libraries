@@ -177,5 +177,15 @@ public enum RelationType {
     /**
      * Indicates A requires B.
      */
-    Requires
+    Requires,
+
+    /**
+     * Indicates A replaces B.
+     */
+    IsObsoletedBy,
+
+    /**
+     * Indicates A is replaced by B.
+     */
+    Obsoletes
 }

@@ -35,8 +35,13 @@ import lombok.ToString;
 public class Date extends AbstractDate
 {
     /**
-     *  The date value.
-     *  In XML, this is the value between the date-tags.
+     * -- GETTER --
+     * Retrieves the {@linkplain Instant} at which the date takes place.
+     * @return the {@linkplain Instant} at which the date takes place
+     *
+     * -- SETTER --
+     * Sets the {@linkplain Instant} at which the date takes place.
+     * @param value the {@linkplain Instant} at which the date takes place
      */
     private Instant value;
 

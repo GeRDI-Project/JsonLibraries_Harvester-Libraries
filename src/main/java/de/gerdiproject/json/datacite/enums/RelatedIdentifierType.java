@@ -127,5 +127,10 @@ public enum RelatedIdentifierType {
      * is a unique and persistent identifier of an electronic document. The syntax is: urn:&lt;NID&gt;:&lt;NSS&gt;
      * the leading urn:sequence is case-insensitive, &lt;NID&gt; is the namespace identifier, &lt;NSS&gt; is the namespace-specific string.
      */
-    URN
+    URN,
+
+    /**
+     * Permanent identifier for Web applications. Mostly used to publish vocabularies and ontologies. The letters ‘w3’ stand for “World Wide Web”.
+     */
+    w3id
 }

@@ -39,25 +39,95 @@ import lombok.RequiredArgsConstructor;
 public class Rights implements ICleanable
 {
     /**
-     * Free text that describes the rights.
-     * In XML, this is the value between the rights-tags.
+     * -- GETTER --
+     * Retrieves the free text that describes the rights.
      * <br>e.g. Creative Commons, Attribution 3.0 Germany
+     * @return free text that describes the rights
+     *
+     * -- SETTER --
+     * Sets the free text that describes the rights.
+     * <br>e.g. Creative Commons, Attribution 3.0 Germany
+     * @param value free text that describes the rights
      */
     @NonNull
     private String value;
 
+
     /**
-     * An optional IETF language tag of the text.
+     * -- GETTER --
+     * Retrieves the IETF language tag of the text.
      * <br>e.g. de, en-US
+     * @return the IETF language tag of the text
+     *
+     * -- SETTER --
+     * Sets the IETF language tag of the text.
+     * <br>e.g. de, en-US
+     * @param lang the IETF language tag of the text
      */
     private String lang;
 
+
     /**
-     * The URI of the license.
+     * -- GETTER --
+     * Retrieves the URI of the license.
      * <br>e.g. http://creativecommons.org/licenses/by/3.0/de/deed.en
+     * @return the URI of the license.
+     *
+     * -- SETTER --
+     * Sets the URI of the license.
+     * <br>e.g. http://creativecommons.org/licenses/by/3.0/de/deed.en
+     * @param uri the URI of the license.
      */
     @SerializedName("rightsURI")
     private String uri;
+
+
+    /**
+     * -- GETTER --
+     * Retrieves the short, standardized version of the license name.
+     * <br>e.g. CC-BY-3.0
+     * <br><br>
+     * It’s suggested to use the identifiers from the SPDX licence list (https://spdx.org/licenses/).
+     * @return a short, standardized version of the license name
+     *
+     * -- SETTER --
+     * Sets the short, standardized version of the license name.
+     * <br>e.g. CC-BY-3.0
+     * <br><br>
+     * It’s suggested to use the identifiers from the SPDX licence list (https://spdx.org/licenses/).
+     * @param identifier short, standardized version of the license name
+     */
+    @SerializedName("rightsIdentifier")
+    private String identifier;
+
+
+    /**
+     * -- GETTER --
+     * Retrieves the name of the scheme.
+     * <br>e.g. SPDX
+     * @return the name of the scheme
+     *
+     * -- SETTER --
+     * Sets the name of the scheme.
+     * <br>e.g. SPDX
+     * @param identifierScheme the name of the scheme
+     */
+    @SerializedName("rightsIdentifierScheme")
+    private String identifierScheme;
+
+
+    /**
+     * -- GETTER --
+     * Retrieves the URI of the rightsIdentifierScheme.
+     * <br>e.g. https://spdx.org/licenses/
+     * @return the URI of the rightsIdentifierScheme
+     *
+     * -- SETTER --
+     * Sets the URI of the rightsIdentifierScheme.
+     * <br>e.g. https://spdx.org/licenses/
+     * @param schemeURI the URI of the rightsIdentifierScheme
+     */
+    private String schemeURI;
 
 
     /**

@@ -33,15 +33,29 @@ import lombok.Data;
 public abstract class AbstractDate implements ICleanable
 {
     /**
-     * The event that is marked by this date.
+     * -- GETTER --
+     * Retrieves the event that is marked by this date.
+     * @return the event that is marked by this date
+     *
+     * -- SETTER --
+     * Sets the event that is marked by this date.
+     * @param type the event that is marked by this date
      */
     @SerializedName("dateType")
     private final DateType type;
 
+
     /**
-     * Specific free text information about the date, if appropriate.
+     * -- GETTER --
+     * Retrieves specific free text information about the date.
+     * @return specific free text information about the date
+     *
+     * -- SETTER --
+     * Sets specific free text information about the date, if appropriate.
+     * @param information specific free text information about the date
      */
-    private String dateInformation;
+    @SerializedName("dateInformation")
+    private String information;
 
 
     /**

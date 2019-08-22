@@ -26,18 +26,41 @@ import lombok.Data;
 public class SoepConcept
 {
     /**
-     * Concept name: how social scientists refer to the concept
+     * -- GETTER --
+     * Retrieves the name of the concept, i.e. how social scientist
+     * refer to it.
+     * @return the name of the concept
+     *
+     * -- SETTER --
+     * Sets the name of the concept, i.e. how social scientist
+     * refer to it.
+     * @param name the name of the concept
      */
     private final String name;
 
+
     /**
-     * Concept description
+     * -- GETTER --
+     * Retrieves a description of the concept.
+     * @return the description of the concept
+     *
+     * -- SETTER --
+     * Sets the description of the concept.
+     * @param label a description of the concept
      */
     private final String label;
 
+
     /**
-     *  Concept label language
-     *  <br>e.g. de, en, etc.
+     * -- GETTER --
+     * Retrieves the concept label language.
+     * <br>e.g. de, en-US
+     * @return the concept label language
+     *
+     * -- SETTER --
+     * Sets the concept label language.
+     * <br>e.g. de, en-US
+     * @param lang the concept label language
      */
-    private final String language;
+    private final String lang;
 }

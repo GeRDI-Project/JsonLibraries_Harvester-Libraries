@@ -18,6 +18,8 @@ package de.gerdiproject.json.geo;
 /**
  * An interface for objects that represent coordinates of a {@linkplain GeoJson} object.
  *
+ * @see <a href="https://tools.ietf.org/html/rfc7946#section-3.2">https://tools.ietf.org/html/rfc7946#section-3.2</a>
+ *
  * @author Robin Weiss
  */
 public interface IGeoCoordinates

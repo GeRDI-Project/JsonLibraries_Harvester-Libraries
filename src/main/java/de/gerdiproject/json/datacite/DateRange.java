@@ -35,14 +35,24 @@ import lombok.ToString;
 public class DateRange extends AbstractDate
 {
     /**
-     *  The date at which the range starts.
-     *  In XML, this is the value between the date-tags, before the slash.
+     * -- GETTER --
+     * Retrieves the {@linkplain Instant} at which the date range starts.
+     * @return the {@linkplain Instant} at which the date range starts
+     *
+     * -- SETTER --
+     * Sets the {@linkplain Instant} at which the date range starts.
+     * @param since the {@linkplain Instant} at which the date range starts
      */
     private Instant since;
 
     /**
-     *  The date at which the range ends.
-     *  In XML, this is the value between the date-tags, after the slash.
+     * -- GETTER --
+     * Retrieves the {@linkplain Instant} at which the date range ends.
+     * @return the {@linkplain Instant} at which the date range ends
+     *
+     * -- SETTER --
+     * Sets the {@linkplain Instant} at which the date range ends.
+     * @param until the {@linkplain Instant} at which the date range ends
      */
     private Instant until;
 

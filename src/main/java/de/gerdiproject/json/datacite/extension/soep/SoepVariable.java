@@ -35,16 +35,39 @@ import lombok.RequiredArgsConstructor;
 @Data
 public class SoepVariable
 {
+    /**
+     * -- GETTER --
+     * Retrieves the name of the variable.
+     * @return the name of the variable
+     *
+     * -- SETTER --
+     * Sets the name of the variable.
+     * @param name the name of the variable
+     */
     @SerializedName("variableName")
     private final String name;
 
+
     /**
-     * The study source for the variable
+     * -- GETTER --
+     * Retrieves the study source for the variable.
+     * @return the study source for the variable
+     *
+     * -- SETTER --
+     * Sets the study source for the variable.
+     * @param source the study source for the variable
      */
     private final String source;
 
+
     /**
-     * The concepts that describe the variable
+     * -- GETTER --
+     * Retrieves the concepts that describe the variable.
+     * @return the concepts that describe the variable
+     *
+     * -- SETTER --
+     * Sets the concepts that describe the variable.
+     * @param concepts the concepts that describe the variable
      */
     private Set<SoepConcept> concepts;
 
