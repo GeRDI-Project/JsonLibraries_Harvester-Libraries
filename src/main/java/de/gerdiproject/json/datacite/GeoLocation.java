@@ -162,8 +162,8 @@ public class GeoLocation implements ICleanable
 
 
     /**
-     * Cleans the geo location point and
-     * sets it to null if it becomes invalid.
+     * Sets the geo location point to null,
+     * if it is not valid.
      */
     private void cleanPoint()
     {
@@ -187,15 +187,13 @@ public class GeoLocation implements ICleanable
             i--;
             Polygon poly = polygons.get(i);
 
-            if (poly == null)
-                polygons.remove(i);
-            else {
+            if (poly != null) {
                 poly = (Polygon) GeometryCleaner.validate(poly);
                 polygons.set(i, poly);
-
-                if (!poly.isValid())
-                    polygons.remove(i);
             }
+
+            if (poly == null)
+                polygons.remove(i);
         }
 
         if (polygons.isEmpty())
@@ -213,9 +211,6 @@ public class GeoLocation implements ICleanable
             return;
 
         this.box = (Polygon) GeometryCleaner.validate(this.box);
-
-        if (!box.isValid())
-            box = null;
     }
 
 
