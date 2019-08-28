@@ -19,6 +19,7 @@ import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
 import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
@@ -94,7 +95,7 @@ public class GeoLocation implements ICleanable
      * @param polygons the list of drawn polygon areas
      */
     @SerializedName("geoLocationPolygon")
-    private List<Polygon> polygons;
+    private List<Geometry> polygons;
 
 
     /**
@@ -185,10 +186,10 @@ public class GeoLocation implements ICleanable
 
         while (i != 0) {
             i--;
-            Polygon poly = polygons.get(i);
+            Geometry poly = polygons.get(i);
 
             if (poly != null) {
-                poly = (Polygon) GeometryCleaner.validate(poly);
+                poly = GeometryCleaner.validate(poly);
                 polygons.set(i, poly);
             }
 
