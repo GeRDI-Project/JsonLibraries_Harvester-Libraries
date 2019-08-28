@@ -74,7 +74,7 @@ public final class GsonUtils
     public static GsonBuilder createGeoJsonGsonBuilder()
     {
         return new GsonBuilder()
-                .registerTypeAdapterFactory(new JtsAdapterFactory())
-                .registerTypeAdapterFactory(new GeometryAdapterFactory());
+               .registerTypeAdapterFactory(new JtsAdapterFactory())
+               .registerTypeAdapterFactory(new GeometryAdapterFactory());
     }
 }

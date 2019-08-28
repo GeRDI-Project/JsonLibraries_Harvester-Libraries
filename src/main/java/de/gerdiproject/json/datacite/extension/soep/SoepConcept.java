@@ -15,8 +15,6 @@
  */
 package de.gerdiproject.json.datacite.extension.soep;
 
-import com.google.gson.annotations.SerializedName;
-
 import lombok.Data;
 
 /**

@@ -28,116 +28,134 @@ import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.operation.polygonize.Polygonizer;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 /**
+ * This helper class fixes invalid {@linkplain Geometry} objects by splitting up self-intersections.
+ *
  *
  * @see <a href="https://stackoverflow.com/questions/31473553/is-there-a-way-to-convert-a-self-intersecting-polygon-to-a-multipolygon-in-jts">StackOverflow</a>
  * @author https://stackoverflow.com/users/470062/tofarr
  *
  */
-@RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class GeometryCleaner
 {
     /**
-     * Get / create a valid version of the geometry given. If the geometry is a polygon or multi polygon, self intersections /
-     * inconsistencies are fixed. Otherwise the geometry is returned.
+     * Creates a valid representation of a specified {@linkplain Geometry} object.
+     * If the {@linkplain Geometry} is a {@linkplain Polygon} or {@linkplain MultiPolygon},
+     * self intersections and other inconsistencies are fixed.
+     * Otherwise the {@linkplain Geometry} is returned as is.
      *
-     * @param geom TODO
-     * @return a geometry
+     * @param geo a possibly invalid {@linkplain Geometry} object
+     * @return a valid {@linkplain Geometry} object
      */
-    @SuppressWarnings("unchecked") // polygonizer.getPolygons() returns the correct types
-    public Geometry validate(Geometry geom)
+    public static Geometry validate(final Geometry geo)
     {
-        if (geom instanceof Polygon) {
-            if (geom.isValid()) {
-                geom.normalize(); // validate does not pick up rings in the wrong order - this will fix that
-                return geom; // If the polygon is valid just return it
-            }
+        final Geometry validGeo;
 
-            Polygonizer polygonizer = new Polygonizer();
-            addPolygon((Polygon)geom, polygonizer);
-            return toPolygonGeometry(polygonizer.getPolygons());
+        if (geo instanceof Polygon || geo instanceof MultiPolygon) {
 
-        } else if (geom instanceof MultiPolygon) {
-            if (geom.isValid()) {
-                geom.normalize(); // validate does not pick up rings in the wrong order - this will fix that
-                return geom; // If the multipolygon is valid just return it
-            }
+            // normalize valid polygons in order to fix wrongly ordered rings
+            if (geo.isValid())
+                validGeo = geo.norm();
+            else
+                validGeo = validatePolygon(geo);
 
-            Polygonizer polygonizer = new Polygonizer();
+        } else // disregard non-polygonial Geometries
+            validGeo = geo;
 
-            for (int n = geom.getNumGeometries(); n-- > 0;)
-                addPolygon((Polygon)geom.getGeometryN(n), polygonizer);
-
-            return toPolygonGeometry(polygonizer.getPolygons());
-        } else
-            return geom; // In my case, I only care about polygon / multipolygon geometries
+        return validGeo;
     }
 
-    
-    /**
-     * Add all line strings from the polygon given to the polygonizer given
-     *
-     * @param polygon polygon from which to extract line strings
-     * @param polygonizer polygonizer
-     */
-    private void addPolygon(Polygon polygon, Polygonizer polygonizer)
-    {
-        addLineString(polygon.getExteriorRing(), polygonizer);
 
-        for (int n = polygon.getNumInteriorRing(); n-- > 0;)
-            addLineString(polygon.getInteriorRingN(n), polygonizer);
+    /**
+     * Creates a valid representation of a specified {@linkplain Polygon} or {@linkplain MultiPolygon},
+     * fixing self intersections and other inconsistencies.
+     * @param geo a possibly invalid {@linkplain Polygon} or {@linkplain MultiPolygon}
+     *
+     * @return a validated {@linkplain Geometry} object
+     */
+    private static Geometry validatePolygon(final Geometry geo)
+    {
+        final Polygonizer polygonizer = new Polygonizer();
+
+        final int polygonCount = geo.getNumGeometries();
+
+        for (int i = 0; i < polygonCount; i++) {
+            final Polygon polygon = (Polygon)geo.getGeometryN(i);
+
+            final Geometry exteriorShape = validateLineString(polygon.getExteriorRing());
+            polygonizer.add(exteriorShape);
+
+            final int shapeCount = polygon.getNumInteriorRing();
+
+            for (int j = 0; j < shapeCount; j++) {
+                final Geometry interiorShape = validateLineString(polygon.getInteriorRingN(j));
+                polygonizer.add(interiorShape);
+            }
+        }
+
+        return createValidPolygon(polygonizer);
     }
 
-    
+
     /**
-     * Add the linestring given to the polygonizer
+     * Validates a {@linkplain LineString}, adding self-intersections as
+     * explicit points.
      *
-     * @param linestring line string
-     * @param polygonizer polygonizer
+     * @param lineString the {@linkplain LineString} that is to be validated
+     *
+     * @return a validated {@linkplain LineString}
      */
-    private void addLineString(LineString lineString, Polygonizer polygonizer)
+    private static Geometry validateLineString(final LineString lineString)
     {
         final GeometryFactory factory = lineString.getFactory();
-        
-        // LinearRings are treated differently to line strings : we need a LineString NOT a LinearRing
-        if (lineString instanceof LinearRing) 
-            lineString = factory.createLineString(lineString.getCoordinateSequence());
 
-        // unioning the linestring with the point makes any self intersections explicit.
-        final Point point = factory.createPoint(lineString.getCoordinateN(0));
-        final Geometry toAdd = lineString.union(point);
+        // convert LinearRing to LineString
+        final LineString realLineString;
 
-        //Add result to polygonizer
-        polygonizer.add(toAdd);
+        if (lineString instanceof LinearRing)
+            realLineString = factory.createLineString(lineString.getCoordinateSequence());
+        else
+            realLineString = lineString;
+
+        // unioning the LineString with its first point makes self-intersections explicit
+        final Point point = factory.createPoint(realLineString.getCoordinateN(0));
+        return realLineString.union(point);
     }
-    
+
 
     /**
-     * Get a geometry from a collection of polygons.
+     * Retrieves {@linkplain Polygon} geometry from a {@linkplain Polygonizer},
+     * fixing potentially overlapping shapes.
      *
-     * @param polygons collection
-     * @return null if there were no polygons, the polygon if there was only one, or a MultiPolygon containing all polygons otherwise
+     * @param polygonizer a {@linkplain Polygonizer} that contains a
+     *         {@linkplain Collection} of validated {@linkplain Polygons}
+     *
+     * @return a validated {@linkplain Polygon} or {@linkplain MultiPolygon} defined by
+     *          the specified {@linkplain Polygonizer}, or null if there are no polygons
      */
-    private Geometry toPolygonGeometry(Collection<Polygon> polygons)
+    @SuppressWarnings("unchecked") // polygonizer.getPolygons() returns the correct types
+    private static Geometry createValidPolygon(final Polygonizer polygonizer)
     {
-        switch (polygons.size()) {
-            case 0:
-                return null; // No valid polygons!
+        final Collection<Polygon> polygons = polygonizer.getPolygons();
+        Geometry polygonGeo;
 
-            case 1:
-                return polygons.iterator().next(); // single polygon - no need to wrap
+        // check if polygon is invalid
+        if (polygons.isEmpty())
+            polygonGeo = null;
 
-            default:
-                //polygons may still overlap! Need to sym difference them
-                Iterator<Polygon> iter = polygons.iterator();
-                Geometry ret = iter.next();
+        // fix multiple overlapping polygon shapes using sym difference
+        else {
+            final Iterator<Polygon> iter = polygons.iterator();
+            polygonGeo = iter.next();
 
-                while (iter.hasNext())
-                    ret = ret.symDifference(iter.next());
-
-                return ret;
+            while (iter.hasNext())
+                polygonGeo = polygonGeo.symDifference(iter.next());
         }
+
+        return polygonGeo;
     }
 }

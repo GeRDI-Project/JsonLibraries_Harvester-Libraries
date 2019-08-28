@@ -18,11 +18,13 @@ package de.gerdiproject.json.datacite;
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
+import com.vividsolutions.jts.geom.Coordinate;
+import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
 import de.gerdiproject.harvest.ICleanable;
-import de.gerdiproject.json.geo.utils.GeoJsonUtils;
+import de.gerdiproject.json.geo.utils.GeometryCleaner;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -38,6 +40,8 @@ import lombok.NoArgsConstructor;
 @Data @NoArgsConstructor
 public class GeoLocation implements ICleanable
 {
+    private final static GeometryFactory FACTORY = new GeometryFactory();
+
     /**
      * -- GETTER --
      * Retrieves the free text description of the geographic location.
@@ -119,18 +123,26 @@ public class GeoLocation implements ICleanable
         final double northBoundLatitude
     )
     {
-        // TODO
-        this.box = new GeoJsonUtils().createBox(
-            westBoundLongitude,
-            eastBoundLongitude,
-            southBoundLatitude,
-            northBoundLatitude);
+        final Coordinate[] coordinates = {
+            new Coordinate(westBoundLongitude, northBoundLatitude),
+            new Coordinate(eastBoundLongitude, northBoundLatitude),
+            new Coordinate(eastBoundLongitude, southBoundLatitude),
+            new Coordinate(westBoundLongitude, southBoundLatitude),
+            new Coordinate(westBoundLongitude, northBoundLatitude)
+        };
+        this.box = FACTORY.createPolygon(coordinates);
     }
 
+
+    /**
+     * Changes the point location in space.
+     *
+     * @param longitude a geographic coordinate that specifies the east-west position of a point on the Earth's surface
+     * @param latitude a geographic coordinate that specifies the north–south position of a point on the Earth's surface
+     */
     public void setPoint(final double longitude, final double latitude)
     {
-        // TODO
-        this.point = new GeoJsonUtils().createPoint(longitude, latitude);
+        this.point = FACTORY.createPoint(new Coordinate(longitude, latitude));
     }
 
 
@@ -155,12 +167,7 @@ public class GeoLocation implements ICleanable
      */
     private void cleanPoint()
     {
-        if (point == null)
-            return;
-
-        // TODO point.clean();
-
-        if (!point.isValid())
+        if (point != null && !point.isValid())
             point = null;
     }
 
@@ -178,14 +185,15 @@ public class GeoLocation implements ICleanable
 
         while (i != 0) {
             i--;
-            final Polygon geo = polygons.get(i);
+            Polygon poly = polygons.get(i);
 
-            if (geo == null)
+            if (poly == null)
                 polygons.remove(i);
             else {
-                // TODO geo.clean();
+                poly = (Polygon) GeometryCleaner.validate(poly);
+                polygons.set(i, poly);
 
-                if (!geo.isValid())
+                if (!poly.isValid())
                     polygons.remove(i);
             }
         }
@@ -204,17 +212,18 @@ public class GeoLocation implements ICleanable
         if (box == null)
             return;
 
-        // TODO box.clean();
+        this.box = (Polygon) GeometryCleaner.validate(this.box);
 
-        //if (!box.isValid())
-        //    box = null;
+        if (!box.isValid())
+            box = null;
     }
 
 
     /**
-     * Returns true if the GeoLocation has any geographical data.
+     * Returns true if the GeoLocation has any geographical data
+     * or at least a textual description.
      *
-     * @return true, if the GeoLocation has any geographical data
+     * @return true, if the GeoLocation has any data
      */
     public boolean isValid()
     {
