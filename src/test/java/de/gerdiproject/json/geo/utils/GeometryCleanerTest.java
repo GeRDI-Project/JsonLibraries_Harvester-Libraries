@@ -19,6 +19,8 @@ package de.gerdiproject.json.geo.utils;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.IOException;
+
 import org.junit.Assume;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,6 +33,7 @@ import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Polygon;
 
 import de.gerdiproject.json.GsonUtils;
+import de.gerdiproject.json.geo.utils.GeometryCleanerTestConstants.GeometryTestVO;
 
 /**
  * This class provides test cases for the {@linkplain GeometryCleaner} class.
@@ -47,67 +50,25 @@ public class GeometryCleanerTest
 
     final Gson gson = GsonUtils.createGeoJsonGsonBuilder().create();
 
-    private static final String POINT_JSON = "{\"coordinates\": [123.456, 789],"
-                                             + "  \"type\": \"Point\"}";
 
-    private static final String POLY_JSON = "{"
-                                            + "\"coordinates\": [[[1,1],[1,4],[4,4],[4,1],[1,1]]],"
-                                            + "\"type\": \"Polygon\"}";
-
-    private static final String INVALID_POLY_JSON1 = "{"
-                                                     + "\"coordinates\": [[[1,1],[4,4],[1,4],[4,1],[1,1]]],"
-                                                     + "\"type\": \"Polygon\"}";
+    private final GeometryTestVO testData;
 
 
-    private static final String INVALID_POLY_JSON2 = "{"
-                                                     + "\"coordinates\": [[[1,1],[3,4],[3,1],[1,4],[4,2],[1,1]]],"
-                                                     + "\"type\": \"Polygon\"}";
-
-
-    private static final String INVALID_POLY_JSON3 = "{"
-                                                     + "\"coordinates\": [[[0,0],[2,0],[2,3],[3,3],[1,2],[0,2],[0,0]]],"
-                                                     + "\"type\": \"Polygon\"}";
-
-    private static final String INVALID_POLY_JSON4 = "{"
-                                                     + "\"coordinates\": [[[0,0],[0,2],[-2,2],[0,2],[0,3],[3,3],[3,0],[0,0]]],"
-                                                     + "\"type\": \"Polygon\"}";
-
-
-    private static final String INVALID_MULTI_POLY_JSON = "{"
-                                                          + "\"coordinates\": ["
-                                                          + "[[[0,0],[0,2],[-2,2],[0,2],[0,3],[3,3],[3,0],[0,0]]],"
-                                                          + "[[[1,1],[4,4],[1,4],[4,1],[1,1]]]"
-                                                          + "],"
-                                                          + "\"type\": \"MultiPolygon\"}";
-
-    private final String inputJson;
-    private final boolean isValid;
-
-
-    @Parameters(name = "geometry: {0}, isValid: {1}")
-    public static Object[][] getParameters()
+    @Parameters(name = "{0}")
+    public static Object[] getParameters() throws IOException
     {
-        return new Object[][] {
-            {POINT_JSON, true},
-            {POLY_JSON, true},
-            {INVALID_POLY_JSON1, false},
-            {INVALID_POLY_JSON2, false},
-            {INVALID_POLY_JSON3, false},
-            {INVALID_POLY_JSON4, false},
-            {INVALID_MULTI_POLY_JSON, false}
-        };
+        return GeometryCleanerTestConstants.TEST_CASES;
     }
 
 
     /**
      * Constructor that adds a GeoJson String as a parameter.
      *
-     * @param inputJson a GeoJson String
+     * @param testData test data related to testing the geometry cleaning
      */
-    public GeometryCleanerTest(String inputJson, boolean isValid)
+    public GeometryCleanerTest(GeometryTestVO testData)
     {
-        this.inputJson = inputJson;
-        this.isValid = isValid;
+        this.testData = testData;
     }
 
 
@@ -118,12 +79,10 @@ public class GeometryCleanerTest
     @Test
     public void testIsValidInput()
     {
-        final Geometry inputGeo = gson.fromJson(inputJson, Geometry.class);
-
         assertEquals(
             "The method GeometryCleaner.validate() should return valid Geometry; ",
-            isValid,
-            inputGeo.isValid());
+            testData.isInputValid,
+            testData.inputGeometry.isValid());
     }
 
 
@@ -133,8 +92,7 @@ public class GeometryCleanerTest
     @Test
     public void testValidate()
     {
-        final Geometry invalidGeo = gson.fromJson(inputJson, Geometry.class);
-        final Geometry fixedGeo = GeometryCleaner.validate(invalidGeo);
+        final Geometry fixedGeo = GeometryCleaner.validate(testData.inputGeometry);
 
         assertTrue(
             "The method GeometryCleaner.validate() should return valid Geometry; ",
@@ -150,11 +108,10 @@ public class GeometryCleanerTest
     @Test
     public void testValidatedPolygonType()
     {
-        final Geometry invalidGeo = gson.fromJson(inputJson, Geometry.class);
-        Assume.assumeTrue(String.format(SKIP_NON_POLY_TESTS_MESSAGE, invalidGeo.getClass().getSimpleName()),
-                          invalidGeo instanceof Polygon || invalidGeo instanceof MultiPolygon);
+        Assume.assumeTrue(String.format(SKIP_NON_POLY_TESTS_MESSAGE, testData.inputGeometry.getClass().getSimpleName()),
+                          testData.inputGeometry instanceof Polygon || testData.inputGeometry instanceof MultiPolygon);
 
-        final Geometry fixedGeo = GeometryCleaner.validate(invalidGeo);
+        final Geometry fixedGeo = GeometryCleaner.validate(testData.inputGeometry);
 
         assertTrue("The method GeometryCleaner.validate() should return a (Multi-)Polygon if the input is a (Multi-)Polygon; ",
                    fixedGeo instanceof Polygon || fixedGeo instanceof MultiPolygon);
@@ -168,14 +125,30 @@ public class GeometryCleanerTest
     @Test
     public void testValidatedNonPolygons()
     {
-        final Geometry invalidGeo = gson.fromJson(inputJson, Geometry.class);
-        Assume.assumeFalse(String.format(SKIP_POLY_TESTS_MESSAGE, invalidGeo.getClass().getSimpleName()),
-                           invalidGeo instanceof Polygon || invalidGeo instanceof MultiPolygon);
+        Assume.assumeFalse(String.format(SKIP_POLY_TESTS_MESSAGE, testData.inputGeometry.getClass().getSimpleName()),
+                           testData.inputGeometry instanceof Polygon || testData.inputGeometry instanceof MultiPolygon);
 
-        final Geometry fixedGeo = GeometryCleaner.validate(invalidGeo);
+        final Geometry fixedGeo = GeometryCleaner.validate(testData.inputGeometry);
 
         assertEquals("The method GeometryCleaner.validate() should return the object reference if the input is not a (Multi-)Polygon; ",
-                     invalidGeo,
+                     testData.inputGeometry,
                      fixedGeo);
+    }
+
+    /**
+     * Tests if {@linkplain GeometryCleaner#validate(Geometry)} results in the expected shape.
+     */
+    @Test
+    public void testValidatedShape()
+    {
+        final Geometry fixedGeo = GeometryCleaner.validate(testData.inputGeometry);
+
+//        System.out.println("\n" + testData.name);
+//        System.out.println(" FIXED: "+ GsonUtils.createGeoJsonGsonBuilder().create().toJson(fixedGeo));
+//        System.out.println(" EXPCT: "+ GsonUtils.createGeoJsonGsonBuilder().create().toJson(testData.outputGeometry));
+//        System.out.println(" IS_SAME: "+ fixedGeo.symDifference(testData.outputGeometry).isEmpty());
+
+        assertTrue("The method GeometryCleaner.validate() returned an unexpected shape; ",
+                   fixedGeo.symDifference(testData.outputGeometry).isEmpty());
     }
 }

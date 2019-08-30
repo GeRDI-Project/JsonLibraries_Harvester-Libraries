@@ -16,10 +16,11 @@
  */
 package de.gerdiproject.json.geo.utils;
 
-import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.LinearRing;
@@ -33,10 +34,11 @@ import lombok.NoArgsConstructor;
 
 /**
  * This helper class fixes invalid {@linkplain Geometry} objects by splitting up self-intersections.
- *
+ * It is based on a solution offered in a StackOverflow thread.
  *
  * @see <a href="https://stackoverflow.com/questions/31473553/is-there-a-way-to-convert-a-self-intersecting-polygon-to-a-multipolygon-in-jts">StackOverflow</a>
  * @author https://stackoverflow.com/users/470062/tofarr
+ * @author Robin Weiss
  *
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -79,25 +81,28 @@ public class GeometryCleaner
      */
     private static Geometry validatePolygon(final Geometry geo)
     {
-        final Polygonizer polygonizer = new Polygonizer();
+        Geometry mergedPoly = null;
 
         final int polygonCount = geo.getNumGeometries();
 
         for (int i = 0; i < polygonCount; i++) {
             final Polygon polygon = (Polygon)geo.getGeometryN(i);
 
-            final Geometry exteriorShape = validateLineString(polygon.getExteriorRing());
-            polygonizer.add(exteriorShape);
+            Geometry poly = createValidPolygon(polygon.getExteriorRing());
+            final int holeCount = polygon.getNumInteriorRing();
 
-            final int shapeCount = polygon.getNumInteriorRing();
-
-            for (int j = 0; j < shapeCount; j++) {
-                final Geometry interiorShape = validateLineString(polygon.getInteriorRingN(j));
-                polygonizer.add(interiorShape);
+            for (int j = 0; j < holeCount; j++) {
+                final Geometry hole = createValidPolygon(polygon.getInteriorRingN(j));
+                poly = poly.symDifference(poly.intersection(hole));
             }
+
+            if (mergedPoly == null)
+                mergedPoly = poly;
+            else
+                mergedPoly = mergedPoly.union(poly);
         }
 
-        return createValidPolygon(polygonizer);
+        return mergedPoly;
     }
 
 
@@ -128,19 +133,21 @@ public class GeometryCleaner
 
 
     /**
-     * Retrieves {@linkplain Polygon} geometry from a {@linkplain Polygonizer},
-     * fixing potentially overlapping shapes.
+     * Creates a {@linkplain Polygon} or {@linkplain MultiPolygon} geometry from a specified
+     * {@linkplain LineString}, fixing potentially overlapping shapes and self-intersections.
      *
-     * @param polygonizer a {@linkplain Polygonizer} that contains a
-     *         {@linkplain Collection} of validated {@linkplain Polygons}
+     * @param lineString a {@linkplain LineString} part of a {@linkplain Polygon}
      *
      * @return a validated {@linkplain Polygon} or {@linkplain MultiPolygon} defined by
      *          the specified {@linkplain Polygonizer}, or null if there are no polygons
      */
-    @SuppressWarnings("unchecked") // polygonizer.getPolygons() returns the correct types
-    private static Geometry createValidPolygon(final Polygonizer polygonizer)
+    @SuppressWarnings("unchecked")
+    private static Geometry createValidPolygon(final LineString lineString)
     {
-        final Collection<Polygon> polygons = polygonizer.getPolygons();
+        final Polygonizer polygonizer = new Polygonizer();
+        polygonizer.add(validateLineString(lineString));
+
+        final List<Polygon> polygons = (List<Polygon>)polygonizer.getPolygons();
         Geometry polygonGeo;
 
         // check if polygon is invalid
@@ -152,8 +159,25 @@ public class GeometryCleaner
             final Iterator<Polygon> iter = polygons.iterator();
             polygonGeo = iter.next();
 
-            while (iter.hasNext())
-                polygonGeo = polygonGeo.symDifference(iter.next());
+            while (iter.hasNext()) {
+
+                final Polygon hole = iter.next();
+                polygonGeo = polygonGeo.symDifference(hole);
+
+                // edge case: remove dangling lines and/or points
+                if (polygonGeo instanceof GeometryCollection && !(polygonGeo instanceof MultiPolygon)) {
+                    final int len = polygonGeo.getNumGeometries();
+
+                    for (int i = 0; i < len; i++) {
+                        final Geometry innerGeo = polygonGeo.getGeometryN(i);
+
+                        if (innerGeo instanceof Polygon || innerGeo instanceof MultiPolygon) {
+                            polygonGeo = innerGeo;
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         return polygonGeo;
