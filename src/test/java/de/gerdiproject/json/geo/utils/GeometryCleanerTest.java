@@ -143,11 +143,6 @@ public class GeometryCleanerTest
     {
         final Geometry fixedGeo = GeometryCleaner.validate(testData.inputGeometry);
 
-//        System.out.println("\n" + testData.name);
-//        System.out.println(" FIXED: "+ GsonUtils.createGeoJsonGsonBuilder().create().toJson(fixedGeo));
-//        System.out.println(" EXPCT: "+ GsonUtils.createGeoJsonGsonBuilder().create().toJson(testData.outputGeometry));
-//        System.out.println(" IS_SAME: "+ fixedGeo.symDifference(testData.outputGeometry).isEmpty());
-
         assertTrue("The method GeometryCleaner.validate() returned an unexpected shape; ",
                    fixedGeo.symDifference(testData.outputGeometry).isEmpty());
     }
