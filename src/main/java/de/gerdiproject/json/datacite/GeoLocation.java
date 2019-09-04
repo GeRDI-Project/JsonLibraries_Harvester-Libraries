@@ -155,7 +155,7 @@ public class GeoLocation implements ICleanable
      */
     public void setBox(final Geometry geometry)
     {
-        this.box = (Polygon) geometry.getEnvelope().convexHull();
+        this.box = geometry == null ? null : (Polygon) geometry.getEnvelope().convexHull();
     }
 
 
@@ -180,6 +180,9 @@ public class GeoLocation implements ICleanable
      */
     public void addPolygons(final Collection<Geometry> geoList)
     {
+        if(geoList == null)
+            return;
+        
         final Iterator<Geometry> iter = geoList.iterator();
 
         final List<Polygon> polyList = new LinkedList<>();
