@@ -43,24 +43,46 @@ public class Affiliation
     private final String value;
 
 
-    // TODO wait for official documentation: https://schema.datacite.org/meta/kernel-4.3/doc/DataCite-MetadataKernel_v4.3.pdf
+    /**
+     * -- GETTER --
+     * Retrieves a unique identifier of the organizational affiliation.
+     * <br>e.g. https://ror.org/04aj4c181
+     * @return a unique identifier of the organizational affiliation
+     *
+     * -- SETTER --
+     * Sets a unique identifier of the organizational affiliation.
+     * <br>e.g. https://ror.org/04aj4c181
+     * @param identifier a unique identifier of the organizational affiliation
+     */
     @SerializedName("affiliationIdentifier")
     private String identifier;
 
 
-    // TODO wait for official documentation: https://schema.datacite.org/meta/kernel-4.3/doc/DataCite-MetadataKernel_v4.3.pdf
+    /**
+     * -- GETTER --
+     * Retrieves the name of the affiliation identifier schema.
+     * <br>e.g. ROR
+     * @return the name of the affiliation identifier schema
+     *
+     * -- SETTER --
+     * Sets the name of the affiliation identifier schema.
+     * <br>e.g. ROR
+     * @param identifierScheme the name of the affiliation identifier schema
+     */
     @SerializedName("affiliationIdentifierScheme")
     private String identifierScheme;
 
 
     /**
      * -- GETTER --
-     * Retrieves the scheme URI of the affiliationIdentifierScheme.
-     * @return the scheme URI of the affiliationIdentifierScheme
+     * Retrieves the scheme URI of the affiliation identifier schema.
+     * <br>e.g. https://ror.org/
+     * @return the scheme URI of the affiliation identifier schema
      *
      * -- SETTER --
-     * Sets the scheme URI of the affiliationIdentifierScheme.
-     * @param schemeURI the scheme URI of the affiliationIdentifierScheme
+     * Sets the scheme URI of the affiliation identifier schema.
+     * <br>e.g. https://ror.org/
+     * @param schemeURI the scheme URI of the affiliation identifier schema
      */
     private String schemeURI;
 }

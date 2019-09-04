@@ -19,6 +19,6 @@ package de.gerdiproject.generator.research.utils;
  * A set of classes that model the hierarchical DFG vocabulary used to typify the research disciplines of data sets
  * harvested in GeRDI.
  *
- * @see http://www.dfg.de/en/dfg_profile/statutory_bodies/review_boards/subject_areas/index.jsp
+ * @see <a href="http://www.dfg.de/en/dfg_profile/statutory_bodies/review_boards/subject_areas/index.jsp">http://www.dfg.de/en/dfg_profile/statutory_bodies/review_boards/subject_areas/index.jsp</a>
  * @author Fidan Limani
  */

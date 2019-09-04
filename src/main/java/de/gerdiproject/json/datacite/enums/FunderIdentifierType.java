@@ -26,21 +26,21 @@ public enum FunderIdentifierType {
     /**
      * International Standard Name Identifier;
      * the globally recognized and adopted international standard approved by ISO for the unique identification of the public identities of persons and organizations across all fields of creative activity.
-     * see http://www.isni.org/
+     * @see <a href="http://www.isni.org/">http://www.isni.org/</a>
      */
     ISNI,
 
     /**
      * Global Research Identifier Database ID;
      * GRID is comprised of a worldwide collection of institutes associated with academic research. The institutes contained are distinguished by a unique identifier, the GRID ID.
-     * see https://www.grid.ac/
+     * @see <a href="https://www.grid.ac/">https://www.grid.ac/</a>
      */
     GRID,
 
     /**
      * Crossref is a not-for-profit membership organization for scholarly publishing working to make content easy to find, cite, link, and assess.
      * Funder IDs can be found in the Crossref Funder Registry.
-     * see https://www.crossref.org/services/funder-registry/
+     *  @see <a href="https://www.crossref.org/services/funder-registry/">https://www.crossref.org/services/funder-registry/</a>
      */
     Crossref_Funder_ID,
 
@@ -50,7 +50,8 @@ public enum FunderIdentifierType {
     Other,
 
     /**
-     * TODO wait for official documentation: https://schema.datacite.org/meta/kernel-4.3/doc/DataCite-MetadataKernel_v4.3.pdf
+     * ROR is a community-led project to develop an open, sustainable, usable, and unique identifier for every research organization in the world.
+     * @see <a href="https://ror.org/">https://ror.org/</a>
      */
     ROR
 }

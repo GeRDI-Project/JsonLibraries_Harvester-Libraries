@@ -180,9 +180,9 @@ public class GeoLocation implements ICleanable
      */
     public void addPolygons(final Collection<Geometry> geoList)
     {
-        if(geoList == null)
+        if (geoList == null)
             return;
-        
+
         final Iterator<Geometry> iter = geoList.iterator();
 
         final List<Polygon> polyList = new LinkedList<>();
