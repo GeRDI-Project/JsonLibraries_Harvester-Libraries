@@ -44,20 +44,31 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class GeometryCleaner
 {
+    private final static String POLYGON_TYPE = Polygon.class.getSimpleName();
+    private final static String MULTI_POLYGON_TYPE = MultiPolygon.class.getSimpleName();
+    private final static String GEOMETRY_COLLECTION_TYPE = GeometryCollection.class.getSimpleName();
+
     /**
      * Creates a valid representation of a specified {@linkplain Geometry} object.
      * If the {@linkplain Geometry} is a {@linkplain Polygon} or {@linkplain MultiPolygon},
      * self intersections and other inconsistencies are fixed.
      * Otherwise the {@linkplain Geometry} is returned as is.
      *
+     * @see <a href="https://tools.ietf.org/html/rfc7946#section-3.2">https://tools.ietf.org/html/rfc7946#section-3.2</a>
+     *
      * @param geo a possibly invalid {@linkplain Geometry} object
      * @return a valid {@linkplain Geometry} object
      */
     public static Geometry validate(final Geometry geo)
     {
+        if (geo == null)
+            return null;
+
         final Geometry validGeo;
 
-        if (geo instanceof Polygon || geo instanceof MultiPolygon) {
+        final String geoType = geo.getGeometryType();
+
+        if (geoType.equalsIgnoreCase(POLYGON_TYPE) || geoType.equalsIgnoreCase(MULTI_POLYGON_TYPE)) {
 
             // normalize valid polygons in order to fix wrongly ordered rings
             if (geo.isValid())
@@ -165,13 +176,14 @@ public class GeometryCleaner
                 polygonGeo = polygonGeo.symDifference(hole);
 
                 // edge case: remove dangling lines and/or points
-                if (polygonGeo instanceof GeometryCollection && !(polygonGeo instanceof MultiPolygon)) {
+                if (polygonGeo.getGeometryType().equalsIgnoreCase(GEOMETRY_COLLECTION_TYPE)) {
                     final int len = polygonGeo.getNumGeometries();
 
                     for (int i = 0; i < len; i++) {
                         final Geometry innerGeo = polygonGeo.getGeometryN(i);
+                        final String innerGeoType = innerGeo.getGeometryType();
 
-                        if (innerGeo instanceof Polygon || innerGeo instanceof MultiPolygon) {
+                        if (innerGeoType.equalsIgnoreCase(POLYGON_TYPE) || innerGeoType.equalsIgnoreCase(MULTI_POLYGON_TYPE)) {
                             polygonGeo = innerGeo;
                             break;
                         }

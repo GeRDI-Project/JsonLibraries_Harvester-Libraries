@@ -15,19 +15,28 @@
  */
 package de.gerdiproject.json.datacite;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import com.google.gson.annotations.SerializedName;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 
 import de.gerdiproject.harvest.ICleanable;
+import de.gerdiproject.harvest.utils.CollectionUtils;
 import de.gerdiproject.json.geo.utils.GeometryCleaner;
+import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 /**
  * Spatial region or named place where the data was gathered or about which the data is focused.
@@ -42,6 +51,8 @@ import lombok.NoArgsConstructor;
 public class GeoLocation implements ICleanable
 {
     private final static GeometryFactory FACTORY = new GeometryFactory();
+    private final static String POLYGON_TYPE = Polygon.class.getSimpleName();
+    private final static String MULTI_POLYGON_TYPE = MultiPolygon.class.getSimpleName();
 
     /**
      * -- GETTER --
@@ -80,6 +91,7 @@ public class GeoLocation implements ICleanable
      * @param box the spatial limits of a box
      */
     @SerializedName("geoLocationBox")
+    @Setter(AccessLevel.NONE)
     private Polygon box;
 
 
@@ -95,7 +107,8 @@ public class GeoLocation implements ICleanable
      * @param polygons the list of drawn polygon areas
      */
     @SerializedName("geoLocationPolygon")
-    private List<Geometry> polygons;
+    @Setter(AccessLevel.NONE)
+    private Set<Polygon> polygons;
 
 
     /**
@@ -136,6 +149,17 @@ public class GeoLocation implements ICleanable
 
 
     /**
+     * Changes the spatial limits of a box, defining its shape.
+     *
+     * @param geometry a GeoJson object, the bounding box of which becomes the box
+     */
+    public void setBox(final Geometry geometry)
+    {
+        this.box = (Polygon) geometry.getEnvelope().convexHull();
+    }
+
+
+    /**
      * Changes the point location in space.
      *
      * @param longitude a geographic coordinate that specifies the east-west position of a point on the Earth's surface
@@ -144,6 +168,34 @@ public class GeoLocation implements ICleanable
     public void setPoint(final double longitude, final double latitude)
     {
         this.point = FACTORY.createPoint(new Coordinate(longitude, latitude));
+    }
+
+
+    /**
+     * Adds a {@linkplain Collection} of {@linkplain Geometry} objects to the {@linkplain List}
+     * of {@linkplain Polygon}s. {@linkplain MultiPolygon}s are split up into {@linkplain Polygon}s
+     * in order to be DataCite compliant.
+     *
+     * @param geoList a collection of {@linkplain Polygon}s and {@linkplain MultiPolygon}s
+     */
+    public void addPolygons(final Collection<Geometry> geoList)
+    {
+        final Iterator<Geometry> iter = geoList.iterator();
+
+        final List<Polygon> polyList = new LinkedList<>();
+
+        while (iter.hasNext()) {
+            final Geometry geo = iter.next();
+            final String geoType = geo.getGeometryType();
+
+            if (geoType.equalsIgnoreCase(POLYGON_TYPE))
+                polyList.add((Polygon)geo);
+
+            else if (geoType.equalsIgnoreCase(MULTI_POLYGON_TYPE))
+                polyList.addAll(multiPolygonToPolygonList((MultiPolygon)geo));
+        }
+
+        this.polygons = CollectionUtils.addToSet(this.polygons, polyList);
     }
 
 
@@ -182,23 +234,12 @@ public class GeoLocation implements ICleanable
         if (polygons == null)
             return;
 
-        int i = polygons.size();
+        final Set<Polygon> cleanedPolys = new HashSet<>();
 
-        while (i != 0) {
-            i--;
-            Geometry poly = polygons.get(i);
+        for (final Polygon poly : polygons)
+            cleanedPolys.add((Polygon) GeometryCleaner.validate(poly));
 
-            if (poly != null) {
-                poly = GeometryCleaner.validate(poly);
-                polygons.set(i, poly);
-            }
-
-            if (poly == null)
-                polygons.remove(i);
-        }
-
-        if (polygons.isEmpty())
-            polygons = null;
+        this.polygons = CollectionUtils.addToSet(null, cleanedPolys);
     }
 
 
@@ -208,10 +249,22 @@ public class GeoLocation implements ICleanable
      */
     private void cleanBox()
     {
-        if (box == null)
+        if (this.box == null)
             return;
 
-        this.box = (Polygon) GeometryCleaner.validate(this.box);
+        Polygon newBoxValue = null;
+
+        if (this.box.isRectangle()) {
+            final Coordinate[] boxCoordinates = this.box.getCoordinates();
+            final Coordinate cornerCoordinate1 = boxCoordinates[1];
+            final Coordinate cornerCoordinate2 = boxCoordinates[2];
+
+            // check if the box is not empty
+            if (!cornerCoordinate1.equals(cornerCoordinate2))
+                newBoxValue = (Polygon) GeometryCleaner.validate(this.box);
+        }
+
+        this.box = newBoxValue;
     }
 
 
@@ -225,5 +278,27 @@ public class GeoLocation implements ICleanable
     {
         return place != null || box != null || polygons != null && !polygons
                .isEmpty() || point != null;
+    }
+
+
+    /**
+     * Converts a {@linkplain MultiPolygon} to a {@linkplain List} of {@linkplain Polygon}s.
+     *
+     * @param multiPolygon the {@linkplain MultiPolygon} of which the {@linkplain Polygon}s are to be extracted
+     *
+     * @return a {@linkplain List} of {@linkplain Polygon}s
+     */
+    private static List<Polygon> multiPolygonToPolygonList(final MultiPolygon multiPolygon)
+    {
+        final List<Polygon> list = new LinkedList<>();
+
+        if (multiPolygon != null) {
+            final int len = multiPolygon.getNumGeometries();
+
+            for (int i = 0; i < len; i++)
+                list.add((Polygon)multiPolygon.getGeometryN(i));
+        }
+
+        return list;
     }
 }
