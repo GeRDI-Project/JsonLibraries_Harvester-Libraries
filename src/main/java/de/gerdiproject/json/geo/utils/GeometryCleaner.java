@@ -48,16 +48,17 @@ public class GeometryCleaner
     private final static String MULTI_POLYGON_TYPE = MultiPolygon.class.getSimpleName();
     private final static String GEOMETRY_COLLECTION_TYPE = GeometryCollection.class.getSimpleName();
 
+
     /**
      * Creates a valid representation of a specified {@linkplain Geometry} object.
      * If the {@linkplain Geometry} is a {@linkplain Polygon} or {@linkplain MultiPolygon},
      * self intersections and other inconsistencies are fixed.
      * Otherwise the {@linkplain Geometry} is returned as is.
-     *
      * @see <a href="https://tools.ietf.org/html/rfc7946#section-3.2">https://tools.ietf.org/html/rfc7946#section-3.2</a>
      *
      * @param geo a possibly invalid {@linkplain Geometry} object
-     * @return a valid {@linkplain Geometry} object
+     *
+     * @return a valid {@linkplain Geometry} object, or null if the object became empty or was null in the beginning
      */
     public static Geometry validate(final Geometry geo)
     {
@@ -65,11 +66,9 @@ public class GeometryCleaner
             return null;
 
         final Geometry validGeo;
-
         final String geoType = geo.getGeometryType();
 
         if (geoType.equalsIgnoreCase(POLYGON_TYPE) || geoType.equalsIgnoreCase(MULTI_POLYGON_TYPE)) {
-
             // normalize valid polygons in order to fix wrongly ordered rings
             if (geo.isValid())
                 validGeo = geo.norm();
