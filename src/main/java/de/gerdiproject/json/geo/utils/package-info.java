@@ -1,5 +1,5 @@
 /*
- *  Copyright © 2018 Robin Weiss (http://www.gerdi-project.de/)
+ *  Copyright © 2019 Robin Weiss (http://www.gerdi-project.de/)
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,20 +14,8 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package de.gerdiproject.json.geo.constants;
-
-import de.gerdiproject.json.geo.GeoJson;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-
 /**
- * This class contains constants used by {@linkplain GeoJson} objects.
- *
  * @author Robin Weiss
+ *
  */
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class GeoJsonConstants
-{
-    public static final String INVALID_GEOJSON_ERROR = "Invalid GeoJson:%n%s";
-    public static final String INVALID_TYPE = "Invalid";
-}
+package de.gerdiproject.json.geo.utils;

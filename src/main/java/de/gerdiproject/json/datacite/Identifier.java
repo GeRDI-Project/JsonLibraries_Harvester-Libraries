@@ -18,6 +18,7 @@ package de.gerdiproject.json.datacite;
 import com.google.gson.annotations.SerializedName;
 
 import de.gerdiproject.json.datacite.enums.IdentifierType;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
@@ -31,7 +32,7 @@ import lombok.RequiredArgsConstructor;
  * Source: https://schema.datacite.org/meta/kernel-4.1/doc/DataCite-MetadataKernel_v4.1.pdf
  * @author Mathis Neumann, Robin Weiss
  */
-@Data @RequiredArgsConstructor
+@Data @AllArgsConstructor @RequiredArgsConstructor
 public class Identifier
 {
     /**
@@ -58,7 +59,7 @@ public class Identifier
      * @param type the type of the identifier
      */
     @SerializedName("identifierType")
-    private final String type;
+    private String type;
 
 
     /**
@@ -71,6 +72,26 @@ public class Identifier
     public Identifier(final String value, final IdentifierType idType)
     {
         this.value = value;
+        setType(idType);
+    }
+
+
+    /**
+     * Sets the type of the identifier.
+     * @param idType the type of the identifier
+     */
+    public void setType(final String idType)
+    {
+        this.type = idType;
+    }
+
+
+    /**
+     * Sets the type of the identifier.
+     * @param idType the type of the identifier
+     */
+    public void setType(final IdentifierType idType)
+    {
         this.type = idType.toString();
     }
 }

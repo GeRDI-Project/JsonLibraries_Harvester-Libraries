@@ -57,11 +57,13 @@ public class FunderIdentifier
 
     /**
      * -- GETTER --
-     * Retrieves the scheme URI of the {@linkplain FunderIdentifierType}.
+     * Retrieves the URI of the funder identifier schema.
+     * <br> e.g. https://www.crossref.org/services/funder-registry/
      * @return the scheme URI of the {@linkplain FunderIdentifierType}
      *
      * -- SETTER --
-     * Sets the scheme URI of the {@linkplain FunderIdentifierType}.
+     * Sets the URI of the funder identifier schema.
+     * <br> e.g. https://www.crossref.org/services/funder-registry/
      * @param schemeURI the scheme URI of the {@linkplain FunderIdentifierType}
      */
     private String schemeURI;

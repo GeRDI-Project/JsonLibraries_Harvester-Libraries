@@ -15,6 +15,8 @@
  */
 package de.gerdiproject.json.geo;
 
+import com.vividsolutions.jts.geom.Geometry;
+
 import lombok.Data;
 
 /**
@@ -35,13 +37,13 @@ public class Feature<T>
     /**
      * -- GETTER --
      * The geometry object of the feature.
-     * @return the {@linkplain GeoJson} geometry or null if the feature is unlocated
+     * @return the {@linkplain Geometry} geometry or null if the feature is unlocated
      *
      * -- SETTER --
      * Sets the geometry object of the feature.
-     * @param geometry a {@linkplain GeoJson} geometry or null if the feature is unlocated
+     * @param geometry a {@linkplain Geometry} geometry or null if the feature is unlocated
      */
-    private GeoJson geometry;
+    private Geometry geometry;
 
 
     /**
