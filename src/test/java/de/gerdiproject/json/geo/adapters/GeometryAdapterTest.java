@@ -42,8 +42,6 @@ import lombok.Value;
 @RunWith(Parameterized.class)
 public class GeometryAdapterTest
 {
-    private static final String GEOJSON_FORMAT = "{\"type\":\"%s\", \"coordinates\":%s}";
-
     private final TestVO testVo;
 
     @Parameters(name = "{0}")
@@ -60,7 +58,6 @@ public class GeometryAdapterTest
     }
 
 
-
     /**
      * Constructor that adds a GeoJson String as a parameter.
      *
@@ -72,6 +69,9 @@ public class GeometryAdapterTest
     }
 
 
+    /**
+     * Tests if the geometry type of a deserialized object is as expected.
+     */
     @Test
     public void testDeserializedType()
     {
@@ -86,6 +86,10 @@ public class GeometryAdapterTest
     }
 
 
+    /**
+     * Tests if {@linkplain Geometry} that is deserialized and then serialized again is equal
+     * to the original JSON String.
+     */
     @Test
     public void testSerializedString()
     {
@@ -101,6 +105,10 @@ public class GeometryAdapterTest
     }
 
 
+    /**
+     * Tests if a serialized {@linkplain Geometry} with a specified precision only contains
+     * coordinates with the expected number of decimal places.
+     */
     @Test
     public void testSerializedPrecision()
     {
@@ -130,15 +138,25 @@ public class GeometryAdapterTest
     @Value
     private static class TestVO
     {
+        private static final String GEOJSON_FORMAT = "{\"type\":\"%s\", \"coordinates\":%s}";
+
         private final String geometryType;
         private final String json;
 
 
+        /**
+         * Constructor that requires the name of the {@linkplain Geometry}, as well
+         * as its JSON representation.
+         *
+         * @param geometryType the {@linkplain Geometry} type
+         * @param coordinates a JSON array String of coordinates
+         */
         public TestVO(final String geometryType, final String coordinates)
         {
             this.geometryType = geometryType;
             this.json = String.format(GEOJSON_FORMAT, geometryType, coordinates).replaceAll("\\s", "");
         }
+
 
         @Override
         public String toString()

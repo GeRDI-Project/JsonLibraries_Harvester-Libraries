@@ -29,7 +29,6 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
-import com.vividsolutions.jts.geom.PrecisionModel;
 
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.utils.CollectionUtils;
@@ -52,7 +51,7 @@ import lombok.Setter;
 @Data @NoArgsConstructor
 public class GeoLocation implements ICleanable
 {
-    private final static GeometryFactory FACTORY = new GeometryFactory(new PrecisionModel(1000));
+    private final static GeometryFactory FACTORY = new GeometryFactory();
 
     /**
      * -- GETTER --

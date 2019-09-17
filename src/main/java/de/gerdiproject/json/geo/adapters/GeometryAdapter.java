@@ -120,7 +120,6 @@ public class GeometryAdapter <T extends Geometry> implements JsonSerializer<T>
     }
 
 
-
     /**
      * Converts a single {@linkplain Coordinate} to a {@linkplain JsonArray}.
      *
@@ -132,6 +131,7 @@ public class GeometryAdapter <T extends Geometry> implements JsonSerializer<T>
     {
         final JsonArray jsonArray = new JsonArray();
 
+        // check if coordinates must be rounded or not
         if (decimalFactor == Double.POSITIVE_INFINITY) {
             jsonArray.add(coordinate.x);
             jsonArray.add(coordinate.y);
