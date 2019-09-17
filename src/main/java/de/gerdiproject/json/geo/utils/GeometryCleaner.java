@@ -20,7 +20,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryCollection;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.LinearRing;
@@ -29,6 +28,7 @@ import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.operation.polygonize.Polygonizer;
 
+import de.gerdiproject.json.geo.constants.GeometryConstants;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -44,9 +44,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class GeometryCleaner
 {
-    private final static String POLYGON_TYPE = Polygon.class.getSimpleName();
-    private final static String MULTI_POLYGON_TYPE = MultiPolygon.class.getSimpleName();
-    private final static String GEOMETRY_COLLECTION_TYPE = GeometryCollection.class.getSimpleName();
 
 
     /**
@@ -68,7 +65,7 @@ public class GeometryCleaner
         final Geometry validGeo;
         final String geoType = geo.getGeometryType();
 
-        if (geoType.equalsIgnoreCase(POLYGON_TYPE) || geoType.equalsIgnoreCase(MULTI_POLYGON_TYPE)) {
+        if (geoType.equalsIgnoreCase(GeometryConstants.POLYGON_TYPE) || geoType.equalsIgnoreCase(GeometryConstants.MULTI_POLYGON_TYPE)) {
             // normalize valid polygons in order to fix wrongly ordered rings
             if (geo.isValid())
                 validGeo = geo.norm();
@@ -175,14 +172,14 @@ public class GeometryCleaner
                 polygonGeo = polygonGeo.symDifference(hole);
 
                 // edge case: remove dangling lines and/or points
-                if (polygonGeo.getGeometryType().equalsIgnoreCase(GEOMETRY_COLLECTION_TYPE)) {
+                if (polygonGeo.getGeometryType().equalsIgnoreCase(GeometryConstants.GEOMETRY_COLLECTION_TYPE)) {
                     final int len = polygonGeo.getNumGeometries();
 
                     for (int i = 0; i < len; i++) {
                         final Geometry innerGeo = polygonGeo.getGeometryN(i);
                         final String innerGeoType = innerGeo.getGeometryType();
 
-                        if (innerGeoType.equalsIgnoreCase(POLYGON_TYPE) || innerGeoType.equalsIgnoreCase(MULTI_POLYGON_TYPE)) {
+                        if (innerGeoType.equalsIgnoreCase(GeometryConstants.POLYGON_TYPE) || innerGeoType.equalsIgnoreCase(GeometryConstants.MULTI_POLYGON_TYPE)) {
                             polygonGeo = innerGeo;
                             break;
                         }

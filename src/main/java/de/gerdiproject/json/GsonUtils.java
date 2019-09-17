@@ -19,7 +19,16 @@ package de.gerdiproject.json;
 import com.github.filosganga.geogson.gson.GeometryAdapterFactory;
 import com.github.filosganga.geogson.jts.JtsAdapterFactory;
 import com.google.gson.GsonBuilder;
+import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.GeometryFactory;
+import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.MultiLineString;
+import com.vividsolutions.jts.geom.MultiPoint;
+import com.vividsolutions.jts.geom.MultiPolygon;
+import com.vividsolutions.jts.geom.Point;
+import com.vividsolutions.jts.geom.Polygon;
+import com.vividsolutions.jts.geom.PrecisionModel;
 
 import de.gerdiproject.json.datacite.Date;
 import de.gerdiproject.json.datacite.DateRange;
@@ -33,6 +42,8 @@ import de.gerdiproject.json.datacite.extension.generic.ResearchArea;
 import de.gerdiproject.json.datacite.extension.generic.ResearchDiscipline;
 import de.gerdiproject.json.datacite.extension.generic.adapter.ResearchAdapter;
 import de.gerdiproject.json.datacite.extension.soep.SoepDataCiteExtension;
+import de.gerdiproject.json.geo.adapters.GeometryAdapter;
+import de.gerdiproject.json.geo.constants.GeometryConstants;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -54,7 +65,59 @@ public final class GsonUtils
      */
     public static GsonBuilder createGerdiDocumentGsonBuilder()
     {
-        return createGeoJsonGsonBuilder()
+        return createGerdiDocumentGsonBuilder(createGeoJsonGsonBuilder());
+    }
+
+
+    /**
+     * Creates a GsonBuilder that is able to (de-) serialize JSON objects of the
+     * GeRDI metadata schema.
+     *
+     * @param geoDecimalPlaces the number of decimal places of GeoJson {@linkplain Coordinate}s
+     *
+     * @return a GsonBuilder that is able to (de-) serialize JSON objects of the
+     * GeRDI metadata schema
+     */
+    public static GsonBuilder createGerdiDocumentGsonBuilder(final int geoDecimalPlaces)
+    {
+        return createGerdiDocumentGsonBuilder(createGeoJsonGsonBuilder(geoDecimalPlaces));
+    }
+
+
+    /**
+     * Creates a GsonBuilder that is able to (de-) serialize {@linkplain Geometry} objects with
+     * an unbounded precision.
+     *
+     * @return a GsonBuilder that is able to (de-) serialize {@linkplain Geometry} objects
+     */
+    public static GsonBuilder createGeoJsonGsonBuilder()
+    {
+        return createGeoJsonGsonBuilder(new JtsAdapterFactory());
+    }
+
+
+    /**
+     * Creates a GsonBuilder that is able to (de-) serialize {@linkplain Geometry} objects
+     * with a specified number of decimal places.
+     *
+     * @param decimalPlaces the number of decimal places of GeoJson {@linkplain Coordinate}s
+     *
+     * @return a GsonBuilder that is able to (de-) serialize {@linkplain Geometry} objects
+     */
+    public static GsonBuilder createGeoJsonGsonBuilder(final int decimalPlaces)
+    {
+        if (decimalPlaces <= 0)
+            throw new IllegalArgumentException(GeometryConstants.INVALID_DECIMALS_ERROR);
+
+        final double precision = Math.pow(10.0, decimalPlaces - 1);
+        return createGeoJsonGsonBuilder(
+                   new JtsAdapterFactory(new GeometryFactory(new PrecisionModel(precision))));
+    }
+
+
+    private static GsonBuilder createGerdiDocumentGsonBuilder(final GsonBuilder geoJsonBuilder)
+    {
+        return geoJsonBuilder
                .registerTypeAdapter(AbstractDate.class, new DateAdapter())
                .registerTypeAdapter(DateRange.class, new DateAdapter())
                .registerTypeAdapter(Date.class, new DateAdapter())
@@ -66,15 +129,25 @@ public final class GsonUtils
     }
 
 
-    /**
-     * Creates a GsonBuilder that is able to (de-) serialize {@linkplain Geometry} objects.
-     *
-     * @return a GsonBuilder that is able to (de-) serialize {@linkplain Geometry} objects
-     */
-    public static GsonBuilder createGeoJsonGsonBuilder()
+    private static GsonBuilder createGeoJsonGsonBuilder(final JtsAdapterFactory jtsAdapterFactory)
     {
+        // get the factor that determines the decimal places of serialized GeoJson objects
+        final PrecisionModel precisionModel = jtsAdapterFactory.getGeometryFactory().getPrecisionModel();
+        final double decimalFactor;
+
+        if (precisionModel.getType() == PrecisionModel.FIXED)
+            decimalFactor = precisionModel.getScale() * 10.0;
+        else
+            decimalFactor = Double.POSITIVE_INFINITY;
+
         return new GsonBuilder()
-               .registerTypeAdapterFactory(new JtsAdapterFactory())
-               .registerTypeAdapterFactory(new GeometryAdapterFactory());
+               .registerTypeAdapterFactory(jtsAdapterFactory)
+               .registerTypeAdapterFactory(new GeometryAdapterFactory())
+               .registerTypeAdapter(Point.class, new GeometryAdapter<Point>(decimalFactor))
+               .registerTypeAdapter(MultiPoint.class, new GeometryAdapter<MultiPoint>(decimalFactor))
+               .registerTypeAdapter(LineString.class, new GeometryAdapter<LineString>(decimalFactor))
+               .registerTypeAdapter(MultiLineString.class, new GeometryAdapter<MultiLineString>(decimalFactor))
+               .registerTypeAdapter(Polygon.class, new GeometryAdapter<Polygon>(decimalFactor))
+               .registerTypeAdapter(MultiPolygon.class, new GeometryAdapter<MultiPolygon>(decimalFactor));
     }
 }

@@ -29,9 +29,11 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
+import com.vividsolutions.jts.geom.PrecisionModel;
 
 import de.gerdiproject.harvest.ICleanable;
 import de.gerdiproject.harvest.utils.CollectionUtils;
+import de.gerdiproject.json.geo.constants.GeometryConstants;
 import de.gerdiproject.json.geo.utils.GeometryCleaner;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -50,9 +52,7 @@ import lombok.Setter;
 @Data @NoArgsConstructor
 public class GeoLocation implements ICleanable
 {
-    private final static GeometryFactory FACTORY = new GeometryFactory();
-    private final static String POLYGON_TYPE = Polygon.class.getSimpleName();
-    private final static String MULTI_POLYGON_TYPE = MultiPolygon.class.getSimpleName();
+    private final static GeometryFactory FACTORY = new GeometryFactory(new PrecisionModel(1000));
 
     /**
      * -- GETTER --
@@ -191,10 +191,10 @@ public class GeoLocation implements ICleanable
             final Geometry geo = iter.next();
             final String geoType = geo.getGeometryType();
 
-            if (geoType.equalsIgnoreCase(POLYGON_TYPE))
+            if (geoType.equalsIgnoreCase(GeometryConstants.POLYGON_TYPE))
                 polyList.add((Polygon)geo);
 
-            else if (geoType.equalsIgnoreCase(MULTI_POLYGON_TYPE))
+            else if (geoType.equalsIgnoreCase(GeometryConstants.MULTI_POLYGON_TYPE))
                 polyList.addAll(multiPolygonToPolygonList((MultiPolygon)geo));
         }
 
