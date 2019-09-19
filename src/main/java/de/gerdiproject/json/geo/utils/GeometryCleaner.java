@@ -19,6 +19,10 @@ package de.gerdiproject.json.geo.utils;
 import java.util.Iterator;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.gson.Gson;
 import com.vividsolutions.jts.geom.Geometry;
 import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
@@ -26,8 +30,10 @@ import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.MultiPolygon;
 import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
+import com.vividsolutions.jts.geom.TopologyException;
 import com.vividsolutions.jts.operation.polygonize.Polygonizer;
 
+import de.gerdiproject.json.GsonUtils;
 import de.gerdiproject.json.geo.constants.GeometryConstants;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -44,7 +50,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class GeometryCleaner
 {
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(GeometryCleaner.class);
+    private static final Gson GEO_GSON = GsonUtils.createGeoJsonGsonBuilder().create();
 
     /**
      * Creates a valid representation of a specified {@linkplain Geometry} object.
@@ -62,15 +69,22 @@ public class GeometryCleaner
         if (geo == null)
             return null;
 
-        final Geometry validGeo;
+        Geometry validGeo;
         final String geoType = geo.getGeometryType();
 
         if (geoType.equalsIgnoreCase(GeometryConstants.POLYGON_TYPE) || geoType.equalsIgnoreCase(GeometryConstants.MULTI_POLYGON_TYPE)) {
             // normalize valid polygons in order to fix wrongly ordered rings
             if (geo.isValid())
                 validGeo = geo.norm();
-            else
-                validGeo = validatePolygon(geo);
+            else {
+                try {
+                    validGeo = validatePolygon(geo);
+
+                } catch (TopologyException e) {
+                    LOGGER.info(String.format(GeometryConstants.CANNOT_VALIDATE_ERROR, GEO_GSON.toJson(geo)), e);
+                    validGeo = null;
+                }
+            }
 
         } else // disregard non-polygonial Geometries
             validGeo = geo;
@@ -100,12 +114,15 @@ public class GeometryCleaner
 
             for (int j = 0; j < holeCount; j++) {
                 final Geometry hole = createValidPolygon(polygon.getInteriorRingN(j));
-                poly = poly.symDifference(poly.intersection(hole));
+
+                if (hole != null)
+                    poly = poly.symDifference(poly.intersection(hole));
             }
 
             if (mergedPoly == null)
                 mergedPoly = poly;
-            else
+
+            else if (poly != null)
                 mergedPoly = mergedPoly.union(poly);
         }
 

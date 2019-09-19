@@ -10,7 +10,7 @@
 	</parent>
 	
 	<artifactId>GSON</artifactId>
-	<version>6.0.2</version>
+	<version>6.0.3</version>
 	<packaging>jar</packaging>
 	<name>GSON</name>
 	<description>This library provides helper functions and common JSON structures using GSON.</description>
@@ -19,8 +19,7 @@
 	<properties>
 		<gson.dependency.version>2.8.5</gson.dependency.version>
 		<jsoup.dependency.version>1.11.3</jsoup.dependency.version>
-		<geogson.dependency.version>1.4.2</geogson.dependency.version>
-		<geogsonjts.dependency.version>1.4.2</geogsonjts.dependency.version>
+		<jts.dependency.version>1.13</jts.dependency.version>
 	</properties>
 
 	<profiles>
@@ -83,17 +82,12 @@
 			<version>${jsoup.dependency.version}</version>
 		</dependency>
 		
-        <dependency>
-            <groupId>com.github.filosganga</groupId>
-            <artifactId>geogson-core</artifactId>
-            <version>${geogson.dependency.version}</version>
-        </dependency>
-		
-        <dependency>
-            <groupId>com.github.filosganga</groupId>
-            <artifactId>geogson-jts</artifactId>
-            <version>${geogsonjts.dependency.version}</version>
-        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.vividsolutions/jts -->
+		<dependency>
+			<groupId>com.vividsolutions</groupId>
+			<artifactId>jts</artifactId>
+			<version>${jts.dependency.version}</version>
+		</dependency>
 	</dependencies>
 
 	<developers>

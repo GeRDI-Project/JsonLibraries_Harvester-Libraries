@@ -16,8 +16,6 @@
 package de.gerdiproject.json;
 
 
-import com.github.filosganga.geogson.gson.GeometryAdapterFactory;
-import com.github.filosganga.geogson.jts.JtsAdapterFactory;
 import com.google.gson.GsonBuilder;
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
@@ -43,6 +41,12 @@ import de.gerdiproject.json.datacite.extension.generic.ResearchDiscipline;
 import de.gerdiproject.json.datacite.extension.generic.adapter.ResearchAdapter;
 import de.gerdiproject.json.datacite.extension.soep.SoepDataCiteExtension;
 import de.gerdiproject.json.geo.adapters.GeometryAdapter;
+import de.gerdiproject.json.geo.adapters.LineStringAdapter;
+import de.gerdiproject.json.geo.adapters.MultiLineStringAdapter;
+import de.gerdiproject.json.geo.adapters.MultiPointAdapter;
+import de.gerdiproject.json.geo.adapters.MultiPolygonAdapter;
+import de.gerdiproject.json.geo.adapters.PointAdapter;
+import de.gerdiproject.json.geo.adapters.PolygonAdapter;
 import de.gerdiproject.json.geo.constants.GeometryConstants;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -92,7 +96,7 @@ public final class GsonUtils
      */
     public static GsonBuilder createGeoJsonGsonBuilder()
     {
-        return createGeoJsonGsonBuilder(new JtsAdapterFactory());
+        return createGeoJsonGsonBuilder(new GeometryFactory());
     }
 
 
@@ -110,8 +114,7 @@ public final class GsonUtils
             throw new IllegalArgumentException(GeometryConstants.INVALID_DECIMALS_ERROR);
 
         final double precision = Math.pow(10.0, decimalPlaces - 1);
-        return createGeoJsonGsonBuilder(
-                   new JtsAdapterFactory(new GeometryFactory(new PrecisionModel(precision))));
+        return createGeoJsonGsonBuilder(new GeometryFactory(new PrecisionModel(precision)));
     }
 
 
@@ -129,25 +132,15 @@ public final class GsonUtils
     }
 
 
-    private static GsonBuilder createGeoJsonGsonBuilder(final JtsAdapterFactory jtsAdapterFactory)
+    private static GsonBuilder createGeoJsonGsonBuilder(final GeometryFactory geoFactory)
     {
-        // get the factor that determines the decimal places of serialized GeoJson objects
-        final PrecisionModel precisionModel = jtsAdapterFactory.getGeometryFactory().getPrecisionModel();
-        final double decimalFactor;
-
-        if (precisionModel.getType() == PrecisionModel.FIXED)
-            decimalFactor = precisionModel.getScale() * 10.0;
-        else
-            decimalFactor = Double.POSITIVE_INFINITY;
-
         return new GsonBuilder()
-               .registerTypeAdapterFactory(jtsAdapterFactory)
-               .registerTypeAdapterFactory(new GeometryAdapterFactory())
-               .registerTypeAdapter(Point.class, new GeometryAdapter<Point>(decimalFactor))
-               .registerTypeAdapter(MultiPoint.class, new GeometryAdapter<MultiPoint>(decimalFactor))
-               .registerTypeAdapter(LineString.class, new GeometryAdapter<LineString>(decimalFactor))
-               .registerTypeAdapter(MultiLineString.class, new GeometryAdapter<MultiLineString>(decimalFactor))
-               .registerTypeAdapter(Polygon.class, new GeometryAdapter<Polygon>(decimalFactor))
-               .registerTypeAdapter(MultiPolygon.class, new GeometryAdapter<MultiPolygon>(decimalFactor));
+               .registerTypeAdapter(Geometry.class, new GeometryAdapter())
+               .registerTypeAdapter(Point.class, new PointAdapter(geoFactory))
+               .registerTypeAdapter(MultiPoint.class, new MultiPointAdapter(geoFactory))
+               .registerTypeAdapter(LineString.class, new LineStringAdapter(geoFactory))
+               .registerTypeAdapter(MultiLineString.class, new MultiLineStringAdapter(geoFactory))
+               .registerTypeAdapter(Polygon.class, new PolygonAdapter(geoFactory))
+               .registerTypeAdapter(MultiPolygon.class, new MultiPolygonAdapter(geoFactory));
     }
 }
