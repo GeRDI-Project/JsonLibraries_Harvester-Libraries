@@ -17,13 +17,6 @@
 package de.gerdiproject.json.geo.constants;
 
 import com.vividsolutions.jts.geom.Geometry;
-import com.vividsolutions.jts.geom.GeometryCollection;
-import com.vividsolutions.jts.geom.LineString;
-import com.vividsolutions.jts.geom.MultiLineString;
-import com.vividsolutions.jts.geom.MultiPoint;
-import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Point;
-import com.vividsolutions.jts.geom.Polygon;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -36,15 +29,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class GeometryConstants
 {
-    public static final String POINT_TYPE = Point.class.getSimpleName();
-    public static final String MULTI_POINT_TYPE = MultiPoint.class.getSimpleName();
-    public static final String LINE_STRING_TYPE = LineString.class.getSimpleName();
-    public static final String MULTI_LINE_STRING_TYPE = MultiLineString.class.getSimpleName();
-    public static final String POLYGON_TYPE = Polygon.class.getSimpleName();
-    public static final String MULTI_POLYGON_TYPE = MultiPolygon.class.getSimpleName();
-    public static final String GEOMETRY_COLLECTION_TYPE = GeometryCollection.class.getSimpleName();
+    public static final String POINT_TYPE = "Point";
+    public static final String MULTI_POINT_TYPE = "MultiPoint";
+    public static final String LINE_STRING_TYPE = "LineString";
+    public static final String MULTI_LINE_STRING_TYPE = "MultiLineString";
+    public static final String POLYGON_TYPE = "Polygon";
+    public static final String MULTI_POLYGON_TYPE = "MultiPolygon";
+    public static final String GEOMETRY_COLLECTION_TYPE = "GeometryCollection";
 
     public static final String TYPE_JSON_FIELD = "type";
     public static final String COORDINATES_JSON_FIELD = "coordinates";
     public static final String INVALID_DECIMALS_ERROR = "The number of decimal places must be greater than zero!";
+    public static final String CANNOT_VALIDATE_ERROR = "Could not validate Geometry, so it will not be added to the document.%n%s";
+    public static final String UNKNOWN_GEOMETRY_TYPE_ERROR = "Unknown Geometry type '%s'.";
 }

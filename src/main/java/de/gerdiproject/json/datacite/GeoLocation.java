@@ -188,6 +188,10 @@ public class GeoLocation implements ICleanable
 
         while (iter.hasNext()) {
             final Geometry geo = iter.next();
+
+            if (geo == null)
+                continue;
+
             final String geoType = geo.getGeometryType();
 
             if (geoType.equalsIgnoreCase(GeometryConstants.POLYGON_TYPE))
@@ -233,13 +237,23 @@ public class GeoLocation implements ICleanable
      */
     private void cleanPolygons()
     {
-        if (polygons == null)
+        if (this.polygons == null)
             return;
 
         final Set<Polygon> cleanedPolys = new HashSet<>();
 
-        for (final Polygon poly : polygons)
-            cleanedPolys.add((Polygon) GeometryCleaner.validate(poly));
+        for (final Polygon poly : this.polygons) {
+            final Geometry cleanedPoly = GeometryCleaner.validate(poly);
+
+            if (cleanedPoly == null)
+                continue;
+
+            else if (cleanedPoly.getGeometryType().equalsIgnoreCase(GeometryConstants.POLYGON_TYPE))
+                cleanedPolys.add((Polygon)cleanedPoly);
+
+            else if (cleanedPoly.getGeometryType().equalsIgnoreCase(GeometryConstants.MULTI_POLYGON_TYPE))
+                cleanedPolys.addAll(multiPolygonToPolygonList((MultiPolygon)cleanedPoly));
+        }
 
         this.polygons = CollectionUtils.addToSet(null, cleanedPolys);
     }
@@ -297,8 +311,12 @@ public class GeoLocation implements ICleanable
         if (multiPolygon != null) {
             final int len = multiPolygon.getNumGeometries();
 
-            for (int i = 0; i < len; i++)
-                list.add((Polygon)multiPolygon.getGeometryN(i));
+            for (int i = 0; i < len; i++) {
+                final Polygon poly = (Polygon) multiPolygon.getGeometryN(i);
+
+                if (poly != null)
+                    list.add(poly);
+            }
         }
 
         return list;
