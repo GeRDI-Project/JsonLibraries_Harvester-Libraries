@@ -28,7 +28,6 @@ import com.vividsolutions.jts.geom.GeometryFactory;
 import com.vividsolutions.jts.geom.LineString;
 import com.vividsolutions.jts.geom.LinearRing;
 import com.vividsolutions.jts.geom.MultiPolygon;
-import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.geom.TopologyException;
 import com.vividsolutions.jts.operation.polygonize.Polygonizer;
@@ -115,8 +114,12 @@ public class GeometryCleaner
             for (int j = 0; j < holeCount; j++) {
                 final Geometry hole = createValidPolygon(polygon.getInteriorRingN(j));
 
-                if (hole != null)
-                    poly = poly.symDifference(poly.intersection(hole));
+                if (hole != null) {
+                    final Geometry intersection = geometryToPolygon(poly.intersection(hole));
+
+                    if (intersection != null)
+                        poly = poly.symDifference(intersection);
+                }
             }
 
             if (mergedPoly == null)
@@ -150,9 +153,8 @@ public class GeometryCleaner
         else
             realLineString = lineString;
 
-        // unioning the LineString with its first point makes self-intersections explicit
-        final Point point = factory.createPoint(realLineString.getCoordinateN(0));
-        return realLineString.union(point);
+        // unioning the LineString makes self-intersections explicit
+        return realLineString.union();
     }
 
 
@@ -186,25 +188,49 @@ public class GeometryCleaner
             while (iter.hasNext()) {
 
                 final Polygon hole = iter.next();
-                polygonGeo = polygonGeo.symDifference(hole);
+                final Geometry mergedPoly = geometryToPolygon(polygonGeo.symDifference(hole));
 
-                // edge case: remove dangling lines and/or points
-                if (polygonGeo.getGeometryType().equalsIgnoreCase(GeometryConstants.GEOMETRY_COLLECTION_TYPE)) {
-                    final int len = polygonGeo.getNumGeometries();
-
-                    for (int i = 0; i < len; i++) {
-                        final Geometry innerGeo = polygonGeo.getGeometryN(i);
-                        final String innerGeoType = innerGeo.getGeometryType();
-
-                        if (innerGeoType.equalsIgnoreCase(GeometryConstants.POLYGON_TYPE) || innerGeoType.equalsIgnoreCase(GeometryConstants.MULTI_POLYGON_TYPE)) {
-                            polygonGeo = innerGeo;
-                            break;
-                        }
-                    }
-                }
+                if (mergedPoly != null)
+                    polygonGeo = mergedPoly;
             }
         }
 
         return polygonGeo;
+    }
+
+
+    /**
+     * Ensures that a {@linkplain Polygon} or {@linkplain MultiPolygon} is returned.
+     * If the input{@linkplain Geometry} is a collection, the first polygon within will be returned.
+     *
+     * @param geo the input {@linkplain Geometry}
+     * @return a {@linkplain Polygon}, {@linkplain MultiPolygon}, or null if the input {@linkplain Geometry} does not contain any polygons
+     */
+    private static Geometry geometryToPolygon(final Geometry geo)
+    {
+        if (geo == null)
+            return null;
+
+        Geometry poly = null;
+        String geoType = geo.getGeometryType();
+
+        if (geoType.equalsIgnoreCase(GeometryConstants.POLYGON_TYPE) || geoType.equalsIgnoreCase(GeometryConstants.MULTI_POLYGON_TYPE))
+            poly = geo;
+
+        else if (geo.getGeometryType().equalsIgnoreCase(GeometryConstants.GEOMETRY_COLLECTION_TYPE)) {
+            final int len = geo.getNumGeometries();
+
+            for (int i = 0; i < len; i++) {
+                final Geometry innerGeo = geo.getGeometryN(i);
+                geoType = innerGeo.getGeometryType();
+
+                if (geoType.equalsIgnoreCase(GeometryConstants.POLYGON_TYPE) || geoType.equalsIgnoreCase(GeometryConstants.MULTI_POLYGON_TYPE)) {
+                    poly = innerGeo;
+                    break;
+                }
+            }
+        }
+
+        return poly;
     }
 }
