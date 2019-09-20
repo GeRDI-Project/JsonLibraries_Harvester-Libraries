@@ -40,6 +40,7 @@ public class GeometryConstants
     public static final String TYPE_JSON_FIELD = "type";
     public static final String COORDINATES_JSON_FIELD = "coordinates";
     public static final String INVALID_DECIMALS_ERROR = "The number of decimal places must be greater than zero!";
-    public static final String CANNOT_VALIDATE_ERROR = "Could not validate Geometry, so it will not be added to the document.%n%s";
+    public static final String CANNOT_VALIDATE_ERROR = "Skipped GeoJson, because it cannot be validated: %s";
+    public static final String CANNOT_VALIDATE_ERROR_SHORT = "Skipped %s GeoJson, because it cannot be validated.";
     public static final String UNKNOWN_GEOMETRY_TYPE_ERROR = "Unknown Geometry type '%s'.";
 }

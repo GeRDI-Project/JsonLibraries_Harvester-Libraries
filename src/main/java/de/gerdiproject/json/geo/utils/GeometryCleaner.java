@@ -80,7 +80,13 @@ public class GeometryCleaner
                     validGeo = validatePolygon(geo);
 
                 } catch (TopologyException e) {
-                    LOGGER.info(String.format(GeometryConstants.CANNOT_VALIDATE_ERROR, GEO_GSON.toJson(geo)), e);
+                    // TopologyExceptions are an unfortunate, known issue in JTS and can happen in some cases
+                    if (LOGGER.isDebugEnabled())
+                        LOGGER.debug(String.format(GeometryConstants.CANNOT_VALIDATE_ERROR, GEO_GSON.toJson(geo)));
+
+                    else if (LOGGER.isInfoEnabled())
+                        LOGGER.info(String.format(GeometryConstants.CANNOT_VALIDATE_ERROR_SHORT, geo.getGeometryType()));
+
                     validGeo = null;
                 }
             }
