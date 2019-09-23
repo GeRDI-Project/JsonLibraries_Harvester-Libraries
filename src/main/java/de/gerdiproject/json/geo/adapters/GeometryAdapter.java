@@ -18,13 +18,18 @@ package de.gerdiproject.json.geo.adapters;
 
 import java.lang.reflect.Type;
 
-import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Geometry;
+import com.vividsolutions.jts.geom.LineString;
+import com.vividsolutions.jts.geom.MultiLineString;
+import com.vividsolutions.jts.geom.MultiPoint;
+import com.vividsolutions.jts.geom.MultiPolygon;
+import com.vividsolutions.jts.geom.Point;
 import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.geom.PrecisionModel;
 
@@ -39,113 +44,64 @@ import lombok.RequiredArgsConstructor;
  * @author Robin Weiss
  */
 @RequiredArgsConstructor
-public class GeometryAdapter <T extends Geometry> implements JsonSerializer<T>
+public class GeometryAdapter implements JsonSerializer<Geometry>, JsonDeserializer<Geometry>
 {
-    private final double decimalFactor;
+    @Override
+    public JsonElement serialize(final Geometry src, final Type typeOfSrc, final JsonSerializationContext context)
+    {
+        final String geometryType = src.getGeometryType();
+
+        switch (geometryType) {
+            case GeometryConstants.POINT_TYPE:
+                return context.serialize(src, Point.class);
+
+            case GeometryConstants.MULTI_POINT_TYPE:
+                return context.serialize(src, MultiPoint.class);
+
+            case GeometryConstants.LINE_STRING_TYPE:
+                return context.serialize(src, LineString.class);
+
+            case GeometryConstants.MULTI_LINE_STRING_TYPE:
+                return context.serialize(src, MultiLineString.class);
+
+            case GeometryConstants.POLYGON_TYPE:
+                return context.serialize(src, Polygon.class);
+
+            case GeometryConstants.MULTI_POLYGON_TYPE:
+                return context.serialize(src, MultiPolygon.class);
+
+            default:
+                throw new JsonParseException(String.format(GeometryConstants.UNKNOWN_GEOMETRY_TYPE_ERROR, geometryType));
+        }
+    }
 
 
     @Override
-    public JsonElement serialize(final T src, final Type typeOfSrc, final JsonSerializationContext context)
+    public Geometry deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException
     {
-        final  JsonObject out = new JsonObject();
-        out.addProperty(GeometryConstants.TYPE_JSON_FIELD, src.getClass().getSimpleName());
-        out.add(GeometryConstants.COORDINATES_JSON_FIELD, serializeCoordinates(src));
-        return out;
-    }
+        final String geometryType = json.getAsJsonObject().get(GeometryConstants.TYPE_JSON_FIELD).getAsString();
 
+        switch (geometryType) {
+            case GeometryConstants.POINT_TYPE:
+                return context.deserialize(json, Point.class);
 
-    /**
-     * Serializes the {@linkplain Coordinate}s of a {@linkplain Geometry} to a {@linkplain JsonArray}.
-     *
-     * @param src a {@linkplain Geometry} the {@linkplain Coordinate}s of which are to be serialized
-     *
-     * @return a {@linkplain JsonArray} of {@linkplain Coordinate}s
-     */
-    private JsonArray serializeCoordinates(final Geometry src)
-    {
-        final JsonArray out;
-        final int subGeometryCount = src.getNumGeometries();
+            case GeometryConstants.MULTI_POINT_TYPE:
+                return context.deserialize(json, MultiPoint.class);
 
-        if (subGeometryCount == 1) {
-            if (src.getGeometryType().equalsIgnoreCase(GeometryConstants.POINT_TYPE)) {
-                // handle Points that only have a single coordinate
-                out = coordinateToJsonArray(src.getCoordinate());
-            }
+            case GeometryConstants.LINE_STRING_TYPE:
+                return context.deserialize(json, LineString.class);
 
-            else if (src.getGeometryType().equalsIgnoreCase(GeometryConstants.POLYGON_TYPE)) {
-                out = new JsonArray();
+            case GeometryConstants.MULTI_LINE_STRING_TYPE:
+                return context.deserialize(json, MultiLineString.class);
 
-                // handle the hull of the Polygon
-                final Polygon srcPoly = (Polygon) src;
-                out.add(coordinatesToJsonArray(srcPoly.getExteriorRing().getCoordinates()));
+            case GeometryConstants.POLYGON_TYPE:
+                return context.deserialize(json, Polygon.class);
 
-                // handle hull holes of the Polygon
-                final int holeCount = srcPoly.getNumInteriorRing();
+            case GeometryConstants.MULTI_POLYGON_TYPE:
+                return context.deserialize(json, MultiPolygon.class);
 
-                for (int i = 0; i < holeCount; i++)
-                    out.add(coordinatesToJsonArray(srcPoly.getInteriorRingN(i).getCoordinates()));
-
-            } else {
-                // handle Geometries that have a consecutive list of coordinates
-                out = coordinatesToJsonArray(src.getCoordinates());
-            }
-
-        } else {
-            // handle composite Geometries
-            out = new JsonArray();
-
-            for (int i = 0; i < subGeometryCount; i++)
-                out.add(serializeCoordinates(src.getGeometryN(i)));
+            default:
+                throw new JsonParseException(String.format(GeometryConstants.UNKNOWN_GEOMETRY_TYPE_ERROR, geometryType));
         }
-
-        return out;
-    }
-
-
-    /**
-     * Converts an array of {@linkplain Coordinate}s to a {@linkplain JsonArray}.
-     *
-     * @param coordinates the {@linkplain Coordinate}s which are to be serialized
-     *
-     * @return a {@linkplain JsonArray} of {@linkplain Coordinate}s
-     */
-    private JsonArray coordinatesToJsonArray(final Coordinate... coordinates)
-    {
-        final JsonArray jsonArray = new JsonArray();
-
-        for (final Coordinate c : coordinates)
-            jsonArray.add(coordinateToJsonArray(c));
-
-        return jsonArray;
-    }
-
-
-    /**
-     * Converts a single {@linkplain Coordinate} to a {@linkplain JsonArray}.
-     *
-     * @param coordinate the {@linkplain Coordinate} which is to be serialized
-     *
-     * @return a {@linkplain JsonArray} that contains {@linkplain Double} values
-     */
-    private JsonArray coordinateToJsonArray(final Coordinate coordinate)
-    {
-        final JsonArray jsonArray = new JsonArray();
-
-        // check if coordinates must be rounded or not
-        if (decimalFactor == Double.POSITIVE_INFINITY) {
-            jsonArray.add(coordinate.x);
-            jsonArray.add(coordinate.y);
-
-            if (Double.isFinite(coordinate.z))
-                jsonArray.add(coordinate.z);
-        } else {
-            jsonArray.add(Math.round(coordinate.x * decimalFactor) / decimalFactor);
-            jsonArray.add(Math.round(coordinate.y * decimalFactor) / decimalFactor);
-
-            if (Double.isFinite(coordinate.z))
-                jsonArray.add(Math.round(coordinate.z * decimalFactor) / decimalFactor);
-        }
-
-        return jsonArray;
     }
 }
