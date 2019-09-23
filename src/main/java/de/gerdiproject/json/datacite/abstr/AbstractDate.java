@@ -77,7 +77,8 @@ public abstract class AbstractDate implements ICleanable
     @Override
     public boolean clean()
     {
-        // nothing to clean, but if the date value is null, the date is invalid
-        return getValue() != null;
+        // nothing to clean, but if the date value is null or empty, the date is invalid
+        final String dateString = getValue();
+        return dateString != null && dateString.length() > 2;
     }
 }
