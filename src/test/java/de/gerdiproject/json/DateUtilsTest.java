@@ -875,6 +875,36 @@ public class DateUtilsTest
 
 
     @Test
+    public void testParsingOpenDateRange1()
+    {
+        final String dateFrom = String.format(Locale.ENGLISH, DATE_FORMAT_DASH, day, month, year);
+        assertDateRangeEquals(dateFrom, "");
+    }
+
+
+    @Test
+    public void testParsingOpenDateRange2()
+    {
+        final String dateFrom = String.format(Locale.ENGLISH, DATE_FORMAT_POINT, day, month, year);
+        assertDateRangeEquals(dateFrom, "");
+    }
+
+    @Test
+    public void testParsingOpenDateRange3()
+    {
+        final String dateUntil = String.format(Locale.ENGLISH, DATE_FORMAT_DASH, day, month, year);
+        assertDateRangeEquals("", dateUntil);
+    }
+
+    @Test
+    public void testParsingOpenDateRange4()
+    {
+        final String dateUntil = String.format(Locale.ENGLISH, DATE_FORMAT_POINT, day, month, year);
+        assertDateRangeEquals("", dateUntil);
+    }
+
+
+    @Test
     public void testParsingAbstractDate()
     {
         final String dateString = String.format(Locale.ENGLISH, DATE_FORMAT_DASH, day, month, year);
@@ -963,7 +993,7 @@ public class DateUtilsTest
 
             assertArrayEquals(String.format("The method parseDateRange(%s) returned the wrong dates; ", dateRangeToParse),
                               expectedDates,
-                              DateUtils.parseDateRange(dateRangeToParse));
+                              DateRangeUtils.parseDateRange(dateRangeToParse));
         }
     }
 }
