@@ -18,6 +18,7 @@ package de.gerdiproject.json.datacite;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 
+import de.gerdiproject.json.DateRangeUtils;
 import de.gerdiproject.json.DateUtils;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.constants.DataCiteDateConstants;
@@ -131,7 +132,7 @@ public class DateRange extends AbstractDate
     @Override
     public void setValue(final String stringValue)
     {
-        final Instant[] dates = DateUtils.parseDateRange(stringValue);
+        final Instant[] dates = DateRangeUtils.parseDateRange(stringValue);
 
         if (dates == null) {
             this.since = null;

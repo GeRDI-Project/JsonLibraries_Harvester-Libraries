@@ -10,7 +10,7 @@
 	</parent>
 	
 	<artifactId>GSON</artifactId>
-	<version>6.0.4</version>
+	<version>6.0.5</version>
 	<packaging>jar</packaging>
 	<name>GSON</name>
 	<description>This library provides helper functions and common JSON structures using GSON.</description>

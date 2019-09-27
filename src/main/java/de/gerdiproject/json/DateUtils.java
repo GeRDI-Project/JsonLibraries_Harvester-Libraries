@@ -34,7 +34,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 /**
- * This utility class offers static methods for processing dates.
+ * This utility class offers static methods for processing {@linkplain Date}s.
  *
  * @author Robin Weiss
  */
@@ -52,74 +52,6 @@ public class DateUtils
     public static Instant unixTimestampToInstant(final long epochMilli)
     {
         return Instant.ofEpochMilli(epochMilli);
-    }
-
-
-    /**
-     * Parses a date range using a set of common separators defined in {@linkplain DataCiteDateConstants}.
-     *
-     * @param dateString a raw {@linkplain String} that contains a date range
-     *
-     * @return an {@linkplain Instant} array that contains the start- and end date,
-     * or null if no date range could be parsed
-     */
-    public static Instant[] parseDateRange(final String dateString)
-    {
-        Instant[] dates = null;
-
-        // check if string represents a range, using any of the common separators
-        for (final String separator : DataCiteDateConstants.DATE_RANGE_SEPARATORS) {
-            dates = parseDateRange(dateString, separator);
-
-            if (dates != null)
-                break;
-        }
-
-        return dates;
-    }
-
-
-    /**
-     * Parses a date range considering a specified separator.
-     *
-     * @param dateString a raw {@linkplain String} that contains a date range
-     * @param separator a sub-string that separates the beginning from the end date
-     *
-     * @return an {@linkplain Instant} array that contains the start- and end date,
-     * or null if no date range could be parsed
-     */
-    public static Instant[] parseDateRange(final String dateString, final String separator)
-    {
-        final Instant[] dates = new Instant[2];
-
-        // check if the string contains the separator
-        if (dateString.contains(separator)) {
-            final String[] dateRangeElements = dateString.split(separator);
-
-            // check if there is really just one separator
-            if (dateRangeElements.length == 2) {
-                dates[0] = parseDate(dateRangeElements[0]);
-                dates[1] = parseDate(dateRangeElements[1]);
-            }
-
-            // edge case: the range-separator is the same symbol as the day/month/year-separator
-            else if (dateRangeElements.length > 2 && dateRangeElements.length % 2 == 0) {
-                // determine the middle of the string for a proper separation
-                final int separatorLength = separator.length();
-                int halfLength = 0;
-                final int len = dateRangeElements.length / 2;
-
-                for (int i = 0; i < len; i++)
-                    halfLength += dateRangeElements[i].length() + separatorLength;
-
-                dates[0] = parseDate(dateString.substring(0, halfLength));
-                dates[1] = parseDate(dateString.substring(halfLength));
-
-            }
-        }
-
-        // return null if array is empty
-        return dates[0] == null && dates[1] == null ? null : dates;
     }
 
 
@@ -190,6 +122,36 @@ public class DateUtils
         return isValidDate ? date : null;
     }
 
+
+    /**
+     * @deprecated Use {@linkplain DateRangeUtils#parseDateRange(String)} instead!
+     *
+     * @param dateString a raw {@linkplain String} that contains a date range
+     *
+     * @return an {@linkplain Instant} array that contains the start- and end date,
+     * or null if no date range could be parsed
+     */
+    @Deprecated
+    public static Instant[] parseDateRange(final String dateString)
+    {
+        return DateRangeUtils.parseDateRange(dateString);
+    }
+
+
+    /**
+     * @deprecated Use {@linkplain DateRangeUtils#parseDateRange(String, String)} instead!
+     *
+     * @param dateString a raw {@linkplain String} that contains a date range
+     * @param separator a sub-string that separates the beginning from the end date
+     *
+     * @return an {@linkplain Instant} array that contains the start- and end date,
+     * or null if no date range could be parsed
+     */
+    @Deprecated
+    public static Instant[] parseDateRange(final String dateString, final String separator)
+    {
+        return DateRangeUtils.parseDateRange(dateString, separator);
+    }
 
     /**
      * Checks if a date string roughly complies to ISO-8601.
