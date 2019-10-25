@@ -17,6 +17,10 @@
 package de.gerdiproject.json.geo.adapters;
 
 import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import java.util.function.BiFunction;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -34,7 +38,6 @@ import com.vividsolutions.jts.geom.Polygon;
 import com.vividsolutions.jts.geom.PrecisionModel;
 
 import de.gerdiproject.json.geo.constants.GeometryConstants;
-import lombok.RequiredArgsConstructor;
 
 /**
  * This class offers generic JSON serialization logic for {@linkplain Geometry}s.
@@ -43,65 +46,76 @@ import lombok.RequiredArgsConstructor;
  *
  * @author Robin Weiss
  */
-@RequiredArgsConstructor
 public class GeometryAdapter implements JsonSerializer<Geometry>, JsonDeserializer<Geometry>
 {
+    private final Locale locale = Locale.ENGLISH;
+    private final Map<String, BiFunction<JsonSerializationContext, Geometry, JsonElement>> serializationMap;
+    private final Map<String, BiFunction<JsonDeserializationContext, JsonElement, Geometry>> deserializationMap;
+
+
+    /**
+     * Simple Constructor that initializes {@linkplain HashMap}s
+     * of (de-)serialization functions.
+     */
+    public GeometryAdapter()
+    {
+        this.serializationMap = new HashMap<>();
+        addSerializationFunction(Point.class, serializationMap);
+        addSerializationFunction(MultiPoint.class, serializationMap);
+        addSerializationFunction(LineString.class, serializationMap);
+        addSerializationFunction(MultiLineString.class, serializationMap);
+        addSerializationFunction(Polygon.class, serializationMap);
+        addSerializationFunction(MultiPolygon.class, serializationMap);
+
+        this.deserializationMap = new HashMap<>();
+        addDeserializationFunction(Point.class, deserializationMap);
+        addDeserializationFunction(MultiPoint.class, deserializationMap);
+        addDeserializationFunction(LineString.class, deserializationMap);
+        addDeserializationFunction(MultiLineString.class, deserializationMap);
+        addDeserializationFunction(Polygon.class, deserializationMap);
+        addDeserializationFunction(MultiPolygon.class, deserializationMap);
+    }
+
+
+    private void addSerializationFunction(final Class<?> geoClass, final Map<String, BiFunction<JsonSerializationContext, Geometry, JsonElement>> map)
+    {
+        map.put(geoClass.getSimpleName().toLowerCase(locale),
+                (final JsonSerializationContext context, final Geometry geo)
+                -> context.serialize(geo, geoClass));
+    }
+
+
+    private void addDeserializationFunction(final Class<?> geoClass, final Map<String, BiFunction<JsonDeserializationContext, JsonElement, Geometry>> map)
+    {
+        map.put(geoClass.getSimpleName().toLowerCase(locale),
+                (final JsonDeserializationContext context, final JsonElement geo)
+                -> context.deserialize(geo, geoClass));
+    }
+
+
     @Override
     public JsonElement serialize(final Geometry src, final Type typeOfSrc, final JsonSerializationContext context)
     {
-        final String geometryType = src.getGeometryType();
+        final BiFunction<JsonSerializationContext, Geometry, JsonElement> serializationFunction =
+            serializationMap.get(src.getGeometryType().toLowerCase(locale));
 
-        switch (geometryType) {
-            case GeometryConstants.POINT_TYPE:
-                return context.serialize(src, Point.class);
-
-            case GeometryConstants.MULTI_POINT_TYPE:
-                return context.serialize(src, MultiPoint.class);
-
-            case GeometryConstants.LINE_STRING_TYPE:
-                return context.serialize(src, LineString.class);
-
-            case GeometryConstants.MULTI_LINE_STRING_TYPE:
-                return context.serialize(src, MultiLineString.class);
-
-            case GeometryConstants.POLYGON_TYPE:
-                return context.serialize(src, Polygon.class);
-
-            case GeometryConstants.MULTI_POLYGON_TYPE:
-                return context.serialize(src, MultiPolygon.class);
-
-            default:
-                throw new JsonParseException(String.format(GeometryConstants.UNKNOWN_GEOMETRY_TYPE_ERROR, geometryType));
-        }
+        if (serializationFunction == null)
+            throw new JsonParseException(String.format(GeometryConstants.UNKNOWN_GEOMETRY_TYPE_ERROR, src.getGeometryType()));
+        else
+            return serializationFunction.apply(context, src);
     }
 
 
     @Override
     public Geometry deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException
     {
-        final String geometryType = json.getAsJsonObject().get(GeometryConstants.TYPE_JSON_FIELD).getAsString();
+        final String geometryType = json.getAsJsonObject().get(GeometryConstants.TYPE_JSON_FIELD).getAsString().toLowerCase(locale);
+        final BiFunction<JsonDeserializationContext, JsonElement, Geometry> deserializationFunction =
+            deserializationMap.get(geometryType);
 
-        switch (geometryType) {
-            case GeometryConstants.POINT_TYPE:
-                return context.deserialize(json, Point.class);
-
-            case GeometryConstants.MULTI_POINT_TYPE:
-                return context.deserialize(json, MultiPoint.class);
-
-            case GeometryConstants.LINE_STRING_TYPE:
-                return context.deserialize(json, LineString.class);
-
-            case GeometryConstants.MULTI_LINE_STRING_TYPE:
-                return context.deserialize(json, MultiLineString.class);
-
-            case GeometryConstants.POLYGON_TYPE:
-                return context.deserialize(json, Polygon.class);
-
-            case GeometryConstants.MULTI_POLYGON_TYPE:
-                return context.deserialize(json, MultiPolygon.class);
-
-            default:
-                throw new JsonParseException(String.format(GeometryConstants.UNKNOWN_GEOMETRY_TYPE_ERROR, geometryType));
-        }
+        if (deserializationFunction == null)
+            throw new JsonParseException(String.format(GeometryConstants.UNKNOWN_GEOMETRY_TYPE_ERROR, geometryType));
+        else
+            return deserializationFunction.apply(context, json);
     }
 }
