@@ -333,7 +333,7 @@ public class DataCiteJson implements IDocument
      * @return discipline specific metadata extensions
      */
     @Setter(AccessLevel.NONE)
-    private final DataCiteExtensions extensions;
+    private DataCiteExtensions extensions;
 
 
     /**
@@ -345,7 +345,6 @@ public class DataCiteJson implements IDocument
     public DataCiteJson(final String sourceId) throws IllegalArgumentException
     {
         this.sourceId = sourceId;
-        this.extensions = new DataCiteExtensions();
     }
 
 
@@ -560,6 +559,10 @@ public class DataCiteJson implements IDocument
      */
     public void addExtension(final IDataCiteExtension extension)
     {
+        // lazy initialization, because extensions are an edge case
+        if (this.extensions == null)
+            this.extensions = new DataCiteExtensions();
+
         this.extensions.add(extension);
     }
 

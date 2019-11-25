@@ -33,6 +33,8 @@ import de.gerdiproject.json.datacite.DateRange;
 import de.gerdiproject.json.datacite.abstr.AbstractDate;
 import de.gerdiproject.json.datacite.adapters.DataCiteExtensionsAdapter;
 import de.gerdiproject.json.datacite.adapters.DateAdapter;
+import de.gerdiproject.json.datacite.adapters.FunderIdentifierTypeAdapter;
+import de.gerdiproject.json.datacite.enums.FunderIdentifierType;
 import de.gerdiproject.json.datacite.extension.DataCiteExtensions;
 import de.gerdiproject.json.datacite.extension.adapters.SoepDataCiteExtensionAdapter;
 import de.gerdiproject.json.datacite.extension.generic.AbstractResearch;
@@ -122,6 +124,7 @@ public final class GsonUtils
     {
         return geoJsonBuilder
                .registerTypeAdapter(AbstractDate.class, new DateAdapter())
+               .registerTypeAdapter(FunderIdentifierType.class, new FunderIdentifierTypeAdapter())
                .registerTypeAdapter(DateRange.class, new DateAdapter())
                .registerTypeAdapter(Date.class, new DateAdapter())
                .registerTypeAdapter(AbstractResearch.class, new ResearchAdapter())
