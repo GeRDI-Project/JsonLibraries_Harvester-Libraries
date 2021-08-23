@@ -18,7 +18,7 @@
 
 	<properties>
 		<gson.dependency.version>2.8.5</gson.dependency.version>
-		<jsoup.dependency.version>1.11.3</jsoup.dependency.version>
+		<jsoup.dependency.version>1.14.2</jsoup.dependency.version>
 		<jts.dependency.version>1.13</jts.dependency.version>
 	</properties>
 
